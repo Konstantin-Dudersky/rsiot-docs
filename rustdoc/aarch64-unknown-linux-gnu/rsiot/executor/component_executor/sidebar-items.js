@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["save_msg_in_cache","task_internal"],"struct":["ComponentExecutor","ComponentExecutorConfig"]};

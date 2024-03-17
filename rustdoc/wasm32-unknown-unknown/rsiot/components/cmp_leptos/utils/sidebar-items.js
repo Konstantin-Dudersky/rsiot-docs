@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["define_hostname","define_window_url"]};
+window.SIDEBAR_ITEMS = {"fn":["define_hostname","define_window_url"],"mod":["define_hostname","define_window_url"]};

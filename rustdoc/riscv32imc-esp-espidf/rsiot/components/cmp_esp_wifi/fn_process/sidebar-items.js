@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fn_process","wifi_setup"]};

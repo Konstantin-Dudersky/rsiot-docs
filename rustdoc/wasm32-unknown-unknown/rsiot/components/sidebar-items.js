@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["cmp_add_input_stream","cmp_add_output_stream","cmp_derive","cmp_external_fn_process","cmp_http_client_wasm","cmp_inject_periodic","cmp_leptos","cmp_logger","cmp_plc","cmp_websocket_client_wasm","cmp_webstorage"]};
+window.SIDEBAR_ITEMS = {"mod":["_cmp_template","cmp_add_input_stream","cmp_add_output_stream","cmp_derive","cmp_external_fn_process","cmp_http_client_wasm","cmp_inject_periodic","cmp_leptos","cmp_logger","cmp_plc","cmp_websocket_client_wasm","cmp_webstorage"]};

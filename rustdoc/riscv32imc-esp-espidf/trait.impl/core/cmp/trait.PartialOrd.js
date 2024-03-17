@@ -1,3 +1,3 @@
 (function() {var implementors = {
-"rsiot":[["impl PartialOrd for <a class=\"enum\" href=\"rsiot/message/enum.AuthPermissions.html\" title=\"enum rsiot::message::AuthPermissions\">AuthPermissions</a>"],["impl PartialOrd for <a class=\"struct\" href=\"rsiot/message/struct.Timestamp.html\" title=\"struct rsiot::message::Timestamp\">Timestamp</a>"]]
+"rsiot":[["impl PartialOrd for <a class=\"enum\" href=\"rsiot/message/auth_roles/enum.AuthPermissions.html\" title=\"enum rsiot::message::auth_roles::AuthPermissions\">AuthPermissions</a>"],["impl PartialOrd for <a class=\"struct\" href=\"rsiot/message/timestamp/struct.Timestamp.html\" title=\"struct rsiot::message::timestamp::Timestamp\">Timestamp</a>"]]
 };if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

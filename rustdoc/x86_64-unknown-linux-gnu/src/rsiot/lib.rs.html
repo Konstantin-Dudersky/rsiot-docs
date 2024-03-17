@@ -326,9 +326,9 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 </span><span class="doccomment">//! TODO Написать про роутинг сообщений
 
-</span><span class="comment">// #![warn(missing_docs)]
+</span><span class="attr">#![warn(missing_docs)]
 
-</span><span class="attr">#[cfg(feature = <span class="string">"executor"</span>)]
+#[cfg(feature = <span class="string">"executor"</span>)]
 </span><span class="kw">pub mod </span>components;
 <span class="kw">mod </span>components_config;
 <span class="attr">#[cfg(feature = <span class="string">"env_vars"</span>)]

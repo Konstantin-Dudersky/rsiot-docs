@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["to_f32","to_u32"]};
+window.SIDEBAR_ITEMS = {"mod":["to_f32","to_u32","utils"]};

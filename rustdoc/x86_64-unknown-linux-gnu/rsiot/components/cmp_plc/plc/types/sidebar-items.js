@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"type":["TimeDuration","TimeInstant"]};
+window.SIDEBAR_ITEMS = {"mod":["time_instant"],"type":["TimeDuration","TimeInstant"]};
