@@ -1,0 +1,3046 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Message` struct in crate `rsiot`."><title>Message in rsiot::message - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../rsiot/index.html">rsiot</a><span class="version">0.0.77</span></h2></div><h2 class="location"><a href="#">Message</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.data">data</a></li><li><a href="#structfield.key">key</a></li><li><a href="#structfield.trace">trace</a></li><li><a href="#structfield.ts">ts</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.add_trace_item">add_trace_item</a></li><li><a href="#method.contains_trace_item">contains_trace_item</a></li><li><a href="#method.deserialize">deserialize</a></li><li><a href="#method.get_data">get_data</a></li><li><a href="#method.new">new</a></li><li><a href="#method.new_custom">new_custom</a></li><li><a href="#method.serialize">serialize</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-Message%3CTCustom%3E">Clone</a></li><li><a href="#impl-Debug-for-Message%3CTCustom%3E">Debug</a></li><li><a href="#impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E">Deserialize&lt;&#x27;de&gt;</a></li><li><a href="#impl-PartialEq-for-Message%3CTCustom%3E">PartialEq</a></li><li><a href="#impl-Serialize-for-Message%3CTCustom%3E">Serialize</a></li><li><a href="#impl-StructuralPartialEq-for-Message%3CTCustom%3E">StructuralPartialEq</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-Message%3CTCustom%3E">RefUnwindSafe</a></li><li><a href="#impl-Send-for-Message%3CTCustom%3E">Send</a></li><li><a href="#impl-Sync-for-Message%3CTCustom%3E">Sync</a></li><li><a href="#impl-Unpin-for-Message%3CTCustom%3E">Unpin</a></li><li><a href="#impl-UnwindSafe-for-Message%3CTCustom%3E">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-Conv-for-T">Conv</a></li><li><a href="#impl-DeserializeOwned-for-T">DeserializeOwned</a></li><li><a href="#impl-FmtForward-for-T">FmtForward</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-FromBase64-for-T">FromBase64</a></li><li><a href="#impl-FromRef%3CT%3E-for-T">FromRef&lt;T&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-Pipe-for-T">Pipe</a></li><li><a href="#impl-Same-for-T">Same</a></li><li><a href="#impl-SignWithKey%3CString%3E-for-C">SignWithKey&lt;String&gt;</a></li><li><a href="#impl-Tap-for-T">Tap</a></li><li><a href="#impl-ToBase64-for-T">ToBase64</a></li><li><a href="#impl-ToOwned-for-T">ToOwned</a></li><li><a href="#impl-TryConv-for-T">TryConv</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-VZip%3CV%3E-for-T">VZip&lt;V&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li><li><a href="#impl-Within%3CG2%3E-for-G1">Within&lt;G2&gt;</a></li><li><a href="#impl-Within%3CG2%3E-for-G1-1">Within&lt;G2&gt;</a></li></ul></section><h2><a href="index.html">In rsiot::message</a></h2></div></nav><div class="sidebar-resizer"></div>
+    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../index.html">rsiot</a>::<wbr><a href="index.html">message</a>::<wbr><a class="struct" href="#">Message</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/rsiot/message/message.rs.html#11-16">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct Message&lt;TCustom&gt; {
+    pub data: <a class="enum" href="enum.MsgData.html" title="enum rsiot::message::MsgData">MsgData</a>&lt;TCustom&gt;,
+    pub key: String,
+    pub ts: <a class="struct" href="struct.Timestamp.html" title="struct rsiot::message::Timestamp">Timestamp</a>,
+    pub trace: <a class="struct" href="struct.MsgTrace.html" title="struct rsiot::message::MsgTrace">MsgTrace</a>,
+}</code></pre><h2 id="fields" class="fields section-header">Fields<a href="#fields" class="anchor">§</a></h2><span id="structfield.data" class="structfield section-header"><a href="#structfield.data" class="anchor field">§</a><code>data: <a class="enum" href="enum.MsgData.html" title="enum rsiot::message::MsgData">MsgData</a>&lt;TCustom&gt;</code></span><span id="structfield.key" class="structfield section-header"><a href="#structfield.key" class="anchor field">§</a><code>key: String</code></span><span id="structfield.ts" class="structfield section-header"><a href="#structfield.ts" class="anchor field">§</a><code>ts: <a class="struct" href="struct.Timestamp.html" title="struct rsiot::message::Timestamp">Timestamp</a></code></span><span id="structfield.trace" class="structfield section-header"><a href="#structfield.trace" class="anchor field">§</a><code>trace: <a class="struct" href="struct.MsgTrace.html" title="struct rsiot::message::MsgTrace">MsgTrace</a></code></span><h2 id="implementations" class="section-header">Implementations<a href="#implementations" class="anchor">§</a></h2><div id="implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#18-61">source</a><a href="#impl-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: <a class="trait" href="trait.MsgDataBound.html" title="trait rsiot::message::MsgDataBound">MsgDataBound</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.new" class="method"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#22-30">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fn">new</a>(data: <a class="enum" href="enum.MsgData.html" title="enum rsiot::message::MsgData">MsgData</a>&lt;TCustom&gt;) -&gt; Self</h4></section></summary><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples"><a href="#scraped-examples">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[39,39],&quot;../../src/cmp_derive/cmp_derive.rs.html#52&quot;,&quot;line 52&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../src/cmp_derive/cmp_derive.rs.html#52">line 52</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
+<span>116</span>
+<span>117</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>tokio::runtime;
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span><span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_derive::{<span class="self">self</span>, DeriveItem},
+            cmp_inject_periodic, cmp_logger,
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt().init();
+
+    <span class="attr">#[derive(Clone, Default, PartialEq)]
+    </span><span class="kw">struct </span>ValueInstantString {
+        <span class="kw">pub </span>f64: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+        <span class="kw">pub </span>bool: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    }
+
+    <span class="kw">let </span>derive_config = cmp_derive::Config {
+        derive_items: <span class="macro">vec!</span>[Box::new(DeriveItem {
+            store: ValueInstantString::default(),
+            fn_input: |msg, store| <span class="kw">match </span><span class="kw-2">&amp;</span>msg.data {
+                MsgData::Custom(data) =&gt; <span class="kw">match </span>data {
+                    Custom::ValueInstantF64(content) =&gt; store.f64 = <span class="prelude-val">Some</span>(<span class="kw-2">*</span>content),
+                    Custom::ValueInstantBool(content) =&gt; store.bool = <span class="prelude-val">Some</span>(<span class="kw-2">*</span>content),
+                    <span class="kw">_ </span>=&gt; (),
+                },
+                MsgData::System(<span class="kw">_</span>) =&gt; (),
+            },
+            fn_output: |store| {
+                <span class="kw">let </span>msg_content =
+                    <span class="macro">format!</span>(<span class="string">"New Message: bool: {}, f64: {}"</span>, store.bool<span class="question-mark">?</span>, store.f64<span class="question-mark">?</span>);
+                <span class="kw">let </span>msg = <span class="highlight focus">Message::new</span>(MsgData::Custom(Custom::ValueInstantString(msg_content)));
+                <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg])
+            },
+        })],
+    };
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg1 = Message::new_custom(Custom::ValueInstantF64(counter));
+            <span class="kw">let </span>msg2 = Message::new_custom(Custom::ValueInstantBool(<span class="bool-val">true</span>));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg1, msg2]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"example_single_thread"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
+    </span>runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            ComponentExecutor::new(executor_config)
+                .add_cmp(cmp_derive::Cmp::new(derive_config))
+                .add_cmp(cmp_logger::Cmp::new(logger_config))
+                .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                .wait_result()
+                .<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span>runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            <span class="kw">let </span>local_set = LocalSet::new();
+
+            local_set.spawn_local(<span class="kw">async move </span>{
+                ComponentExecutor::new(executor_config)
+                    .add_cmp(cmp_derive::Cmp::new(derive_config))
+                    .add_cmp(cmp_logger::Cmp::new(logger_config))
+                    .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                    .wait_result()
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+            });
+
+            local_set.<span class="kw">await</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div></div></details><details class="toggle method-toggle" open><summary><section id="method.new_custom" class="method"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#32-41">source</a><h4 class="code-header">pub fn <a href="#method.new_custom" class="fn">new_custom</a>(custom_data: TCustom) -&gt; Self</h4></section></summary><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-1"><a href="#scraped-examples-1">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[37,37],&quot;../../src/cmp_websocket_client/cmp_websocket_client.rs.html#46&quot;,&quot;line 46&quot;],[[56,56],&quot;../../src/cmp_websocket_client/cmp_websocket_client.rs.html#65&quot;,&quot;line 65&quot;],[[70,70],&quot;../../src/cmp_websocket_client/cmp_websocket_client.rs.html#79&quot;,&quot;line 79&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_client/cmp_websocket_client.rs (<a href="../../src/cmp_websocket_client/cmp_websocket_client.rs.html#46">line 46</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Message, MsgDataBound},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">enum </span>Data {
+        Send(f64),
+        Recv(f64),
+        Tick(u64),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {}
+
+    <span class="kw">fn </span>fn_input(msg: <span class="kw-2">&amp;</span>Message&lt;Data&gt;) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt; {
+        <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+    }
+
+    <span class="kw">fn </span>fn_output(text: <span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;Data&gt;&gt;&gt;&gt; {
+        <span class="comment">// сообщение tick ...
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(val) = parse_tick(text) {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[val]));
+        }
+        <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+        <span class="kw">let </span>msg = <span class="kw">match </span>msg.get_data() {
+            <span class="prelude-val">Some</span>(msg) =&gt; msg,
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        };
+        <span class="kw">match </span>msg {
+            Data::Send(val) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[<span class="highlight focus">Message::new_custom</span>(Data::Recv(val))])),
+            Data::Recv(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+            Data::Tick(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        }
+    }
+
+    <span class="kw">fn </span>parse_tick(data: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Message&lt;Data&gt;&gt; {
+        <span class="kw">let </span>parts: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = data.split(<span class="string">' '</span>).collect();
+        <span class="kw">if </span>parts.len() != <span class="number">2 </span>{
+            <span class="kw">return </span><span class="prelude-val">None</span>;
+        }
+        <span class="kw">if </span>parts[<span class="number">0</span>] != <span class="string">"tick" </span>{
+            <span class="kw">return </span><span class="prelude-val">None</span>;
+        }
+        <span class="kw">let </span>num: <span class="prelude-ty">Option</span>&lt;u64&gt; = parts[<span class="number">1</span>].parse().ok();
+        <span class="kw">let </span>num = <span class="kw">match </span>num {
+            <span class="prelude-val">Some</span>(val) =&gt; val,
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+        };
+        <span class="prelude-val">Some</span>(<span class="highlight">Message::new_custom</span>(Data::Tick(num)))
+    }
+
+    tracing_subscriber::fmt().init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = <span class="highlight">Message::new_custom</span>(Data::Send(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>ws_client = cmp_websocket_client::Config {
+        url: Url::parse(<span class="string">"ws://localhost:9001"</span>)<span class="question-mark">?</span>,
+        fn_input,
+        fn_output,
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"rsiot-websocket-client"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Data&gt;::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .add_cmp(cmp_websocket_client::Cmp::new(ws_client))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[13,13],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#30&quot;,&quot;line 30&quot;],[[29,29],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#46&quot;,&quot;line 46&quot;],[[32,32],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#49&quot;,&quot;line 49&quot;],[[35,35],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#52&quot;,&quot;line 52&quot;],[[38,38],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#55&quot;,&quot;line 55&quot;],[[42,42],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#59&quot;,&quot;line 59&quot;],[[46,46],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#63&quot;,&quot;line 63&quot;],[[50,50],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#67&quot;,&quot;line 67&quot;],[[54,54],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#71&quot;,&quot;line 71&quot;],[[58,58],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#75&quot;,&quot;line 75&quot;],[[62,62],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#79&quot;,&quot;line 79&quot;],[[66,66],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#83&quot;,&quot;line 83&quot;],[[70,70],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#87&quot;,&quot;line 87&quot;],[[74,74],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#91&quot;,&quot;line 91&quot;],[[78,78],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#95&quot;,&quot;line 95&quot;],[[81,81],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#98&quot;,&quot;line 98&quot;],[[84,84],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#101&quot;,&quot;line 101&quot;],[[87,87],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#104&quot;,&quot;line 104&quot;],[[90,90],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#107&quot;,&quot;line 107&quot;],[[94,94],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#111&quot;,&quot;line 111&quot;],[[97,97],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#114&quot;,&quot;line 114&quot;],[[100,100],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#117&quot;,&quot;line 117&quot;],[[103,103],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#120&quot;,&quot;line 120&quot;],[[106,106],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#123&quot;,&quot;line 123&quot;],[[109,109],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#126&quot;,&quot;line 126&quot;],[[112,112],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#129&quot;,&quot;line 129&quot;],[[115,115],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#132&quot;,&quot;line 132&quot;],[[118,118],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#135&quot;,&quot;line 135&quot;],[[121,121],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#138&quot;,&quot;line 138&quot;],[[124,124],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#141&quot;,&quot;line 141&quot;],[[127,127],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#144&quot;,&quot;line 144&quot;],[[130,130],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#147&quot;,&quot;line 147&quot;],[[133,133],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#150&quot;,&quot;line 150&quot;],[[136,136],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#153&quot;,&quot;line 153&quot;],[[139,139],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#156&quot;,&quot;line 156&quot;],[[142,142],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#159&quot;,&quot;line 159&quot;],[[145,145],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#162&quot;,&quot;line 162&quot;],[[148,148],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#165&quot;,&quot;line 165&quot;],[[151,151],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#168&quot;,&quot;line 168&quot;],[[154,154],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#171&quot;,&quot;line 171&quot;],[[157,157],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#174&quot;,&quot;line 174&quot;],[[160,160],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#177&quot;,&quot;line 177&quot;],[[163,163],&quot;../../src/cmp_modbus_client_fermenter/config.rs.html#180&quot;,&quot;line 180&quot;]]"><div class="scraped-example-title">examples/cmp_modbus_client_fermenter/config.rs (<a href="../../src/cmp_modbus_client_fermenter/config.rs.html#30">line 30</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
+<span>116</span>
+<span>117</span>
+<span>118</span>
+<span>119</span>
+<span>120</span>
+<span>121</span>
+<span>122</span>
+<span>123</span>
+<span>124</span>
+<span>125</span>
+<span>126</span>
+<span>127</span>
+<span>128</span>
+<span>129</span>
+<span>130</span>
+<span>131</span>
+<span>132</span>
+<span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
+<span>156</span>
+<span>157</span>
+<span>158</span>
+<span>159</span>
+<span>160</span>
+<span>161</span>
+<span>162</span>
+<span>163</span>
+<span>164</span>
+<span>165</span>
+<span>166</span>
+<span>167</span>
+<span>168</span>
+<span>169</span>
+<span>170</span>
+<span>171</span>
+<span>172</span>
+<span>173</span>
+<span>174</span>
+<span>175</span>
+<span>176</span>
+<span>177</span>
+<span>178</span>
+<span>179</span>
+<span>180</span>
+<span>181</span>
+<span>182</span>
+<span>183</span>
+<span>184</span>
+<span>185</span>
+<span>186</span>
+<span>187</span>
+<span>188</span>
+<span>189</span>
+<span>190</span>
+<span>191</span>
+<span>192</span>
+<span>193</span>
+<span>194</span>
+<span>195</span>
+<span>196</span>
+<span>197</span>
+<span>198</span>
+<span>199</span>
+<span>200</span>
+<span>201</span>
+<span>202</span>
+<span>203</span>
+<span>204</span>
+<span>205</span>
+<span>206</span>
+<span>207</span>
+<span>208</span>
+<span>209</span>
+<span>210</span>
+<span>211</span>
+<span>212</span>
+<span>213</span>
+<span>214</span>
+<span>215</span>
+<span>216</span>
+<span>217</span>
+<span>218</span>
+<span>219</span>
+<span>220</span>
+<span>221</span>
+<span>222</span>
+<span>223</span>
+<span>224</span>
+<span>225</span>
+<span>226</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">pub fn </span>config() -&gt; Config&lt;Data&gt; {
+    cmp_modbus_client::Config {
+        enabled: <span class="bool-val">true</span>,
+        unit_id: <span class="number">1</span>,
+        input_config: <span class="macro">vec!</span>[InputConfig {
+            fn_input: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
+            fn_on_success: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
+            fn_on_failure: Vec::new,
+        }],
+        periodic_config: <span class="macro">vec!</span>[PeriodicConfig {
+            period: Duration::from_secs(<span class="number">2</span>),
+            request: Request::ReadHoldingRegisters(<span class="number">0</span>, <span class="number">52</span>),
+            fn_on_success: fn_on_success_1,
+            fn_on_failure: || <span class="macro">vec!</span>[<span class="highlight focus">Message::new_custom</span>(Data::rTempCSSensorTValue_Get(<span class="number">0.0</span>))],
+        }],
+        client_type: ClientType::Tcp(TcpClientType {
+            host: IpAddr::V4(Ipv4Addr::new(<span class="number">10</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">10</span>)),
+            port: <span class="number">502</span>,
+        }),
+    }
+}
+
+<span class="attr">#[allow(non_snake_case)]
+</span><span class="kw">fn </span>fn_on_success_1(data: <span class="kw-2">&amp;</span>Response) -&gt; Vec&lt;Message&lt;Data&gt;&gt; {
+    <span class="kw">let </span>data = <span class="kw">match </span>data {
+        Response::U16(data) =&gt; data,
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="macro">vec!</span>[],
+    };
+    <span class="kw">let </span>wWordState1_Get = data[<span class="number">0</span>];
+    <span class="kw">let </span>wWordState1_Get = <span class="highlight">Message::new_custom</span>(Data::wWordState1_Get(wWordState1_Get));
+
+    <span class="kw">let </span>wWordState2 = data[<span class="number">1</span>];
+    <span class="kw">let </span>wWordState2 = <span class="highlight">Message::new_custom</span>(Data::wWordState2(wWordState2));
+
+    <span class="kw">let </span>wWordCMD1 = data[<span class="number">2</span>];
+    <span class="kw">let </span>wWordCMD1 = <span class="highlight">Message::new_custom</span>(Data::wWordCMD1(wWordCMD1));
+
+    <span class="kw">let </span>iOperationModeSet = data[<span class="number">3</span>];
+    <span class="kw">let </span>iOperationModeSet = <span class="highlight">Message::new_custom</span>(Data::iOperationModeSet(iOperationModeSet));
+
+    <span class="kw">let </span>rTempCSSensorTValue_Get = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">4</span>..=<span class="number">5</span>]);
+    <span class="kw">let </span>rTempCSSensorTValue_Get =
+        <span class="highlight">Message::new_custom</span>(Data::rTempCSSensorTValue_Get(rTempCSSensorTValue_Get));
+
+    <span class="kw">let </span>rMZSensorCurrentRS1_Get = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">6</span>..=<span class="number">7</span>]);
+    <span class="kw">let </span>rMZSensorCurrentRS1_Get =
+        <span class="highlight">Message::new_custom</span>(Data::rMZSensorCurrentRS1_Get(rMZSensorCurrentRS1_Get));
+
+    <span class="kw">let </span>rMZSensorCurrentRS2_Get = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">8</span>..=<span class="number">9</span>]);
+    <span class="kw">let </span>rMZSensorCurrentRS2_Get =
+        <span class="highlight">Message::new_custom</span>(Data::rMZSensorCurrentRS2_Get(rMZSensorCurrentRS2_Get));
+
+    <span class="kw">let </span>rFZSensorCurrentRS3_Get = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">10</span>..=<span class="number">11</span>]);
+    <span class="kw">let </span>rFZSensorCurrentRS3_Get =
+        <span class="highlight">Message::new_custom</span>(Data::rFZSensorCurrentRS3_Get(rFZSensorCurrentRS3_Get));
+
+    <span class="kw">let </span>rCZSensorCurrentRS4_Get = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">12</span>..=<span class="number">13</span>]);
+    <span class="kw">let </span>rCZSensorCurrentRS4_Get =
+        <span class="highlight">Message::new_custom</span>(Data::rCZSensorCurrentRS4_Get(rCZSensorCurrentRS4_Get));
+
+    <span class="kw">let </span>BZTimeBetweenStartManual = data[<span class="number">14</span>];
+    <span class="kw">let </span>BZTimeBetweenStartManual =
+        <span class="highlight">Message::new_custom</span>(Data::BZTimeBetweenStartManual(BZTimeBetweenStartManual));
+
+    <span class="kw">let </span>BZTimePulseStartManual = data[<span class="number">15</span>];
+    <span class="kw">let </span>BZTimePulseStartManual =
+        <span class="highlight">Message::new_custom</span>(Data::BZTimePulseStartManual(BZTimePulseStartManual));
+
+    <span class="kw">let </span>CZTimeBetweenStartManual = data[<span class="number">16</span>];
+    <span class="kw">let </span>CZTimeBetweenStartManual =
+        <span class="highlight">Message::new_custom</span>(Data::CZTimeBetweenStartManual(CZTimeBetweenStartManual));
+
+    <span class="kw">let </span>CZTimePulseStartManual = data[<span class="number">17</span>];
+    <span class="kw">let </span>CZTimePulseStartManual =
+        <span class="highlight">Message::new_custom</span>(Data::CZTimePulseStartManual(CZTimePulseStartManual));
+
+    <span class="kw">let </span>TimeFermentH_Current = data[<span class="number">18</span>];
+    <span class="kw">let </span>TimeFermentH_Current =
+        <span class="highlight">Message::new_custom</span>(Data::TimeFermentH_Current(TimeFermentH_Current));
+
+    <span class="kw">let </span>wWordError = data[<span class="number">19</span>];
+    <span class="kw">let </span>wWordError = <span class="highlight">Message::new_custom</span>(Data::wWordError(wWordError));
+
+    <span class="kw">let </span>Invertor20Frequency = data[<span class="number">20</span>];
+    <span class="kw">let </span>Invertor20Frequency = <span class="highlight">Message::new_custom</span>(Data::Invertor20Frequency(Invertor20Frequency));
+
+    <span class="kw">let </span>Invertor22Frequency = data[<span class="number">21</span>];
+    <span class="kw">let </span>Invertor22Frequency = <span class="highlight">Message::new_custom</span>(Data::Invertor22Frequency(Invertor22Frequency));
+
+    <span class="kw">let </span>Invertor24Frequency = data[<span class="number">22</span>];
+    <span class="kw">let </span>Invertor24Frequency = <span class="highlight">Message::new_custom</span>(Data::Invertor24Frequency(Invertor24Frequency));
+
+    <span class="kw">let </span>TimeFermentM_Current = data[<span class="number">23</span>];
+    <span class="kw">let </span>TimeFermentM_Current =
+        <span class="highlight">Message::new_custom</span>(Data::TimeFermentM_Current(TimeFermentM_Current));
+
+    <span class="kw">let </span>motodays = TO_U32(<span class="kw-2">&amp;</span>data[<span class="number">24</span>..=<span class="number">25</span>]);
+    <span class="kw">let </span>motodays = <span class="highlight">Message::new_custom</span>(Data::motodays(motodays));
+
+    <span class="kw">let </span>motohours = TO_U32(<span class="kw-2">&amp;</span>data[<span class="number">26</span>..=<span class="number">27</span>]);
+    <span class="kw">let </span>motohours = <span class="highlight">Message::new_custom</span>(Data::motohours(motohours));
+
+    <span class="kw">let </span>motomins = TO_U32(<span class="kw-2">&amp;</span>data[<span class="number">28</span>..=<span class="number">29</span>]);
+    <span class="kw">let </span>motomins = <span class="highlight">Message::new_custom</span>(Data::motomins(motomins));
+
+    <span class="kw">let </span>CZDispenserL = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">30</span>..=<span class="number">31</span>]);
+    <span class="kw">let </span>CZDispenserL = <span class="highlight">Message::new_custom</span>(Data::CZDispenserL(CZDispenserL));
+
+    <span class="kw">let </span>FZMixerPart1N = data[<span class="number">32</span>];
+    <span class="kw">let </span>FZMixerPart1N = <span class="highlight">Message::new_custom</span>(Data::FZMixerPart1N(FZMixerPart1N));
+
+    <span class="kw">let </span>FZMixerPart2N = data[<span class="number">33</span>];
+    <span class="kw">let </span>FZMixerPart2N = <span class="highlight">Message::new_custom</span>(Data::FZMixerPart2N(FZMixerPart2N));
+
+    <span class="kw">let </span>FZMixerPart3N = data[<span class="number">34</span>];
+    <span class="kw">let </span>FZMixerPart3N = <span class="highlight">Message::new_custom</span>(Data::FZMixerPart3N(FZMixerPart3N));
+
+    <span class="kw">let </span>FZMixerPart4N = data[<span class="number">35</span>];
+    <span class="kw">let </span>FZMixerPart4N = <span class="highlight">Message::new_custom</span>(Data::FZMixerPart4N(FZMixerPart4N));
+
+    <span class="kw">let </span>MZMixerPart1N = data[<span class="number">38</span>];
+    <span class="kw">let </span>MZMixerPart1N = <span class="highlight">Message::new_custom</span>(Data::MZMixerPart1N(MZMixerPart1N));
+
+    <span class="kw">let </span>MZMixerPart2N = data[<span class="number">37</span>];
+    <span class="kw">let </span>MZMixerPart2N = <span class="highlight">Message::new_custom</span>(Data::MZMixerPart2N(MZMixerPart2N));
+
+    <span class="kw">let </span>MZMixerPart3N = data[<span class="number">38</span>];
+    <span class="kw">let </span>MZMixerPart3N = <span class="highlight">Message::new_custom</span>(Data::MZMixerPart3N(MZMixerPart3N));
+
+    <span class="kw">let </span>MZMixerPart4N = data[<span class="number">39</span>];
+    <span class="kw">let </span>MZMixerPart4N = <span class="highlight">Message::new_custom</span>(Data::MZMixerPart4N(MZMixerPart4N));
+
+    <span class="kw">let </span>TimeFermentH_SP = data[<span class="number">40</span>];
+    <span class="kw">let </span>TimeFermentH_SP = <span class="highlight">Message::new_custom</span>(Data::TimeFermentH_SP(TimeFermentH_SP));
+
+    <span class="kw">let </span>TimeFermentM_SP = data[<span class="number">41</span>];
+    <span class="kw">let </span>TimeFermentM_SP = <span class="highlight">Message::new_custom</span>(Data::TimeFermentM_SP(TimeFermentM_SP));
+
+    <span class="kw">let </span>NumberFormation_Get = data[<span class="number">42</span>];
+    <span class="kw">let </span>NumberFormation_Get = <span class="highlight">Message::new_custom</span>(Data::NumberFormation_Get(NumberFormation_Get));
+
+    <span class="kw">let </span>AllMixingSec = data[<span class="number">43</span>];
+    <span class="kw">let </span>AllMixingSec = <span class="highlight">Message::new_custom</span>(Data::AllMixingSec(AllMixingSec));
+
+    <span class="kw">let </span>CZDispenserH = data[<span class="number">44</span>];
+    <span class="kw">let </span>CZDispenserH = <span class="highlight">Message::new_custom</span>(Data::CZDispenserH(CZDispenserH));
+
+    <span class="kw">let </span>CZDispenserM = data[<span class="number">45</span>];
+    <span class="kw">let </span>CZDispenserM = <span class="highlight">Message::new_custom</span>(Data::CZDispenserM(CZDispenserM));
+
+    <span class="kw">let </span>NumberRecept = data[<span class="number">46</span>];
+    <span class="kw">let </span>NumberRecept = <span class="highlight">Message::new_custom</span>(Data::NumberRecept(NumberRecept));
+
+    <span class="kw">let </span>CommError = data[<span class="number">47</span>];
+    <span class="kw">let </span>CommError = <span class="highlight">Message::new_custom</span>(Data::CommError(CommError));
+
+    <span class="kw">let </span>BZDispenserH = data[<span class="number">48</span>];
+    <span class="kw">let </span>BZDispenserH = <span class="highlight">Message::new_custom</span>(Data::BZDispenserH(BZDispenserH));
+
+    <span class="kw">let </span>BZDispenserM = data[<span class="number">49</span>];
+    <span class="kw">let </span>BZDispenserM = <span class="highlight">Message::new_custom</span>(Data::BZDispenserM(BZDispenserM));
+
+    <span class="kw">let </span>BZDispenserL = TO_F32(<span class="kw-2">&amp;</span>data[<span class="number">50</span>..=<span class="number">51</span>]);
+    <span class="kw">let </span>BZDispenserL = <span class="highlight">Message::new_custom</span>(Data::BZDispenserL(BZDispenserL));
+
+    <span class="macro">vec!</span>[
+        wWordState1_Get,
+        wWordState2,
+        wWordCMD1,
+        iOperationModeSet,
+        rTempCSSensorTValue_Get,
+        rMZSensorCurrentRS1_Get,
+        rMZSensorCurrentRS2_Get,
+        rFZSensorCurrentRS3_Get,
+        rCZSensorCurrentRS4_Get,
+        BZTimeBetweenStartManual,
+        BZTimePulseStartManual,
+        CZTimeBetweenStartManual,
+        CZTimePulseStartManual,
+        TimeFermentH_Current,
+        wWordError,
+        Invertor20Frequency,
+        Invertor22Frequency,
+        Invertor24Frequency,
+        TimeFermentM_Current,
+        motodays,
+        motohours,
+        motomins,
+        CZDispenserL,
+        FZMixerPart1N,
+        FZMixerPart2N,
+        FZMixerPart3N,
+        FZMixerPart4N,
+        MZMixerPart1N,
+        MZMixerPart2N,
+        MZMixerPart3N,
+        MZMixerPart4N,
+        TimeFermentH_SP,
+        TimeFermentM_SP,
+        NumberFormation_Get,
+        AllMixingSec,
+        CZDispenserH,
+        CZDispenserM,
+        NumberRecept,
+        CommError,
+        BZDispenserH,
+        BZDispenserM,
+        BZDispenserL,
+    ]
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[16,16],&quot;../../src/cmp_timescaledb/cmp_timescaledb.rs.html#25&quot;,&quot;line 25&quot;]]"><div class="scraped-example-title">examples/cmp_timescaledb/cmp_timescaledb.rs (<a href="../../src/cmp_timescaledb/cmp_timescaledb.rs.html#25">line 25</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_timescaledb},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt().init();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::new_custom</span>(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>url = Url::parse(<span class="string">"postgres://postgres:postgres@localhost:5432/db_data_test"</span>)<span class="question-mark">?</span>;
+    <span class="kw">let </span>db_config = cmp_timescaledb::Config {
+        connection_string: url,
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"timescaledb-storing"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .add_cmp(cmp_timescaledb::Cmp::new(db_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[30,30],&quot;../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#40&quot;,&quot;line 40&quot;]]"><div class="scraped-example-title">examples/cmp_inject_periodic/cmp_inject_periodic.rs (<a href="../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#40">line 40</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::{task::LocalSet, time::Duration};
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, Message},
+    };
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::DEBUG)
+        .init();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"cmp_inject_periodic"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">"Logger: "</span>.into(),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Custom::ValueInstantF64(counter);
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::new_custom</span>(msg);
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+            .add_cmp(cmp_logger::Cmp::new(logger_config))
+            .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+            .wait_result()
+            .<span class="kw">await
+            </span>.unwrap();
+    });
+
+    local_set.<span class="kw">await</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[35,35],&quot;../../src/cmp_websocket_server/cmp_websocket_server.rs.html#46&quot;,&quot;line 46&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_server.rs (<a href="../../src/cmp_websocket_server/cmp_websocket_server.rs.html#46">line 46</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_server},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt()
+        .with_env_filter(<span class="string">"trace,tokio_tungstenite=debug,tungstenite=debug"</span>)
+        .init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>ws_server_config = cmp_websocket_server::Config {
+        port: <span class="number">8021</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">10</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::new_custom</span>(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"rsiot-websocket-server"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_websocket_server::Cmp::new(ws_server_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[22,22],&quot;../../src/cmp_influxdb/cmp_influxdb.rs.html#25&quot;,&quot;line 25&quot;]]"><div class="scraped-example-title">examples/cmp_influxdb/cmp_influxdb.rs (<a href="../../src/cmp_influxdb/cmp_influxdb.rs.html#25">line 25</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>tracing::level_filters::LevelFilter;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_influxdb, cmp_inject_periodic},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    <span class="kw">const </span>TOKEN: <span class="kw-2">&amp;</span>str =
+        <span class="string">"6ux3LH1s0wOf4z2vIec6cmYYk03GgTksvxD3OnaM71xfOfyj9NQTvKq8TZRb5iInEl_PpoVFHFQB43CyaoJMhg=="</span>;
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::INFO)
+        .init();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::new_custom</span>(Custom::ValueInstantF64(counter <span class="kw">as </span>f64));
+            counter += <span class="number">1</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>influxdb_config = cmp_influxdb::Config {
+        host: <span class="string">"localhost"</span>.into(),
+        port: <span class="number">8086</span>,
+        org: <span class="string">"test"</span>.into(),
+        bucket: <span class="string">"test1"</span>.into(),
+        token: TOKEN.into(),
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>value = <span class="kw">match </span><span class="kw-2">&amp;</span>msg.data {
+                MsgData::Custom(Custom::ValueInstantF64(data)) =&gt; {
+                    cmp_influxdb::ValueType::f64(<span class="kw-2">*</span>data)
+                }
+                <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+            };
+            <span class="kw">let </span>line = cmp_influxdb::LineProtocolItem::new(<span class="kw-2">&amp;</span>msg.key, value, <span class="kw-2">&amp;</span>msg.ts);
+            <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[line])
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"example_single_thread"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .add_cmp(cmp_influxdb::Cmp::new(influxdb_config))
+        .wait_result()
+        .<span class="kw">await
+        </span>.unwrap();
+}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../src/cmp_redis_client_publication/publication.rs.html#51">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../src/cmp_surrealdb/cmp_surrealdb.rs.html#63">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#63">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../src/cmp_http_server/cmp_http_server.rs.html#63">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../src/cmp_derive/cmp_derive.rs.html#67">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../src/cmp_http_client/cmp_http_client.rs.html#58">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.get_data" class="method"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#43-48">source</a><h4 class="code-header">pub fn <a href="#method.get_data" class="fn">get_data</a>(&amp;self) -&gt; Option&lt;TCustom&gt;</h4></section></summary><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-2"><a href="#scraped-examples-2">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[6,6],&quot;../../src/cmp_websocket_client/cmp_websocket_client.rs.html#41&quot;,&quot;line 41&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_client/cmp_websocket_client.rs (<a href="../../src/cmp_websocket_client/cmp_websocket_client.rs.html#41">line 41</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button>    <span class="kw">fn </span>fn_output(text: <span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;Data&gt;&gt;&gt;&gt; {
+        <span class="comment">// сообщение tick ...
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(val) = parse_tick(text) {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[val]));
+        }
+        <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+        <span class="kw">let </span>msg = <span class="kw">match </span>msg.<span class="highlight focus">get_data</span>() {
+            <span class="prelude-val">Some</span>(msg) =&gt; msg,
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        };
+        <span class="kw">match </span>msg {
+            Data::Send(val) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[Message::new_custom(Data::Recv(val))])),
+            Data::Recv(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+            Data::Tick(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        }
+    }</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[32,32],&quot;../../src/cmp_surrealdb/cmp_surrealdb.rs.html#41&quot;,&quot;line 41&quot;]]"><div class="scraped-example-title">examples/cmp_surrealdb/cmp_surrealdb.rs (<a href="../../src/cmp_surrealdb/cmp_surrealdb.rs.html#41">line 41</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>tracing::info;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_inject_periodic,
+            cmp_surrealdb::{<span class="self">self</span>, InputConfig},
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Deserialize, Message, MsgDataBound, Serialize},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">enum </span>Custom {
+        Request(u16),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
+
+    tracing_subscriber::fmt().init();
+
+    <span class="kw">let </span>surrealdb_config = cmp_surrealdb::Config {
+        host: <span class="string">"127.0.0.1"</span>.into(),
+        port: <span class="number">8003</span>,
+        user: <span class="string">"root"</span>.into(),
+        password: <span class="string">"root"</span>.into(),
+        namespace: <span class="string">"rsiot"</span>.into(),
+        database: <span class="string">"rsiot"</span>.into(),
+        init_script: <span class="macro">include_str!</span>(<span class="string">"./init.surql"</span>).into(),
+        input_config: <span class="macro">vec!</span>[InputConfig {
+            fn_input: |msg| <span class="kw">match </span>msg.<span class="highlight focus">get_data</span>()<span class="question-mark">? </span>{
+                Custom::Request(content) =&gt; {
+                    <span class="kw">let </span>value = content;
+                    <span class="kw">let </span>query = <span class="macro">include_str!</span>(<span class="string">"./new_value_int.surql"</span>);
+                    <span class="kw">let </span>query = query
+                        .replace(<span class="string">"$ts"</span>, <span class="kw-2">&amp;</span>msg.ts.to_rfc3339())
+                        .replace(<span class="string">"$value_float"</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{:.2}"</span>, value));
+                    <span class="prelude-val">Some</span>(query)
+                }
+            },
+            fn_on_success: |response| {
+                <span class="macro">info!</span>(<span class="string">"Response: {response}"</span>);
+                <span class="macro">vec!</span>[]
+            },
+            fn_on_failure: Vec::new,
+        }],
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::Request(counter));
+            counter += <span class="number">1</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"surrealdb_multi_thread"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .add_cmp(cmp_surrealdb::Cmp::new(surrealdb_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[33,33],&quot;../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#50&quot;,&quot;line 50&quot;]]"><div class="scraped-example-title">examples/cmp_modbus_client_simulator.rs (<a href="../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#50">line 50</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::net::{IpAddr, Ipv4Addr};
+
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_inject_periodic, cmp_logger,
+            cmp_modbus_client::{<span class="self">self</span>, <span class="kw-2">*</span>},
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Message, MsgDataBound},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">pub enum </span>Messages {
+        ValueWrite(f64),
+        ValueRead(f64),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Messages {}
+
+    <span class="comment">// логгирование
+    </span>fmt().init();
+
+    <span class="comment">// Конфигурация modbus клиента
+    </span><span class="kw">let </span>modbus_client_config = Config {
+        enabled: <span class="bool-val">true</span>,
+        unit_id: <span class="number">1</span>,
+        input_config: <span class="macro">vec!</span>[InputConfig {
+            fn_input: |msg| <span class="kw">match </span>msg.<span class="highlight focus">get_data</span>()<span class="question-mark">? </span>{
+                Messages::ValueWrite(val) =&gt; <span class="prelude-val">Some</span>(Request::WriteSingleRegister(<span class="number">0</span>, val <span class="kw">as </span>u16)),
+                Messages::ValueRead(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+            },
+            fn_on_success: |_data| <span class="macro">vec!</span>[],
+            fn_on_failure: Vec::new,
+        }],
+        periodic_config: <span class="macro">vec!</span>[PeriodicConfig {
+            period: Duration::from_secs(<span class="number">2</span>),
+            request: Request::ReadHoldingRegisters(<span class="number">0</span>, <span class="number">1</span>),
+            fn_on_success: |data| {
+                <span class="kw">let </span><span class="kw-2">mut </span>msgs = <span class="macro">vec!</span>[];
+                <span class="kw">if let </span>Response::U16(data) = data {
+                    msgs.push(Message::new_custom(Messages::ValueRead(data[<span class="number">0</span>] <span class="kw">as </span>f64)));
+                }
+                msgs
+            },
+            fn_on_failure: Vec::new,
+        }],
+        client_type: ClientType::Tcp(TcpClientType {
+            host: IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)),
+            port: <span class="number">5020</span>,
+        }),
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"modbus_tcp_client"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    ComponentExecutor::new(executor_config)
+        <span class="comment">// Периодическое генерирование сообщения для записи счетчика на сервер
+        </span>.add_cmp(cmp_inject_periodic::Cmp::new(cmp_inject_periodic::Config {
+            period: Duration::from_secs(<span class="number">2</span>),
+            fn_periodic: <span class="kw">move </span>|| {
+                <span class="kw">let </span>msg = Message::new_custom(Messages::ValueWrite(counter));
+                counter += <span class="number">1.0</span>;
+                <span class="macro">vec!</span>[msg]
+            },
+        }))
+        <span class="comment">// Клиент modbus
+        </span>.add_cmp(cmp_modbus_client::Cmp::new(modbus_client_config))
+        <span class="comment">// Вывод сообщений в лог
+        </span>.add_cmp(cmp_logger::Cmp::new(cmp_logger::Config {
+            level: Level::INFO,
+            header: <span class="string">""</span>.into(),
+        }))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[65,65],&quot;../../src/cmp_http_client/cmp_http_client.rs.html#74&quot;,&quot;line 74&quot;]]"><div class="scraped-example-title">examples/cmp_http_client/cmp_http_client.rs (<a href="../../src/cmp_http_client/cmp_http_client.rs.html#74">line 74</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
+<span>116</span>
+<span>117</span>
+<span>118</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::collections::HashMap;
+
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="kw">use </span>serde_json::from_str;
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_http_client::{<span class="self">self</span>, http_client_config},
+            cmp_inject_periodic, cmp_logger,
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Message, MsgDataBound},
+    };
+
+    <span class="comment">//------------------------------------------------------------------------------
+
+    </span><span class="attr">#[allow(clippy::enum_variant_names)]
+    #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">enum </span>Data {
+        HttpMethodsGetPeriodicRespone(HttpMethodsGet),
+        HttpMethodsGetOnEventResponse(HttpMethodsGet),
+        HttpMethodsGetOnEventRequest(()),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {}
+
+    <span class="comment">//------------------------------------------------------------------------------
+
+    </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">struct </span>HttpMethodsGet {
+        args: HashMap&lt;String, String&gt;,
+        headers: HashMap&lt;String, String&gt;,
+        origin: String,
+        url: String,
+    }
+
+    <span class="comment">//------------------------------------------------------------------------------
+
+    </span>tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::INFO)
+        .init();
+
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Data::HttpMethodsGetOnEventRequest(()));
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">"HTTP response"</span>.into(),
+    };
+
+    <span class="kw">let </span>http_config = http_client_config::Config::&lt;Data&gt; {
+        connection_config: http_client_config::ConnectionConfig {
+            base_url: Url::parse(<span class="string">"http://127.0.0.1:80"</span>)<span class="question-mark">?</span>,
+        },
+        requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
+            fn_input: |msg| {
+                <span class="kw">let </span>msg = msg.<span class="highlight focus">get_data</span>()<span class="question-mark">?</span>;
+                <span class="kw">match </span>msg {
+                    Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
+                        <span class="kw">let </span>param = http_client_config::HttpParam::Get(<span class="string">"get"</span>.to_string());
+                        <span class="prelude-val">Some</span>(param)
+                    }
+                    <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+                }
+            },
+            on_success: |body| {
+                <span class="kw">let </span>res = from_str::&lt;HttpMethodsGet&gt;(body)<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[Message::new_custom(
+                    Data::HttpMethodsGetOnEventResponse(res),
+                )])
+            },
+            on_failure: Vec::new,
+        }],
+        requests_periodic: <span class="macro">vec!</span>[http_client_config::RequestPeriodic {
+            period: Duration::from_secs(<span class="number">5</span>),
+            http_param: http_client_config::HttpParam::Get(<span class="string">"get"</span>.to_string()),
+            on_success: |body| {
+                <span class="kw">let </span>res = from_str::&lt;HttpMethodsGet&gt;(body)<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[Message::new_custom(
+                    Data::HttpMethodsGetPeriodicRespone(res),
+                )])
+            },
+            on_failure: Vec::new,
+        }],
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"http_client"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_http_client::Cmp::new(http_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div></div></details></div></details><section id="method.add_trace_item" class="method"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#50-52">source</a><h4 class="code-header">pub fn <a href="#method.add_trace_item" class="fn">add_trace_item</a>(&amp;mut self, id: &amp;<a class="struct" href="https://docs.rs/uuid/1.7.0/uuid/struct.Uuid.html" title="struct uuid::Uuid">Uuid</a>, name: &amp;str)</h4></section><details class="toggle method-toggle" open><summary><section id="method.contains_trace_item" class="method"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#58-60">source</a><h4 class="code-header">pub fn <a href="#method.contains_trace_item" class="fn">contains_trace_item</a>(&amp;self, id: &amp;<a class="struct" href="https://docs.rs/uuid/1.7.0/uuid/struct.Uuid.html" title="struct uuid::Uuid">Uuid</a>) -&gt; bool</h4></section></summary><div class="docblock"><p>Проверяем, что в трейсе сообщения присутсвует компонент с заданным id.</p>
+<p>Полезно для предотварщения зацикливания сообщений, чтобы данный компонент не обрабатывал
+сообщения, которые он же и сгенерировал</p>
+</div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Message%3CTData%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/msg_serde.rs.html#8-49">source</a><a href="#impl-Message%3CTData%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TData&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TData&gt;<div class="where">where
+    TData: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> + <a class="trait" href="trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.serialize" class="method"><a class="src rightside" href="../../src/rsiot/message/msg_serde.rs.html#27-35">source</a><h4 class="code-header">pub fn <a href="#method.serialize" class="fn">serialize</a>(&amp;self) -&gt; Result&lt;String, <a class="enum" href="enum.Error.html" title="enum rsiot::message::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Сериализация сообщений в json</p>
+</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-3"><a href="#scraped-examples-3">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example expanded" data-locs="[[[1,1],&quot;../../src/cmp_websocket_client/cmp_websocket_client.rs.html#31&quot;,&quot;line 31&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_client/cmp_websocket_client.rs (<a href="../../src/cmp_websocket_client/cmp_websocket_client.rs.html#31">line 31</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+</pre></div><pre class="rust"><code>    <span class="kw">fn </span>fn_input(msg: <span class="kw-2">&amp;</span>Message&lt;Data&gt;) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt; {
+        <span class="kw">let </span>text = msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+    }</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[24,24],&quot;../../src/cmp_redis_client_subscription/subscription.rs.html#50&quot;,&quot;line 50&quot;]]"><div class="scraped-example-title">examples/cmp_redis_client/subscription.rs (<a href="../../src/cmp_redis_client_subscription/subscription.rs.html#50">line 50</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_logger, cmp_redis_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    fmt().init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>redis_config = cmp_redis_client::Config {
+        url: Url::parse(<span class="string">"redis://127.0.0.1:6379"</span>)<span class="question-mark">?</span>,
+        subscription_channel: ExampleMessageChannel::Output,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>channel = ExampleMessageChannel::Output;
+            <span class="kw">let </span>key = msg.key.clone();
+            <span class="kw">let </span>value = msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[cmp_redis_client::ConfigFnInputItem {
+                channel,
+                key,
+                value,
+            }]))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"redis-client-subscription"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_redis_client::Cmp::new(redis_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[22,22],&quot;../../src/cmp_websocket_server/cmp_websocket_server.rs.html#33&quot;,&quot;line 33&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_server.rs (<a href="../../src/cmp_websocket_server/cmp_websocket_server.rs.html#33">line 33</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_server},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt()
+        .with_env_filter(<span class="string">"trace,tokio_tungstenite=debug,tungstenite=debug"</span>)
+        .init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>ws_server_config = cmp_websocket_server::Config {
+        port: <span class="number">8021</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">10</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"rsiot-websocket-server"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_websocket_server::Cmp::new(ws_server_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[25,25],&quot;../../src/cmp_redis_client_publication/publication.rs.html#34&quot;,&quot;line 34&quot;]]"><div class="scraped-example-title">examples/cmp_redis_client/publication.rs (<a href="../../src/cmp_redis_client_publication/publication.rs.html#34">line 34</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_redis_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    fmt().init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>redis_config = cmp_redis_client::Config {
+        url: Url::parse(<span class="string">"redis://127.0.0.1:6379"</span>)<span class="question-mark">?</span>,
+        subscription_channel: ExampleMessageChannel::Output,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>channel = ExampleMessageChannel::Output;
+            <span class="kw">let </span>key = msg.key.clone();
+            <span class="kw">let </span>value = msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[cmp_redis_client::ConfigFnInputItem {
+                channel,
+                key,
+                value,
+            }]))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter <span class="kw">as </span>f64));
+
+            counter += <span class="number">1</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"redis-client-publication"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_redis_client::Cmp::new(redis_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[41,41],&quot;../../src/cmp_http_server/cmp_http_server.rs.html#55&quot;,&quot;line 55&quot;]]"><div class="scraped-example-title">examples/cmp_http_server/cmp_http_server.rs (<a href="../../src/cmp_http_server/cmp_http_server.rs.html#55">line 55</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span><span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tokio::{runtime, time::Duration};
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::filter::LevelFilter;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_http_server, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Message, MsgDataBound},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">enum </span>Data {
+        Msg0(f64),
+        Msg1(f64),
+        MsgSet(f64),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {}
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::DEBUG)
+        .init();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>http_server_config = cmp_http_server::Config {
+        port: <span class="number">8011</span>,
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::&lt;Data&gt;::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Data&gt;| {
+            <span class="kw">let </span>text = msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+    };
+
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg1 = Message::new_custom(Data::Msg0(counter));
+            <span class="kw">let </span>msg2 = Message::new_custom(Data::Msg1(counter * <span class="number">2.0</span>));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg1, msg2]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"http-server"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
+    </span>runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            ComponentExecutor::new(executor_config)
+                .add_cmp(cmp_logger::Cmp::new(logger_config))
+                .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                .add_cmp(cmp_http_server::Cmp::new(http_server_config))
+                .wait_result()
+                .<span class="kw">await</span><span class="question-mark">?</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span>runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            <span class="kw">let </span>local_set = LocalSet::new();
+
+            local_set.spawn_local(<span class="kw">async move </span>{
+                ComponentExecutor::new(executor_config)
+                    .add_cmp(cmp_logger::Cmp::new(logger_config))
+                    .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                    .add_cmp(cmp_http_server::Cmp::new(http_server_config))
+                    .wait_result()
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+            });
+
+            local_set.<span class="kw">await</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.deserialize" class="method"><a class="src rightside" href="../../src/rsiot/message/msg_serde.rs.html#39-48">source</a><h4 class="code-header">pub fn <a href="#method.deserialize" class="fn">deserialize</a>(text: &amp;str) -&gt; Result&lt;Self, <a class="enum" href="enum.Error.html" title="enum rsiot::message::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Десериализация сообщений из json</p>
+</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-4"><a href="#scraped-examples-4">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[5,5],&quot;../../src/cmp_websocket_client/cmp_websocket_client.rs.html#40&quot;,&quot;line 40&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_client/cmp_websocket_client.rs (<a href="../../src/cmp_websocket_client/cmp_websocket_client.rs.html#40">line 40</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button>    <span class="kw">fn </span>fn_output(text: <span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;Data&gt;&gt;&gt;&gt; {
+        <span class="comment">// сообщение tick ...
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(val) = parse_tick(text) {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[val]));
+        }
+        <span class="kw">let </span>msg = <span class="highlight focus">Message::deserialize</span>(text)<span class="question-mark">?</span>;
+        <span class="kw">let </span>msg = <span class="kw">match </span>msg.get_data() {
+            <span class="prelude-val">Some</span>(msg) =&gt; msg,
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        };
+        <span class="kw">match </span>msg {
+            Data::Send(val) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[Message::new_custom(Data::Recv(val))])),
+            Data::Recv(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+            Data::Tick(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        }
+    }</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[32,32],&quot;../../src/cmp_redis_client_subscription/subscription.rs.html#58&quot;,&quot;line 58&quot;]]"><div class="scraped-example-title">examples/cmp_redis_client/subscription.rs (<a href="../../src/cmp_redis_client_subscription/subscription.rs.html#58">line 58</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_logger, cmp_redis_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    fmt().init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>redis_config = cmp_redis_client::Config {
+        url: Url::parse(<span class="string">"redis://127.0.0.1:6379"</span>)<span class="question-mark">?</span>,
+        subscription_channel: ExampleMessageChannel::Output,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>channel = ExampleMessageChannel::Output;
+            <span class="kw">let </span>key = msg.key.clone();
+            <span class="kw">let </span>value = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[cmp_redis_client::ConfigFnInputItem {
+                channel,
+                key,
+                value,
+            }]))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::deserialize</span>(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"redis-client-subscription"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_redis_client::Cmp::new(redis_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[26,26],&quot;../../src/cmp_websocket_server/cmp_websocket_server.rs.html#37&quot;,&quot;line 37&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_server.rs (<a href="../../src/cmp_websocket_server/cmp_websocket_server.rs.html#37">line 37</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_server},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt()
+        .with_env_filter(<span class="string">"trace,tokio_tungstenite=debug,tungstenite=debug"</span>)
+        .init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>ws_server_config = cmp_websocket_server::Config {
+        port: <span class="number">8021</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::deserialize</span>(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">10</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"rsiot-websocket-server"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_websocket_server::Cmp::new(ws_server_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[33,33],&quot;../../src/cmp_redis_client_publication/publication.rs.html#42&quot;,&quot;line 42&quot;]]"><div class="scraped-example-title">examples/cmp_redis_client/publication.rs (<a href="../../src/cmp_redis_client_publication/publication.rs.html#42">line 42</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_redis_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    fmt().init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>redis_config = cmp_redis_client::Config {
+        url: Url::parse(<span class="string">"redis://127.0.0.1:6379"</span>)<span class="question-mark">?</span>,
+        subscription_channel: ExampleMessageChannel::Output,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>channel = ExampleMessageChannel::Output;
+            <span class="kw">let </span>key = msg.key.clone();
+            <span class="kw">let </span>value = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[cmp_redis_client::ConfigFnInputItem {
+                channel,
+                key,
+                value,
+            }]))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::deserialize</span>(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter <span class="kw">as </span>f64));
+
+            counter += <span class="number">1</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"redis-client-publication"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(cmp_logger::Cmp::new(logger_config))
+        .add_cmp(cmp_redis_client::Cmp::new(redis_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[37,37],&quot;../../src/cmp_http_server/cmp_http_server.rs.html#51&quot;,&quot;line 51&quot;]]"><div class="scraped-example-title">examples/cmp_http_server/cmp_http_server.rs (<a href="../../src/cmp_http_server/cmp_http_server.rs.html#51">line 51</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span><span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tokio::{runtime, time::Duration};
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::filter::LevelFilter;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_http_server, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Message, MsgDataBound},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">enum </span>Data {
+        Msg0(f64),
+        Msg1(f64),
+        MsgSet(f64),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {}
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::DEBUG)
+        .init();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>http_server_config = cmp_http_server::Config {
+        port: <span class="number">8011</span>,
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::&lt;Data&gt;::deserialize</span>(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Data&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+    };
+
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg1 = Message::new_custom(Data::Msg0(counter));
+            <span class="kw">let </span>msg2 = Message::new_custom(Data::Msg1(counter * <span class="number">2.0</span>));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg1, msg2]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"http-server"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
+    </span>runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            ComponentExecutor::new(executor_config)
+                .add_cmp(cmp_logger::Cmp::new(logger_config))
+                .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                .add_cmp(cmp_http_server::Cmp::new(http_server_config))
+                .wait_result()
+                .<span class="kw">await</span><span class="question-mark">?</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span>runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            <span class="kw">let </span>local_set = LocalSet::new();
+
+            local_set.spawn_local(<span class="kw">async move </span>{
+                ComponentExecutor::new(executor_config)
+                    .add_cmp(cmp_logger::Cmp::new(logger_config))
+                    .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                    .add_cmp(cmp_http_server::Cmp::new(http_server_config))
+                    .wait_result()
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+            });
+
+            local_set.<span class="kw">await</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div></div></details></div></details></div></details></div><h2 id="trait-implementations" class="section-header">Trait Implementations<a href="#trait-implementations" class="anchor">§</a></h2><div id="trait-implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Clone-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#impl-Clone-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom: Clone&gt; Clone for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.clone" class="method trait-impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#method.clone" class="anchor">§</a><h4 class="code-header">fn <a class="fn">clone</a>(&amp;self) -&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;</h4></section></summary><div class='docblock'>Returns a copy of the value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.clone_from" class="method trait-impl"><span class="since rightside" title="Stable since Rust version 1.0.0">1.0.0</span><a href="#method.clone_from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">clone_from</a>(&amp;mut self, source: &amp;Self)</h4></section></summary><div class='docblock'>Performs copy-assignment from <code>source</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Debug-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#impl-Debug-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom: Debug&gt; Debug for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#method.fmt" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt</a>(&amp;self, f: &amp;mut Formatter&lt;'_&gt;) -&gt; Result</h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;'de, TCustom&gt; <a class="trait" href="trait.Deserialize.html" title="trait rsiot::message::Deserialize">Deserialize</a>&lt;'de&gt; for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: <a class="trait" href="trait.Deserialize.html" title="trait rsiot::message::Deserialize">Deserialize</a>&lt;'de&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.deserialize-1" class="method trait-impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#method.deserialize-1" class="anchor">§</a><h4 class="code-header">fn <a href="trait.Deserialize.html#tymethod.deserialize" class="fn">deserialize</a>&lt;__D&gt;(__deserializer: __D) -&gt; Result&lt;Self, __D::<a class="associatedtype" href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#associatedtype.Error" title="type serde::de::Deserializer::Error">Error</a>&gt;<div class="where">where
+    __D: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Deserializer</a>&lt;'de&gt;,</div></h4></section></summary><div class='docblock'>Deserialize this value from the given Serde deserializer. <a href="trait.Deserialize.html#tymethod.deserialize">Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-PartialEq-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#impl-PartialEq-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom: PartialEq&gt; PartialEq for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.eq" class="method trait-impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#method.eq" class="anchor">§</a><h4 class="code-header">fn <a class="fn">eq</a>(&amp;self, other: &amp;<a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;) -&gt; bool</h4></section></summary><div class='docblock'>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used
+by <code>==</code>.</div></details><details class="toggle method-toggle" open><summary><section id="method.ne" class="method trait-impl"><span class="since rightside" title="Stable since Rust version 1.0.0">1.0.0</span><a href="#method.ne" class="anchor">§</a><h4 class="code-header">fn <a class="fn">ne</a>(&amp;self, other: &amp;Rhs) -&gt; bool</h4></section></summary><div class='docblock'>This method tests for <code>!=</code>. The default implementation is almost always
+sufficient, and should not be overridden without very good reason.</div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Serialize-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#impl-Serialize-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; <a class="trait" href="trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a> for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: <a class="trait" href="trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.serialize-1" class="method trait-impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#method.serialize-1" class="anchor">§</a><h4 class="code-header">fn <a href="trait.Serialize.html#tymethod.serialize" class="fn">serialize</a>&lt;__S&gt;(&amp;self, __serializer: __S) -&gt; Result&lt;__S::<a class="associatedtype" href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, __S::<a class="associatedtype" href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt;<div class="where">where
+    __S: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html" title="trait serde::ser::Serializer">Serializer</a>,</div></h4></section></summary><div class='docblock'>Serialize this value into the given Serde serializer. <a href="trait.Serialize.html#tymethod.serialize">Read more</a></div></details></div></details><section id="impl-StructuralPartialEq-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../src/rsiot/message/message.rs.html#10">source</a><a href="#impl-StructuralPartialEq-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; StructuralPartialEq for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;</h3></section></div><h2 id="synthetic-implementations" class="section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor">§</a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-Message%3CTCustom%3E" class="impl"><a href="#impl-RefUnwindSafe-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; RefUnwindSafe for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: RefUnwindSafe,</div></h3></section><section id="impl-Send-for-Message%3CTCustom%3E" class="impl"><a href="#impl-Send-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; Send for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: Send,</div></h3></section><section id="impl-Sync-for-Message%3CTCustom%3E" class="impl"><a href="#impl-Sync-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; Sync for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: Sync,</div></h3></section><section id="impl-Unpin-for-Message%3CTCustom%3E" class="impl"><a href="#impl-Unpin-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; Unpin for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: Unpin,</div></h3></section><section id="impl-UnwindSafe-for-Message%3CTCustom%3E" class="impl"><a href="#impl-UnwindSafe-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom&gt; UnwindSafe for <a class="struct" href="struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
+    TCustom: UnwindSafe,</div></h3></section></div><h2 id="blanket-implementations" class="section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor">§</a></h2><div id="blanket-implementations-list"><details class="toggle implementors-toggle"><summary><section id="impl-Any-for-T" class="impl"><a href="#impl-Any-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Any for T<div class="where">where
+    T: 'static + ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl"><a href="#method.type_id" class="anchor">§</a><h4 class="code-header">fn <a class="fn">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-T" class="impl"><a href="#impl-Borrow%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<div class="where">where
+    T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl"><a href="#method.borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-T" class="impl"><a href="#impl-BorrowMut%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<div class="where">where
+    T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl"><a href="#method.borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Conv-for-T" class="impl"><a href="#impl-Conv-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Conv for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.conv" class="method trait-impl"><a href="#method.conv" class="anchor">§</a><h4 class="code-header">fn <a class="fn">conv</a>&lt;T&gt;(self) -&gt; T<div class="where">where
+    Self: Into&lt;T&gt;,</div></h4></section></summary><div class='docblock'>Converts <code>self</code> into <code>T</code> using <code>Into&lt;T&gt;</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FmtForward-for-T" class="impl"><a href="#impl-FmtForward-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; FmtForward for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.fmt_binary" class="method trait-impl"><a href="#method.fmt_binary" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_binary</a>(self) -&gt; FmtBinary&lt;Self&gt;<div class="where">where
+    Self: Binary,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Binary</code> implementation when <code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_display" class="method trait-impl"><a href="#method.fmt_display" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_display</a>(self) -&gt; FmtDisplay&lt;Self&gt;<div class="where">where
+    Self: Display,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Display</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_lower_exp" class="method trait-impl"><a href="#method.fmt_lower_exp" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_lower_exp</a>(self) -&gt; FmtLowerExp&lt;Self&gt;<div class="where">where
+    Self: LowerExp,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>LowerExp</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_lower_hex" class="method trait-impl"><a href="#method.fmt_lower_hex" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_lower_hex</a>(self) -&gt; FmtLowerHex&lt;Self&gt;<div class="where">where
+    Self: LowerHex,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>LowerHex</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_octal" class="method trait-impl"><a href="#method.fmt_octal" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_octal</a>(self) -&gt; FmtOctal&lt;Self&gt;<div class="where">where
+    Self: Octal,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Octal</code> implementation when <code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_pointer" class="method trait-impl"><a href="#method.fmt_pointer" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_pointer</a>(self) -&gt; FmtPointer&lt;Self&gt;<div class="where">where
+    Self: Pointer,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Pointer</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_upper_exp" class="method trait-impl"><a href="#method.fmt_upper_exp" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_upper_exp</a>(self) -&gt; FmtUpperExp&lt;Self&gt;<div class="where">where
+    Self: UpperExp,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>UpperExp</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_upper_hex" class="method trait-impl"><a href="#method.fmt_upper_hex" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_upper_hex</a>(self) -&gt; FmtUpperHex&lt;Self&gt;<div class="where">where
+    Self: UpperHex,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>UpperHex</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_list" class="method trait-impl"><a href="#method.fmt_list" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_list</a>(self) -&gt; FmtList&lt;Self&gt;<div class="where">where
+    &amp;'a Self: for&lt;'a&gt; IntoIterator,</div></h4></section></summary><div class='docblock'>Formats each item in a sequence. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-T" class="impl"><a href="#impl-From%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.from" class="method trait-impl"><a href="#method.from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FromBase64-for-T" class="impl"><a href="#impl-FromBase64-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; FromBase64 for T<div class="where">where
+    T: for&lt;'de&gt; <a class="trait" href="trait.Deserialize.html" title="trait rsiot::message::Deserialize">Deserialize</a>&lt;'de&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.from_base64" class="method trait-impl"><a href="#method.from_base64" class="anchor">§</a><h4 class="code-header">fn <a class="fn">from_base64</a>&lt;Input&gt;(raw: &amp;Input) -&gt; Result&lt;T, Error&gt;<div class="where">where
+    Input: AsRef&lt;[u8]&gt; + ?Sized,</div></h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FromRef%3CT%3E-for-T" class="impl"><a href="#impl-FromRef%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; FromRef&lt;T&gt; for T<div class="where">where
+    T: Clone,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.from_ref" class="method trait-impl"><a href="#method.from_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">from_ref</a>(input: &amp;T) -&gt; T</h4></section></summary><div class='docblock'>Converts to this type from a reference to the input type.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Instrument-for-T" class="impl"><a href="#impl-Instrument-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Instrument for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.instrument" class="method trait-impl"><a href="#method.instrument" class="anchor">§</a><h4 class="code-header">fn <a class="fn">instrument</a>(self, span: Span) -&gt; Instrumented&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the provided [<code>Span</code>], returning an
+<code>Instrumented</code> wrapper. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.in_current_span" class="method trait-impl"><a href="#method.in_current_span" class="anchor">§</a><h4 class="code-header">fn <a class="fn">in_current_span</a>(self) -&gt; Instrumented&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the <a href="super::Span::current()">current</a> <a href="crate::Span"><code>Span</code></a>, returning an
+<code>Instrumented</code> wrapper. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-T" class="impl"><a href="#impl-Into%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<div class="where">where
+    U: From&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.into" class="method trait-impl"><a href="#method.into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Pipe-for-T" class="impl"><a href="#impl-Pipe-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Pipe for T<div class="where">where
+    T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.pipe" class="method trait-impl"><a href="#method.pipe" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe</a>&lt;R&gt;(self, func: impl FnOnce(Self) -&gt; R) -&gt; R<div class="where">where
+    Self: Sized,</div></h4></section></summary><div class='docblock'>Pipes by value. This is generally the method you want to use. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_ref" class="method trait-impl"><a href="#method.pipe_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_ref</a>&lt;'a, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a Self) -&gt; R) -&gt; R<div class="where">where
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code> and passes that borrow into the pipe function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_ref_mut" class="method trait-impl"><a href="#method.pipe_ref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_ref_mut</a>&lt;'a, R&gt;(&amp;'a mut self, func: impl FnOnce(&amp;'a mut Self) -&gt; R) -&gt; R<div class="where">where
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code> and passes that borrow into the pipe function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_borrow" class="method trait-impl"><a href="#method.pipe_borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_borrow</a>&lt;'a, B, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a B) -&gt; R) -&gt; R<div class="where">where
+    Self: Borrow&lt;B&gt;,
+    B: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code>, then passes <code>self.borrow()</code> into the pipe function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_borrow_mut" class="method trait-impl"><a href="#method.pipe_borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_borrow_mut</a>&lt;'a, B, R&gt;(
+    &amp;'a mut self,
+    func: impl FnOnce(&amp;'a mut B) -&gt; R
+) -&gt; R<div class="where">where
+    Self: BorrowMut&lt;B&gt;,
+    B: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code>, then passes <code>self.borrow_mut()</code> into the pipe
+function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_as_ref" class="method trait-impl"><a href="#method.pipe_as_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_as_ref</a>&lt;'a, U, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a U) -&gt; R) -&gt; R<div class="where">where
+    Self: AsRef&lt;U&gt;,
+    U: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code>, then passes <code>self.as_ref()</code> into the pipe function.</div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_as_mut" class="method trait-impl"><a href="#method.pipe_as_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_as_mut</a>&lt;'a, U, R&gt;(&amp;'a mut self, func: impl FnOnce(&amp;'a mut U) -&gt; R) -&gt; R<div class="where">where
+    Self: AsMut&lt;U&gt;,
+    U: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code>, then passes <code>self.as_mut()</code> into the pipe
+function.</div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_deref" class="method trait-impl"><a href="#method.pipe_deref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_deref</a>&lt;'a, T, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a T) -&gt; R) -&gt; R<div class="where">where
+    Self: Deref&lt;Target = T&gt;,
+    T: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code>, then passes <code>self.deref()</code> into the pipe function.</div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_deref_mut" class="method trait-impl"><a href="#method.pipe_deref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_deref_mut</a>&lt;'a, T, R&gt;(
+    &amp;'a mut self,
+    func: impl FnOnce(&amp;'a mut T) -&gt; R
+) -&gt; R<div class="where">where
+    Self: DerefMut&lt;Target = T&gt; + Deref,
+    T: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code>, then passes <code>self.deref_mut()</code> into the pipe
+function.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Same-for-T" class="impl"><a class="src rightside" href="https://docs.rs/typenum/1.17.0/src/typenum/type_operators.rs.html#34">source</a><a href="#impl-Same-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://docs.rs/typenum/1.17.0/typenum/type_operators/trait.Same.html" title="trait typenum::type_operators::Same">Same</a> for T</h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Output" class="associatedtype trait-impl"><a href="#associatedtype.Output" class="anchor">§</a><h4 class="code-header">type <a href="https://docs.rs/typenum/1.17.0/typenum/type_operators/trait.Same.html#associatedtype.Output" class="associatedtype">Output</a> = T</h4></section></summary><div class='docblock'>Should always be <code>Self</code></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-SignWithKey%3CString%3E-for-C" class="impl"><a href="#impl-SignWithKey%3CString%3E-for-C" class="anchor">§</a><h3 class="code-header">impl&lt;C&gt; SignWithKey&lt;String&gt; for C<div class="where">where
+    C: ToBase64,</div></h3></section></summary><div class="impl-items"><section id="method.sign_with_key" class="method trait-impl"><a href="#method.sign_with_key" class="anchor">§</a><h4 class="code-header">fn <a class="fn">sign_with_key</a>(self, key: &amp;impl SigningAlgorithm) -&gt; Result&lt;String, Error&gt;</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Tap-for-T" class="impl"><a href="#impl-Tap-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Tap for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.tap" class="method trait-impl"><a href="#method.tap" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap</a>(self, func: impl FnOnce(&amp;Self)) -&gt; Self</h4></section></summary><div class='docblock'>Immutable access to a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_mut" class="method trait-impl"><a href="#method.tap_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_mut</a>(self, func: impl FnOnce(&amp;mut Self)) -&gt; Self</h4></section></summary><div class='docblock'>Mutable access to a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow" class="method trait-impl"><a href="#method.tap_borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow</a>&lt;B&gt;(self, func: impl FnOnce(&amp;B)) -&gt; Self<div class="where">where
+    Self: Borrow&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Immutable access to the <code>Borrow&lt;B&gt;</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow_mut" class="method trait-impl"><a href="#method.tap_borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow_mut</a>&lt;B&gt;(self, func: impl FnOnce(&amp;mut B)) -&gt; Self<div class="where">where
+    Self: BorrowMut&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Mutable access to the <code>BorrowMut&lt;B&gt;</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref" class="method trait-impl"><a href="#method.tap_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref</a>&lt;R&gt;(self, func: impl FnOnce(&amp;R)) -&gt; Self<div class="where">where
+    Self: AsRef&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Immutable access to the <code>AsRef&lt;R&gt;</code> view of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref_mut" class="method trait-impl"><a href="#method.tap_ref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref_mut</a>&lt;R&gt;(self, func: impl FnOnce(&amp;mut R)) -&gt; Self<div class="where">where
+    Self: AsMut&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Mutable access to the <code>AsMut&lt;R&gt;</code> view of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref" class="method trait-impl"><a href="#method.tap_deref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref</a>&lt;T&gt;(self, func: impl FnOnce(&amp;T)) -&gt; Self<div class="where">where
+    Self: Deref&lt;Target = T&gt;,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Immutable access to the <code>Deref::Target</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref_mut" class="method trait-impl"><a href="#method.tap_deref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref_mut</a>&lt;T&gt;(self, func: impl FnOnce(&amp;mut T)) -&gt; Self<div class="where">where
+    Self: DerefMut&lt;Target = T&gt; + Deref,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Mutable access to the <code>Deref::Target</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_dbg" class="method trait-impl"><a href="#method.tap_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_dbg</a>(self, func: impl FnOnce(&amp;Self)) -&gt; Self</h4></section></summary><div class='docblock'>Calls <code>.tap()</code> only in debug builds, and is erased in release builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_mut_dbg" class="method trait-impl"><a href="#method.tap_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_mut_dbg</a>(self, func: impl FnOnce(&amp;mut Self)) -&gt; Self</h4></section></summary><div class='docblock'>Calls <code>.tap_mut()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow_dbg" class="method trait-impl"><a href="#method.tap_borrow_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow_dbg</a>&lt;B&gt;(self, func: impl FnOnce(&amp;B)) -&gt; Self<div class="where">where
+    Self: Borrow&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_borrow()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow_mut_dbg" class="method trait-impl"><a href="#method.tap_borrow_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow_mut_dbg</a>&lt;B&gt;(self, func: impl FnOnce(&amp;mut B)) -&gt; Self<div class="where">where
+    Self: BorrowMut&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_borrow_mut()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref_dbg" class="method trait-impl"><a href="#method.tap_ref_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref_dbg</a>&lt;R&gt;(self, func: impl FnOnce(&amp;R)) -&gt; Self<div class="where">where
+    Self: AsRef&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_ref()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref_mut_dbg" class="method trait-impl"><a href="#method.tap_ref_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref_mut_dbg</a>&lt;R&gt;(self, func: impl FnOnce(&amp;mut R)) -&gt; Self<div class="where">where
+    Self: AsMut&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_ref_mut()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref_dbg" class="method trait-impl"><a href="#method.tap_deref_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref_dbg</a>&lt;T&gt;(self, func: impl FnOnce(&amp;T)) -&gt; Self<div class="where">where
+    Self: Deref&lt;Target = T&gt;,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_deref()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref_mut_dbg" class="method trait-impl"><a href="#method.tap_deref_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref_mut_dbg</a>&lt;T&gt;(self, func: impl FnOnce(&amp;mut T)) -&gt; Self<div class="where">where
+    Self: DerefMut&lt;Target = T&gt; + Deref,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_deref_mut()</code> only in debug builds, and is erased in release
+builds.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-ToBase64-for-T" class="impl"><a href="#impl-ToBase64-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; ToBase64 for T<div class="where">where
+    T: <a class="trait" href="trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a>,</div></h3></section></summary><div class="impl-items"><section id="method.to_base64" class="method trait-impl"><a href="#method.to_base64" class="anchor">§</a><h4 class="code-header">fn <a class="fn">to_base64</a>(&amp;self) -&gt; Result&lt;Cow&lt;'_, str&gt;, Error&gt;</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-ToOwned-for-T" class="impl"><a href="#impl-ToOwned-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; ToOwned for T<div class="where">where
+    T: Clone,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Owned" class="associatedtype trait-impl"><a href="#associatedtype.Owned" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Owned</a> = T</h4></section></summary><div class='docblock'>The resulting type after obtaining ownership.</div></details><details class="toggle method-toggle" open><summary><section id="method.to_owned" class="method trait-impl"><a href="#method.to_owned" class="anchor">§</a><h4 class="code-header">fn <a class="fn">to_owned</a>(&amp;self) -&gt; T</h4></section></summary><div class='docblock'>Creates owned data from borrowed data, usually by cloning. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.clone_into" class="method trait-impl"><a href="#method.clone_into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">clone_into</a>(&amp;self, target: &amp;mut T)</h4></section></summary><div class='docblock'>Uses borrowed data to replace owned data, usually by cloning. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryConv-for-T" class="impl"><a href="#impl-TryConv-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; TryConv for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.try_conv" class="method trait-impl"><a href="#method.try_conv" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_conv</a>&lt;T&gt;(self) -&gt; Result&lt;T, Self::Error&gt;<div class="where">where
+    Self: TryInto&lt;T&gt;,</div></h4></section></summary><div class='docblock'>Attempts to convert <code>self</code> into <code>T</code> using <code>TryInto&lt;T&gt;</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-T" class="impl"><a href="#impl-TryFrom%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<div class="where">where
+    U: Into&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl"><a href="#associatedtype.Error" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl"><a href="#method.try_from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-T" class="impl"><a href="#impl-TryInto%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<div class="where">where
+    U: TryFrom&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl"><a href="#associatedtype.Error-1" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VZip%3CV%3E-for-T" class="impl"><a href="#impl-VZip%3CV%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;V, T&gt; VZip&lt;V&gt; for T<div class="where">where
+    V: MultiLane&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.vzip" class="method trait-impl"><a href="#method.vzip" class="anchor">§</a><h4 class="code-header">fn <a class="fn">vzip</a>(self) -&gt; V</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-WithSubscriber-for-T" class="impl"><a href="#impl-WithSubscriber-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; WithSubscriber for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.with_subscriber" class="method trait-impl"><a href="#method.with_subscriber" class="anchor">§</a><h4 class="code-header">fn <a class="fn">with_subscriber</a>&lt;S&gt;(self, subscriber: S) -&gt; WithDispatch&lt;Self&gt;<div class="where">where
+    S: Into&lt;Dispatch&gt;,</div></h4></section></summary><div class='docblock'>Attaches the provided <a href="super::Subscriber"><code>Subscriber</code></a> to this type, returning a
+[<code>WithDispatch</code>] wrapper. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.with_current_subscriber" class="method trait-impl"><a href="#method.with_current_subscriber" class="anchor">§</a><h4 class="code-header">fn <a class="fn">with_current_subscriber</a>(self) -&gt; WithDispatch&lt;Self&gt;</h4></section></summary><div class='docblock'>Attaches the current <a href="crate::dispatcher#setting-the-default-subscriber">default</a> <a href="super::Subscriber"><code>Subscriber</code></a> to this type, returning a
+[<code>WithDispatch</code>] wrapper. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Within%3CG2%3E-for-G1" class="impl"><a href="#impl-Within%3CG2%3E-for-G1" class="anchor">§</a><h3 class="code-header">impl&lt;G1, G2&gt; Within&lt;G2&gt; for G1<div class="where">where
+    G2: Contains&lt;G1&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.is_within" class="method trait-impl"><a href="#method.is_within" class="anchor">§</a><h4 class="code-header">fn <a class="fn">is_within</a>(&amp;self, b: &amp;G2) -&gt; bool</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Within%3CG2%3E-for-G1-1" class="impl"><a href="#impl-Within%3CG2%3E-for-G1-1" class="anchor">§</a><h3 class="code-header">impl&lt;G1, G2&gt; Within&lt;G2&gt; for G1<div class="where">where
+    G2: Contains&lt;G1&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.is_within-1" class="method trait-impl"><a href="#method.is_within-1" class="anchor">§</a><h4 class="code-header">fn <a class="fn">is_within</a>(&amp;self, b: &amp;G2) -&gt; bool</h4></section></div></details><section id="impl-DeserializeOwned-for-T" class="impl"><a class="src rightside" href="https://docs.rs/serde/1.0.197/src/serde/de/mod.rs.html#608">source</a><a href="#impl-DeserializeOwned-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> for T<div class="where">where
+    T: for&lt;'de&gt; <a class="trait" href="trait.Deserialize.html" title="trait rsiot::message::Deserialize">Deserialize</a>&lt;'de&gt;,</div></h3></section></div></section></div></main></body></html>

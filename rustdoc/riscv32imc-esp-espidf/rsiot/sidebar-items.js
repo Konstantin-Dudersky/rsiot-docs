@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["components","doc","executor","message"]};
+window.SIDEBAR_ITEMS = {"mod":["components","executor","message"]};

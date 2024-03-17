@@ -1,4 +1,4 @@
-Создание нового проекта для ESP32
+# Создание нового проекта для ESP32
 
 ```bash
 cargo new project_name
@@ -10,7 +10,8 @@ cargo new project_name
 - rsiot/build.rs
 - rsiot/rust-toolchain.toml
 - rsiot/rust-toolchain.toml
-  Добавить в Config.toml:
+
+Добавить в Config.toml:
 
 ```toml
 [build-dependencies]

@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"rsiot":[["impl&lt;TMessage&gt; Deref for <a class=\"struct\" href=\"rsiot/components/cmp_modbus_client/struct.ConfigNewType.html\" title=\"struct rsiot::components::cmp_modbus_client::ConfigNewType\">ConfigNewType</a>&lt;TMessage&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

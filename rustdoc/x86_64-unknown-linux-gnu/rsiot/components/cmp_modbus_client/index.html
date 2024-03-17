@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Опрос устройств Modbus, используя библиотеку tokio-modbus"><title>rsiot::components::cmp_modbus_client - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.77</span></h2></div><h2 class="location"><a href="#">Module cmp_modbus_client</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Aliases</a></li></ul></section><h2><a href="../index.html">In rsiot::components</a></h2></div></nav><div class="sidebar-resizer"></div>
+    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a>::<wbr><a class="mod" href="#">cmp_modbus_client</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/components/cmp_modbus_client/mod.rs.html#1-39">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Опрос устройств Modbus, используя библиотеку
+<a href="https://crates.io/crates/tokio-modbus">tokio-modbus</a></p>
+<p>Ссылки:</p>
+<ul>
+<li>
+<p><a href="https://docs.rs/rsiot-modbus-client/latest/">Документация docs.rs</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Konstantin-Dudersky/rsiot/tree/main/rsiot-modbus-client">Репозиторий
+GitHub</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Konstantin-Dudersky/rsiot/tree/main/rsiot-modbus-client/examples">Примеры</a></p>
+</li>
+</ul>
+<h3 id="Тестирование"><a class="doc-anchor" href="#Тестирование">§</a>Тестирование</h3>
+<p>Готовый docker-образ для тестов - <a href="https://github.com/cybcon/modbus-server">GitHub</a>.</p>
+<p>Запускается через docker compose в корне. <a href="../doc/development.md">Инструкция</a>.</p>
+<h2 id="Пример"><a class="doc-anchor" href="#Пример">§</a>Пример</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="doccomment">//! Простейший пример использования клиента Modbus
+//!
+//! Для тестирования можно использовать образ docker oitc/modbus-server
+//!
+//! Выполняется две операции:
+//! - раз в 2 секунды на сервер в регистр 0 записывается значение счетчика (`input_config`)
+//! - раз в 2 секунды считывается значение регистра 0 (`periodic_config`) и отправляется в логгер
+//!
+//! Запуск:
+//!
+//! ```bash
+//! cargo run -p rsiot --example cmp_modbus_client_simulator --features "cmp_modbus_client"
+//! ```
+
+</span><span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
+#[tokio::main]
+</span><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::net::{IpAddr, Ipv4Addr};
+
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_inject_periodic, cmp_logger,
+            cmp_modbus_client::{<span class="self">self</span>, <span class="kw-2">*</span>},
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{Message, MsgDataBound},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">pub enum </span>Messages {
+        ValueWrite(f64),
+        ValueRead(f64),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Messages {}
+
+    <span class="comment">// логгирование
+    </span>fmt().init();
+
+    <span class="comment">// Конфигурация modbus клиента
+    </span><span class="kw">let </span>modbus_client_config = Config {
+        enabled: <span class="bool-val">true</span>,
+        unit_id: <span class="number">1</span>,
+        input_config: <span class="macro">vec!</span>[InputConfig {
+            fn_input: |msg| <span class="kw">match </span>msg.get_data()<span class="question-mark">? </span>{
+                Messages::ValueWrite(val) =&gt; <span class="prelude-val">Some</span>(Request::WriteSingleRegister(<span class="number">0</span>, val <span class="kw">as </span>u16)),
+                Messages::ValueRead(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+            },
+            fn_on_success: |_data| <span class="macro">vec!</span>[],
+            fn_on_failure: Vec::new,
+        }],
+        periodic_config: <span class="macro">vec!</span>[PeriodicConfig {
+            period: Duration::from_secs(<span class="number">2</span>),
+            request: Request::ReadHoldingRegisters(<span class="number">0</span>, <span class="number">1</span>),
+            fn_on_success: |data| {
+                <span class="kw">let </span><span class="kw-2">mut </span>msgs = <span class="macro">vec!</span>[];
+                <span class="kw">if let </span>Response::U16(data) = data {
+                    msgs.push(Message::new_custom(Messages::ValueRead(data[<span class="number">0</span>] <span class="kw">as </span>f64)));
+                }
+                msgs
+            },
+            fn_on_failure: Vec::new,
+        }],
+        client_type: ClientType::Tcp(TcpClientType {
+            host: IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)),
+            port: <span class="number">5020</span>,
+        }),
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"modbus_tcp_client"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    ComponentExecutor::new(executor_config)
+        <span class="comment">// Периодическое генерирование сообщения для записи счетчика на сервер
+        </span>.add_cmp(cmp_inject_periodic::Cmp::new(cmp_inject_periodic::Config {
+            period: Duration::from_secs(<span class="number">2</span>),
+            fn_periodic: <span class="kw">move </span>|| {
+                <span class="kw">let </span>msg = Message::new_custom(Messages::ValueWrite(counter));
+                counter += <span class="number">1.0</span>;
+                <span class="macro">vec!</span>[msg]
+            },
+        }))
+        <span class="comment">// Клиент modbus
+        </span>.add_cmp(cmp_modbus_client::Cmp::new(modbus_client_config))
+        <span class="comment">// Вывод сообщений в лог
+        </span>.add_cmp(cmp_logger::Cmp::new(cmp_logger::Config {
+            level: Level::INFO,
+            header: <span class="string">""</span>.into(),
+        }))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="attr">#[cfg(not(feature = <span class="string">"cmp_modbus_client"</span>))]
+</span><span class="kw">fn </span>main() {}</code></pre></div>
+<p>TODO - рестарт не работает</p>
+</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="conversion/index.html" title="mod rsiot::components::cmp_modbus_client::conversion">conversion</a></div><div class="desc docblock-short">Модуль для конвертации числовых данных в регистры и наоборот.</div></li></ul><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_modbus_client::Config">Config</a></div></li><li><div class="item-name"><a class="struct" href="struct.ConfigNewType.html" title="struct rsiot::components::cmp_modbus_client::ConfigNewType">ConfigNewType</a></div></li><li><div class="item-name"><a class="struct" href="struct.InputConfig.html" title="struct rsiot::components::cmp_modbus_client::InputConfig">InputConfig</a></div><div class="desc docblock-short">Конфигурация запросов, которые выполняются на основе входного потока сообщений</div></li><li><div class="item-name"><a class="struct" href="struct.PeriodicConfig.html" title="struct rsiot::components::cmp_modbus_client::PeriodicConfig">PeriodicConfig</a></div><div class="desc docblock-short">Конфигурация запросов, которые выполняются периодически</div></li><li><div class="item-name"><a class="struct" href="struct.TcpClientType.html" title="struct rsiot::components::cmp_modbus_client::TcpClientType">TcpClientType</a></div><div class="desc docblock-short">Конфигурация Modbus TCP клиента</div></li></ul><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.ClientType.html" title="enum rsiot::components::cmp_modbus_client::ClientType">ClientType</a></div><div class="desc docblock-short">Конфигурация Modbus клиента</div></li><li><div class="item-name"><a class="enum" href="enum.Request.html" title="enum rsiot::components::cmp_modbus_client::Request">Request</a></div><div class="desc docblock-short">Параметры запроса Modbus</div></li><li><div class="item-name"><a class="enum" href="enum.Response.html" title="enum rsiot::components::cmp_modbus_client::Response">Response</a></div><div class="desc docblock-short">Ответ от устройства</div></li></ul><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_modbus_client::Cmp">Cmp</a></div><div class="desc docblock-short">Обмен данными с устройством, поддерживающим Modbus TCP сервер.</div></li><li><div class="item-name"><a class="type" href="type.FnOnFailure.html" title="type rsiot::components::cmp_modbus_client::FnOnFailure">FnOnFailure</a></div></li><li><div class="item-name"><a class="type" href="type.FnOnSuccess.html" title="type rsiot::components::cmp_modbus_client::FnOnSuccess">FnOnSuccess</a></div></li></ul></section></div></main></body></html>
