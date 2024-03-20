@@ -13,6 +13,7 @@
 
 - [ESP](./dev_prepare_esp.md)
 - [Tauri](./dev_prepare_tauri.md)
+- [Slint](./dev_prepare_slint.md)
 
 # Создание проекта
 
