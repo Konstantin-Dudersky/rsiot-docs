@@ -100,6 +100,10 @@
 <a href="#98" id="98">98</a>
 <a href="#99" id="99">99</a>
 <a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
@@ -117,11 +121,15 @@
 <span class="kw">pub mod </span>cmp_derive;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
-#[cfg(target_arch = <span class="string">"riscv32"</span>)]
+#[cfg(riscv32imc__esp__espidf)]
 </span><span class="kw">pub mod </span>cmp_esp_gpio_input;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
-#[cfg(target_arch = <span class="string">"riscv32"</span>)]
+#[cfg(riscv32imc__esp__espidf)]
+</span><span class="kw">pub mod </span>cmp_esp_gpio_output;
+
+<span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
+#[cfg(riscv32imc__esp__espidf)]
 </span><span class="kw">pub mod </span>cmp_esp_wifi;
 
 <span class="kw">pub mod </span>cmp_external_fn_process;
@@ -139,11 +147,11 @@
 </span><span class="kw">pub mod </span>cmp_http_server;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
-#[cfg(target_arch = <span class="string">"riscv32"</span>)]
+#[cfg(riscv32imc__esp__espidf)]
 </span><span class="kw">pub mod </span>cmp_http_server_esp;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_influxdb"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+</span><span class="comment">// #[cfg(any(target_arch = "x86_64", target_arch = "aarch64"))]
 </span><span class="kw">pub mod </span>cmp_influxdb;
 
 <span class="kw">pub mod </span>cmp_inject_periodic;
@@ -166,11 +174,11 @@
 </span><span class="kw">pub mod </span>cmp_redis_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_slint"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(x86_64__unknown__linux__gnu, aarch64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_slint;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
-#[cfg(target_arch = <span class="string">"riscv32"</span>)]
+#[cfg(riscv32imc__esp__espidf)]
 </span><span class="kw">pub mod </span>cmp_storage_esp;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_surrealdb"</span>)]

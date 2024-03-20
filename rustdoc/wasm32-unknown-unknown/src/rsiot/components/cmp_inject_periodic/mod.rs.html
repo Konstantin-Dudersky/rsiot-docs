@@ -74,6 +74,8 @@
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
 <a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для периодического генерирования сообщений
 
 </span><span class="kw">use </span>async_trait::async_trait;
@@ -84,7 +86,8 @@
     message::{AuthPermissions, Message, MsgDataBound},
 };
 
-<span class="attr">#[derive(Clone, Debug)]
+<span class="doccomment">/// Конфигурация cmp_inject_periodic
+</span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Config&lt;TMsg, TFnPeriodic&gt;
 <span class="kw">where
     </span>TMsg: Clone,
@@ -147,5 +150,6 @@
     }
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMessage, TFnPeriodic&gt; = Component&lt;Config&lt;TMessage, TFnPeriodic&gt;, TMessage&gt;;
+<span class="doccomment">/// Компонент cmp_inject_periodic
+</span><span class="kw">pub type </span>Cmp&lt;TMessage, TFnPeriodic&gt; = Component&lt;Config&lt;TMessage, TFnPeriodic&gt;, TMessage&gt;;
 </code></pre></div></section></main></body></html>

@@ -21,6 +21,7 @@
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
 <a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::collections::HashSet;
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -28,7 +29,7 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::message::AuthPermissions;
 
-<span class="doccomment">/// Ответ на запрос на регистрацию
+<span class="doccomment">/// Подтверждение авторизации
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>AuthResponseOk {
     <span class="doccomment">/// Сгенерированный токен
@@ -40,6 +41,7 @@
     <span class="doccomment">/// Идентификаторы компонентов, через которые сообщение было получено
     </span><span class="kw">pub </span>trace_ids: HashSet&lt;Uuid&gt;,
 
-    <span class="kw">pub </span>login: String,
+    <span class="doccomment">/// Логин для входа
+    </span><span class="kw">pub </span>login: String,
 }
 </code></pre></div></section></main></body></html>

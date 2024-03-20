@@ -11,6 +11,7 @@
 
 # Подготовка среды разработки
 
+- [ARM](./dev_prepare_ARM.md)
 - [ESP](./dev_prepare_esp.md)
 - [Tauri](./dev_prepare_tauri.md)
 - [Slint](./dev_prepare_slint.md)

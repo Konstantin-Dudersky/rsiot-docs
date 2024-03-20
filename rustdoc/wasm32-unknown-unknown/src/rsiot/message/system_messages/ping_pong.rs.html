@@ -11,15 +11,23 @@
 <a href="#9" id="9">9</a>
 <a href="#10" id="10">10</a>
 <a href="#11" id="11">11</a>
+<a href="#12" id="12">12</a>
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+<a href="#15" id="15">15</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
 
-<span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+<span class="doccomment">/// Проверка связи - запрос партнера по коммуникации
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>Ping {
-    <span class="kw">pub </span>count: u32,
+    <span class="doccomment">/// Порядковый номер запроса
+    </span><span class="kw">pub </span>count: u32,
 }
 
-<span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+<span class="doccomment">/// Проверка связи - ответ от партнера по коммуникации
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>Pong {
-    <span class="kw">pub </span>count: u32,
+    <span class="doccomment">/// Порядковый номер запроса
+    </span><span class="kw">pub </span>count: u32,
 }
 </code></pre></div></section></main></body></html>

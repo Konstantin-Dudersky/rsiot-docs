@@ -62,6 +62,7 @@
 <a href="#60" id="60">60</a>
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для логгирования сообщений
 
 </span><span class="kw">use </span>async_trait::async_trait;
@@ -123,5 +124,6 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;Config, TMessage&gt;;
+<span class="doccomment">/// Компонент cmp_logger
+</span><span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;Config, TMessage&gt;;
 </code></pre></div></section></main></body></html>

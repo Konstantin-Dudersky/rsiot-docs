@@ -185,6 +185,10 @@
 <a href="#183" id="183">183</a>
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>reqwest::{Client, Response, StatusCode};
@@ -354,9 +358,9 @@
     req: <span class="kw-2">&amp;</span>config::HttpParam,
 ) -&gt; <span class="kw">super</span>::Result&lt;Response, TMessage&gt; {
     <span class="kw">let </span>endpoint = <span class="kw">match </span>req {
-        config::HttpParam::Get(val) =&gt; val,
-        config::HttpParam::Put(<span class="kw">_</span>) =&gt; <span class="macro">todo!</span>(),
-        config::HttpParam::Post(<span class="kw">_</span>) =&gt; <span class="macro">todo!</span>(),
+        config::HttpParam::Get { endpoint } =&gt; endpoint,
+        config::HttpParam::Put { endpoint, body: <span class="kw">_ </span>} =&gt; endpoint,
+        config::HttpParam::Post { endpoint, body: <span class="kw">_ </span>} =&gt; endpoint,
     };
     <span class="kw">let </span>url = url.join(endpoint).map_err(|err| {
         <span class="kw">let </span>err = err.to_string();
@@ -364,9 +368,13 @@
     })<span class="question-mark">?</span>;
     <span class="kw">let </span>client = Client::new();
     <span class="kw">let </span>response = <span class="kw">match </span>req {
-        config::HttpParam::Get(<span class="kw">_</span>) =&gt; client.get(url).send().<span class="kw">await</span><span class="question-mark">?</span>,
-        config::HttpParam::Put(<span class="kw">_</span>) =&gt; <span class="macro">todo!</span>(),
-        config::HttpParam::Post(<span class="kw">_</span>) =&gt; <span class="macro">todo!</span>(),
+        config::HttpParam::Get { endpoint: <span class="kw">_ </span>} =&gt; client.get(url).send().<span class="kw">await</span><span class="question-mark">?</span>,
+        config::HttpParam::Put { endpoint: <span class="kw">_</span>, body } =&gt; {
+            client.put(url).body(body.to_string()).send().<span class="kw">await</span><span class="question-mark">?
+        </span>}
+        config::HttpParam::Post { endpoint: <span class="kw">_</span>, body } =&gt; {
+            client.post(url).body(body.to_string()).send().<span class="kw">await</span><span class="question-mark">?
+        </span>}
     };
     <span class="prelude-val">Ok</span>(response)
 }

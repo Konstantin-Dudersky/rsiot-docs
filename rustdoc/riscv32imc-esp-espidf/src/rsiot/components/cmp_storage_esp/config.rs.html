@@ -123,6 +123,7 @@
 <a href="#121" id="121">121</a>
 <a href="#122" id="122">122</a>
 <a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Тестирование документации:
 //!
 //! Нет тестируется - Exec format error (os error 8)
@@ -135,7 +136,8 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
-<span class="attr">#[derive(Debug)]
+<span class="doccomment">/// Конфигурация cmp_storage_esp
+</span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>Config&lt;TMsg, TStorageData&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,

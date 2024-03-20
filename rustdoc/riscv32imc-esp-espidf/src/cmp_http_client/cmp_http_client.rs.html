@@ -121,6 +121,10 @@
 <a href="#119" id="119">119</a>
 <a href="#120" id="120">120</a>
 <a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Запуск:
 //!
 //! ```bash
@@ -197,7 +201,9 @@
                 <span class="kw">let </span>msg = msg.get_data()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
-                        <span class="kw">let </span>param = http_client_config::HttpParam::Get(<span class="string">"get"</span>.to_string());
+                        <span class="kw">let </span>param = http_client_config::HttpParam::Get {
+                            endpoint: <span class="string">"get"</span>.to_string(),
+                        };
                         <span class="prelude-val">Some</span>(param)
                     }
                     <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -213,7 +219,9 @@
         }],
         requests_periodic: <span class="macro">vec!</span>[http_client_config::RequestPeriodic {
             period: Duration::from_secs(<span class="number">5</span>),
-            http_param: http_client_config::HttpParam::Get(<span class="string">"get"</span>.to_string()),
+            http_param: http_client_config::HttpParam::Get {
+                endpoint: <span class="string">"get"</span>.to_string(),
+            },
             on_success: |body| {
                 <span class="kw">let </span>res = from_str::&lt;HttpMethodsGet&gt;(body)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[Message::new_custom(
