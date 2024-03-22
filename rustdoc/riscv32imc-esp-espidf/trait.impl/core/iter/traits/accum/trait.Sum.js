@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"chrono":[["impl&lt;'a&gt; Sum&lt;&amp;'a <a class=\"struct\" href=\"chrono/struct.TimeDelta.html\" title=\"struct chrono::TimeDelta\">TimeDelta</a>&gt; for <a class=\"struct\" href=\"chrono/struct.TimeDelta.html\" title=\"struct chrono::TimeDelta\">TimeDelta</a>"],["impl Sum for <a class=\"struct\" href=\"chrono/struct.TimeDelta.html\" title=\"struct chrono::TimeDelta\">TimeDelta</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

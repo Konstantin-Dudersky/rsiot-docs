@@ -104,6 +104,10 @@
 <a href="#102" id="102">102</a>
 <a href="#103" id="103">103</a>
 <a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
@@ -115,7 +119,7 @@
 <span class="kw">pub mod </span>cmp_add_output_stream;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_auth"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_auth;
 
 <span class="kw">pub mod </span>cmp_derive;
@@ -135,15 +139,15 @@
 <span class="kw">pub mod </span>cmp_external_fn_process;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_http_client"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_http_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_http_client_wasm"</span>)]
-#[cfg(target_arch = <span class="string">"wasm32"</span>)]
+#[cfg(wasm32__unknown__unknown)]
 </span><span class="kw">pub mod </span>cmp_http_client_wasm;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_http_server"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_http_server;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
@@ -151,30 +155,34 @@
 </span><span class="kw">pub mod </span>cmp_http_server_esp;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_influxdb"</span>)]
-</span><span class="comment">// #[cfg(any(target_arch = "x86_64", target_arch = "aarch64"))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_influxdb;
 
 <span class="kw">pub mod </span>cmp_inject_periodic;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_leptos"</span>)]
-#[cfg(target_arch = <span class="string">"wasm32"</span>)]
+#[cfg(wasm32__unknown__unknown)]
 </span><span class="kw">pub mod </span>cmp_leptos;
 
 <span class="kw">pub mod </span>cmp_logger;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_modbus_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_plc"</span>)]
 </span><span class="kw">pub mod </span>cmp_plc;
 
+<span class="attr">#[cfg(feature = <span class="string">"cmp_raspberrypi"</span>)]
+#[cfg(aarch64__unknown__linux__gnu)]
+</span><span class="kw">pub mod </span>cmp_raspberrypi_gpio;
+
 <span class="attr">#[cfg(feature = <span class="string">"cmp_redis_client"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_redis_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_slint"</span>)]
-#[cfg(any(x86_64__unknown__linux__gnu, aarch64__unknown__linux__gnu))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_slint;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
@@ -182,30 +190,30 @@
 </span><span class="kw">pub mod </span>cmp_storage_esp;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_surrealdb"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_surrealdb;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_system_info"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_system_info;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_timescaledb"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_timescaledb;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_websocket_client"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_websocket_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_websocket_client_wasm"</span>)]
-#[cfg(target_arch = <span class="string">"wasm32"</span>)]
+#[cfg(wasm32__unknown__unknown)]
 </span><span class="kw">pub mod </span>cmp_websocket_client_wasm;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_websocket_server"</span>)]
-#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
+#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
 </span><span class="kw">pub mod </span>cmp_websocket_server;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_webstorage"</span>)]
-#[cfg(target_arch = <span class="string">"wasm32"</span>)]
+#[cfg(wasm32__unknown__unknown)]
 </span><span class="kw">pub mod </span>cmp_webstorage;
 </code></pre></div></section></main></body></html>
