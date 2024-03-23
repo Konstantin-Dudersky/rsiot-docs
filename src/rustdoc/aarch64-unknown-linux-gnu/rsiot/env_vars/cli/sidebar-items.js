@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["ENV_EXAMPLE_FILE"],"enum":["Commands"],"fn":["command_check","command_create","env_vars_cli"],"struct":["Cli"]};

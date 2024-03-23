@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Загрузка переменных среды из ОС и из файла .env"><title>rsiot::env_vars - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../rsiot/index.html">rsiot</a><span class="version">0.0.77</span></h2></div><h2 class="location"><a href="#">Module env_vars</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></section><h2><a href="../index.html">In crate rsiot</a></h2></div></nav><div class="sidebar-resizer"></div>
+    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../index.html">rsiot</a>::<wbr><a class="mod" href="#">env_vars</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/rsiot/env_vars/mod.rs.html#1-45">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Загрузка переменных среды из ОС и из файла .env</p>
+<p>Ссылки:</p>
+<ul>
+<li>
+<p><a href="https://docs.rs/rsiot-env-vars/latest/">Документация docs.rs</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Konstantin-Dudersky/rsiot/tree/main/rsiot-env-vars">Репозиторий GitHub</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Konstantin-Dudersky/rsiot/tree/main/rsiot-env-vars/examples">Примеры</a></p>
+</li>
+</ul>
+<h3 id="Команды"><a class="doc-anchor" href="#Команды">§</a>Команды</h3><h4 id="cоздать--обновить-файл-envexample"><a class="doc-anchor" href="#cоздать--обновить-файл-envexample">§</a>Cоздать / обновить файл .env.example</h4><div class="example-wrap"><pre class="language-bash"><code>cargo run --bin env_vars create
+</code></pre></div>
+<p>Создает файл <code>.env.example</code> со значениями по-умолчанию</p>
+<h4 id="Проверить-файл-env"><a class="doc-anchor" href="#Проверить-файл-env">§</a>Проверить файл .env</h4><div class="example-wrap"><pre class="language-bash"><code>cargo run --bin env_vars check
+</code></pre></div>
+<ol>
+<li>Пытается загрузить файл <code>.env</code></li>
+<li>Читает настройки в структуру <code>src/config.rs</code></li>
+</ol>
+<h2 id="Пример"><a class="doc-anchor" href="#Пример">§</a>Пример</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[cfg(feature = <span class="string">"env_vars"</span>)]
+#[tokio::main]
+</span><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="kw">use </span>url::Url;
+
+    <span class="doccomment">/// Структура со всеми переменными
+    </span><span class="attr">#[derive(Clone, Debug, Deserialize, Serialize)]
+    </span><span class="kw">pub struct </span>Config {
+        <span class="kw">pub </span>db_host: String,
+        <span class="kw">pub </span>db_port: u16,
+        <span class="kw">pub </span>db_user: String,
+        <span class="kw">pub </span>db_password: String,
+    }
+
+    <span class="doccomment">/// Задаем настройки по-умолчанию
+    </span><span class="kw">impl </span>Default <span class="kw">for </span>Config {
+        <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+            <span class="self">Self </span>{
+                db_host: <span class="string">"localhost"</span>.into(),
+                db_port: <span class="number">5432</span>,
+                db_user: <span class="string">"postgres"</span>.into(),
+                db_password: <span class="string">"postgres"</span>.into(),
+            }
+        }
+    }
+
+    <span class="doccomment">/// Добавляем переменные, которые собираются из заданных в файле
+    </span><span class="kw">impl </span>Config {
+        <span class="doccomment">/// Подключение к БД с данными
+        </span><span class="attr">#[allow(dead_code)]
+        </span><span class="kw">pub fn </span>db_data_url(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Url {
+            <span class="kw">let </span>url = <span class="macro">format!</span>(
+                <span class="string">"postgres://{}:{}@{}:{}/db_data"</span>,
+                <span class="self">self</span>.db_user, <span class="self">self</span>.db_password, <span class="self">self</span>.db_host, <span class="self">self</span>.db_port
+            );
+            Url::parse(<span class="kw-2">&amp;</span>url).expect(<span class="string">"Неправильно заданный адрес БД"</span>)
+        }
+    }
+
+    <span class="kw">impl </span>IEnvVars <span class="kw">for </span>Config {}
+
+    <span class="kw">use </span>rsiot::env_vars::{load_config, IEnvVars};
+
+    tracing_subscriber::fmt().init();
+    <span class="kw">let </span>config = load_config::&lt;Config&gt;();
+    <span class="macro">println!</span>(<span class="string">"{:#?}"</span>, config);
+}
+
+<span class="attr">#[cfg(not(feature = <span class="string">"env_vars"</span>))]
+</span><span class="kw">fn </span>main() {}</code></pre></div>
+</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="cli/index.html" title="mod rsiot::env_vars::cli">cli</a><span title="Restricted Visibility">&nbsp;🔒</span> </div><div class="desc docblock-short">CLI интерфейс</div></li><li><div class="item-name"><a class="mod" href="create_env_file/index.html" title="mod rsiot::env_vars::create_env_file">create_env_file</a><span title="Restricted Visibility">&nbsp;🔒</span> </div><div class="desc docblock-short">Сериализация настроек</div></li><li><div class="item-name"><a class="mod" href="error/index.html" title="mod rsiot::env_vars::error">error</a><span title="Restricted Visibility">&nbsp;🔒</span> </div></li><li><div class="item-name"><a class="mod" href="ienvvars/index.html" title="mod rsiot::env_vars::ienvvars">ienvvars</a><span title="Restricted Visibility">&nbsp;🔒</span> </div><div class="desc docblock-short">Трейт, который должна реализовывать структура конфигурации</div></li><li><div class="item-name"><a class="mod" href="load_config/index.html" title="mod rsiot::env_vars::load_config">load_config</a><span title="Restricted Visibility">&nbsp;🔒</span> </div></li></ul><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Errors.html" title="enum rsiot::env_vars::Errors">Errors</a></div></li></ul><h2 id="traits" class="section-header">Traits<a href="#traits" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.IEnvVars.html" title="trait rsiot::env_vars::IEnvVars">IEnvVars</a></div><div class="desc docblock-short">Трейт, который должна реализовывать структура конфигурации</div></li></ul><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="fn" href="fn.env_vars_cli.html" title="fn rsiot::env_vars::env_vars_cli">env_vars_cli</a></div><div class="desc docblock-short">Запускаем CLI</div></li><li><div class="item-name"><a class="fn" href="fn.load_config.html" title="fn rsiot::env_vars::load_config">load_config</a></div><div class="desc docblock-short">Загрузить настройки</div></li></ul></section></div></main></body></html>

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["agg_type","row"]};

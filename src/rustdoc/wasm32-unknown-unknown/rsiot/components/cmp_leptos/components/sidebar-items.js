@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["go2rtc","svg_dynamic"]};

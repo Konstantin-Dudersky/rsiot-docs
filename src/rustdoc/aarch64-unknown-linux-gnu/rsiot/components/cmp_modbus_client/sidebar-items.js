@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ClientType","Request","Response"],"mod":["component","config","conversion","error","fn_process"],"struct":["Config","ConfigNewType","InputConfig","PeriodicConfig","TcpClientType"],"type":["Cmp","FnOnFailure","FnOnSuccess","Result"]};

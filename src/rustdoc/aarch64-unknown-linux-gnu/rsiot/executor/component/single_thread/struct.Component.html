@@ -1,0 +1,764 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Component` struct in crate `rsiot`."><title>Component in rsiot::executor::component::single_thread - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../../rsiot/index.html">rsiot</a><span class="version">0.0.77</span></h2></div><h2 class="location"><a href="#">Component</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.config">config</a></li><li><a href="#structfield.in_out">in_out</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.new">new</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-IComponent%3CTMsg%3E-for-Component%3CTConfig,+TMsg%3E">IComponent&lt;TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CCfg%3CTMsg%3E,+TMsg%3E-for-Component%3CCfg%3CTMsg%3E,+TMsg%3E">IComponentProcess&lt;Cfg&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CCfg%3CTMsg%3E,+TMsg%3E-for-Component%3CCfg%3CTMsg%3E,+TMsg%3E-1">IComponentProcess&lt;Cfg&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig,+TMessage%3E-for-Component%3CConfig,+TMessage%3E">IComponentProcess&lt;Config, TMessage&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig,+TMsg%3E-for-Component%3CConfig,+TMsg%3E">IComponentProcess&lt;Config, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMainWindow,+TMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMainWindow,+TMsg%3E,+TMsg%3E">IComponentProcess&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMsg,+I,+Q,+S%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg,+I,+Q,+S%3E,+TMsg%3E">IComponentProcess&lt;Config&lt;TMsg, I, Q, S&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMsg,+TFnPeriodic%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg,+TFnPeriodic%3E,+TMsg%3E">IComponentProcess&lt;Config&lt;TMsg, TFnPeriodic&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E">IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-1">IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-2">IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-3">IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias,+TMsg%3E-for-Component%3CConfigAlias,+TMsg%3E">IComponentProcess&lt;ConfigAlias, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias%3CTMessage,+TMessageChannel%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage,+TMessageChannel%3E,+TMessage%3E">IComponentProcess&lt;ConfigAlias&lt;TMessage, TMessageChannel&gt;, TMessage&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage%3E,+TMessage%3E">IComponentProcess&lt;ConfigAlias&lt;TMessage&gt;, TMessage&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage%3E,+TMessage%3E-1">IComponentProcess&lt;ConfigAlias&lt;TMessage&gt;, TMessage&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E">IComponentProcess&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E-1">IComponentProcess&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E-2">IComponentProcess&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;</a></li><li><a href="#impl-IComponentProcess%3CConfigNewType%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigNewType%3CTMessage%3E,+TMessage%3E">IComponentProcess&lt;ConfigNewType&lt;TMessage&gt;, TMessage&gt;</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-Component%3CTConfig,+TMessage%3E">!RefUnwindSafe</a></li><li><a href="#impl-UnwindSafe-for-Component%3CTConfig,+TMessage%3E">!UnwindSafe</a></li><li><a href="#impl-Send-for-Component%3CTConfig,+TMessage%3E">Send</a></li><li><a href="#impl-Sync-for-Component%3CTConfig,+TMessage%3E">Sync</a></li><li><a href="#impl-Unpin-for-Component%3CTConfig,+TMessage%3E">Unpin</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-Conv-for-T">Conv</a></li><li><a href="#impl-Downcast-for-T">Downcast</a></li><li><a href="#impl-DowncastSync-for-T">DowncastSync</a></li><li><a href="#impl-FmtForward-for-T">FmtForward</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-Pipe-for-T">Pipe</a></li><li><a href="#impl-Same-for-T">Same</a></li><li><a href="#impl-Tap-for-T">Tap</a></li><li><a href="#impl-TryConv-for-T">TryConv</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-VZip%3CV%3E-for-T">VZip&lt;V&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li><li><a href="#impl-Within%3CG2%3E-for-G1">Within&lt;G2&gt;</a></li><li><a href="#impl-Within%3CG2%3E-for-G1-1">Within&lt;G2&gt;</a></li></ul></section><h2><a href="index.html">In rsiot::executor::component::single_thread</a></h2></div></nav><div class="sidebar-resizer"></div>
+    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../../../index.html">rsiot</a>::<wbr><a href="../../index.html">executor</a>::<wbr><a href="../index.html">component</a>::<wbr><a href="index.html">single_thread</a>::<wbr><a class="struct" href="#">Component</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../../src/rsiot/executor/component/single_thread.rs.html#5-8">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct Component&lt;TConfig, TMessage&gt; {
+    in_out: Option&lt;<a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;&gt;,
+    config: Option&lt;TConfig&gt;,
+}</code></pre><h2 id="fields" class="fields section-header">Fields<a href="#fields" class="anchor">§</a></h2><span id="structfield.in_out" class="structfield section-header"><a href="#structfield.in_out" class="anchor field">§</a><code>in_out: Option&lt;<a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;&gt;</code></span><span id="structfield.config" class="structfield section-header"><a href="#structfield.config" class="anchor field">§</a><code>config: Option&lt;TConfig&gt;</code></span><h2 id="implementations" class="section-header">Implementations<a href="#implementations" class="anchor">§</a></h2><div id="implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Component%3CTConfig,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/executor/component/single_thread.rs.html#10-17">source</a><a href="#impl-Component%3CTConfig,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMsg&gt; <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMsg&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.new" class="method"><a class="src rightside" href="../../../../src/rsiot/executor/component/single_thread.rs.html#11-16">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fn">new</a>(config: impl Into&lt;TConfig&gt;) -&gt; Self</h4></section></summary><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples"><a href="#scraped-examples">Examples found in repository</a><a class="scrape-help" href="../../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[18,18],&quot;../../../../src/executor_single_thread/main.rs.html#34&quot;,&quot;line 34&quot;],[[19,19],&quot;../../../../src/executor_single_thread/main.rs.html#35&quot;,&quot;line 35&quot;]]"><div class="scraped-example-title">examples/executor/executor-single-thread/main.rs (<a href="../../../../src/executor_single_thread/main.rs.html#34">line 34</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>message::Message;
+    <span class="kw">use </span>tokio::task::LocalSet;
+
+    <span class="kw">use </span>rsiot::executor::{ComponentExecutor, ComponentExecutorConfig};
+
+    tracing_subscriber::fmt().init();
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"example_single_thread"</span>.into(),
+        fn_auth: |<span class="kw">_</span>, <span class="kw">_</span>| <span class="prelude-val">None</span>,
+    };
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>cmps = ComponentExecutor::&lt;Message&gt;::new(executor_config)
+            .add_cmp(<span class="highlight focus">example_component1::Cmp::new</span>(example_component1::Config {}))
+            .add_cmp(<span class="highlight">example_component2::Cmp::new</span>(example_component2::Config {}));
+
+        cmps.wait_result().<span class="kw">await</span>.unwrap();
+    });
+
+    local_set.<span class="kw">await</span>;
+}</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[25,25],&quot;../../../../src/cmp_modbus_client_fermenter/main.rs.html#34&quot;,&quot;line 34&quot;],[[26,26],&quot;../../../../src/cmp_modbus_client_fermenter/main.rs.html#35&quot;,&quot;line 35&quot;]]"><div class="scraped-example-title">examples/cmp_modbus_client_fermenter/main.rs (<a href="../../../../src/cmp_modbus_client_fermenter/main.rs.html#34">line 34</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
+    <span class="kw">use </span>tracing_subscriber::fmt;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_logger, cmp_modbus_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+    };
+
+    <span class="kw">use </span>message::Data;
+
+    fmt().with_max_level(LevelFilter::INFO).init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"example_single_thread"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Data&gt;::new(executor_config)
+        .add_cmp(<span class="highlight focus">cmp_modbus_client::Cmp::new</span>(config::config()))
+        .add_cmp(<span class="highlight">cmp_logger::Cmp::new</span>(logger_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[34,34],&quot;../../../../src/cmp_timescaledb/cmp_timescaledb.rs.html#43&quot;,&quot;line 43&quot;],[[35,35],&quot;../../../../src/cmp_timescaledb/cmp_timescaledb.rs.html#44&quot;,&quot;line 44&quot;]]"><div class="scraped-example-title">examples/cmp_timescaledb/cmp_timescaledb.rs (<a href="../../../../src/cmp_timescaledb/cmp_timescaledb.rs.html#43">line 43</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::time::Duration;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_timescaledb},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt().init();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>url = Url::parse(<span class="string">"postgres://postgres:postgres@localhost:5432/db_data_test"</span>)<span class="question-mark">?</span>;
+    <span class="kw">let </span>db_config = cmp_timescaledb::Config {
+        connection_string: url,
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"timescaledb-storing"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(<span class="highlight focus">cmp_inject_periodic::Cmp::new</span>(inject_config))
+        .add_cmp(<span class="highlight">cmp_timescaledb::Cmp::new</span>(db_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[40,40],&quot;../../../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#50&quot;,&quot;line 50&quot;],[[41,41],&quot;../../../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#51&quot;,&quot;line 51&quot;]]"><div class="scraped-example-title">examples/cmp_inject_periodic/cmp_inject_periodic.rs (<a href="../../../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#50">line 50</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::{task::LocalSet, time::Duration};
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, Message},
+    };
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::DEBUG)
+        .init();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"cmp_inject_periodic"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">"Logger: "</span>.into(),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Custom::ValueInstantF64(counter);
+            <span class="kw">let </span>msg = Message::new_custom(msg);
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+            .add_cmp(<span class="highlight focus">cmp_logger::Cmp::new</span>(logger_config))
+            .add_cmp(<span class="highlight">cmp_inject_periodic::Cmp::new</span>(inject_config))
+            .wait_result()
+            .<span class="kw">await
+            </span>.unwrap();
+    });
+
+    local_set.<span class="kw">await</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[44,44],&quot;../../../../src/cmp_redis_client_subscription/subscription.rs.html#70&quot;,&quot;line 70&quot;],[[45,45],&quot;../../../../src/cmp_redis_client_subscription/subscription.rs.html#71&quot;,&quot;line 71&quot;]]"><div class="scraped-example-title">examples/cmp_redis_client/subscription.rs (<a href="../../../../src/cmp_redis_client_subscription/subscription.rs.html#70">line 70</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::fmt;
+    <span class="kw">use </span>url::Url;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_logger, cmp_redis_client},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    fmt().init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>redis_config = cmp_redis_client::Config {
+        url: Url::parse(<span class="string">"redis://127.0.0.1:6379"</span>)<span class="question-mark">?</span>,
+        subscription_channel: ExampleMessageChannel::Output,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>channel = ExampleMessageChannel::Output;
+            <span class="kw">let </span>key = msg.key.clone();
+            <span class="kw">let </span>value = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[cmp_redis_client::ConfigFnInputItem {
+                channel,
+                key,
+                value,
+            }]))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"redis-client-subscription"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+        .add_cmp(<span class="highlight focus">cmp_logger::Cmp::new</span>(logger_config))
+        .add_cmp(<span class="highlight">cmp_redis_client::Cmp::new</span>(redis_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[45,45],&quot;../../../../src/cmp_auth/cmp_auth.rs.html#50&quot;,&quot;line 50&quot;],[[46,46],&quot;../../../../src/cmp_auth/cmp_auth.rs.html#51&quot;,&quot;line 51&quot;],[[47,47],&quot;../../../../src/cmp_auth/cmp_auth.rs.html#52&quot;,&quot;line 52&quot;]]"><div class="scraped-example-title">examples/cmp_auth.rs (<a href="../../../../src/cmp_auth/cmp_auth.rs.html#50">line 50</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_auth, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, system_messages::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+    <span class="kw">use </span>tracing::Level;
+
+    tracing_subscriber::fmt().with_max_level(Level::INFO).init();
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">4</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>value = AuthRequestByLogin {
+                login: <span class="string">"admin"</span>.to_string(),
+                password: <span class="string">"admin"</span>.to_string(),
+            };
+            <span class="kw">let </span>msg = <span class="macro">message_new!</span>(<span class="string">"System-AuthRequestByLogin::value"</span>);
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>auth_config = cmp_auth::Config {
+        secret_key: <span class="string">"secret_key"</span>.into(),
+        store: cmp_auth::ConfigStore::Local(<span class="macro">vec!</span>[cmp_auth::ConfigStoreItem {
+            login: <span class="string">"admin"</span>.into(),
+            password: <span class="string">"admin1"</span>.into(),
+            role: AuthPermissions::Admin,
+        }]),
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"example_auth"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+        .add_cmp(<span class="highlight focus">cmp_logger::Cmp::new</span>(logger_config))
+        .add_cmp(<span class="highlight">cmp_auth::Cmp::new</span>(auth_config))
+        .add_cmp(<span class="highlight">cmp_inject_periodic::Cmp::new</span>(inject_periodic_config))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#59">examples/cmp_websocket_server.rs</a></li><li><a href="../../../../src/cmp_influxdb/cmp_influxdb.rs.html#56">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../../src/cmp_redis_client_publication/publication.rs.html#65">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#67">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#76">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#98">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#84-91">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../../src/cmp_http_server/cmp_http_server.rs.html#100">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../../src/cmp_derive/cmp_derive.rs.html#103">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../../src/cmp_http_client/cmp_http_client.rs.html#115">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details></div></details></div><h2 id="trait-implementations" class="section-header">Trait Implementations<a href="#trait-implementations" class="anchor">§</a></h2><div id="trait-implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-IComponent%3CTMsg%3E-for-Component%3CTConfig,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/executor/component/single_thread.rs.html#20-41">source</a><a href="#impl-IComponent%3CTMsg%3E-for-Component%3CTConfig,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMsg&gt; <a class="trait" href="trait.IComponent.html" title="trait rsiot::executor::component::single_thread::IComponent">IComponent</a>&lt;TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMsg&gt;<div class="where">where
+    Self: <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;TConfig, TMsg&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.set_interface" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/executor/component/single_thread.rs.html#24-26">source</a><a href="#method.set_interface" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponent.html#tymethod.set_interface" class="fn">set_interface</a>(&amp;mut self, in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;)</h4></section><section id="method.spawn" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/executor/component/single_thread.rs.html#28-40">source</a><a href="#method.spawn" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponent.html#tymethod.spawn" class="fn">spawn</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 mut self
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CCfg%3CTMsg%3E,+TMsg%3E-for-Component%3CCfg%3CTMsg%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_add_output_stream/mod.rs.html#19-35">source</a><a href="#impl-IComponentProcess%3CCfg%3CTMsg%3E,+TMsg%3E-for-Component%3CCfg%3CTMsg%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_add_output_stream/struct.Cfg.html" title="struct rsiot::components::cmp_add_output_stream::Cfg">Cfg</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_add_output_stream/struct.Cfg.html" title="struct rsiot::components::cmp_add_output_stream::Cfg">Cfg</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-14" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_add_output_stream/mod.rs.html#23-34">source</a><a href="#method.process-14" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_add_output_stream/struct.Cfg.html" title="struct rsiot::components::cmp_add_output_stream::Cfg">Cfg</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CCfg%3CTMsg%3E,+TMsg%3E-for-Component%3CCfg%3CTMsg%3E,+TMsg%3E-1" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_add_input_stream/mod.rs.html#21-38">source</a><a href="#impl-IComponentProcess%3CCfg%3CTMsg%3E,+TMsg%3E-for-Component%3CCfg%3CTMsg%3E,+TMsg%3E-1" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_add_input_stream/struct.Cfg.html" title="struct rsiot::components::cmp_add_input_stream::Cfg">Cfg</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_add_input_stream/struct.Cfg.html" title="struct rsiot::components::cmp_add_input_stream::Cfg">Cfg</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="docblock"><p>Компонент для добавления сообщений из побочного потока</p>
+</div><div class="impl-items"><section id="method.process-15" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_add_input_stream/mod.rs.html#25-37">source</a><a href="#method.process-15" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_add_input_stream/struct.Cfg.html" title="struct rsiot::components::cmp_add_input_stream::Cfg">Cfg</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMainWindow,+TMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMainWindow,+TMsg%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_slint/component.rs.html#13-29">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMainWindow,+TMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMainWindow,+TMsg%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMainWindow, TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_slint/config/struct.Config.html" title="struct rsiot::components::cmp_slint::config::Config">Config</a>&lt;TMainWindow, TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_slint/config/struct.Config.html" title="struct rsiot::components::cmp_slint::config::Config">Config</a>&lt;TMainWindow, TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,
+    Self: Sync,
+    TMainWindow: ComponentHandle + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-4" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_slint/component.rs.html#20-28">source</a><a href="#method.process-4" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_slint/config/struct.Config.html" title="struct rsiot::components::cmp_slint::config::Config">Config</a>&lt;TMainWindow, TMsg&gt;,
+    input: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_external_fn_process/mod.rs.html#120-134">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_external_fn_process/struct.Config.html" title="struct rsiot::components::cmp_external_fn_process::Config">Config</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_external_fn_process/struct.Config.html" title="struct rsiot::components::cmp_external_fn_process::Config">Config</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a>,</div></h3></section></summary><div class="impl-items"><section id="method.process-6" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_external_fn_process/mod.rs.html#124-133">source</a><a href="#method.process-6" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_external_fn_process/struct.Config.html" title="struct rsiot::components::cmp_external_fn_process::Config">Config</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-1" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_derive/component.rs.html#12-28">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-1" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_derive/config/struct.Config.html" title="struct rsiot::components::cmp_derive::config::Config">Config</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_derive/config/struct.Config.html" title="struct rsiot::components::cmp_derive::config::Config">Config</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-9" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_derive/component.rs.html#16-27">source</a><a href="#method.process-9" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_derive/config/struct.Config.html" title="struct rsiot::components::cmp_derive::config::Config">Config</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-2" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/_cmp_template/component.rs.html#12-25">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-2" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/_cmp_template/config/struct.Config.html" title="struct rsiot::components::_cmp_template::config::Config">Config</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/_cmp_template/config/struct.Config.html" title="struct rsiot::components::_cmp_template::config::Config">Config</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-12" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/_cmp_template/component.rs.html#16-24">source</a><a href="#method.process-12" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/_cmp_template/config/struct.Config.html" title="struct rsiot::components::_cmp_template::config::Config">Config</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-3" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_surrealdb/component.rs.html#12-28">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E-3" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_surrealdb/config/struct.Config.html" title="struct rsiot::components::cmp_surrealdb::config::Config">Config</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_surrealdb/config/struct.Config.html" title="struct rsiot::components::cmp_surrealdb::config::Config">Config</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-13" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_surrealdb/component.rs.html#16-27">source</a><a href="#method.process-13" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_surrealdb/config/struct.Config.html" title="struct rsiot::components::cmp_surrealdb::config::Config">Config</a>&lt;TMsg&gt;,
+    input: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg,+I,+Q,+S%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg,+I,+Q,+S%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_plc/component.rs.html#17-37">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg,+I,+Q,+S%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg,+I,+Q,+S%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg, I, Q, S&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_plc/config/struct.Config.html" title="struct rsiot::components::cmp_plc::config::Config">Config</a>&lt;TMsg, I, Q, S&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_plc/config/struct.Config.html" title="struct rsiot::components::cmp_plc::config::Config">Config</a>&lt;TMsg, I, Q, S&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,
+    I: Clone + Default + Send + <a class="trait" href="../../../message/trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a> + 'static + Sync,
+    Q: Clone + Default + Send + <a class="trait" href="../../../message/trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a> + 'static + Sync,
+    S: Clone + Default + Send + <a class="trait" href="../../../message/trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a> + 'static + Sync,
+    <a class="struct" href="../../../components/cmp_plc/plc/function_block_base/struct.FunctionBlockBase.html" title="struct rsiot::components::cmp_plc::plc::function_block_base::FunctionBlockBase">FunctionBlockBase</a>&lt;I, Q, S&gt;: <a class="trait" href="../../../components/cmp_plc/plc/function_block_base/trait.IFunctionBlock.html" title="trait rsiot::components::cmp_plc::plc::function_block_base::IFunctionBlock">IFunctionBlock</a>&lt;I, Q, S&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.process-1" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_plc/component.rs.html#26-36">source</a><a href="#method.process-1" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_plc/config/struct.Config.html" title="struct rsiot::components::cmp_plc::config::Config">Config</a>&lt;TMsg, I, Q, S&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg,+TFnPeriodic%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg,+TFnPeriodic%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_inject_periodic/mod.rs.html#29-46">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg,+TFnPeriodic%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg,+TFnPeriodic%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg, TFnPeriodic&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_inject_periodic/struct.Config.html" title="struct rsiot::components::cmp_inject_periodic::Config">Config</a>&lt;TMsg, TFnPeriodic&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_inject_periodic/struct.Config.html" title="struct rsiot::components::cmp_inject_periodic::Config">Config</a>&lt;TMsg, TFnPeriodic&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a>,
+    TFnPeriodic: FnMut() -&gt; Vec&lt;<a class="struct" href="../../../message/message/struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TMsg&gt;&gt; + Send + Sync,</div></h3></section></summary><div class="impl-items"><section id="method.process" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_inject_periodic/mod.rs.html#35-45">source</a><a href="#method.process" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_inject_periodic/struct.Config.html" title="struct rsiot::components::cmp_inject_periodic::Config">Config</a>&lt;TMsg, TFnPeriodic&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig,+TMessage%3E-for-Component%3CConfig,+TMessage%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_logger/mod.rs.html#22-37">source</a><a href="#impl-IComponentProcess%3CConfig,+TMessage%3E-for-Component%3CConfig,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMessage&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_logger/struct.Config.html" title="struct rsiot::components::cmp_logger::Config">Config</a>, TMessage&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_logger/struct.Config.html" title="struct rsiot::components::cmp_logger::Config">Config</a>, TMessage&gt;<div class="where">where
+    TMessage: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a>,</div></h3></section></summary><div class="impl-items"><section id="method.process-3" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_logger/mod.rs.html#26-36">source</a><a href="#method.process-3" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_logger/struct.Config.html" title="struct rsiot::components::cmp_logger::Config">Config</a>,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig,+TMsg%3E-for-Component%3CConfig,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_auth/component.rs.html#11-21">source</a><a href="#impl-IComponentProcess%3CConfig,+TMsg%3E-for-Component%3CConfig,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_auth/config/struct.Config.html" title="struct rsiot::components::cmp_auth::config::Config">Config</a>, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_auth/config/struct.Config.html" title="struct rsiot::components::cmp_auth::config::Config">Config</a>, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-5" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_auth/component.rs.html#15-20">source</a><a href="#method.process-5" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_auth/config/struct.Config.html" title="struct rsiot::components::cmp_auth::config::Config">Config</a>,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = <a class="type" href="../../types/type.ComponentResult.html" title="type rsiot::executor::types::ComponentResult">ComponentResult</a>&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage%3E,+TMessage%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_websocket_server/component.rs.html#12-28">source</a><a href="#impl-IComponentProcess%3CConfigAlias%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage%3E,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMessage&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_websocket_server/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_websocket_server::config::ConfigAlias">ConfigAlias</a>&lt;TMessage&gt;, TMessage&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_websocket_server/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_websocket_server::config::ConfigAlias">ConfigAlias</a>&lt;TMessage&gt;, TMessage&gt;<div class="where">where
+    TMessage: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-2" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_websocket_server/component.rs.html#17-27">source</a><a href="#method.process-2" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_websocket_server/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_websocket_server::config::ConfigAlias">ConfigAlias</a>&lt;TMessage&gt;,
+    input: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage%3E,+TMessage%3E-1" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_websocket_client/component.rs.html#12-30">source</a><a href="#impl-IComponentProcess%3CConfigAlias%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage%3E,+TMessage%3E-1" class="anchor">§</a><h3 class="code-header">impl&lt;TMessage&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_websocket_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_websocket_client::config::ConfigAlias">ConfigAlias</a>&lt;TMessage&gt;, TMessage&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_websocket_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_websocket_client::config::ConfigAlias">ConfigAlias</a>&lt;TMessage&gt;, TMessage&gt;<div class="where">where
+    TMessage: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-16" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_websocket_client/component.rs.html#17-29">source</a><a href="#method.process-16" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_websocket_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_websocket_client::config::ConfigAlias">ConfigAlias</a>&lt;TMessage&gt;,
+    input: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias%3CTMessage,+TMessageChannel%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage,+TMessageChannel%3E,+TMessage%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_redis_client/component.rs.html#12-31">source</a><a href="#impl-IComponentProcess%3CConfigAlias%3CTMessage,+TMessageChannel%3E,+TMessage%3E-for-Component%3CConfigAlias%3CTMessage,+TMessageChannel%3E,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMessage, TMessageChannel&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_redis_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_redis_client::config::ConfigAlias">ConfigAlias</a>&lt;TMessage, TMessageChannel&gt;, TMessage&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_redis_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_redis_client::config::ConfigAlias">ConfigAlias</a>&lt;TMessage, TMessageChannel&gt;, TMessage&gt;<div class="where">where
+    TMessage: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,
+    TMessageChannel: <a class="trait" href="../../../message/message_channel/trait.IMessageChannel.html" title="trait rsiot::message::message_channel::IMessageChannel">IMessageChannel</a> + 'static,
+    Self: Sync,</div></h3></section></summary><div class="impl-items"><section id="method.process-18" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_redis_client/component.rs.html#19-30">source</a><a href="#method.process-18" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_redis_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_redis_client::config::ConfigAlias">ConfigAlias</a>&lt;TMessage, TMessageChannel&gt;,
+    input: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_influxdb/component.rs.html#14-31">source</a><a href="#impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_influxdb/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_influxdb::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_influxdb/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_influxdb::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-7" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_influxdb/component.rs.html#18-30">source</a><a href="#method.process-7" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_influxdb/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_influxdb::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E-1" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_http_client/component.rs.html#12-28">source</a><a href="#impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E-1" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_http_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_http_client::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_http_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_http_client::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-10" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_http_client/component.rs.html#16-27">source</a><a href="#method.process-10" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_http_client/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_http_client::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E-2" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_http_server/component.rs.html#12-24">source</a><a href="#impl-IComponentProcess%3CConfigAlias%3CTMsg%3E,+TMsg%3E-for-Component%3CConfigAlias%3CTMsg%3E,+TMsg%3E-2" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_http_server/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_http_server::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_http_server/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_http_server::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-17" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_http_server/component.rs.html#16-23">source</a><a href="#method.process-17" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_http_server/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_http_server::config::ConfigAlias">ConfigAlias</a>&lt;TMsg&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigAlias,+TMsg%3E-for-Component%3CConfigAlias,+TMsg%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_timescaledb/component.rs.html#11-27">source</a><a href="#impl-IComponentProcess%3CConfigAlias,+TMsg%3E-for-Component%3CConfigAlias,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_timescaledb/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_timescaledb::config::ConfigAlias">ConfigAlias</a>, TMsg&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_timescaledb/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_timescaledb::config::ConfigAlias">ConfigAlias</a>, TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a>,</div></h3></section></summary><div class="impl-items"><section id="method.process-11" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_timescaledb/component.rs.html#15-26">source</a><a href="#method.process-11" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_timescaledb/config/struct.ConfigAlias.html" title="struct rsiot::components::cmp_timescaledb::config::ConfigAlias">ConfigAlias</a>,
+    input: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfigNewType%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigNewType%3CTMessage%3E,+TMessage%3E" class="impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_modbus_client/component.rs.html#12-28">source</a><a href="#impl-IComponentProcess%3CConfigNewType%3CTMessage%3E,+TMessage%3E-for-Component%3CConfigNewType%3CTMessage%3E,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMessage&gt; <a class="trait" href="trait.IComponentProcess.html" title="trait rsiot::executor::component::single_thread::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="../../../components/cmp_modbus_client/config/struct.ConfigNewType.html" title="struct rsiot::components::cmp_modbus_client::config::ConfigNewType">ConfigNewType</a>&lt;TMessage&gt;, TMessage&gt; for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;<a class="struct" href="../../../components/cmp_modbus_client/config/struct.ConfigNewType.html" title="struct rsiot::components::cmp_modbus_client::config::ConfigNewType">ConfigNewType</a>&lt;TMessage&gt;, TMessage&gt;<div class="where">where
+    TMessage: <a class="trait" href="../../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><section id="method.process-8" class="method trait-impl"><a class="src rightside" href="../../../../src/rsiot/components/cmp_modbus_client/component.rs.html#17-27">source</a><a href="#method.process-8" class="anchor">§</a><h4 class="code-header">fn <a href="trait.IComponentProcess.html#tymethod.process" class="fn">process</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    config: <a class="struct" href="../../../components/cmp_modbus_client/config/struct.ConfigNewType.html" title="struct rsiot::components::cmp_modbus_client::config::ConfigNewType">ConfigNewType</a>&lt;TMessage&gt;,
+    in_out: <a class="struct" href="../../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMessage&gt;
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;(), <a class="enum" href="../../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt; + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></div></details></div><h2 id="synthetic-implementations" class="section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor">§</a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-Component%3CTConfig,+TMessage%3E" class="impl"><a href="#impl-RefUnwindSafe-for-Component%3CTConfig,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMessage&gt; !RefUnwindSafe for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMessage&gt;</h3></section><section id="impl-Send-for-Component%3CTConfig,+TMessage%3E" class="impl"><a href="#impl-Send-for-Component%3CTConfig,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMessage&gt; Send for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMessage&gt;<div class="where">where
+    TConfig: Send,
+    TMessage: Send + Sync,</div></h3></section><section id="impl-Sync-for-Component%3CTConfig,+TMessage%3E" class="impl"><a href="#impl-Sync-for-Component%3CTConfig,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMessage&gt; Sync for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMessage&gt;<div class="where">where
+    TConfig: Sync,
+    TMessage: Send + Sync,</div></h3></section><section id="impl-Unpin-for-Component%3CTConfig,+TMessage%3E" class="impl"><a href="#impl-Unpin-for-Component%3CTConfig,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMessage&gt; Unpin for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMessage&gt;<div class="where">where
+    TConfig: Unpin,</div></h3></section><section id="impl-UnwindSafe-for-Component%3CTConfig,+TMessage%3E" class="impl"><a href="#impl-UnwindSafe-for-Component%3CTConfig,+TMessage%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TConfig, TMessage&gt; !UnwindSafe for <a class="struct" href="struct.Component.html" title="struct rsiot::executor::component::single_thread::Component">Component</a>&lt;TConfig, TMessage&gt;</h3></section></div><h2 id="blanket-implementations" class="section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor">§</a></h2><div id="blanket-implementations-list"><details class="toggle implementors-toggle"><summary><section id="impl-Any-for-T" class="impl"><a href="#impl-Any-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Any for T<div class="where">where
+    T: 'static + ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl"><a href="#method.type_id" class="anchor">§</a><h4 class="code-header">fn <a class="fn">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-T" class="impl"><a href="#impl-Borrow%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<div class="where">where
+    T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl"><a href="#method.borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-T" class="impl"><a href="#impl-BorrowMut%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<div class="where">where
+    T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl"><a href="#method.borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Conv-for-T" class="impl"><a href="#impl-Conv-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Conv for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.conv" class="method trait-impl"><a href="#method.conv" class="anchor">§</a><h4 class="code-header">fn <a class="fn">conv</a>&lt;T&gt;(self) -&gt; T<div class="where">where
+    Self: Into&lt;T&gt;,</div></h4></section></summary><div class='docblock'>Converts <code>self</code> into <code>T</code> using <code>Into&lt;T&gt;</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Downcast-for-T" class="impl"><a href="#impl-Downcast-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Downcast for T<div class="where">where
+    T: Any,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.into_any" class="method trait-impl"><a href="#method.into_any" class="anchor">§</a><h4 class="code-header">fn <a class="fn">into_any</a>(self: Box&lt;T&gt;) -&gt; Box&lt;dyn Any&gt;</h4></section></summary><div class='docblock'>Convert <code>Box&lt;dyn Trait&gt;</code> (where <code>Trait: Downcast</code>) to <code>Box&lt;dyn Any&gt;</code>. <code>Box&lt;dyn Any&gt;</code> can
+then be further <code>downcast</code> into <code>Box&lt;ConcreteType&gt;</code> where <code>ConcreteType</code> implements <code>Trait</code>.</div></details><details class="toggle method-toggle" open><summary><section id="method.into_any_rc" class="method trait-impl"><a href="#method.into_any_rc" class="anchor">§</a><h4 class="code-header">fn <a class="fn">into_any_rc</a>(self: Rc&lt;T&gt;) -&gt; Rc&lt;dyn Any&gt;</h4></section></summary><div class='docblock'>Convert <code>Rc&lt;Trait&gt;</code> (where <code>Trait: Downcast</code>) to <code>Rc&lt;Any&gt;</code>. <code>Rc&lt;Any&gt;</code> can then be
+further <code>downcast</code> into <code>Rc&lt;ConcreteType&gt;</code> where <code>ConcreteType</code> implements <code>Trait</code>.</div></details><details class="toggle method-toggle" open><summary><section id="method.as_any" class="method trait-impl"><a href="#method.as_any" class="anchor">§</a><h4 class="code-header">fn <a class="fn">as_any</a>(&amp;self) -&gt; &amp;(dyn Any + 'static)</h4></section></summary><div class='docblock'>Convert <code>&amp;Trait</code> (where <code>Trait: Downcast</code>) to <code>&amp;Any</code>. This is needed since Rust cannot
+generate <code>&amp;Any</code>’s vtable from <code>&amp;Trait</code>’s.</div></details><details class="toggle method-toggle" open><summary><section id="method.as_any_mut" class="method trait-impl"><a href="#method.as_any_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">as_any_mut</a>(&amp;mut self) -&gt; &amp;mut (dyn Any + 'static)</h4></section></summary><div class='docblock'>Convert <code>&amp;mut Trait</code> (where <code>Trait: Downcast</code>) to <code>&amp;Any</code>. This is needed since Rust cannot
+generate <code>&amp;mut Any</code>’s vtable from <code>&amp;mut Trait</code>’s.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-DowncastSync-for-T" class="impl"><a href="#impl-DowncastSync-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; DowncastSync for T<div class="where">where
+    T: Any + Send + Sync,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.into_any_arc" class="method trait-impl"><a href="#method.into_any_arc" class="anchor">§</a><h4 class="code-header">fn <a class="fn">into_any_arc</a>(self: Arc&lt;T&gt;) -&gt; Arc&lt;dyn Any + Sync + Send&gt;</h4></section></summary><div class='docblock'>Convert <code>Arc&lt;Trait&gt;</code> (where <code>Trait: Downcast</code>) to <code>Arc&lt;Any&gt;</code>. <code>Arc&lt;Any&gt;</code> can then be
+further <code>downcast</code> into <code>Arc&lt;ConcreteType&gt;</code> where <code>ConcreteType</code> implements <code>Trait</code>.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FmtForward-for-T" class="impl"><a href="#impl-FmtForward-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; FmtForward for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.fmt_binary" class="method trait-impl"><a href="#method.fmt_binary" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_binary</a>(self) -&gt; FmtBinary&lt;Self&gt;<div class="where">where
+    Self: Binary,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Binary</code> implementation when <code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_display" class="method trait-impl"><a href="#method.fmt_display" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_display</a>(self) -&gt; FmtDisplay&lt;Self&gt;<div class="where">where
+    Self: Display,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Display</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_lower_exp" class="method trait-impl"><a href="#method.fmt_lower_exp" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_lower_exp</a>(self) -&gt; FmtLowerExp&lt;Self&gt;<div class="where">where
+    Self: LowerExp,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>LowerExp</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_lower_hex" class="method trait-impl"><a href="#method.fmt_lower_hex" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_lower_hex</a>(self) -&gt; FmtLowerHex&lt;Self&gt;<div class="where">where
+    Self: LowerHex,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>LowerHex</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_octal" class="method trait-impl"><a href="#method.fmt_octal" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_octal</a>(self) -&gt; FmtOctal&lt;Self&gt;<div class="where">where
+    Self: Octal,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Octal</code> implementation when <code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_pointer" class="method trait-impl"><a href="#method.fmt_pointer" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_pointer</a>(self) -&gt; FmtPointer&lt;Self&gt;<div class="where">where
+    Self: Pointer,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>Pointer</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_upper_exp" class="method trait-impl"><a href="#method.fmt_upper_exp" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_upper_exp</a>(self) -&gt; FmtUpperExp&lt;Self&gt;<div class="where">where
+    Self: UpperExp,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>UpperExp</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_upper_hex" class="method trait-impl"><a href="#method.fmt_upper_hex" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_upper_hex</a>(self) -&gt; FmtUpperHex&lt;Self&gt;<div class="where">where
+    Self: UpperHex,</div></h4></section></summary><div class='docblock'>Causes <code>self</code> to use its <code>UpperHex</code> implementation when
+<code>Debug</code>-formatted.</div></details><details class="toggle method-toggle" open><summary><section id="method.fmt_list" class="method trait-impl"><a href="#method.fmt_list" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt_list</a>(self) -&gt; FmtList&lt;Self&gt;<div class="where">where
+    &amp;'a Self: for&lt;'a&gt; IntoIterator,</div></h4></section></summary><div class='docblock'>Formats each item in a sequence. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-T" class="impl"><a href="#impl-From%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.from" class="method trait-impl"><a href="#method.from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Instrument-for-T" class="impl"><a href="#impl-Instrument-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Instrument for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.instrument" class="method trait-impl"><a href="#method.instrument" class="anchor">§</a><h4 class="code-header">fn <a class="fn">instrument</a>(self, span: Span) -&gt; Instrumented&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the provided [<code>Span</code>], returning an
+<code>Instrumented</code> wrapper. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.in_current_span" class="method trait-impl"><a href="#method.in_current_span" class="anchor">§</a><h4 class="code-header">fn <a class="fn">in_current_span</a>(self) -&gt; Instrumented&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the <a href="super::Span::current()">current</a> <a href="crate::Span"><code>Span</code></a>, returning an
+<code>Instrumented</code> wrapper. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-T" class="impl"><a href="#impl-Into%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<div class="where">where
+    U: From&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.into" class="method trait-impl"><a href="#method.into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Pipe-for-T" class="impl"><a href="#impl-Pipe-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Pipe for T<div class="where">where
+    T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.pipe" class="method trait-impl"><a href="#method.pipe" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe</a>&lt;R&gt;(self, func: impl FnOnce(Self) -&gt; R) -&gt; R<div class="where">where
+    Self: Sized,</div></h4></section></summary><div class='docblock'>Pipes by value. This is generally the method you want to use. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_ref" class="method trait-impl"><a href="#method.pipe_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_ref</a>&lt;'a, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a Self) -&gt; R) -&gt; R<div class="where">where
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code> and passes that borrow into the pipe function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_ref_mut" class="method trait-impl"><a href="#method.pipe_ref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_ref_mut</a>&lt;'a, R&gt;(&amp;'a mut self, func: impl FnOnce(&amp;'a mut Self) -&gt; R) -&gt; R<div class="where">where
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code> and passes that borrow into the pipe function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_borrow" class="method trait-impl"><a href="#method.pipe_borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_borrow</a>&lt;'a, B, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a B) -&gt; R) -&gt; R<div class="where">where
+    Self: Borrow&lt;B&gt;,
+    B: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code>, then passes <code>self.borrow()</code> into the pipe function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_borrow_mut" class="method trait-impl"><a href="#method.pipe_borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_borrow_mut</a>&lt;'a, B, R&gt;(
+    &amp;'a mut self,
+    func: impl FnOnce(&amp;'a mut B) -&gt; R
+) -&gt; R<div class="where">where
+    Self: BorrowMut&lt;B&gt;,
+    B: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code>, then passes <code>self.borrow_mut()</code> into the pipe
+function. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_as_ref" class="method trait-impl"><a href="#method.pipe_as_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_as_ref</a>&lt;'a, U, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a U) -&gt; R) -&gt; R<div class="where">where
+    Self: AsRef&lt;U&gt;,
+    U: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code>, then passes <code>self.as_ref()</code> into the pipe function.</div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_as_mut" class="method trait-impl"><a href="#method.pipe_as_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_as_mut</a>&lt;'a, U, R&gt;(&amp;'a mut self, func: impl FnOnce(&amp;'a mut U) -&gt; R) -&gt; R<div class="where">where
+    Self: AsMut&lt;U&gt;,
+    U: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code>, then passes <code>self.as_mut()</code> into the pipe
+function.</div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_deref" class="method trait-impl"><a href="#method.pipe_deref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_deref</a>&lt;'a, T, R&gt;(&amp;'a self, func: impl FnOnce(&amp;'a T) -&gt; R) -&gt; R<div class="where">where
+    Self: Deref&lt;Target = T&gt;,
+    T: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Borrows <code>self</code>, then passes <code>self.deref()</code> into the pipe function.</div></details><details class="toggle method-toggle" open><summary><section id="method.pipe_deref_mut" class="method trait-impl"><a href="#method.pipe_deref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">pipe_deref_mut</a>&lt;'a, T, R&gt;(
+    &amp;'a mut self,
+    func: impl FnOnce(&amp;'a mut T) -&gt; R
+) -&gt; R<div class="where">where
+    Self: DerefMut&lt;Target = T&gt; + Deref,
+    T: 'a + ?Sized,
+    R: 'a,</div></h4></section></summary><div class='docblock'>Mutably borrows <code>self</code>, then passes <code>self.deref_mut()</code> into the pipe
+function.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Same-for-T" class="impl"><a class="src rightside" href="https://docs.rs/typenum/1.17.0/src/typenum/type_operators.rs.html#34">source</a><a href="#impl-Same-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://docs.rs/typenum/1.17.0/typenum/type_operators/trait.Same.html" title="trait typenum::type_operators::Same">Same</a> for T</h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Output" class="associatedtype trait-impl"><a href="#associatedtype.Output" class="anchor">§</a><h4 class="code-header">type <a href="https://docs.rs/typenum/1.17.0/typenum/type_operators/trait.Same.html#associatedtype.Output" class="associatedtype">Output</a> = T</h4></section></summary><div class='docblock'>Should always be <code>Self</code></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Tap-for-T" class="impl"><a href="#impl-Tap-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Tap for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.tap" class="method trait-impl"><a href="#method.tap" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap</a>(self, func: impl FnOnce(&amp;Self)) -&gt; Self</h4></section></summary><div class='docblock'>Immutable access to a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_mut" class="method trait-impl"><a href="#method.tap_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_mut</a>(self, func: impl FnOnce(&amp;mut Self)) -&gt; Self</h4></section></summary><div class='docblock'>Mutable access to a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow" class="method trait-impl"><a href="#method.tap_borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow</a>&lt;B&gt;(self, func: impl FnOnce(&amp;B)) -&gt; Self<div class="where">where
+    Self: Borrow&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Immutable access to the <code>Borrow&lt;B&gt;</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow_mut" class="method trait-impl"><a href="#method.tap_borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow_mut</a>&lt;B&gt;(self, func: impl FnOnce(&amp;mut B)) -&gt; Self<div class="where">where
+    Self: BorrowMut&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Mutable access to the <code>BorrowMut&lt;B&gt;</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref" class="method trait-impl"><a href="#method.tap_ref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref</a>&lt;R&gt;(self, func: impl FnOnce(&amp;R)) -&gt; Self<div class="where">where
+    Self: AsRef&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Immutable access to the <code>AsRef&lt;R&gt;</code> view of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref_mut" class="method trait-impl"><a href="#method.tap_ref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref_mut</a>&lt;R&gt;(self, func: impl FnOnce(&amp;mut R)) -&gt; Self<div class="where">where
+    Self: AsMut&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Mutable access to the <code>AsMut&lt;R&gt;</code> view of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref" class="method trait-impl"><a href="#method.tap_deref" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref</a>&lt;T&gt;(self, func: impl FnOnce(&amp;T)) -&gt; Self<div class="where">where
+    Self: Deref&lt;Target = T&gt;,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Immutable access to the <code>Deref::Target</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref_mut" class="method trait-impl"><a href="#method.tap_deref_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref_mut</a>&lt;T&gt;(self, func: impl FnOnce(&amp;mut T)) -&gt; Self<div class="where">where
+    Self: DerefMut&lt;Target = T&gt; + Deref,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Mutable access to the <code>Deref::Target</code> of a value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.tap_dbg" class="method trait-impl"><a href="#method.tap_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_dbg</a>(self, func: impl FnOnce(&amp;Self)) -&gt; Self</h4></section></summary><div class='docblock'>Calls <code>.tap()</code> only in debug builds, and is erased in release builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_mut_dbg" class="method trait-impl"><a href="#method.tap_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_mut_dbg</a>(self, func: impl FnOnce(&amp;mut Self)) -&gt; Self</h4></section></summary><div class='docblock'>Calls <code>.tap_mut()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow_dbg" class="method trait-impl"><a href="#method.tap_borrow_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow_dbg</a>&lt;B&gt;(self, func: impl FnOnce(&amp;B)) -&gt; Self<div class="where">where
+    Self: Borrow&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_borrow()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_borrow_mut_dbg" class="method trait-impl"><a href="#method.tap_borrow_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_borrow_mut_dbg</a>&lt;B&gt;(self, func: impl FnOnce(&amp;mut B)) -&gt; Self<div class="where">where
+    Self: BorrowMut&lt;B&gt;,
+    B: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_borrow_mut()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref_dbg" class="method trait-impl"><a href="#method.tap_ref_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref_dbg</a>&lt;R&gt;(self, func: impl FnOnce(&amp;R)) -&gt; Self<div class="where">where
+    Self: AsRef&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_ref()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_ref_mut_dbg" class="method trait-impl"><a href="#method.tap_ref_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_ref_mut_dbg</a>&lt;R&gt;(self, func: impl FnOnce(&amp;mut R)) -&gt; Self<div class="where">where
+    Self: AsMut&lt;R&gt;,
+    R: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_ref_mut()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref_dbg" class="method trait-impl"><a href="#method.tap_deref_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref_dbg</a>&lt;T&gt;(self, func: impl FnOnce(&amp;T)) -&gt; Self<div class="where">where
+    Self: Deref&lt;Target = T&gt;,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_deref()</code> only in debug builds, and is erased in release
+builds.</div></details><details class="toggle method-toggle" open><summary><section id="method.tap_deref_mut_dbg" class="method trait-impl"><a href="#method.tap_deref_mut_dbg" class="anchor">§</a><h4 class="code-header">fn <a class="fn">tap_deref_mut_dbg</a>&lt;T&gt;(self, func: impl FnOnce(&amp;mut T)) -&gt; Self<div class="where">where
+    Self: DerefMut&lt;Target = T&gt; + Deref,
+    T: ?Sized,</div></h4></section></summary><div class='docblock'>Calls <code>.tap_deref_mut()</code> only in debug builds, and is erased in release
+builds.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryConv-for-T" class="impl"><a href="#impl-TryConv-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; TryConv for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.try_conv" class="method trait-impl"><a href="#method.try_conv" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_conv</a>&lt;T&gt;(self) -&gt; Result&lt;T, Self::Error&gt;<div class="where">where
+    Self: TryInto&lt;T&gt;,</div></h4></section></summary><div class='docblock'>Attempts to convert <code>self</code> into <code>T</code> using <code>TryInto&lt;T&gt;</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-T" class="impl"><a href="#impl-TryFrom%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<div class="where">where
+    U: Into&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl"><a href="#associatedtype.Error" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl"><a href="#method.try_from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-T" class="impl"><a href="#impl-TryInto%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<div class="where">where
+    U: TryFrom&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl"><a href="#associatedtype.Error-1" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VZip%3CV%3E-for-T" class="impl"><a href="#impl-VZip%3CV%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;V, T&gt; VZip&lt;V&gt; for T<div class="where">where
+    V: MultiLane&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.vzip" class="method trait-impl"><a href="#method.vzip" class="anchor">§</a><h4 class="code-header">fn <a class="fn">vzip</a>(self) -&gt; V</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-WithSubscriber-for-T" class="impl"><a href="#impl-WithSubscriber-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; WithSubscriber for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.with_subscriber" class="method trait-impl"><a href="#method.with_subscriber" class="anchor">§</a><h4 class="code-header">fn <a class="fn">with_subscriber</a>&lt;S&gt;(self, subscriber: S) -&gt; WithDispatch&lt;Self&gt;<div class="where">where
+    S: Into&lt;Dispatch&gt;,</div></h4></section></summary><div class='docblock'>Attaches the provided <a href="super::Subscriber"><code>Subscriber</code></a> to this type, returning a
+[<code>WithDispatch</code>] wrapper. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.with_current_subscriber" class="method trait-impl"><a href="#method.with_current_subscriber" class="anchor">§</a><h4 class="code-header">fn <a class="fn">with_current_subscriber</a>(self) -&gt; WithDispatch&lt;Self&gt;</h4></section></summary><div class='docblock'>Attaches the current <a href="crate::dispatcher#setting-the-default-subscriber">default</a> <a href="super::Subscriber"><code>Subscriber</code></a> to this type, returning a
+[<code>WithDispatch</code>] wrapper. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Within%3CG2%3E-for-G1" class="impl"><a href="#impl-Within%3CG2%3E-for-G1" class="anchor">§</a><h3 class="code-header">impl&lt;G1, G2&gt; Within&lt;G2&gt; for G1<div class="where">where
+    G2: Contains&lt;G1&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.is_within" class="method trait-impl"><a href="#method.is_within" class="anchor">§</a><h4 class="code-header">fn <a class="fn">is_within</a>(&amp;self, b: &amp;G2) -&gt; bool</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Within%3CG2%3E-for-G1-1" class="impl"><a href="#impl-Within%3CG2%3E-for-G1-1" class="anchor">§</a><h3 class="code-header">impl&lt;G1, G2&gt; Within&lt;G2&gt; for G1<div class="where">where
+    G2: Contains&lt;G1&gt;,</div></h3></section></summary><div class="impl-items"><section id="method.is_within-1" class="method trait-impl"><a href="#method.is_within-1" class="anchor">§</a><h4 class="code-header">fn <a class="fn">is_within</a>(&amp;self, b: &amp;G2) -&gt; bool</h4></section></div></details></div></section></div></main></body></html>

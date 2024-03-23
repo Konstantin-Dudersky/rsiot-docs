@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["System"],"mod":["auth_request_by_login","auth_request_by_token","auth_response_error","auth_response_ok","ping_pong"],"struct":["AuthRequestByLogin","AuthRequestByToken","AuthResponseErr","AuthResponseOk","Ping","Pong"]};
