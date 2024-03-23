@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["conv_u16x2_to_u8x4","is_wrong_len"]};

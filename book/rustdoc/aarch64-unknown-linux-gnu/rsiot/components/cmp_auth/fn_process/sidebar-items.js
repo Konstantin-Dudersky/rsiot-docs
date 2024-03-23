@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","get_credentials","process_request_by_login","process_request_by_token","task_main"]};

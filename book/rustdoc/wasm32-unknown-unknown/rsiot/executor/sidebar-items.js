@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ComponentError"],"mod":["cache","cmp_in_out","component","component_executor","error","types"],"struct":["Cache","CmpInOut","Component","ComponentExecutor","ComponentExecutorConfig"],"trait":["IComponent","IComponentProcess"],"type":["ComponentResult"]};

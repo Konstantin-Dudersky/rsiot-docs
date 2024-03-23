@@ -1,3 +1,0 @@
-(function() {var implementors = {
-"rsiot":[["impl TryFrom&lt;<a class=\"struct\" href=\"rsiot/components/cmp_influxdb/struct.LineProtocolItem.html\" title=\"struct rsiot::components::cmp_influxdb::LineProtocolItem\">LineProtocolItem</a>&gt; for String"],["impl TryFrom&lt;&amp;<a class=\"struct\" href=\"rsiot/components/cmp_influxdb/struct.LineProtocolItem.html\" title=\"struct rsiot::components::cmp_influxdb::LineProtocolItem\">LineProtocolItem</a>&gt; for String"]]
-};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

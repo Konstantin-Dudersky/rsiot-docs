@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["AggType","ValueType"],"mod":["agg_type","eav_model","value_type"],"struct":["EavModel"]};

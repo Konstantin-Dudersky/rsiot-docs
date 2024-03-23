@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"mod":["component","config","error","fn_process","http_client_config"],"type":["Cmp","Result"]};

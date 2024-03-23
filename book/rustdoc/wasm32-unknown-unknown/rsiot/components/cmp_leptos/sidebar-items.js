@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"macro":["create_signal_from_msg"],"mod":["cmp_leptos","components","create_signal_from_msg","error","global_state","utils"],"struct":["Config","GlobalState"],"type":["Cmp","Result"]};

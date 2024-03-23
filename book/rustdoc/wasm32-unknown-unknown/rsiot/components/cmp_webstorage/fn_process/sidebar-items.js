@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","load_from_storage","save_to_storage"]};

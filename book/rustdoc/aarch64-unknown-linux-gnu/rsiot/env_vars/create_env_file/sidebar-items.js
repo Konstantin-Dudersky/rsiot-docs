@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["create_env_file","line_to_upper","lines_to_upper"]};

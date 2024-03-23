@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["async_task_utils","component","config","errors","fn_process","handle_ws_connection"],"struct":["Config"],"type":["Cmp","Result"]};

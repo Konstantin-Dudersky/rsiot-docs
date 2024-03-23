@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["load_config","load_from_env","load_from_file"]};
