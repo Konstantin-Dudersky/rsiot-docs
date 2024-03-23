@@ -79,11 +79,27 @@
 <a href="#77" id="77">77</a>
 <a href="#78" id="78">78</a>
 <a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Пример работы с GPIO компьютера Raspberry Pi
+//!
+//! Скомпилировать и загрузить на целевую систему:
 //!
 //! ```bash
 //! cargo build --example cmp_raspberrypi --target="aarch64-unknown-linux-gnu" --features="cmp_raspberrypi" --release; scp target/aarch64-unknown-linux-gnu/release/examples/cmp_raspberrypi user@target:/home/user/
-//! ````
+//! ```
+//!
+//! Запустить на целевой системе:
+//!
+//! ```bash
+//! sudo ./cmp_raspberry
+//! ```
 
 </span><span class="kw">mod </span>message;
 
@@ -133,7 +149,7 @@
 
     <span class="kw">let </span><span class="kw-2">mut </span>flag = <span class="bool-val">false</span>;
     <span class="kw">let </span>config_inject_periodic = cmp_inject_periodic::Config {
-        period: Duration::from_secs(<span class="number">2</span>),
+        period: Duration::from_secs(<span class="number">5</span>),
         fn_periodic: <span class="kw">move </span>|| {
             <span class="kw">let </span>msg = Message::new_custom(Custom::SetOutput2(flag));
             flag = !flag;
@@ -150,8 +166,8 @@
     ComponentExecutor::&lt;Custom&gt;::new(executor_config)
         .add_cmp(cmp_logger::Cmp::new(logger_config))
         .add_cmp(cmp_raspberrypi_gpio::Cmp::new(config_raspberrypi_gpio))
-        <span class="comment">// .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
-        </span>.wait_result()
+        .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
+        .wait_result()
         .<span class="kw">await
         </span>.unwrap();
 }

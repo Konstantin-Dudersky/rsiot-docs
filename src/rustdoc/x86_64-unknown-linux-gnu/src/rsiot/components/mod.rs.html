@@ -108,6 +108,14 @@
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
@@ -139,7 +147,11 @@
 <span class="kw">pub mod </span>cmp_external_fn_process;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_http_client"</span>)]
-#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
+#[cfg(any(
+    aarch64_linux_android,
+    aarch64__unknown__linux__gnu,
+    x86_64__unknown__linux__gnu
+))]
 </span><span class="kw">pub mod </span>cmp_http_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_http_client_wasm"</span>)]
@@ -182,7 +194,11 @@
 </span><span class="kw">pub mod </span>cmp_redis_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_slint"</span>)]
-#[cfg(any(aarch64__unknown__linux__gnu, x86_64__unknown__linux__gnu))]
+#[cfg(any(
+    aarch64_linux_android,
+    aarch64__unknown__linux__gnu,
+    x86_64__unknown__linux__gnu
+))]
 </span><span class="kw">pub mod </span>cmp_slint;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
