@@ -72,6 +72,8 @@
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>esp_idf_svc::wifi::EspWifi;
@@ -81,12 +83,14 @@
 
 <span class="kw">use </span><span class="kw">super</span>::Config;
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(<span class="kw-2">mut </span>config: Config, _in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config, _in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
+    <span class="kw">let </span><span class="kw-2">mut </span>driver = EspWifi::new(config.peripherals, config.event_loop.clone(), <span class="prelude-val">None</span>).unwrap();
+
     wifi_setup(
-        <span class="kw-2">&amp;mut </span>config.driver,
+        <span class="kw-2">&amp;mut </span>driver,
         config.event_loop,
         <span class="comment">// Configuration::Mixed(
         //     ClientConfiguration {

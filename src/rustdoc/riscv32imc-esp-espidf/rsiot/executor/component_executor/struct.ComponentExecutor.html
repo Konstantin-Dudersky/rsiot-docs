@@ -621,7 +621,7 @@ spawn_local(context);
 
     <span class="kw">use </span>esp_idf_svc::{
         eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches, wifi::EspWifi,
+        sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
     <span class="kw">use </span>tracing::Level;
@@ -682,18 +682,18 @@ spawn_local(context);
 
     <span class="comment">// wifi
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
+        peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
-        driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
     };
 
     <span class="comment">// GPIO
     </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
         inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
-            driver: peripherals.pins.gpio9.into(),
+            peripherals: peripherals.pins.gpio9.into(),
             fn_output: |value| Message::new_custom(Custom::BootButton(value)),
         }],
         outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
-            driver: peripherals.pins.gpio0.into(),
+            peripherals: peripherals.pins.gpio0.into(),
             fn_input: |msg| <span class="kw">match </span>msg.data {
                 MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
                 <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -1323,7 +1323,7 @@ spawn_local(context);
 
     <span class="kw">use </span>esp_idf_svc::{
         eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches, wifi::EspWifi,
+        sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
     <span class="kw">use </span>tracing::Level;
@@ -1384,18 +1384,18 @@ spawn_local(context);
 
     <span class="comment">// wifi
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
+        peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
-        driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
     };
 
     <span class="comment">// GPIO
     </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
         inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
-            driver: peripherals.pins.gpio9.into(),
+            peripherals: peripherals.pins.gpio9.into(),
             fn_output: |value| Message::new_custom(Custom::BootButton(value)),
         }],
         outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
-            driver: peripherals.pins.gpio0.into(),
+            peripherals: peripherals.pins.gpio0.into(),
             fn_input: |msg| <span class="kw">match </span>msg.data {
                 MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
                 <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -2027,7 +2027,7 @@ spawn_local(context);
 
     <span class="kw">use </span>esp_idf_svc::{
         eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches, wifi::EspWifi,
+        sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
     <span class="kw">use </span>tracing::Level;
@@ -2088,18 +2088,18 @@ spawn_local(context);
 
     <span class="comment">// wifi
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
+        peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
-        driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
     };
 
     <span class="comment">// GPIO
     </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
         inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
-            driver: peripherals.pins.gpio9.into(),
+            peripherals: peripherals.pins.gpio9.into(),
             fn_output: |value| Message::new_custom(Custom::BootButton(value)),
         }],
         outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
-            driver: peripherals.pins.gpio0.into(),
+            peripherals: peripherals.pins.gpio0.into(),
             fn_input: |msg| <span class="kw">match </span>msg.data {
                 MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
                 <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,

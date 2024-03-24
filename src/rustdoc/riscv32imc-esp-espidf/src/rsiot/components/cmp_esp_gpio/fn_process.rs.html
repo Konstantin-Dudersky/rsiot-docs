@@ -92,7 +92,7 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="kw">let </span><span class="kw-2">mut </span>pin = PinDriver::input(config_input.driver).unwrap();
+    <span class="kw">let </span><span class="kw-2">mut </span>pin = PinDriver::input(config_input.peripherals).unwrap();
     <span class="kw">loop </span>{
         <span class="kw">let </span>level = pin.get_level();
         <span class="kw">let </span>level = gpio_level_to_bool(<span class="kw-2">&amp;</span>level);
@@ -106,7 +106,7 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="kw">let </span><span class="kw-2">mut </span>pin = PinDriver::output(config_output.driver).unwrap();
+    <span class="kw">let </span><span class="kw-2">mut </span>pin = PinDriver::output(config_output.peripherals).unwrap();
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = in_out.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>level = (config_output.fn_input)(msg);
         <span class="kw">let </span><span class="prelude-val">Some</span>(level) = level <span class="kw">else </span>{ <span class="kw">continue </span>};

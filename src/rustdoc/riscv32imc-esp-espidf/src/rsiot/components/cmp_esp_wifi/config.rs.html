@@ -9,12 +9,12 @@
 <a href="#7" id="7">7</a>
 <a href="#8" id="8">8</a>
 <a href="#9" id="9">9</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::{eventloop::EspSystemEventLoop, wifi::EspWifi};
+</pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::{eventloop::EspSystemEventLoop, hal::modem::Modem};
 
 <span class="doccomment">/// Конфигурация cmp_esp_wifi
 </span><span class="kw">pub struct </span>Config {
-    <span class="doccomment">/// Ссылка на драйвер для подключения
-    </span><span class="kw">pub </span>driver: EspWifi&lt;<span class="lifetime">'static</span>&gt;,
+    <span class="doccomment">/// Модем для подключения
+    </span><span class="kw">pub </span>peripherals: Modem,
     <span class="doccomment">/// Ссылка на цикл событий
     </span><span class="kw">pub </span>event_loop: EspSystemEventLoop,
 }

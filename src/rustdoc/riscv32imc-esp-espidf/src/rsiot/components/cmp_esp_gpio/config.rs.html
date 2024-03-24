@@ -68,7 +68,7 @@
     </span>TMsg: MsgDataBound,
 {
     <span class="doccomment">/// Пин
-    </span><span class="kw">pub </span>driver: AnyInputPin,
+    </span><span class="kw">pub </span>peripherals: AnyInputPin,
 
     <span class="doccomment">/// Функция преобразования значения пина в сообщение
     </span><span class="kw">pub </span>fn_output: <span class="kw">fn</span>(bool) -&gt; Message&lt;TMsg&gt;,
@@ -80,7 +80,7 @@
     </span>TMsg: MsgDataBound,
 {
     <span class="doccomment">/// Пин
-    </span><span class="kw">pub </span>driver: AnyOutputPin,
+    </span><span class="kw">pub </span>peripherals: AnyOutputPin,
 
     <span class="doccomment">/// Функция преобразования входящих сообщений в сигналы управления
     ///
