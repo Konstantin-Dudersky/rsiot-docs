@@ -19,23 +19,35 @@
 <a href="#17" id="17">17</a>
 <a href="#18" id="18">18</a>
 <a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>hmac::digest::InvalidLength;
 
-<span class="attr">#[derive(Debug, thiserror::Error)]
+<span class="doccomment">/// Ошибки cmp_auth
+</span><span class="attr">#[derive(Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Error {
-    <span class="attr">#[error(<span class="string">"TokioTaskJoinError: {0}"</span>)]
+    <span class="doccomment">/// TokioTaskJoinError
+    </span><span class="attr">#[error(<span class="string">"TokioTaskJoinError: {0}"</span>)]
     </span>TokioTaskJoinError(<span class="attr">#[from] </span>tokio::task::JoinError),
 
-    <span class="attr">#[error(<span class="string">"CmpOutput: {0}"</span>)]
+    <span class="doccomment">/// CmpOutput
+    </span><span class="attr">#[error(<span class="string">"CmpOutput: {0}"</span>)]
     </span>CmpOutput(<span class="kw">crate</span>::executor::ComponentError),
 
-    <span class="attr">#[error(<span class="string">"ProcessRequest: {0}"</span>)]
+    <span class="doccomment">/// ProcessRequest
+    </span><span class="attr">#[error(<span class="string">"ProcessRequest: {0}"</span>)]
     </span>ProcessRequest(String),
 
-    <span class="attr">#[error(<span class="string">"Hmac error: {0}"</span>)]
+    <span class="doccomment">/// Hmac error
+    </span><span class="attr">#[error(<span class="string">"Hmac error: {0}"</span>)]
     </span>Hmac(<span class="attr">#[from] </span>InvalidLength),
 
-    <span class="attr">#[error(<span class="string">"Jwt error: {0}"</span>)]
+    <span class="doccomment">/// Jwt error
+    </span><span class="attr">#[error(<span class="string">"Jwt error: {0}"</span>)]
     </span>Jwt(<span class="attr">#[from] </span>jwt::Error),
 }
 </code></pre></div></section></main></body></html>

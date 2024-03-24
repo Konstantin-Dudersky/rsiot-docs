@@ -144,7 +144,7 @@
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_http_client::{<span class="self">self</span>, http_client_config},
+            cmp_http_client::{<span class="self">self</span>},
             cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
@@ -192,16 +192,16 @@
         header: <span class="string">"HTTP response"</span>.into(),
     };
 
-    <span class="kw">let </span>http_config = http_client_config::Config::&lt;Data&gt; {
-        connection_config: http_client_config::ConnectionConfig {
+    <span class="kw">let </span>http_config = cmp_http_client::Config::&lt;Data&gt; {
+        connection_config: cmp_http_client::ConnectionConfig {
             base_url: Url::parse(<span class="string">"http://127.0.0.1:80"</span>)<span class="question-mark">?</span>,
         },
-        requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
+        requests_input: <span class="macro">vec!</span>[cmp_http_client::RequestInput {
             fn_input: |msg| {
                 <span class="kw">let </span>msg = msg.get_custom_data()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
-                        <span class="kw">let </span>param = http_client_config::HttpParam::Get {
+                        <span class="kw">let </span>param = cmp_http_client::HttpParam::Get {
                             endpoint: <span class="string">"get"</span>.to_string(),
                         };
                         <span class="prelude-val">Some</span>(param)
@@ -217,9 +217,9 @@
             },
             on_failure: Vec::new,
         }],
-        requests_periodic: <span class="macro">vec!</span>[http_client_config::RequestPeriodic {
+        requests_periodic: <span class="macro">vec!</span>[cmp_http_client::RequestPeriodic {
             period: Duration::from_secs(<span class="number">5</span>),
-            http_param: http_client_config::HttpParam::Get {
+            http_param: cmp_http_client::HttpParam::Get {
                 endpoint: <span class="string">"get"</span>.to_string(),
             },
             on_success: |body| {

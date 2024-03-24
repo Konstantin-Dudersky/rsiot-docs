@@ -7,11 +7,21 @@
 <a href="#5" id="5">5</a>
 <a href="#6" id="6">6</a>
 <a href="#7" id="7">7</a>
+<a href="#8" id="8">8</a>
+<a href="#9" id="9">9</a>
+<a href="#10" id="10">10</a>
+<a href="#11" id="11">11</a>
+<a href="#12" id="12">12</a>
 </pre></div><pre class="rust"><code><span class="doccomment">/// Ответ от устройства
 </span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub enum </span>Response {
-    U16(Vec&lt;u16&gt;),
-    Bool(Vec&lt;bool&gt;),
-    Unit,
+    <span class="doccomment">/// Массив слов
+    </span>WordVector(Vec&lt;u16&gt;),
+
+    <span class="doccomment">/// Массив бит
+    </span>BitVector(Vec&lt;bool&gt;),
+
+    <span class="doccomment">/// Без ответа
+    </span>Unit,
 }
 </code></pre></div></section></main></body></html>

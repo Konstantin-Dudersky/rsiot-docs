@@ -211,6 +211,11 @@
 <a href="#209" id="209">209</a>
 <a href="#210" id="210">210</a>
 <a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация Redis-клиента
 //!
 //! Тестирование:
@@ -227,7 +232,8 @@
     <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;ConfigFnInputItem&lt;TMessageChannel&gt;&gt;&gt;&gt;;
 <span class="kw">pub type </span>FnOutput&lt;TMsg&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;&gt;;
 
-<span class="attr">#[derive(Clone, Debug)]
+<span class="doccomment">/// Конфигурация cmp_redis_client
+</span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Config&lt;TMsg, TMessageChannel&gt;
 <span class="kw">where
     </span>TMessageChannel: IMessageChannel,
@@ -359,13 +365,17 @@
     </span><span class="kw">pub </span>fn_output: FnOutput&lt;TMsg&gt;,
 }
 
-<span class="kw">pub struct </span>ConfigFnInputItem&lt;TMessageChannel&gt;
+<span class="doccomment">/// Структура с информацией для отправки данных в Redis
+</span><span class="kw">pub struct </span>ConfigFnInputItem&lt;TMessageChannel&gt;
 <span class="kw">where
     </span>TMessageChannel: IMessageChannel,
 {
-    <span class="kw">pub </span>channel: TMessageChannel,
-    <span class="kw">pub </span>key: String,
-    <span class="kw">pub </span>value: String,
+    <span class="doccomment">/// Канал Pub/Sub, в котором опубликовать сообщение
+    </span><span class="kw">pub </span>channel: TMessageChannel,
+    <span class="doccomment">/// Ключ для сохранения в кеше Redis
+    </span><span class="kw">pub </span>key: String,
+    <span class="doccomment">/// Значение для сохранения - само сообщение
+    </span><span class="kw">pub </span>value: String,
 }
 
 <span class="attr">#[cfg(test)]

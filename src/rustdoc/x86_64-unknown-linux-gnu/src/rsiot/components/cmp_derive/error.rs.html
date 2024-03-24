@@ -8,12 +8,18 @@
 <a href="#6" id="6">6</a>
 <a href="#7" id="7">7</a>
 <a href="#8" id="8">8</a>
-</pre></div><pre class="rust"><code><span class="attr">#[derive(Debug, thiserror::Error)]
+<a href="#9" id="9">9</a>
+<a href="#10" id="10">10</a>
+<a href="#11" id="11">11</a>
+</pre></div><pre class="rust"><code><span class="doccomment">/// Ошибки cmp_derive
+</span><span class="attr">#[derive(Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Error {
-    <span class="attr">#[error(<span class="string">"{0}"</span>)]
+    <span class="doccomment">/// TokioSynBroadcast
+    </span><span class="attr">#[error(<span class="string">"{0}"</span>)]
     </span>TokioSynBroadcast(String),
 
-    <span class="attr">#[error(<span class="string">"{0}"</span>)]
+    <span class="doccomment">/// TokioTaskJoin
+    </span><span class="attr">#[error(<span class="string">"{0}"</span>)]
     </span>TokioTaskJoin(<span class="attr">#[from] </span>tokio::task::JoinError),
 }
 </code></pre></div></section></main></body></html>

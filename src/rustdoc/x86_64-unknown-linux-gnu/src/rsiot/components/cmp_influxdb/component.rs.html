@@ -33,6 +33,7 @@
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
 <a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use </span>tracing::error;
@@ -65,5 +66,6 @@
     }
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;;
+<span class="doccomment">/// Компонент cmp_influxdb
+</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

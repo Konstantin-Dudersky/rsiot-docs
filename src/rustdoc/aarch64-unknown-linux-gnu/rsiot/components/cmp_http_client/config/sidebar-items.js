@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ConfigAlias"]};
+window.SIDEBAR_ITEMS = {};

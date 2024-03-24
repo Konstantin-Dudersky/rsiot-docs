@@ -257,7 +257,7 @@
             fn_on_success: fn_on_success_1,
             fn_on_failure: || <span class="macro">vec!</span>[Message::new_custom(Data::rTempCSSensorTValue_Get(<span class="number">0.0</span>))],
         }],
-        client_type: ClientType::Tcp(TcpClientType {
+        connection_config: ClientType::Tcp(TcpClientType {
             host: IpAddr::V4(Ipv4Addr::new(<span class="number">10</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">10</span>)),
             port: <span class="number">502</span>,
         }),
@@ -267,7 +267,7 @@
 <span class="attr">#[allow(non_snake_case)]
 </span><span class="kw">fn </span>fn_on_success_1(data: <span class="kw-2">&amp;</span>Response) -&gt; Vec&lt;Message&lt;Data&gt;&gt; {
     <span class="kw">let </span>data = <span class="kw">match </span>data {
-        Response::U16(data) =&gt; data,
+        Response::WordVector(data) =&gt; data,
         <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="macro">vec!</span>[],
     };
     <span class="kw">let </span>wWordState1_Get = data[<span class="number">0</span>];

@@ -72,9 +72,6 @@
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
-<a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>esp_idf_svc::wifi::EspWifi;
@@ -84,10 +81,7 @@
 
 <span class="kw">use </span><span class="kw">super</span>::Config;
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
-    <span class="kw-2">mut </span>config: Config&lt;TMsg&gt;,
-    _in_out: CmpInOut&lt;TMsg&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(<span class="kw-2">mut </span>config: Config, _in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {

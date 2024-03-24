@@ -138,6 +138,9 @@
 <a href="#136" id="136">136</a>
 <a href="#137" id="137">137</a>
 <a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>tokio::time::sleep;
@@ -152,7 +155,7 @@
     message::{system_messages::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
 };
 
-<span class="kw">use super</span>::{token_payload::TokenPayload, Config, ConfigStore, ConfigStoreItem, Error};
+<span class="kw">use super</span>::{token_payload::TokenPayload, Config, ConfigStore, ConfigStoreLocalItem, Error};
 
 <span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
@@ -266,7 +269,10 @@
     <span class="prelude-val">Ok</span>(msg)
 }
 
-<span class="kw">async fn </span>get_credentials(login: <span class="kw-2">&amp;</span>str, config: <span class="kw-2">&amp;</span>Config) -&gt; <span class="kw">super</span>::Result&lt;<span class="prelude-ty">Option</span>&lt;ConfigStoreItem&gt;&gt; {
+<span class="kw">async fn </span>get_credentials(
+    login: <span class="kw-2">&amp;</span>str,
+    config: <span class="kw-2">&amp;</span>Config,
+) -&gt; <span class="kw">super</span>::Result&lt;<span class="prelude-ty">Option</span>&lt;ConfigStoreLocalItem&gt;&gt; {
     <span class="kw">match </span><span class="kw-2">&amp;</span>config.store {
         ConfigStore::Local(local) =&gt; {
             <span class="kw">let </span>item = local.iter().find(|e| e.login == login).cloned();

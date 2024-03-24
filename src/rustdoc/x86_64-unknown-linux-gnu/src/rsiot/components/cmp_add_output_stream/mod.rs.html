@@ -37,6 +37,8 @@
 <a href="#35" id="35">35</a>
 <a href="#36" id="36">36</a>
 <a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для отправки сообщений в побочный потока
 
 </span><span class="kw">use </span>async_trait::async_trait;
@@ -50,7 +52,8 @@
 <span class="doccomment">/// Настройки
 </span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>Cfg&lt;TMessage&gt; {
-    <span class="kw">pub </span>channel: mpsc::Sender&lt;Message&lt;TMessage&gt;&gt;,
+    <span class="doccomment">/// Внешний канал mpsc, в который пересылаются исходящие сообщения
+    </span><span class="kw">pub </span>channel: mpsc::Sender&lt;Message&lt;TMessage&gt;&gt;,
 }
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
@@ -73,5 +76,6 @@
     }
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;Cfg&lt;TMsg&gt;, TMsg&gt;;
+<span class="doccomment">/// Компонент cmp_add_output_stream
+</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;Cfg&lt;TMsg&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

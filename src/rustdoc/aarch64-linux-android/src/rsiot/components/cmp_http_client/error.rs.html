@@ -15,19 +15,31 @@
 <a href="#13" id="13">13</a>
 <a href="#14" id="14">14</a>
 <a href="#15" id="15">15</a>
-</pre></div><pre class="rust"><code><span class="attr">#[derive(Debug, thiserror::Error)]
+<a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+</pre></div><pre class="rust"><code><span class="doccomment">/// Ошибки cmp_http_client
+</span><span class="attr">#[derive(Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Error&lt;TMessage&gt; {
     <span class="doccomment">/// Ошибка конфигурации пользователя
     </span>Configuration(String),
 
-    Reqwest(<span class="attr">#[from] </span>reqwest::Error),
+    <span class="doccomment">/// Reqwest
+    </span>Reqwest(<span class="attr">#[from] </span>reqwest::Error),
 
-    SendChannel(<span class="attr">#[from] </span>tokio::sync::mpsc::error::SendError&lt;TMessage&gt;),
+    <span class="doccomment">/// SendChannel
+    </span>SendChannel(<span class="attr">#[from] </span>tokio::sync::mpsc::error::SendError&lt;TMessage&gt;),
 
-    TokioJoin(<span class="attr">#[from] </span>tokio::task::JoinError),
+    <span class="doccomment">/// TokioJoin
+    </span>TokioJoin(<span class="attr">#[from] </span>tokio::task::JoinError),
 
-    ResponseCallback(<span class="attr">#[from] </span>anyhow::Error),
+    <span class="doccomment">/// ResponseCallback
+    </span>ResponseCallback(<span class="attr">#[from] </span>anyhow::Error),
 
-    ComponentCore(<span class="attr">#[from] </span><span class="kw">crate</span>::executor::ComponentError),
+    <span class="doccomment">/// ComponentCore
+    </span>ComponentCore(<span class="attr">#[from] </span><span class="kw">crate</span>::executor::ComponentError),
 }
 </code></pre></div></section></main></body></html>

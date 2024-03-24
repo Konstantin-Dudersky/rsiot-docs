@@ -166,14 +166,14 @@
             request: Request::ReadHoldingRegisters(<span class="number">0</span>, <span class="number">1</span>),
             fn_on_success: |data| {
                 <span class="kw">let </span><span class="kw-2">mut </span>msgs = <span class="macro">vec!</span>[];
-                <span class="kw">if let </span>Response::U16(data) = data {
+                <span class="kw">if let </span>Response::WordVector(data) = data {
                     msgs.push(Message::new_custom(Messages::ValueRead(data[<span class="number">0</span>] <span class="kw">as </span>f64)));
                 }
                 msgs
             },
             fn_on_failure: Vec::new,
         }],
-        client_type: ClientType::Tcp(TcpClientType {
+        connection_config: ClientType::Tcp(TcpClientType {
             host: IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)),
             port: <span class="number">5020</span>,
         }),

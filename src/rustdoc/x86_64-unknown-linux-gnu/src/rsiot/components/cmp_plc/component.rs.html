@@ -39,6 +39,7 @@
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>serde::Serialize;
 
@@ -77,5 +78,6 @@
     </span>}
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMsg, I, Q, S&gt; = Component&lt;Config&lt;TMsg, I, Q, S&gt;, TMsg&gt;;
+<span class="doccomment">/// Компонент cmp_plc
+</span><span class="kw">pub type </span>Cmp&lt;TMsg, I, Q, S&gt; = Component&lt;Config&lt;TMsg, I, Q, S&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

@@ -24,9 +24,17 @@
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
 <a href="#24" id="24">24</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::utils::{conv_u16x2_to_u8x4, is_wrong_len};
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! Конвертация двух регистров в f32
 
-<span class="kw">pub fn </span>little_endian(_data: <span class="kw-2">&amp;</span>[u16]) -&gt; f32 {
+</span><span class="kw">use </span><span class="kw">super</span>::utils::{conv_u16x2_to_u8x4, is_wrong_len};
+
+<span class="doccomment">/// Конвертация двух регистров в f32, little endian
+</span><span class="kw">pub fn </span>little_endian(_data: <span class="kw-2">&amp;</span>[u16]) -&gt; f32 {
     <span class="macro">todo!</span>()
 }
 
@@ -41,11 +49,13 @@
     f32::from_le_bytes(bytes)
 }
 
-<span class="kw">pub fn </span>big_endian(_data: <span class="kw-2">&amp;</span>[u16]) -&gt; f32 {
+<span class="doccomment">/// Конвертация двух регистров в f32, big endian с перестановкой байт
+</span><span class="kw">pub fn </span>big_endian(_data: <span class="kw-2">&amp;</span>[u16]) -&gt; f32 {
     <span class="macro">todo!</span>()
 }
 
-<span class="kw">pub fn </span>big_endian_swap(_data: <span class="kw-2">&amp;</span>[u16]) -&gt; f32 {
+<span class="doccomment">/// Конвертация двух регистров в f32, big endian с перестановкой байт
+</span><span class="kw">pub fn </span>big_endian_swap(_data: <span class="kw-2">&amp;</span>[u16]) -&gt; f32 {
     <span class="macro">todo!</span>()
 }
 </code></pre></div></section></main></body></html>

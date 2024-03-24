@@ -96,6 +96,28 @@
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Example based on developer board ESP32-C3
 //!
 //! cargo run --example cmp_esp --target="riscv32imc-esp-espidf" --features="cmp_esp" --release
@@ -103,18 +125,19 @@
 </span><span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[tokio::main(flavor = <span class="string">"current_thread"</span>)]
 </span><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>std::time::Duration;
+
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop,
-        hal::{gpio::PinDriver, peripherals::Peripherals},
-        log::EspLogger,
-        sys::link_patches,
-        wifi::EspWifi,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
+        sys::link_patches, wifi::EspWifi,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
     <span class="kw">use </span>tracing::Level;
 
     <span class="kw">use </span>rsiot::{
-        components::{cmp_esp_gpio_input, cmp_esp_wifi, cmp_http_server_esp, cmp_logger},
+        components::{
+            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+        },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         message::<span class="kw-2">*</span>,
     };
@@ -126,6 +149,7 @@
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
+        Relay0(bool),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -149,29 +173,48 @@
         header: <span class="string">""</span>.into(),
     };
 
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>value = <span class="bool-val">false</span>;
+    <span class="kw">let </span>config_inject_periodic = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">5</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::Relay0(value));
+            value = !value;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
     <span class="comment">// ESP -----------------------------------------------------------------------------------------
     </span><span class="kw">let </span>peripherals = Peripherals::take().unwrap();
     <span class="kw">let </span>event_loop = EspSystemEventLoop::take().unwrap();
 
     <span class="comment">// wifi
-    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config::&lt;Custom&gt; {
-        fn_input: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
-        fn_output: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
+    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         event_loop: event_loop.clone(),
         driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
     };
 
-    <span class="comment">// GPIO9 - button Boot
-    </span><span class="kw">let </span>gpio9_config = cmp_esp_gpio_input::Config {
-        fn_output: |value| Message::new_custom(Custom::BootButton(value)),
-        driver: PinDriver::input(peripherals.pins.gpio9).unwrap(),
+    <span class="comment">// GPIO
+    </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
+        inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
+            driver: peripherals.pins.gpio9.into(),
+            fn_output: |value| Message::new_custom(Custom::BootButton(value)),
+        }],
+        outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
+            driver: peripherals.pins.gpio0.into(),
+            fn_input: |msg| <span class="kw">match </span>msg.data {
+                MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+            },
+            is_low_triggered: <span class="bool-val">false</span>,
+        }],
     };
 
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">10</span>,
-        executor_name: <span class="string">"cmp_http_server_esp_example"</span>.into(),
+        executor_name: <span class="string">"cmp_esp_example"</span>.into(),
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
     };
 
@@ -182,7 +225,8 @@
             .add_cmp(cmp_logger::Cmp::new(logger_config))
             .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
-            .add_cmp(cmp_esp_gpio_input::Cmp::new(gpio9_config))
+            .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
+            .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()

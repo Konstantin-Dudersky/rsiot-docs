@@ -168,6 +168,10 @@
 <a href="#166" id="166">166</a>
 <a href="#167" id="167">167</a>
 <a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{cmp::max, fmt::Debug};
 
 <span class="kw">use </span>tracing::{info, trace};
@@ -220,7 +224,11 @@
         }
     }
 
-    <span class="kw">pub fn </span>clone_with_new_id(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str, auth_perm: AuthPermissions) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Клонировать и присвоить новый идентификатор
+    ///
+    /// Необходимо вызывать в начале исполнения компонента, чтобы у каждого компонента был
+    /// уникальный id
+    </span><span class="kw">pub fn </span>clone_with_new_id(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str, auth_perm: AuthPermissions) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>name = <span class="macro">format!</span>(<span class="string">"{}::{}"</span>, <span class="self">self</span>.name, name);
         <span class="kw">let </span>id = MsgTrace::generate_uuid();
         <span class="macro">info!</span>(<span class="string">"Start: {}, id: {}, auth_perm: {:?}"</span>, name, id, auth_perm);

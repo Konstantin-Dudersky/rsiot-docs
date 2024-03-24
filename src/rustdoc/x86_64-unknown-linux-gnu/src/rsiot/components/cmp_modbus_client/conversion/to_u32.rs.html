@@ -12,9 +12,13 @@
 <a href="#10" id="10">10</a>
 <a href="#11" id="11">11</a>
 <a href="#12" id="12">12</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::utils::{conv_u16x2_to_u8x4, is_wrong_len};
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! Конвертация двух регистров в u32
 
-<span class="doccomment">/// Конвертация двух регистров в u32
+</span><span class="kw">use </span><span class="kw">super</span>::utils::{conv_u16x2_to_u8x4, is_wrong_len};
+
+<span class="doccomment">/// Конвертация двух регистров в u32, little endian с пересановкой байт
 </span><span class="kw">pub fn </span>little_endian_swap(data: <span class="kw-2">&amp;</span>[u16]) -&gt; u32 {
     <span class="kw">if </span>is_wrong_len(data, <span class="number">2</span>) {
         <span class="kw">return </span>u32::default();

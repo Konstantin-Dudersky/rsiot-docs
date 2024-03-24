@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"mod":["component","config","error","fn_process","http_client_config"],"type":["Cmp","Result"]};
+window.SIDEBAR_ITEMS = {"enum":["Error","HttpParam"],"mod":["component","config","error","fn_process"],"struct":["Config","ConnectionConfig","RequestInput","RequestPeriodic"],"type":["CbkOnFailure","CbkOnSuccess","Cmp","Result"]};

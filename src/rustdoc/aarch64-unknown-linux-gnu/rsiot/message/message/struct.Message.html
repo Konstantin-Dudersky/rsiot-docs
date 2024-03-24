@@ -639,7 +639,7 @@
             fn_on_success: fn_on_success_1,
             fn_on_failure: || <span class="macro">vec!</span>[<span class="highlight focus">Message::new_custom</span>(Data::rTempCSSensorTValue_Get(<span class="number">0.0</span>))],
         }],
-        client_type: ClientType::Tcp(TcpClientType {
+        connection_config: ClientType::Tcp(TcpClientType {
             host: IpAddr::V4(Ipv4Addr::new(<span class="number">10</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">10</span>)),
             port: <span class="number">502</span>,
         }),
@@ -649,7 +649,7 @@
 <span class="attr">#[allow(non_snake_case)]
 </span><span class="kw">fn </span>fn_on_success_1(data: <span class="kw-2">&amp;</span>Response) -&gt; Vec&lt;Message&lt;Data&gt;&gt; {
     <span class="kw">let </span>data = <span class="kw">match </span>data {
-        Response::U16(data) =&gt; data,
+        Response::WordVector(data) =&gt; data,
         <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="macro">vec!</span>[],
     };
     <span class="kw">let </span>wWordState1_Get = data[<span class="number">0</span>];
@@ -1553,14 +1553,14 @@
             request: Request::ReadHoldingRegisters(<span class="number">0</span>, <span class="number">1</span>),
             fn_on_success: |data| {
                 <span class="kw">let </span><span class="kw-2">mut </span>msgs = <span class="macro">vec!</span>[];
-                <span class="kw">if let </span>Response::U16(data) = data {
+                <span class="kw">if let </span>Response::WordVector(data) = data {
                     msgs.push(Message::new_custom(Messages::ValueRead(data[<span class="number">0</span>] <span class="kw">as </span>f64)));
                 }
                 msgs
             },
             fn_on_failure: Vec::new,
         }],
-        client_type: ClientType::Tcp(TcpClientType {
+        connection_config: ClientType::Tcp(TcpClientType {
             host: IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)),
             port: <span class="number">5020</span>,
         }),
@@ -1718,7 +1718,7 @@
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_http_client::{<span class="self">self</span>, http_client_config},
+            cmp_http_client::{<span class="self">self</span>},
             cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
@@ -1766,16 +1766,16 @@
         header: <span class="string">"HTTP response"</span>.into(),
     };
 
-    <span class="kw">let </span>http_config = http_client_config::Config::&lt;Data&gt; {
-        connection_config: http_client_config::ConnectionConfig {
+    <span class="kw">let </span>http_config = cmp_http_client::Config::&lt;Data&gt; {
+        connection_config: cmp_http_client::ConnectionConfig {
             base_url: Url::parse(<span class="string">"http://127.0.0.1:80"</span>)<span class="question-mark">?</span>,
         },
-        requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
+        requests_input: <span class="macro">vec!</span>[cmp_http_client::RequestInput {
             fn_input: |msg| {
                 <span class="kw">let </span>msg = msg.<span class="highlight focus">get_custom_data</span>()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
-                        <span class="kw">let </span>param = http_client_config::HttpParam::Get {
+                        <span class="kw">let </span>param = cmp_http_client::HttpParam::Get {
                             endpoint: <span class="string">"get"</span>.to_string(),
                         };
                         <span class="prelude-val">Some</span>(param)
@@ -1791,9 +1791,9 @@
             },
             on_failure: Vec::new,
         }],
-        requests_periodic: <span class="macro">vec!</span>[http_client_config::RequestPeriodic {
+        requests_periodic: <span class="macro">vec!</span>[cmp_http_client::RequestPeriodic {
             period: Duration::from_secs(<span class="number">5</span>),
-            http_param: http_client_config::HttpParam::Get {
+            http_param: cmp_http_client::HttpParam::Get {
                 endpoint: <span class="string">"get"</span>.to_string(),
             },
             on_success: |body| {

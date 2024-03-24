@@ -250,7 +250,7 @@
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
 {
-    <span class="kw">let </span>ctx = <span class="kw">match </span>config.client_type {
+    <span class="kw">let </span>ctx = <span class="kw">match </span>config.connection_config {
         config::ClientType::Tcp(tcp_config) =&gt; {
             <span class="kw">let </span>socket_addr = SocketAddr::new(tcp_config.host, tcp_config.port);
             <span class="macro">debug!</span>(<span class="string">"Try to establish connection to socket: {:?}"</span>, socket_addr);
@@ -353,7 +353,7 @@
         config::Request::ReadCoils(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">todo!</span>(),
         config::Request::ReadHoldingRegisters(start_address, count) =&gt; {
             <span class="kw">let </span>response = lock.read_holding_registers(<span class="kw-2">*</span>start_address, <span class="kw-2">*</span>count).<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(config::Response::U16(response))
+            <span class="prelude-val">Ok</span>(config::Response::WordVector(response))
         }
         config::Request::WriteSingleRegister(start_address, value) =&gt; {
             lock.write_single_register(<span class="kw-2">*</span>start_address, <span class="kw-2">*</span>value).<span class="kw">await</span><span class="question-mark">?</span>;

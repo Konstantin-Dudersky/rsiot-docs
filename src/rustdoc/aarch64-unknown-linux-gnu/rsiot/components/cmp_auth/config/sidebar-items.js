@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ConfigStore"],"struct":["Config","ConfigStoreItem"]};
+window.SIDEBAR_ITEMS = {"enum":["ConfigStore"],"struct":["Config","ConfigStoreLocalItem"]};

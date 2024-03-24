@@ -17,21 +17,33 @@
 <a href="#15" id="15">15</a>
 <a href="#16" id="16">16</a>
 <a href="#17" id="17">17</a>
-</pre></div><pre class="rust"><code><span class="attr">#[derive(Debug, thiserror::Error)]
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+</pre></div><pre class="rust"><code><span class="doccomment">/// Ошибки модуля работы с переменными среды
+</span><span class="attr">#[derive(Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Errors {
-    <span class="attr">#[error(<span class="string">"Error loading .env file: {0}"</span>)]
+    <span class="doccomment">/// LoadFromFile
+    </span><span class="attr">#[error(<span class="string">"Error loading .env file: {0}"</span>)]
     </span>LoadFromFile(<span class="attr">#[from] </span>dotenvy::Error),
 
-    <span class="attr">#[error(<span class="string">"Deserialization error: {0}"</span>)]
+    <span class="doccomment">/// LoadFromEnvironment
+    </span><span class="attr">#[error(<span class="string">"Deserialization error: {0}"</span>)]
     </span>LoadFromEnvironment(<span class="attr">#[from] </span>envy::Error),
 
-    <span class="attr">#[error(<span class="string">"Serialization error: {0}"</span>)]
+    <span class="doccomment">/// SerializeError
+    </span><span class="attr">#[error(<span class="string">"Serialization error: {0}"</span>)]
     </span>SerializeError(<span class="attr">#[from] </span>toml::ser::Error),
 
-    <span class="attr">#[error(<span class="string">"{0}"</span>)]
+    <span class="doccomment">/// IoError
+    </span><span class="attr">#[error(<span class="string">"{0}"</span>)]
     </span>IoError(<span class="attr">#[from] </span>std::io::Error),
 
-    <span class="attr">#[error(<span class="string">"Error converting to UPPER_CASE: {0}"</span>)]
+    <span class="doccomment">/// ToUppercase
+    </span><span class="attr">#[error(<span class="string">"Error converting to UPPER_CASE: {0}"</span>)]
     </span>ToUppercase(String),
 }
 </code></pre></div></section></main></body></html>

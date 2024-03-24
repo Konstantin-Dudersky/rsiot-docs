@@ -53,17 +53,26 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
-<span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::{CmpInOut, ComponentError};
+<span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::{CmpInOut, CmpResult, ComponentError};
 
-<span class="kw">pub struct </span>Component&lt;TConfig, TMessage&gt; {
+<span class="doccomment">/// Представление обобщенного компонента
+</span><span class="kw">pub struct </span>Component&lt;TConfig, TMessage&gt; {
     in_out: <span class="prelude-ty">Option</span>&lt;CmpInOut&lt;TMessage&gt;&gt;,
     config: <span class="prelude-ty">Option</span>&lt;TConfig&gt;,
 }
 
 <span class="kw">impl</span>&lt;TConfig, TMsg&gt; Component&lt;TConfig, TMsg&gt; {
-    <span class="kw">pub fn </span>new(config: <span class="kw">impl </span>Into&lt;TConfig&gt;) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Создание компонента
+    </span><span class="kw">pub fn </span>new(config: <span class="kw">impl </span>Into&lt;TConfig&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             in_out: <span class="prelude-val">None</span>,
             config: <span class="prelude-val">Some</span>(config.into()),
@@ -80,7 +89,7 @@
         <span class="self">self</span>.in_out = <span class="prelude-val">Some</span>(in_out);
     }
 
-    <span class="kw">async fn </span>spawn(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
+    <span class="kw">async fn </span>spawn(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; CmpResult {
         <span class="kw">let </span>in_out = <span class="self">self
             </span>.in_out
             .take()
@@ -95,15 +104,20 @@
     </span>}
 }
 
-<span class="attr">#[async_trait(<span class="question-mark">?</span>Send)]
+<span class="doccomment">/// Трейт основной функции компонента
+///
+/// Каждый компонент должен определить данный трейт
+</span><span class="attr">#[async_trait(<span class="question-mark">?</span>Send)]
 </span><span class="kw">pub trait </span>IComponentProcess&lt;TConfig, TMsg&gt; {
-    <span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: TConfig, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;;
+    <span class="doccomment">/// Основная функция компонента
+    </span><span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: TConfig, in_out: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult;
 }
 
-<span class="attr">#[async_trait(<span class="question-mark">?</span>Send)]
+<span class="doccomment">/// Интерфейс компонента, который используется исполнитель при добавлении компонентов
+</span><span class="attr">#[async_trait(<span class="question-mark">?</span>Send)]
 </span><span class="kw">pub trait </span>IComponent&lt;TMsg&gt; {
     <span class="kw">fn </span>set_interface(<span class="kw-2">&amp;mut </span><span class="self">self</span>, in_out: CmpInOut&lt;TMsg&gt;);
 
-    <span class="kw">async fn </span>spawn(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;;
+    <span class="kw">async fn </span>spawn(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; CmpResult;
 }
 </code></pre></div></section></main></body></html>

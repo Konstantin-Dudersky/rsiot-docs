@@ -39,16 +39,20 @@
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::net::IpAddr;
 
 <span class="kw">use super</span>::{InputConfig, PeriodicConfig};
 
-<span class="attr">#[derive(Clone, Debug)]
+<span class="doccomment">/// Конфигурация cmp_modbus_client
+</span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Config&lt;TMessage&gt; {
     <span class="doccomment">/// true - разрешение работы
     </span><span class="kw">pub </span>enabled: bool,
 
-    <span class="kw">pub </span>client_type: ClientType,
+    <span class="doccomment">/// Настройки подключения к опрашиваемому устройтву
+    </span><span class="kw">pub </span>connection_config: ClientType,
 
     <span class="doccomment">/// Адрес подчиненного устройства (обычно 1)
     </span><span class="kw">pub </span>unit_id: u8,

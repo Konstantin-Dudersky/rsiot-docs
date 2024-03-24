@@ -6,10 +6,16 @@
 <a href="#4" id="4">4</a>
 <a href="#5" id="5">5</a>
 <a href="#6" id="6">6</a>
+<a href="#7" id="7">7</a>
+<a href="#8" id="8">8</a>
+<a href="#9" id="9">9</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Result;
 
 <span class="kw">use </span><span class="kw">crate</span>::message::Message;
 
-<span class="kw">pub type </span>CbkOnSuccess&lt;TMsg&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;;
-<span class="kw">pub type </span>CbkOnFailure&lt;TMsg&gt; = <span class="kw">fn</span>() -&gt; Vec&lt;Message&lt;TMsg&gt;&gt;;
+<span class="doccomment">/// Коллбек успешного ответа
+</span><span class="kw">pub type </span>CbkOnSuccess&lt;TMsg&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;;
+
+<span class="doccomment">/// Коллбек неуспешного ответа
+</span><span class="kw">pub type </span>CbkOnFailure&lt;TMsg&gt; = <span class="kw">fn</span>() -&gt; Vec&lt;Message&lt;TMsg&gt;&gt;;
 </code></pre></div></section></main></body></html>

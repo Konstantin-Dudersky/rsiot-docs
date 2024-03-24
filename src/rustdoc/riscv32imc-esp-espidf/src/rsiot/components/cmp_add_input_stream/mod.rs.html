@@ -40,6 +40,7 @@
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
 <a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для добавления сообщений из побочного потока
 
 </span><span class="kw">use </span>async_trait::async_trait;
@@ -79,5 +80,6 @@
     }
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;Cfg&lt;TMsg&gt;, TMsg&gt;;
+<span class="doccomment">/// Компонент cmp_add_input_stream
+</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;Cfg&lt;TMsg&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

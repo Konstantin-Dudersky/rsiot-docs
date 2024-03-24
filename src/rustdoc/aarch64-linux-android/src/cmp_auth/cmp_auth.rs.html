@@ -95,7 +95,7 @@
 
     <span class="kw">let </span>auth_config = cmp_auth::Config {
         secret_key: <span class="string">"secret_key"</span>.into(),
-        store: cmp_auth::ConfigStore::Local(<span class="macro">vec!</span>[cmp_auth::ConfigStoreItem {
+        store: cmp_auth::ConfigStore::Local(<span class="macro">vec!</span>[cmp_auth::ConfigStoreLocalItem {
             login: <span class="string">"admin"</span>.into(),
             password: <span class="string">"admin1"</span>.into(),
             role: AuthPermissions::Admin,

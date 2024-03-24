@@ -9,21 +9,13 @@
 <a href="#7" id="7">7</a>
 <a href="#8" id="8">8</a>
 <a href="#9" id="9">9</a>
-<a href="#10" id="10">10</a>
-<a href="#11" id="11">11</a>
-<a href="#12" id="12">12</a>
-<a href="#13" id="13">13</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::{eventloop::EspSystemEventLoop, wifi::EspWifi};
 
-<span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
-
-<span class="kw">pub struct </span>Config&lt;TMsg&gt;
-<span class="kw">where
-    </span>TMsg: MsgDataBound,
-{
-    <span class="kw">pub </span>fn_input: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="kw">pub </span>fn_output: <span class="kw">fn</span>(String) -&gt; Vec&lt;Message&lt;TMsg&gt;&gt;,
-    <span class="kw">pub </span>driver: EspWifi&lt;<span class="lifetime">'static</span>&gt;,
-    <span class="kw">pub </span>event_loop: EspSystemEventLoop,
+<span class="doccomment">/// Конфигурация cmp_esp_wifi
+</span><span class="kw">pub struct </span>Config {
+    <span class="doccomment">/// Ссылка на драйвер для подключения
+    </span><span class="kw">pub </span>driver: EspWifi&lt;<span class="lifetime">'static</span>&gt;,
+    <span class="doccomment">/// Ссылка на цикл событий
+    </span><span class="kw">pub </span>event_loop: EspSystemEventLoop,
 }
 </code></pre></div></section></main></body></html>

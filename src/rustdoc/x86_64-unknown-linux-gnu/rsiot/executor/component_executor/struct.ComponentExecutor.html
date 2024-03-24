@@ -420,13 +420,7 @@ spawn_local(context);
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[44,44],&quot;../../../src/cmp_auth/cmp_auth.rs.html#49&quot;,&quot;line 49&quot;]]"><div class="scraped-example-title">examples/cmp_auth.rs (<a href="../../../src/cmp_auth/cmp_auth.rs.html#49">line 49</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
-<span>6</span>
-<span>7</span>
-<span>8</span>
-<span>9</span>
-<span>10</span>
-<span>11</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[47,47],&quot;../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#58&quot;,&quot;line 58&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_server.rs (<a href="../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#58">line 58</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>11</span>
 <span>12</span>
 <span>13</span>
 <span>14</span>
@@ -473,59 +467,71 @@ spawn_local(context);
 <span>55</span>
 <span>56</span>
 <span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
-    <span class="kw">use </span>std::time::Duration;
-
-    <span class="kw">use </span>rsiot::{
-        components::{cmp_auth, cmp_inject_periodic, cmp_logger},
-        executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::{example_message::<span class="kw-2">*</span>, system_messages::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
-    };
+    <span class="kw">use </span>tokio::time::Duration;
     <span class="kw">use </span>tracing::Level;
 
-    tracing_subscriber::fmt().with_max_level(Level::INFO).init();
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_server},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt()
+        .with_env_filter(<span class="string">"trace,tokio_tungstenite=debug,tungstenite=debug"</span>)
+        .init();
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
         header: <span class="string">""</span>.into(),
     };
 
-    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
-        period: Duration::from_secs(<span class="number">4</span>),
+    <span class="kw">let </span>ws_server_config = cmp_websocket_server::Config {
+        port: <span class="number">8021</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">10</span>),
         fn_periodic: <span class="kw">move </span>|| {
-            <span class="kw">let </span>value = AuthRequestByLogin {
-                login: <span class="string">"admin"</span>.to_string(),
-                password: <span class="string">"admin"</span>.to_string(),
-            };
-            <span class="kw">let </span>msg = <span class="macro">message_new!</span>(<span class="string">"System-AuthRequestByLogin::value"</span>);
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
             <span class="macro">vec!</span>[msg]
         },
     };
 
-    <span class="kw">let </span>auth_config = cmp_auth::Config {
-        secret_key: <span class="string">"secret_key"</span>.into(),
-        store: cmp_auth::ConfigStore::Local(<span class="macro">vec!</span>[cmp_auth::ConfigStoreItem {
-            login: <span class="string">"admin"</span>.into(),
-            password: <span class="string">"admin1"</span>.into(),
-            role: AuthPermissions::Admin,
-        }]),
-    };
-
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">100</span>,
-        executor_name: <span class="string">"example_auth"</span>.into(),
+        executor_name: <span class="string">"rsiot-websocket-server"</span>.into(),
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
     };
 
-    <span class="highlight focus">ComponentExecutor::&lt;Custom&gt;::new</span>(executor_config)
+    <span class="highlight focus">ComponentExecutor::new</span>(executor_config)
         .add_cmp(cmp_logger::Cmp::new(logger_config))
-        .add_cmp(cmp_auth::Cmp::new(auth_config))
-        .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+        .add_cmp(cmp_websocket_server::Cmp::new(ws_server_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
         .wait_result()
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#58">examples/cmp_websocket_server.rs</a></li><li><a href="../../../src/cmp_influxdb/cmp_influxdb.rs.html#55">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../src/cmp_redis_client_publication/publication.rs.html#64">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#66">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#75">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#97">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#82">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../src/cmp_http_server/cmp_http_server.rs.html#99">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../src/cmp_derive/cmp_derive.rs.html#102">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../src/cmp_http_client/cmp_http_client.rs.html#114">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.add_cmp" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#130-136">source</a><h4 class="code-header">pub fn <a href="#method.add_cmp" class="fn">add_cmp</a>(self, component: impl <a class="trait" href="../component/single_thread/trait.IComponent.html" title="trait rsiot::executor::component::single_thread::IComponent">IComponent</a>&lt;TMsg&gt; + 'static) -&gt; Self</h4></section></summary><div class="docblock"><p>Добавить компонент (?Send)</p>
+}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../src/cmp_auth/cmp_auth.rs.html#49">examples/cmp_auth.rs</a></li><li><a href="../../../src/cmp_influxdb/cmp_influxdb.rs.html#55">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../src/cmp_redis_client_publication/publication.rs.html#64">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#66">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#75">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#97">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#82">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../src/cmp_http_server/cmp_http_server.rs.html#99">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../src/cmp_derive/cmp_derive.rs.html#102">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../src/cmp_http_client/cmp_http_client.rs.html#114">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.add_cmp" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#130-136">source</a><h4 class="code-header">pub fn <a href="#method.add_cmp" class="fn">add_cmp</a>(self, component: impl <a class="trait" href="../component/single_thread/trait.IComponent.html" title="trait rsiot::executor::component::single_thread::IComponent">IComponent</a>&lt;TMsg&gt; + 'static) -&gt; Self</h4></section></summary><div class="docblock"><p>Добавить компонент (?Send)</p>
 </div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-1"><a href="#scraped-examples-1">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[18,18],&quot;../../../src/executor_single_thread/main.rs.html#34&quot;,&quot;line 34&quot;],[[19,19],&quot;../../../src/executor_single_thread/main.rs.html#35&quot;,&quot;line 35&quot;]]"><div class="scraped-example-title">examples/executor/executor-single-thread/main.rs (<a href="../../../src/executor_single_thread/main.rs.html#34">line 34</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>16</span>
 <span>17</span>
 <span>18</span>
@@ -923,13 +929,7 @@ spawn_local(context);
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[45,45],&quot;../../../src/cmp_auth/cmp_auth.rs.html#50&quot;,&quot;line 50&quot;],[[46,46],&quot;../../../src/cmp_auth/cmp_auth.rs.html#51&quot;,&quot;line 51&quot;],[[47,47],&quot;../../../src/cmp_auth/cmp_auth.rs.html#52&quot;,&quot;line 52&quot;]]"><div class="scraped-example-title">examples/cmp_auth.rs (<a href="../../../src/cmp_auth/cmp_auth.rs.html#50">line 50</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
-<span>6</span>
-<span>7</span>
-<span>8</span>
-<span>9</span>
-<span>10</span>
-<span>11</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[48,48],&quot;../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#59&quot;,&quot;line 59&quot;],[[49,49],&quot;../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#60&quot;,&quot;line 60&quot;],[[50,50],&quot;../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#61&quot;,&quot;line 61&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_server.rs (<a href="../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#59">line 59</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>11</span>
 <span>12</span>
 <span>13</span>
 <span>14</span>
@@ -976,59 +976,71 @@ spawn_local(context);
 <span>55</span>
 <span>56</span>
 <span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
-    <span class="kw">use </span>std::time::Duration;
-
-    <span class="kw">use </span>rsiot::{
-        components::{cmp_auth, cmp_inject_periodic, cmp_logger},
-        executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::{example_message::<span class="kw-2">*</span>, system_messages::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
-    };
+    <span class="kw">use </span>tokio::time::Duration;
     <span class="kw">use </span>tracing::Level;
 
-    tracing_subscriber::fmt().with_max_level(Level::INFO).init();
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_server},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt()
+        .with_env_filter(<span class="string">"trace,tokio_tungstenite=debug,tungstenite=debug"</span>)
+        .init();
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
         header: <span class="string">""</span>.into(),
     };
 
-    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
-        period: Duration::from_secs(<span class="number">4</span>),
+    <span class="kw">let </span>ws_server_config = cmp_websocket_server::Config {
+        port: <span class="number">8021</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">10</span>),
         fn_periodic: <span class="kw">move </span>|| {
-            <span class="kw">let </span>value = AuthRequestByLogin {
-                login: <span class="string">"admin"</span>.to_string(),
-                password: <span class="string">"admin"</span>.to_string(),
-            };
-            <span class="kw">let </span>msg = <span class="macro">message_new!</span>(<span class="string">"System-AuthRequestByLogin::value"</span>);
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
             <span class="macro">vec!</span>[msg]
         },
     };
 
-    <span class="kw">let </span>auth_config = cmp_auth::Config {
-        secret_key: <span class="string">"secret_key"</span>.into(),
-        store: cmp_auth::ConfigStore::Local(<span class="macro">vec!</span>[cmp_auth::ConfigStoreItem {
-            login: <span class="string">"admin"</span>.into(),
-            password: <span class="string">"admin1"</span>.into(),
-            role: AuthPermissions::Admin,
-        }]),
-    };
-
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">100</span>,
-        executor_name: <span class="string">"example_auth"</span>.into(),
+        executor_name: <span class="string">"rsiot-websocket-server"</span>.into(),
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
     };
 
-    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+    ComponentExecutor::new(executor_config)
         .<span class="highlight focus">add_cmp</span>(cmp_logger::Cmp::new(logger_config))
-        .<span class="highlight">add_cmp</span>(cmp_auth::Cmp::new(auth_config))
-        .<span class="highlight">add_cmp</span>(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+        .<span class="highlight">add_cmp</span>(cmp_websocket_server::Cmp::new(ws_server_config))
+        .<span class="highlight">add_cmp</span>(cmp_inject_periodic::Cmp::new(inject_config))
         .wait_result()
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#59">examples/cmp_websocket_server.rs</a></li><li><a href="../../../src/cmp_influxdb/cmp_influxdb.rs.html#56">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../src/cmp_redis_client_publication/publication.rs.html#65">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#67">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#76">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#98">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#84-91">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../src/cmp_http_server/cmp_http_server.rs.html#100">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../src/cmp_derive/cmp_derive.rs.html#103">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../src/cmp_http_client/cmp_http_client.rs.html#115">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.wait_result" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#142-160">source</a><h4 class="code-header">pub async fn <a href="#method.wait_result" class="fn">wait_result</a>(&amp;mut self) -&gt; Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;</h4></section></summary><div class="docblock"><p>Запустить на выполнение все компоненты.</p>
+}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../src/cmp_auth/cmp_auth.rs.html#50">examples/cmp_auth.rs</a></li><li><a href="../../../src/cmp_influxdb/cmp_influxdb.rs.html#56">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../src/cmp_redis_client_publication/publication.rs.html#65">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#67">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#76">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#98">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#84-91">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../src/cmp_http_server/cmp_http_server.rs.html#100">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../src/cmp_derive/cmp_derive.rs.html#103">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../src/cmp_http_client/cmp_http_client.rs.html#115">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.wait_result" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#142-160">source</a><h4 class="code-header">pub async fn <a href="#method.wait_result" class="fn">wait_result</a>(&amp;mut self) -&gt; Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;</h4></section></summary><div class="docblock"><p>Запустить на выполнение все компоненты.</p>
 <p>Компоненты не должны заканчивать выполнение. Если хоть один остановился (неважно по какой
 причине - по ошибке или нет), это ошибка выполнения.</p>
 </div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-2"><a href="#scraped-examples-2">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[21,21],&quot;../../../src/executor_single_thread/main.rs.html#37&quot;,&quot;line 37&quot;]]"><div class="scraped-example-title">examples/executor/executor-single-thread/main.rs (<a href="../../../src/executor_single_thread/main.rs.html#37">line 37</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>16</span>
@@ -1428,13 +1440,7 @@ spawn_local(context);
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[48,48],&quot;../../../src/cmp_auth/cmp_auth.rs.html#53&quot;,&quot;line 53&quot;]]"><div class="scraped-example-title">examples/cmp_auth.rs (<a href="../../../src/cmp_auth/cmp_auth.rs.html#53">line 53</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
-<span>6</span>
-<span>7</span>
-<span>8</span>
-<span>9</span>
-<span>10</span>
-<span>11</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[51,51],&quot;../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#62&quot;,&quot;line 62&quot;]]"><div class="scraped-example-title">examples/cmp_websocket_server.rs (<a href="../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#62">line 62</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>11</span>
 <span>12</span>
 <span>13</span>
 <span>14</span>
@@ -1481,59 +1487,71 @@ spawn_local(context);
 <span>55</span>
 <span>56</span>
 <span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
-    <span class="kw">use </span>std::time::Duration;
-
-    <span class="kw">use </span>rsiot::{
-        components::{cmp_auth, cmp_inject_periodic, cmp_logger},
-        executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::{example_message::<span class="kw-2">*</span>, system_messages::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
-    };
+    <span class="kw">use </span>tokio::time::Duration;
     <span class="kw">use </span>tracing::Level;
 
-    tracing_subscriber::fmt().with_max_level(Level::INFO).init();
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger, cmp_websocket_server},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt()
+        .with_env_filter(<span class="string">"trace,tokio_tungstenite=debug,tungstenite=debug"</span>)
+        .init();
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
         header: <span class="string">""</span>.into(),
     };
 
-    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
-        period: Duration::from_secs(<span class="number">4</span>),
+    <span class="kw">let </span>ws_server_config = cmp_websocket_server::Config {
+        port: <span class="number">8021</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg]))
+        },
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">10</span>),
         fn_periodic: <span class="kw">move </span>|| {
-            <span class="kw">let </span>value = AuthRequestByLogin {
-                login: <span class="string">"admin"</span>.to_string(),
-                password: <span class="string">"admin"</span>.to_string(),
-            };
-            <span class="kw">let </span>msg = <span class="macro">message_new!</span>(<span class="string">"System-AuthRequestByLogin::value"</span>);
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
             <span class="macro">vec!</span>[msg]
         },
     };
 
-    <span class="kw">let </span>auth_config = cmp_auth::Config {
-        secret_key: <span class="string">"secret_key"</span>.into(),
-        store: cmp_auth::ConfigStore::Local(<span class="macro">vec!</span>[cmp_auth::ConfigStoreItem {
-            login: <span class="string">"admin"</span>.into(),
-            password: <span class="string">"admin1"</span>.into(),
-            role: AuthPermissions::Admin,
-        }]),
-    };
-
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">100</span>,
-        executor_name: <span class="string">"example_auth"</span>.into(),
+        executor_name: <span class="string">"rsiot-websocket-server"</span>.into(),
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
     };
 
-    ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+    ComponentExecutor::new(executor_config)
         .add_cmp(cmp_logger::Cmp::new(logger_config))
-        .add_cmp(cmp_auth::Cmp::new(auth_config))
-        .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+        .add_cmp(cmp_websocket_server::Cmp::new(ws_server_config))
+        .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
         .<span class="highlight focus">wait_result</span>()
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../src/cmp_websocket_server/cmp_websocket_server.rs.html#62">examples/cmp_websocket_server.rs</a></li><li><a href="../../../src/cmp_influxdb/cmp_influxdb.rs.html#58">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../src/cmp_redis_client_publication/publication.rs.html#68">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#68">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#78">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#101">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#99">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../src/cmp_http_server/cmp_http_server.rs.html#103">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../src/cmp_derive/cmp_derive.rs.html#106">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../src/cmp_http_client/cmp_http_client.rs.html#118">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details></div></details></div><h2 id="synthetic-implementations" class="section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor">§</a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; !RefUnwindSafe for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;</h3></section><section id="impl-Send-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-Send-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; Send for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;<div class="where">where
+}</code></pre></div></div></div><div class="example-links">Additional examples can be found in:<br><ul><li><a href="../../../src/cmp_auth/cmp_auth.rs.html#53">examples/cmp_auth.rs</a></li><li><a href="../../../src/cmp_influxdb/cmp_influxdb.rs.html#58">examples/cmp_influxdb/cmp_influxdb.rs</a></li><li><a href="../../../src/cmp_redis_client_publication/publication.rs.html#68">examples/cmp_redis_client/publication.rs</a></li><li><a href="../../../src/cmp_external_fn_process/cmp_external_fn_process.rs.html#68">examples/cmp_external_fn_process/cmp_external_fn_process.rs</a></li><li><a href="../../../src/cmp_surrealdb/cmp_surrealdb.rs.html#78">examples/cmp_surrealdb/cmp_surrealdb.rs</a></li><li><a href="../../../src/cmp_websocket_client/cmp_websocket_client.rs.html#101">examples/cmp_websocket_client/cmp_websocket_client.rs</a></li><li><a href="../../../src/cmp_modbus_client_simulator/cmp_modbus_client_simulator.rs.html#99">examples/cmp_modbus_client_simulator.rs</a></li><li><a href="../../../src/cmp_http_server/cmp_http_server.rs.html#103">examples/cmp_http_server/cmp_http_server.rs</a></li><li><a href="../../../src/cmp_derive/cmp_derive.rs.html#106">examples/cmp_derive/cmp_derive.rs</a></li><li><a href="../../../src/cmp_http_client/cmp_http_client.rs.html#118">examples/cmp_http_client/cmp_http_client.rs</a></li></ul></div></div></details></div></details></div></details></div><h2 id="synthetic-implementations" class="section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor">§</a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; !RefUnwindSafe for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;</h3></section><section id="impl-Send-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-Send-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; Send for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;<div class="where">where
     TMsg: Sync + Send,</div></h3></section><section id="impl-Sync-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-Sync-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; Sync for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;<div class="where">where
     TMsg: Sync + Send,</div></h3></section><section id="impl-Unpin-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-Unpin-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; Unpin for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;</h3></section><section id="impl-UnwindSafe-for-ComponentExecutor%3CTMsg%3E" class="impl"><a href="#impl-UnwindSafe-for-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; !UnwindSafe for <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;</h3></section></div><h2 id="blanket-implementations" class="section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor">§</a></h2><div id="blanket-implementations-list"><details class="toggle implementors-toggle"><summary><section id="impl-Any-for-T" class="impl"><a href="#impl-Any-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Any for T<div class="where">where
     T: 'static + ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl"><a href="#method.type_id" class="anchor">§</a><h4 class="code-header">fn <a class="fn">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-T" class="impl"><a href="#impl-Borrow%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<div class="where">where

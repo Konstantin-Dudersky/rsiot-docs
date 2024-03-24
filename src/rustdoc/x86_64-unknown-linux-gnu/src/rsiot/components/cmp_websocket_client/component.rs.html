@@ -32,6 +32,7 @@
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
@@ -63,5 +64,6 @@
     }
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;ConfigAlias&lt;TMessage&gt;, TMessage&gt;;
+<span class="doccomment">/// Компонент cmp_websocket_client
+</span><span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;ConfigAlias&lt;TMessage&gt;, TMessage&gt;;
 </code></pre></div></section></main></body></html>

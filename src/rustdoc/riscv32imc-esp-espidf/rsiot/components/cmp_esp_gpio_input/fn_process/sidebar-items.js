@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","gpio_level_to_bool"]};

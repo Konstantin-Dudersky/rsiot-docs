@@ -49,7 +49,8 @@
 
 <span class="kw">use </span><span class="kw">super</span>::derive_item_process::DeriveItemProcess;
 
-<span class="kw">pub struct </span>DeriveItem&lt;TMsg, TStore&gt;
+<span class="doccomment">/// Хранение данных для преобразования
+</span><span class="kw">pub struct </span>DeriveItem&lt;TMsg, TStore&gt;
 <span class="kw">where
     </span>TStore: Default + Send + Sync,
 {
@@ -76,8 +77,7 @@
             <span class="kw">return </span><span class="prelude-val">None</span>;
         }
         <span class="kw">let </span>msgs_content_data = (<span class="self">self</span>.fn_output)(<span class="kw-2">&amp;</span><span class="self">self</span>.store)<span class="question-mark">?</span>;
-        <span class="comment">// let msgs_vec = msgs_content_data.into_iter().map(Message::new).collect();
-        </span><span class="prelude-val">Some</span>(msgs_content_data)
+        <span class="prelude-val">Some</span>(msgs_content_data)
     }
 }
 

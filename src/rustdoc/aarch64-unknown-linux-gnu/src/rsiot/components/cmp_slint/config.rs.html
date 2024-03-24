@@ -69,8 +69,8 @@
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             instance: <span class="self">self</span>.instance.clone(),
-            fn_input: <span class="self">self</span>.fn_input.clone(),
-            fn_output: <span class="self">self</span>.fn_output.clone(),
+            fn_input: <span class="self">self</span>.fn_input,
+            fn_output: <span class="self">self</span>.fn_output,
         }
     }
 }

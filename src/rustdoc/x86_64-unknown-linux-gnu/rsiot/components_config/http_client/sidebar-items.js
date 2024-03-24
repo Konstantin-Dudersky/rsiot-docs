@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["config","connection_config","http_param","request_input","request_periodic","response","types"]};
+window.SIDEBAR_ITEMS = {"mod":["config","connection_config","http_param","request_input","request_periodic","types"]};

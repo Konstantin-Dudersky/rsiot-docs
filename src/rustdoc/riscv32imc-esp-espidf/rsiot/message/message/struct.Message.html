@@ -322,180 +322,7 @@
     local_set.<span class="kw">await</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[61,61],&quot;../../../src/cmp_esp/cmp_esp.rs.html#68&quot;,&quot;line 68&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#68">line 68</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
-<span>8</span>
-<span>9</span>
-<span>10</span>
-<span>11</span>
-<span>12</span>
-<span>13</span>
-<span>14</span>
-<span>15</span>
-<span>16</span>
-<span>17</span>
-<span>18</span>
-<span>19</span>
-<span>20</span>
-<span>21</span>
-<span>22</span>
-<span>23</span>
-<span>24</span>
-<span>25</span>
-<span>26</span>
-<span>27</span>
-<span>28</span>
-<span>29</span>
-<span>30</span>
-<span>31</span>
-<span>32</span>
-<span>33</span>
-<span>34</span>
-<span>35</span>
-<span>36</span>
-<span>37</span>
-<span>38</span>
-<span>39</span>
-<span>40</span>
-<span>41</span>
-<span>42</span>
-<span>43</span>
-<span>44</span>
-<span>45</span>
-<span>46</span>
-<span>47</span>
-<span>48</span>
-<span>49</span>
-<span>50</span>
-<span>51</span>
-<span>52</span>
-<span>53</span>
-<span>54</span>
-<span>55</span>
-<span>56</span>
-<span>57</span>
-<span>58</span>
-<span>59</span>
-<span>60</span>
-<span>61</span>
-<span>62</span>
-<span>63</span>
-<span>64</span>
-<span>65</span>
-<span>66</span>
-<span>67</span>
-<span>68</span>
-<span>69</span>
-<span>70</span>
-<span>71</span>
-<span>72</span>
-<span>73</span>
-<span>74</span>
-<span>75</span>
-<span>76</span>
-<span>77</span>
-<span>78</span>
-<span>79</span>
-<span>80</span>
-<span>81</span>
-<span>82</span>
-<span>83</span>
-<span>84</span>
-<span>85</span>
-<span>86</span>
-<span>87</span>
-<span>88</span>
-<span>89</span>
-<span>90</span>
-<span>91</span>
-<span>92</span>
-<span>93</span>
-</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
-    <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop,
-        hal::{gpio::PinDriver, peripherals::Peripherals},
-        log::EspLogger,
-        sys::link_patches,
-        wifi::EspWifi,
-    };
-    <span class="kw">use </span>tokio::task::LocalSet;
-    <span class="kw">use </span>tracing::Level;
-
-    <span class="kw">use </span>rsiot::{
-        components::{cmp_esp_gpio_input, cmp_esp_wifi, cmp_http_server_esp, cmp_logger},
-        executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::<span class="kw-2">*</span>,
-    };
-
-    link_patches();
-    EspLogger::initialize_default();
-
-    <span class="comment">// message
-    </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
-    </span><span class="kw">pub enum </span>Custom {
-        BootButton(bool),
-    }
-
-    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
-
-    <span class="comment">// cmp_http_server_esp -------------------------------------------------------------------------
-    </span><span class="kw">let </span>http_server_esp_config = cmp_http_server_esp::Config {
-        port: <span class="number">8010</span>,
-        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
-            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
-        },
-        fn_output: |text: <span class="kw-2">&amp;</span>str| {
-            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
-        },
-    };
-
-    <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
-        level: Level::INFO,
-        header: <span class="string">""</span>.into(),
-    };
-
-    <span class="comment">// ESP -----------------------------------------------------------------------------------------
-    </span><span class="kw">let </span>peripherals = Peripherals::take().unwrap();
-    <span class="kw">let </span>event_loop = EspSystemEventLoop::take().unwrap();
-
-    <span class="comment">// wifi
-    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config::&lt;Custom&gt; {
-        fn_input: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
-        fn_output: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
-        event_loop: event_loop.clone(),
-        driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
-    };
-
-    <span class="comment">// GPIO9 - button Boot
-    </span><span class="kw">let </span>gpio9_config = cmp_esp_gpio_input::Config {
-        fn_output: |value| <span class="highlight focus">Message::new_custom</span>(Custom::BootButton(value)),
-        driver: PinDriver::input(peripherals.pins.gpio9).unwrap(),
-    };
-
-    <span class="comment">// executor ------------------------------------------------------------------------------------
-
-    </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
-        buffer_size: <span class="number">10</span>,
-        executor_name: <span class="string">"cmp_http_server_esp_example"</span>.into(),
-        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
-    };
-
-    <span class="kw">let </span>local_set = LocalSet::new();
-
-    local_set.spawn_local(<span class="kw">async </span>{
-        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
-            .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
-            .add_cmp(cmp_esp_gpio_input::Cmp::new(gpio9_config))
-            .wait_result()
-            .<span class="kw">await
-            </span>.unwrap()
-    });
-    local_set.<span class="kw">await</span>;
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[54,54],&quot;../../../src/cmp_derive/cmp_derive.rs.html#67&quot;,&quot;line 67&quot;],[[55,55],&quot;../../../src/cmp_derive/cmp_derive.rs.html#68&quot;,&quot;line 68&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../../src/cmp_derive/cmp_derive.rs.html#67">line 67</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
+}</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[54,54],&quot;../../../src/cmp_derive/cmp_derive.rs.html#67&quot;,&quot;line 67&quot;],[[55,55],&quot;../../../src/cmp_derive/cmp_derive.rs.html#68&quot;,&quot;line 68&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../../src/cmp_derive/cmp_derive.rs.html#67">line 67</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
 <span>14</span>
 <span>15</span>
 <span>16</span>
@@ -704,14 +531,7 @@
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.get_custom_data" class="method"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#51-56">source</a><h4 class="code-header">pub fn <a href="#method.get_custom_data" class="fn">get_custom_data</a>(&amp;self) -&gt; Option&lt;TCustom&gt;</h4></section></summary><div class="docblock"><p>Возвращает данные сообщения, если тип сообщения <code>MsgData::Custom</code></p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.add_trace_item" class="method"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#59-61">source</a><h4 class="code-header">pub fn <a href="#method.add_trace_item" class="fn">add_trace_item</a>(&amp;mut self, id: &amp;<a class="struct" href="https://docs.rs/uuid/1.8.0/uuid/struct.Uuid.html" title="struct uuid::Uuid">Uuid</a>, name: &amp;str)</h4></section></summary><div class="docblock"><p>Добавить запись пути</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.contains_trace_item" class="method"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#67-69">source</a><h4 class="code-header">pub fn <a href="#method.contains_trace_item" class="fn">contains_trace_item</a>(&amp;self, id: &amp;<a class="struct" href="https://docs.rs/uuid/1.8.0/uuid/struct.Uuid.html" title="struct uuid::Uuid">Uuid</a>) -&gt; bool</h4></section></summary><div class="docblock"><p>Проверяем, что в трейсе сообщения присутсвует компонент с заданным id.</p>
-<p>Полезно для предотварщения зацикливания сообщений, чтобы данный компонент не обрабатывал
-сообщения, которые он же и сгенерировал</p>
-</div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Message%3CTData%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#8-49">source</a><a href="#impl-Message%3CTData%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TData&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TData&gt;<div class="where">where
-    TData: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> + <a class="trait" href="../trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.serialize" class="method"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#27-35">source</a><h4 class="code-header">pub fn <a href="#method.serialize" class="fn">serialize</a>(&amp;self) -&gt; Result&lt;String, <a class="enum" href="../error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Сериализация сообщений в json</p>
-</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-2"><a href="#scraped-examples-2">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[32,32],&quot;../../../src/cmp_esp/cmp_esp.rs.html#39&quot;,&quot;line 39&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#39">line 39</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[54,54],&quot;../../../src/cmp_esp/cmp_esp.rs.html#61&quot;,&quot;line 61&quot;],[[74,74],&quot;../../../src/cmp_esp/cmp_esp.rs.html#81&quot;,&quot;line 81&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#61">line 61</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -798,19 +618,42 @@
 <span>91</span>
 <span>92</span>
 <span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>std::time::Duration;
+
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop,
-        hal::{gpio::PinDriver, peripherals::Peripherals},
-        log::EspLogger,
-        sys::link_patches,
-        wifi::EspWifi,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
+        sys::link_patches, wifi::EspWifi,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
     <span class="kw">use </span>tracing::Level;
 
     <span class="kw">use </span>rsiot::{
-        components::{cmp_esp_gpio_input, cmp_esp_wifi, cmp_http_server_esp, cmp_logger},
+        components::{
+            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+        },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         message::<span class="kw-2">*</span>,
     };
@@ -822,6 +665,231 @@
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
+        Relay0(bool),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
+
+    <span class="comment">// cmp_http_server_esp -------------------------------------------------------------------------
+    </span><span class="kw">let </span>http_server_esp_config = cmp_http_server_esp::Config {
+        port: <span class="number">8010</span>,
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
+    <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
+    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        header: <span class="string">""</span>.into(),
+    };
+
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>value = <span class="bool-val">false</span>;
+    <span class="kw">let </span>config_inject_periodic = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">5</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = <span class="highlight focus">Message::new_custom</span>(Custom::Relay0(value));
+            value = !value;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="comment">// ESP -----------------------------------------------------------------------------------------
+    </span><span class="kw">let </span>peripherals = Peripherals::take().unwrap();
+    <span class="kw">let </span>event_loop = EspSystemEventLoop::take().unwrap();
+
+    <span class="comment">// wifi
+    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
+        event_loop: event_loop.clone(),
+        driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
+    };
+
+    <span class="comment">// GPIO
+    </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
+        inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
+            driver: peripherals.pins.gpio9.into(),
+            fn_output: |value| <span class="highlight">Message::new_custom</span>(Custom::BootButton(value)),
+        }],
+        outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
+            driver: peripherals.pins.gpio0.into(),
+            fn_input: |msg| <span class="kw">match </span>msg.data {
+                MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+            },
+            is_low_triggered: <span class="bool-val">false</span>,
+        }],
+    };
+
+    <span class="comment">// executor ------------------------------------------------------------------------------------
+
+    </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">10</span>,
+        executor_name: <span class="string">"cmp_esp_example"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+            .add_cmp(cmp_logger::Cmp::new(logger_config))
+            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
+            .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
+            .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
+            .wait_result()
+            .<span class="kw">await
+            </span>.unwrap()
+    });
+    local_set.<span class="kw">await</span>;
+}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.get_custom_data" class="method"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#51-56">source</a><h4 class="code-header">pub fn <a href="#method.get_custom_data" class="fn">get_custom_data</a>(&amp;self) -&gt; Option&lt;TCustom&gt;</h4></section></summary><div class="docblock"><p>Возвращает данные сообщения, если тип сообщения <code>MsgData::Custom</code></p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.add_trace_item" class="method"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#59-61">source</a><h4 class="code-header">pub fn <a href="#method.add_trace_item" class="fn">add_trace_item</a>(&amp;mut self, id: &amp;<a class="struct" href="https://docs.rs/uuid/1.8.0/uuid/struct.Uuid.html" title="struct uuid::Uuid">Uuid</a>, name: &amp;str)</h4></section></summary><div class="docblock"><p>Добавить запись пути</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.contains_trace_item" class="method"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#67-69">source</a><h4 class="code-header">pub fn <a href="#method.contains_trace_item" class="fn">contains_trace_item</a>(&amp;self, id: &amp;<a class="struct" href="https://docs.rs/uuid/1.8.0/uuid/struct.Uuid.html" title="struct uuid::Uuid">Uuid</a>) -&gt; bool</h4></section></summary><div class="docblock"><p>Проверяем, что в трейсе сообщения присутсвует компонент с заданным id.</p>
+<p>Полезно для предотварщения зацикливания сообщений, чтобы данный компонент не обрабатывал
+сообщения, которые он же и сгенерировал</p>
+</div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Message%3CTData%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#8-49">source</a><a href="#impl-Message%3CTData%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TData&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TData&gt;<div class="where">where
+    TData: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> + <a class="trait" href="../trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.serialize" class="method"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#27-35">source</a><h4 class="code-header">pub fn <a href="#method.serialize" class="fn">serialize</a>(&amp;self) -&gt; Result&lt;String, <a class="enum" href="../error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Сериализация сообщений в json</p>
+</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-2"><a href="#scraped-examples-2">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[34,34],&quot;../../../src/cmp_esp/cmp_esp.rs.html#41&quot;,&quot;line 41&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#41">line 41</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>esp_idf_svc::{
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
+        sys::link_patches, wifi::EspWifi,
+    };
+    <span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::<span class="kw-2">*</span>,
+    };
+
+    link_patches();
+    EspLogger::initialize_default();
+
+    <span class="comment">// message
+    </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">pub enum </span>Custom {
+        BootButton(bool),
+        Relay0(bool),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -845,29 +913,48 @@
         header: <span class="string">""</span>.into(),
     };
 
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>value = <span class="bool-val">false</span>;
+    <span class="kw">let </span>config_inject_periodic = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">5</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::Relay0(value));
+            value = !value;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
     <span class="comment">// ESP -----------------------------------------------------------------------------------------
     </span><span class="kw">let </span>peripherals = Peripherals::take().unwrap();
     <span class="kw">let </span>event_loop = EspSystemEventLoop::take().unwrap();
 
     <span class="comment">// wifi
-    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config::&lt;Custom&gt; {
-        fn_input: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
-        fn_output: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
+    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         event_loop: event_loop.clone(),
         driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
     };
 
-    <span class="comment">// GPIO9 - button Boot
-    </span><span class="kw">let </span>gpio9_config = cmp_esp_gpio_input::Config {
-        fn_output: |value| Message::new_custom(Custom::BootButton(value)),
-        driver: PinDriver::input(peripherals.pins.gpio9).unwrap(),
+    <span class="comment">// GPIO
+    </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
+        inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
+            driver: peripherals.pins.gpio9.into(),
+            fn_output: |value| Message::new_custom(Custom::BootButton(value)),
+        }],
+        outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
+            driver: peripherals.pins.gpio0.into(),
+            fn_input: |msg| <span class="kw">match </span>msg.data {
+                MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+            },
+            is_low_triggered: <span class="bool-val">false</span>,
+        }],
     };
 
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">10</span>,
-        executor_name: <span class="string">"cmp_http_server_esp_example"</span>.into(),
+        executor_name: <span class="string">"cmp_esp_example"</span>.into(),
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
     };
 
@@ -878,14 +965,15 @@
             .add_cmp(cmp_logger::Cmp::new(logger_config))
             .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
-            .add_cmp(cmp_esp_gpio_input::Cmp::new(gpio9_config))
+            .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
+            .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
     });
     local_set.<span class="kw">await</span>;
 }</code></pre></div></div></div></div></details><details class="toggle method-toggle" open><summary><section id="method.deserialize" class="method"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#39-48">source</a><h4 class="code-header">pub fn <a href="#method.deserialize" class="fn">deserialize</a>(text: &amp;str) -&gt; Result&lt;Self, <a class="enum" href="../error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Десериализация сообщений из json</p>
-</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-3"><a href="#scraped-examples-3">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[36,36],&quot;../../../src/cmp_esp/cmp_esp.rs.html#43&quot;,&quot;line 43&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#43">line 43</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-3"><a href="#scraped-examples-3">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[38,38],&quot;../../../src/cmp_esp/cmp_esp.rs.html#45&quot;,&quot;line 45&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#45">line 45</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -972,19 +1060,42 @@
 <span>91</span>
 <span>92</span>
 <span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>std::time::Duration;
+
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop,
-        hal::{gpio::PinDriver, peripherals::Peripherals},
-        log::EspLogger,
-        sys::link_patches,
-        wifi::EspWifi,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
+        sys::link_patches, wifi::EspWifi,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
     <span class="kw">use </span>tracing::Level;
 
     <span class="kw">use </span>rsiot::{
-        components::{cmp_esp_gpio_input, cmp_esp_wifi, cmp_http_server_esp, cmp_logger},
+        components::{
+            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+        },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         message::<span class="kw-2">*</span>,
     };
@@ -996,6 +1107,7 @@
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
+        Relay0(bool),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -1019,29 +1131,48 @@
         header: <span class="string">""</span>.into(),
     };
 
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>value = <span class="bool-val">false</span>;
+    <span class="kw">let </span>config_inject_periodic = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">5</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::Relay0(value));
+            value = !value;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
     <span class="comment">// ESP -----------------------------------------------------------------------------------------
     </span><span class="kw">let </span>peripherals = Peripherals::take().unwrap();
     <span class="kw">let </span>event_loop = EspSystemEventLoop::take().unwrap();
 
     <span class="comment">// wifi
-    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config::&lt;Custom&gt; {
-        fn_input: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
-        fn_output: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
+    </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         event_loop: event_loop.clone(),
         driver: EspWifi::new(peripherals.modem, event_loop.clone(), <span class="prelude-val">None</span>).unwrap(),
     };
 
-    <span class="comment">// GPIO9 - button Boot
-    </span><span class="kw">let </span>gpio9_config = cmp_esp_gpio_input::Config {
-        fn_output: |value| Message::new_custom(Custom::BootButton(value)),
-        driver: PinDriver::input(peripherals.pins.gpio9).unwrap(),
+    <span class="comment">// GPIO
+    </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
+        inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
+            driver: peripherals.pins.gpio9.into(),
+            fn_output: |value| Message::new_custom(Custom::BootButton(value)),
+        }],
+        outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
+            driver: peripherals.pins.gpio0.into(),
+            fn_input: |msg| <span class="kw">match </span>msg.data {
+                MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+            },
+            is_low_triggered: <span class="bool-val">false</span>,
+        }],
     };
 
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">10</span>,
-        executor_name: <span class="string">"cmp_http_server_esp_example"</span>.into(),
+        executor_name: <span class="string">"cmp_esp_example"</span>.into(),
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
     };
 
@@ -1052,7 +1183,8 @@
             .add_cmp(cmp_logger::Cmp::new(logger_config))
             .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
-            .add_cmp(cmp_esp_gpio_input::Cmp::new(gpio9_config))
+            .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
+            .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()

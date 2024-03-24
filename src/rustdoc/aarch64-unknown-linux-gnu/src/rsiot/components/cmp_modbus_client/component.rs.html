@@ -30,6 +30,7 @@
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
@@ -37,27 +38,28 @@
     message::{AuthPermissions, MsgDataBound},
 };
 
-<span class="kw">use super</span>::{config::ConfigNewType, fn_process::fn_process};
+<span class="kw">use super</span>::{config::Config, fn_process::fn_process};
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
-</span><span class="kw">impl</span>&lt;TMessage&gt; IComponentProcess&lt;ConfigNewType&lt;TMessage&gt;, TMessage&gt;
-    <span class="kw">for </span>Component&lt;ConfigNewType&lt;TMessage&gt;, TMessage&gt;
+</span><span class="kw">impl</span>&lt;TMessage&gt; IComponentProcess&lt;Config&lt;TMessage&gt;, TMessage&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMessage&gt;, TMessage&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        config: ConfigNewType&lt;TMessage&gt;,
+        config: Config&lt;TMessage&gt;,
         in_out: CmpInOut&lt;TMessage&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         fn_process(
             in_out.clone_with_new_id(<span class="string">"cmp_modbus_client"</span>, AuthPermissions::FullAccess),
-            config.<span class="number">0</span>,
+            config,
         )
         .<span class="kw">await
     </span>}
 }
 
-<span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;ConfigNewType&lt;TMessage&gt;, TMessage&gt;;
+<span class="doccomment">/// Компонент cmp_modbus_client
+</span><span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;Config&lt;TMessage&gt;, TMessage&gt;;
 </code></pre></div></section></main></body></html>

@@ -29,21 +29,36 @@
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! Фронт сигнала 0 -&gt; 1
+
+</span><span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::<span class="kw">super</span>::function_block_base::{FunctionBlockBase, IFunctionBlock};
 
-<span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
+<span class="doccomment">/// Входные данные
+</span><span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
 </span><span class="kw">pub struct </span>I {
-    <span class="kw">pub </span>i: bool,
+    <span class="doccomment">/// Сигнал, фронт которого нужно определить
+    </span><span class="kw">pub </span>i: bool,
 }
 
-<span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
+<span class="doccomment">/// Выходные данные
+</span><span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
 </span><span class="kw">pub struct </span>Q {
-    <span class="kw">pub </span>q: bool,
+    <span class="doccomment">/// Устанавливается в true на один цикл при обнаруженном фронте сигнала 0 -&gt; 1
+    </span><span class="kw">pub </span>q: bool,
 }
 
-<span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
+<span class="doccomment">/// Статичные данные
+</span><span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
 </span><span class="kw">pub struct </span>S {
     prev_i: bool,
 }
@@ -57,5 +72,6 @@
     }
 }
 
-<span class="kw">pub type </span>FunctionBlock = FunctionBlockBase&lt;I, Q, S&gt;;
+<span class="doccomment">/// Фронт сигнала 0 -&gt; 1
+</span><span class="kw">pub type </span>FB = FunctionBlockBase&lt;I, Q, S&gt;;
 </code></pre></div></section></main></body></html>

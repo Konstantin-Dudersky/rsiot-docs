@@ -17,21 +17,35 @@
 <a href="#15" id="15">15</a>
 <a href="#16" id="16">16</a>
 <a href="#17" id="17">17</a>
-</pre></div><pre class="rust"><code><span class="attr">#[derive(Debug, thiserror::Error)]
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+</pre></div><pre class="rust"><code><span class="doccomment">/// Ошибки cmp_influxdb
+</span><span class="attr">#[derive(Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Error {
-    <span class="attr">#[error(<span class="string">"Reqwest error: {0}"</span>)]
+    <span class="doccomment">/// Reqwest
+    </span><span class="attr">#[error(<span class="string">"Reqwest error: {0}"</span>)]
     </span>Reqwest(<span class="attr">#[from] </span>reqwest::Error),
 
-    <span class="attr">#[error(<span class="string">"Status: {status}, message: {message}"</span>)]
+    <span class="doccomment">/// RequestParameters
+    </span><span class="attr">#[error(<span class="string">"Status: {status}, message: {message}"</span>)]
     </span>RequestParameters {
-        status: reqwest::StatusCode,
-        message: String,
+        <span class="doccomment">/// status
+        </span>status: reqwest::StatusCode,
+        <span class="doccomment">/// message
+        </span>message: String,
     },
 
-    <span class="attr">#[error(<span class="string">"Cannot represent timetamp as Unix time: {0:?}"</span>)]
+    <span class="doccomment">/// WrongTimestamp
+    </span><span class="attr">#[error(<span class="string">"Cannot represent timetamp as Unix time: {0:?}"</span>)]
     </span>WrongTimestamp(<span class="kw">crate</span>::message::Timestamp),
 
-    <span class="attr">#[error(transparent)]
+    <span class="doccomment">/// Config
+    </span><span class="attr">#[error(transparent)]
     </span>Config(<span class="attr">#[from] </span><span class="kw">crate</span>::components_config::influxdb_v2::Error),
 }
 </code></pre></div></section></main></body></html>
