@@ -20,6 +20,7 @@
 <a href="#18" id="18">18</a>
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Debug;
 
 <span class="doccomment">/// Трейт для канала сообщений
@@ -27,7 +28,8 @@
 <span class="kw">where
     </span><span class="self">Self</span>: Clone + Debug + Send,
 {
-    <span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+    <span class="doccomment">/// Преобразование в строку
+    </span><span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="macro">format!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>)
     }
 }

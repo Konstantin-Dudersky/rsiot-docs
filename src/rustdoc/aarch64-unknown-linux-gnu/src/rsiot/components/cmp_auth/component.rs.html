@@ -27,7 +27,7 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::message::{AuthPermissions, MsgDataBound};
 
-<span class="kw">use </span><span class="kw">crate</span>::executor::{CmpInOut, Component, ComponentError, ComponentResult, IComponentProcess};
+<span class="kw">use </span><span class="kw">crate</span>::executor::{CmpInOut, CmpResult, Component, ComponentError, IComponentProcess};
 
 <span class="kw">use super</span>::{fn_process::fn_process, Config};
 
@@ -37,7 +37,7 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
 {
-    <span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: Config, in_out: CmpInOut&lt;TMsg&gt;) -&gt; ComponentResult {
+    <span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: Config, in_out: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
         <span class="kw">let </span>in_out = in_out.clone_with_new_id(<span class="string">"cmp_auth"</span>, AuthPermissions::FullAccess);
         fn_process(config, in_out)
             .<span class="kw">await

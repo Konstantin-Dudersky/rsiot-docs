@@ -164,6 +164,10 @@
 <a href="#162" id="162">162</a>
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{cmp::max, fmt::Debug};
 
 <span class="kw">use </span>tracing::{info, trace};
@@ -176,11 +180,14 @@
     Cache, ComponentError,
 };
 
-<span class="attr">#[derive(Debug)]
+<span class="doccomment">/// Подключение компонента к внутренней шине сообщений исполнителя
+</span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>CmpInOut&lt;TMsg&gt; {
     input: CmpInput&lt;TMsg&gt;,
     output: CmpOutput&lt;TMsg&gt;,
-    <span class="kw">pub </span>cache: Cache&lt;TMsg&gt;,
+    <span class="doccomment">/// Ссылка на кэш
+    /// TODO - проверить, скорее всего можно сделать приватным
+    </span><span class="kw">pub </span>cache: Cache&lt;TMsg&gt;,
     name: String,
     id: Uuid,
     auth_perm: AuthPermissions,
@@ -191,7 +198,8 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="kw">pub fn </span>new(
+    <span class="doccomment">/// Создание подключения к внутренней шине сообщений исполнителя
+    </span><span class="kw">pub fn </span>new(
         input: CmpInput&lt;TMsg&gt;,
         output: CmpOutput&lt;TMsg&gt;,
         cache: Cache&lt;TMsg&gt;,

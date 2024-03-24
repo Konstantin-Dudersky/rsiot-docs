@@ -8,12 +8,28 @@
 <a href="#6" id="6">6</a>
 <a href="#7" id="7">7</a>
 <a href="#8" id="8">8</a>
-</pre></div><pre class="rust"><code><span class="attr">#[derive(Debug, thiserror::Error)]
+<a href="#9" id="9">9</a>
+<a href="#10" id="10">10</a>
+<a href="#11" id="11">11</a>
+<a href="#12" id="12">12</a>
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+<a href="#15" id="15">15</a>
+<a href="#16" id="16">16</a>
+</pre></div><pre class="rust"><code><span class="doccomment">/// Ошибки работы с сообщениями
+</span><span class="attr">#[derive(Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Error {
-    <span class="attr">#[error(<span class="string">"Message deserialization\nError: {error}\nData: {data}"</span>)]
-    </span>Deserialization { error: String, data: String },
+    <span class="doccomment">/// Message deserialization error
+    </span><span class="attr">#[error(<span class="string">"Message deserialization\nError: {error}\nData: {data}"</span>)]
+    </span>Deserialization {
+        <span class="doccomment">/// Текст ошибки
+        </span>error: String,
+        <span class="doccomment">/// Данные, которые не удалось десериализовать
+        </span>data: String,
+    },
 
-    <span class="attr">#[error(<span class="string">"Message serialization error: {0}"</span>)]
+    <span class="doccomment">/// Message serialization error
+    </span><span class="attr">#[error(<span class="string">"Message serialization error: {0}"</span>)]
     </span>Serialization(String),
 }
 </code></pre></div></section></main></body></html>

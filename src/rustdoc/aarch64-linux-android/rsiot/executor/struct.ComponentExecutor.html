@@ -249,11 +249,11 @@ spawn_local(context);
 
     <span class="kw">use </span>rsiot::{
         components::cmp_external_fn_process,
-        executor::{CmpInOut, ComponentExecutor, ComponentExecutorConfig, ComponentResult},
+        executor::{CmpInOut, CmpResult, ComponentExecutor, ComponentExecutorConfig},
         message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
     };
 
-    <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_input: CmpInOut&lt;TMsg&gt;) -&gt; ComponentResult {
+    <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_input: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
         <span class="kw">loop </span>{
             <span class="macro">info!</span>(<span class="string">"External fn process"</span>);
             sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
@@ -261,7 +261,7 @@ spawn_local(context);
     }
 
     <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
-    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, ComponentResult&gt;
+    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
     <span class="kw">where
         </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     {
@@ -269,7 +269,7 @@ spawn_local(context);
     }
 
     <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
-    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, ComponentResult&gt;
+    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
     <span class="kw">where
         </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     {
@@ -686,7 +686,7 @@ spawn_local(context);
         },
         requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
             fn_input: |msg| {
-                <span class="kw">let </span>msg = msg.get_data()<span class="question-mark">?</span>;
+                <span class="kw">let </span>msg = msg.get_custom_data()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
                         <span class="kw">let </span>param = http_client_config::HttpParam::Get {
@@ -961,11 +961,11 @@ spawn_local(context);
 
     <span class="kw">use </span>rsiot::{
         components::cmp_external_fn_process,
-        executor::{CmpInOut, ComponentExecutor, ComponentExecutorConfig, ComponentResult},
+        executor::{CmpInOut, CmpResult, ComponentExecutor, ComponentExecutorConfig},
         message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
     };
 
-    <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_input: CmpInOut&lt;TMsg&gt;) -&gt; ComponentResult {
+    <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_input: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
         <span class="kw">loop </span>{
             <span class="macro">info!</span>(<span class="string">"External fn process"</span>);
             sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
@@ -973,7 +973,7 @@ spawn_local(context);
     }
 
     <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
-    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, ComponentResult&gt;
+    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
     <span class="kw">where
         </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     {
@@ -981,7 +981,7 @@ spawn_local(context);
     }
 
     <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
-    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, ComponentResult&gt;
+    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
     <span class="kw">where
         </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     {
@@ -1398,7 +1398,7 @@ spawn_local(context);
         },
         requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
             fn_input: |msg| {
-                <span class="kw">let </span>msg = msg.get_data()<span class="question-mark">?</span>;
+                <span class="kw">let </span>msg = msg.get_custom_data()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
                         <span class="kw">let </span>param = http_client_config::HttpParam::Get {
@@ -1675,11 +1675,11 @@ spawn_local(context);
 
     <span class="kw">use </span>rsiot::{
         components::cmp_external_fn_process,
-        executor::{CmpInOut, ComponentExecutor, ComponentExecutorConfig, ComponentResult},
+        executor::{CmpInOut, CmpResult, ComponentExecutor, ComponentExecutorConfig},
         message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
     };
 
-    <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_input: CmpInOut&lt;TMsg&gt;) -&gt; ComponentResult {
+    <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_input: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
         <span class="kw">loop </span>{
             <span class="macro">info!</span>(<span class="string">"External fn process"</span>);
             sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
@@ -1687,7 +1687,7 @@ spawn_local(context);
     }
 
     <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
-    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, ComponentResult&gt;
+    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
     <span class="kw">where
         </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     {
@@ -1695,7 +1695,7 @@ spawn_local(context);
     }
 
     <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
-    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, ComponentResult&gt;
+    </span><span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
     <span class="kw">where
         </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     {
@@ -2112,7 +2112,7 @@ spawn_local(context);
         },
         requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
             fn_input: |msg| {
-                <span class="kw">let </span>msg = msg.get_data()<span class="question-mark">?</span>;
+                <span class="kw">let </span>msg = msg.get_custom_data()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
                         <span class="kw">let </span>param = http_client_config::HttpParam::Get {

@@ -73,6 +73,15 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
 </pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::module_inception)]
 
 </span><span class="kw">use </span>std::fmt::Debug;
@@ -82,19 +91,25 @@
 
 <span class="kw">use super</span>::{MsgData, MsgDataBound, MsgTrace, Timestamp};
 
-<span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+<span class="doccomment">/// Сообщение
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>Message&lt;TCustom&gt; {
-    <span class="kw">pub </span>data: MsgData&lt;TCustom&gt;,
-    <span class="kw">pub </span>key: String,
-    <span class="kw">pub </span>ts: Timestamp,
-    <span class="kw">pub </span>trace: MsgTrace,
+    <span class="doccomment">/// Данные
+    </span><span class="kw">pub </span>data: MsgData&lt;TCustom&gt;,
+    <span class="doccomment">/// Ключ
+    </span><span class="kw">pub </span>key: String,
+    <span class="doccomment">/// Метка времени
+    </span><span class="kw">pub </span>ts: Timestamp,
+    <span class="doccomment">/// Путь, по котором передавалось сообщение
+    </span><span class="kw">pub </span>trace: MsgTrace,
 }
 
 <span class="kw">impl</span>&lt;TCustom&gt; Message&lt;TCustom&gt;
 <span class="kw">where
     </span>TCustom: MsgDataBound,
 {
-    <span class="kw">pub fn </span>new(data: MsgData&lt;TCustom&gt;) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Создать новое сообщение
+    </span><span class="kw">pub fn </span>new(data: MsgData&lt;TCustom&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>key = define_key(<span class="kw-2">&amp;</span>data);
         <span class="self">Self </span>{
             data,
@@ -104,7 +119,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>new_custom(custom_data: TCustom) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Создать новое сообщение типа `MsgData::Custom`
+    </span><span class="kw">pub fn </span>new_custom(custom_data: TCustom) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>data = MsgData::Custom(custom_data);
         <span class="kw">let </span>key = define_key(<span class="kw-2">&amp;</span>data);
         <span class="self">Self </span>{
@@ -115,15 +131,17 @@
         }
     }
 
-    <span class="kw">pub fn </span>get_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;TCustom&gt; {
+    <span class="doccomment">/// Возвращает данные сообщения, если тип сообщения `MsgData::Custom`
+    </span><span class="kw">pub fn </span>get_custom_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;TCustom&gt; {
         <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.data {
             MsgData::System(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
             MsgData::Custom(data) =&gt; <span class="prelude-val">Some</span>(data.clone()),
         }
     }
 
-    <span class="kw">pub fn </span>add_trace_item(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>Uuid, name: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.trace.insert(<span class="kw-2">*</span>id, name.to_string())
+    <span class="doccomment">/// Добавить запись пути
+    </span><span class="kw">pub fn </span>add_trace_item(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>Uuid, name: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.trace.add_trace_item(<span class="kw-2">*</span>id, name.to_string())
     }
 
     <span class="doccomment">/// Проверяем, что в трейсе сообщения присутсвует компонент с заданным id.
@@ -131,7 +149,7 @@
     /// Полезно для предотварщения зацикливания сообщений, чтобы данный компонент не обрабатывал
     /// сообщения, которые он же и сгенерировал
     </span><span class="kw">pub fn </span>contains_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>Uuid) -&gt; bool {
-        <span class="self">self</span>.trace.contains_key(id)
+        <span class="self">self</span>.trace.contains_trace_item(id)
     }
 }
 

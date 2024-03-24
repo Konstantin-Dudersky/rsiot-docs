@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["MsgTrace","TraceValue"]};
+window.SIDEBAR_ITEMS = {"struct":["MsgTrace","MsgTraceItem"]};

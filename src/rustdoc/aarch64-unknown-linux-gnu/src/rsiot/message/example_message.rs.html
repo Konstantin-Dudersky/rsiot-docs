@@ -59,6 +59,17 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Пример реализации сообщения. Можно использовать для тестирования компонентов
 
 </span><span class="kw">use super</span>::{Deserialize, MsgDataBound, Serialize};
@@ -66,23 +77,34 @@
 <span class="doccomment">/// Пример реализации сообщения. Можно использовать для тестирования компонентов
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub enum </span>Custom {
-    ValueInstantF64(f64),
-    ValueInstantBool(bool),
-    ValueInstantString(String),
-    DataUnit(()),
-    DataGroup(DataGroup),
+    <span class="doccomment">/// Мгновенное значение типа f64
+    </span>ValueInstantF64(f64),
+    <span class="doccomment">/// Мгновенное значение типа bool
+    </span>ValueInstantBool(bool),
+    <span class="doccomment">/// Мгновенное значение типа String
+    </span>ValueInstantString(String),
+    <span class="doccomment">/// Значение типа unit
+    </span>DataUnit(()),
+    <span class="doccomment">/// Вложенная группа
+    </span>DataGroup(DataGroup),
 }
 
-<span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+<span class="doccomment">/// Пример структуры
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>StructInDataGroup {
-    <span class="kw">pub </span>struct_field1: bool,
-    <span class="kw">pub </span>struct_field2: f64,
+    <span class="doccomment">/// Поле 1
+    </span><span class="kw">pub </span>struct_field1: bool,
+    <span class="doccomment">/// Поле 2
+    </span><span class="kw">pub </span>struct_field2: f64,
 }
 
-<span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+<span class="doccomment">/// Вложенная группа
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub enum </span>DataGroup {
-    DataGroupF64(f64),
-    DataGroupStruct(StructInDataGroup),
+    <span class="doccomment">/// Значение типа f64 в структуре
+    </span>DataGroupF64(f64),
+    <span class="doccomment">/// Вложенная в группу структура
+    </span>DataGroupStruct(StructInDataGroup),
 }
 
 <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}

@@ -23,14 +23,10 @@
 <a href="#21" id="21">21</a>
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
-<a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a>
-<a href="#26" id="26">26</a>
-<a href="#27" id="27">27</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
-    executor::{CmpInOut, Component, ComponentError, IComponentProcess},
+    executor::{CmpInOut, CmpResult, Component, ComponentError, IComponentProcess},
     message::{AuthPermissions, MsgDataBound},
 };
 
@@ -42,11 +38,7 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
 {
-    <span class="kw">async fn </span>process(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        config: Config&lt;TMsg&gt;,
-        in_out: CmpInOut&lt;TMsg&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
+    <span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: Config&lt;TMsg&gt;, in_out: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
         <span class="kw">let </span>in_out = in_out.clone_with_new_id(<span class="string">"CMP_TEMPLATE"</span>, AuthPermissions::FullAccess);
         fn_process(config, in_out).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())

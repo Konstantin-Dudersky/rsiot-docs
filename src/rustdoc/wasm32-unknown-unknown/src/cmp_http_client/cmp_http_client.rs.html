@@ -198,7 +198,7 @@
         },
         requests_input: <span class="macro">vec!</span>[http_client_config::RequestInput {
             fn_input: |msg| {
-                <span class="kw">let </span>msg = msg.get_data()<span class="question-mark">?</span>;
+                <span class="kw">let </span>msg = msg.get_custom_data()<span class="question-mark">?</span>;
                 <span class="kw">match </span>msg {
                     Data::HttpMethodsGetOnEventRequest(<span class="kw">_</span>) =&gt; {
                         <span class="kw">let </span>param = http_client_config::HttpParam::Get {

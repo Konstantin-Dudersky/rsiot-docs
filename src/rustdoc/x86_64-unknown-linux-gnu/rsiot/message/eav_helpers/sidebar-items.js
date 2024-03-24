@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["command","value_counter","value_instant"],"struct":["Command","ValueCounter","ValueInstant"]};
+window.SIDEBAR_ITEMS = {"mod":["command","value_counter","value_instant"]};

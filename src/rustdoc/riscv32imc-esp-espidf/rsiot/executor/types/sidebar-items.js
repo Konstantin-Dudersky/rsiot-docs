@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"type":["CmpInput","CmpOutput","ComponentResult","FnAuth"]};
+window.SIDEBAR_ITEMS = {"type":["CmpInput","CmpOutput","CmpResult","FnAuth"]};

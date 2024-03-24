@@ -125,7 +125,7 @@
         database: <span class="string">"rsiot"</span>.into(),
         init_script: <span class="macro">include_str!</span>(<span class="string">"./init.surql"</span>).into(),
         input_config: <span class="macro">vec!</span>[InputConfig {
-            fn_input: |msg| <span class="kw">match </span>msg.get_data()<span class="question-mark">? </span>{
+            fn_input: |msg| <span class="kw">match </span>msg.get_custom_data()<span class="question-mark">? </span>{
                 Custom::Request(content) =&gt; {
                     <span class="kw">let </span>value = content;
                     <span class="kw">let </span>query = <span class="macro">include_str!</span>(<span class="string">"./new_value_int.surql"</span>);

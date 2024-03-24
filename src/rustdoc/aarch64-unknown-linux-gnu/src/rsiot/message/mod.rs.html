@@ -32,12 +32,15 @@
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Представление сообщений в системе.
 //!
 //! Сообщения представлены типом перечисления (enum). Данные вложены в варианты перечисления.
 
 </span><span class="kw">mod </span>auth_roles;
 <span class="kw">mod </span>error;
+<span class="kw">pub mod </span>example_message;
 <span class="kw">mod </span>example_message_channel;
 <span class="kw">mod </span>message;
 <span class="kw">mod </span>message_channel;
@@ -48,9 +51,10 @@
 <span class="kw">pub mod </span>system_messages;
 <span class="kw">mod </span>timestamp;
 
-<span class="kw">pub mod </span>eav;
-<span class="kw">pub mod </span>eav_helpers;
-<span class="kw">pub mod </span>example_message;
+<span class="doccomment">/// Пока эти модули не нужны, в будущем скорее всего можно удалить
+</span><span class="kw">pub mod </span>eav;
+<span class="attr">#[allow(unused_imports)]
+</span><span class="kw">mod </span>eav_helpers;
 
 <span class="kw">pub use </span>auth_roles::AuthPermissions;
 <span class="kw">pub use </span>error::Error;
