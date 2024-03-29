@@ -18,7 +18,7 @@ LLVM:
 
 sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
-## espflash
+**espflash**
 
 sudo usermod -a -G dialout $USER
 

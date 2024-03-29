@@ -3,3 +3,11 @@ authors = ["Konstantin-Dudersky"]
 language = "ru"
 multilingual = false
 src = "src"
+
+[output.pandoc.profile.pdf]
+output-file = "output.pdf"
+to = "typst"
+
+[output.pandoc.profile.pdf.variables]
+papersize = "a4"
+section-numbering = "1.1.1"

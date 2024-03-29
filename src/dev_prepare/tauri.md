@@ -14,7 +14,7 @@ sudo apt install libwebkit2gtk-4.1-dev \
   librsvg2-dev
 ```
 
-## Установка Android Studio
+**Установка Android Studio**
 
 ```bash
 sudo snap install android-studio --classic
@@ -28,11 +28,11 @@ sudo snap install android-studio --classic
 rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android wasm32-unknown-unknown
 ```
 
-### Переменные среды
+**Переменные среды**
 
 Необходимо задать переменные среды.
 
-#### Nushell
+**Nushell**
 
 Задать переменные среды в файле `~/.config/nushell/config.nu`. Проверить версию NDK
 

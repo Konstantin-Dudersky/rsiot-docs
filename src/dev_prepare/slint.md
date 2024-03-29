@@ -2,7 +2,7 @@
 
 sudo apt-get install qtbase5-dev
 
-## Android
+**Android**
 
 sudo apt install openjdk-21-jdk
 
