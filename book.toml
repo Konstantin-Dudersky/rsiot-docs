@@ -4,6 +4,9 @@ language = "ru"
 multilingual = false
 src = "src"
 
+[output.pandoc]
+optional = true
+
 [output.pandoc.profile.pdf]
 output-file = "output.pdf"
 to = "typst"
