@@ -4,6 +4,8 @@ language = "ru"
 multilingual = false
 src = "src"
 
+[output.html]
+
 [output.pandoc]
 optional = true
 
