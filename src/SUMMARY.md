@@ -2,6 +2,7 @@
 
 [Начало](README.md)
 
+- [Компоненты](./components/components.md)
 - [Подготовка среды разработки](./dev_prepare/dev_prepare.md)
   - [aarch64-linux-android](./dev_prepare/aarch64-linux-android.md)
   - [aarch64-unknown-linux-gnu](./dev_prepare/aarch64-unknown-linux-gnu.md)
