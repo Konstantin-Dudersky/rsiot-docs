@@ -4,7 +4,7 @@
 cargo new project_name
 ```
 
-## `.vscode/settings.json`
+**`.vscode/settings.json`**
 
 ```json
 {
@@ -12,7 +12,7 @@ cargo new project_name
 }
 ```
 
-## `.cargo/config.toml`
+**`.cargo/config.toml`**
 
 ```toml
 [build]
@@ -39,7 +39,7 @@ ESP_IDF_TOOLS_INSTALL_DIR = "global"
 ESP_IDF_VERSION = "v5.2.1"
 ```
 
-## `build.rs`
+**`build.rs`**
 
 ```rust
 fn main() {
@@ -47,7 +47,7 @@ fn main() {
 }
 ```
 
-## `rust-toolchain.toml`
+**`rust-toolchain.toml`**
 
 ```toml
 [toolchain]
@@ -55,7 +55,7 @@ channel = "nightly-2024-02-01"
 components = ["rust-src"]
 ```
 
-## `sdkconfig.defaults`
+**`sdkconfig.defaults`**
 
 ```
 # Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
@@ -79,7 +79,7 @@ CONFIG_LOG_MAXIMUM_LEVEL=5
 CONFIG_LOG_COLORS=y
 ```
 
-## `Config.toml`
+**`Config.toml`**
 
 ```toml
 [dependencies]
@@ -89,7 +89,7 @@ esp-idf-svc = { version = "*" }
 embuild = { version = "*", features = ["espidf"] }
 ```
 
-## `main.rs`
+**`main.rs`**
 
 Первой строкой в функции main():
 

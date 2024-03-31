@@ -1,12 +1,12 @@
 # aarch64-linux-android
 
-Добавляем таргет:
+**Таргет**
 
 ```bash
 rustup target add aarch64-linux-android
 ```
 
-Устанавливаем Android Studio
+**Android Studio**
 
 ```bash
 sudo snap install android-studio --classic
@@ -22,8 +22,14 @@ cargo install cargo-apk
 
 **Java**
 
-```
+```bash
 sudo apt install openjdk-21-jdk
 ```
 
 Или более новую, что есть в репозиториях
+
+**ADB**
+
+```bash
+sudo apt install adb
+```

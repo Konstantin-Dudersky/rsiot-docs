@@ -24,7 +24,3 @@ $env.LD = $"($env.TOOLCHAIN)/bin/ld"
 $env.RANLIB = $"($env.TOOLCHAIN)/bin/llvm-ranlib"
 $env.STRIP = $"($env.TOOLCHAIN)/bin/llvm-strip"
 ```
-
-Получить отфильтрованные логи из телефона:
-
-adb logcat RustStdoutStderr:I \*:
