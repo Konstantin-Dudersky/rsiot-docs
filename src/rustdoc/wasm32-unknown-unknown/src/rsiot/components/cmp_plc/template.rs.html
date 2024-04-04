@@ -27,7 +27,7 @@
 
 </span><span class="kw">use </span>serde::{Deserialize, Serialize};
 
-<span class="kw">use </span><span class="kw">super</span>::plc::function_block_base::{FunctionBlockBase, IFunctionBlock};
+<span class="kw">use </span><span class="kw">crate</span>::components::cmp_plc::plc::function_block_base::{FunctionBlockBase, IFunctionBlock};
 
 <span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
 </span><span class="kw">pub struct </span>I {}

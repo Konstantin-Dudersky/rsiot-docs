@@ -118,6 +118,24 @@
 <a href="#116" id="116">116</a>
 <a href="#117" id="117">117</a>
 <a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Example based on developer board ESP32-C3
 //!
 //! cargo run --example cmp_esp --target="riscv32imc-esp-espidf" --features="cmp_esp" --release
@@ -128,28 +146,30 @@
     <span class="kw">use </span>std::time::Duration;
 
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
-    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
+            cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
+        logging::configure_logging,
         message::<span class="kw-2">*</span>,
     };
 
     link_patches();
-    EspLogger::initialize_default();
+    configure_logging(LevelFilter::INFO).unwrap();
 
     <span class="comment">// message
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
         Relay0(bool),
+        Analog3(f32),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -170,7 +190,7 @@
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
     </span><span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
@@ -210,6 +230,21 @@
         }],
     };
 
+    <span class="comment">// ADC
+    </span><span class="kw">let </span>config_esp_adc = cmp_esp_adc::Config::&lt;Custom&gt; {
+        adc1: peripherals.adc1,
+        adc2: peripherals.adc2,
+        inputs: <span class="macro">vec!</span>[cmp_esp_adc::ConfigInput {
+            peripherals: cmp_esp_adc::ConfigInputType::Gpio3(peripherals.pins.gpio3),
+            attenuation: cmp_esp_adc::ConfigInputAttenuation::Db11,
+            update_period: Duration::from_secs(<span class="number">1</span>),
+            fn_output: |value| {
+                <span class="kw">let </span>value = value <span class="kw">as </span>f32 / <span class="number">1000.0</span>;
+                Message::new_custom(Custom::Analog3(value))
+            },
+        }],
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -227,6 +262,7 @@
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
+            .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()

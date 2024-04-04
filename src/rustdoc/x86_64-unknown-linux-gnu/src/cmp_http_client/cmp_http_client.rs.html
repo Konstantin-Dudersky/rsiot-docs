@@ -189,7 +189,7 @@
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">"HTTP response"</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span>http_config = cmp_http_client::Config::&lt;Data&gt; {

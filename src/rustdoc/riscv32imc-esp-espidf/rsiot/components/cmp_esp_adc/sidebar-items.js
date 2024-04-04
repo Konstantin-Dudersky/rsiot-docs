@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ConfigInputAttenuation","ConfigInputType","Error"],"mod":["component","config","error","fn_process"],"struct":["Config","ConfigInput"],"type":["Cmp","Result"]};

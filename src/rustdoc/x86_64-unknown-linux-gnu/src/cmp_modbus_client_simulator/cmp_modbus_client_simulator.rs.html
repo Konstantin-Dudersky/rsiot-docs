@@ -201,7 +201,7 @@
         <span class="comment">// Вывод сообщений в лог
         </span>.add_cmp(cmp_logger::Cmp::new(cmp_logger::Config {
             level: Level::INFO,
-            header: <span class="string">""</span>.into(),
+            fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
         }))
         .wait_result()
         .<span class="kw">await</span><span class="question-mark">?</span>;

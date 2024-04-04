@@ -74,7 +74,7 @@
 /// Логи выводятся в:
 /// - stdout
 /// - Grafana Loki
-</span><span class="kw">pub async fn </span>configure_logging(rust_log: <span class="kw-2">&amp;</span>str, loki_url: <span class="kw-2">&amp;</span>url::Url) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="kw">super</span>::Error&gt; {
+</span><span class="kw">pub async fn </span>configure_logging(rust_log: <span class="kw-2">&amp;</span>str, loki_url: <span class="kw-2">&amp;</span>url::Url) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
     <span class="kw">let </span>service = env::args().collect::&lt;Vec&lt;String&gt;&gt;()[<span class="number">0</span>].clone();
     <span class="kw">let </span>service = service_cleanup(<span class="kw-2">&amp;</span>service);
 

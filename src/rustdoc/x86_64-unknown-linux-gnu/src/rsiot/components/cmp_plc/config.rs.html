@@ -59,6 +59,10 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>serde::Serialize;
@@ -68,11 +72,6 @@
 <span class="kw">use </span><span class="kw">super</span>::plc::function_block_base::{FunctionBlockBase, IFunctionBlock};
 
 <span class="doccomment">/// Конфигурация компонента ПЛК
-///
-/// # Шаблон функционального блока
-///
-</span><span class="attr">#[doc = <span class="macro">include_str!</span>(<span class="string">"./template.rs"</span>)]
-</span><span class="doccomment">///
 </span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>Config&lt;TMessage, I, Q, S&gt;
 <span class="kw">where
@@ -82,12 +81,21 @@
     S: Clone + Default + Serialize,
     FunctionBlockBase&lt;I, Q, S&gt;: IFunctionBlock&lt;I, Q, S&gt;,
 {
+    <span class="doccomment">/// Функция инициализации входной структуры в начале цикла ПЛК
+    ///
+    /// # Примеры
+    ///
+    /// ```rust
+    /// fn_cycle_init: |_input: &amp;mut fb_main::I| {}
+    /// ```
+    </span><span class="kw">pub </span>fn_cycle_init: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>I) -&gt; (),
+
     <span class="doccomment">/// Функция преобразования входящих сообщений во входную структуру ПЛК.
     ///
     /// # Примеры
     ///
     /// ```rust
-    /// fn_input: |input: &amp;mut fb_main::I, msg: &amp;TMessage| match msg {}
+    /// fn_input: |input: &amp;mut fb_main::I, msg: &amp;Message&lt;Custom&gt;| match msg {}
     /// ```
     </span><span class="kw">pub </span>fn_input: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>I, <span class="kw-2">&amp;</span>Message&lt;TMessage&gt;) -&gt; (),
 

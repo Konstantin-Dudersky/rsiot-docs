@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Запуск коллекции компонентов в работу"><title>ComponentExecutor in rsiot::executor - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../rsiot/index.html">rsiot</a><span class="version">0.0.77</span></h2></div><h2 class="location"><a href="#">ComponentExecutor</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.cmp_in_out">cmp_in_out</a></li><li><a href="#structfield.task_set">task_set</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.add_cmp">add_cmp</a></li><li><a href="#method.new">new</a></li><li><a href="#method.wait_result">wait_result</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E">!RefUnwindSafe</a></li><li><a href="#impl-UnwindSafe-for-ComponentExecutor%3CTMsg%3E">!UnwindSafe</a></li><li><a href="#impl-Send-for-ComponentExecutor%3CTMsg%3E">Send</a></li><li><a href="#impl-Sync-for-ComponentExecutor%3CTMsg%3E">Sync</a></li><li><a href="#impl-Unpin-for-ComponentExecutor%3CTMsg%3E">Unpin</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li></ul></section><h2><a href="index.html">In rsiot::executor</a></h2></div></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Запуск коллекции компонентов в работу"><title>ComponentExecutor in rsiot::executor - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../rsiot/index.html">rsiot</a><span class="version">0.0.78</span></h2></div><h2 class="location"><a href="#">ComponentExecutor</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.cmp_in_out">cmp_in_out</a></li><li><a href="#structfield.task_set">task_set</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.add_cmp">add_cmp</a></li><li><a href="#method.new">new</a></li><li><a href="#method.wait_result">wait_result</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E">!RefUnwindSafe</a></li><li><a href="#impl-UnwindSafe-for-ComponentExecutor%3CTMsg%3E">!UnwindSafe</a></li><li><a href="#impl-Send-for-ComponentExecutor%3CTMsg%3E">Send</a></li><li><a href="#impl-Sync-for-ComponentExecutor%3CTMsg%3E">Sync</a></li><li><a href="#impl-Unpin-for-ComponentExecutor%3CTMsg%3E">Unpin</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li></ul></section><h2><a href="index.html">In rsiot::executor</a></h2></div></nav><div class="sidebar-resizer"></div>
     <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../index.html">rsiot</a>::<wbr><a href="index.html">executor</a>::<wbr><a class="struct" href="#">ComponentExecutor</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/rsiot/executor/component_executor.rs.html#43-46">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct ComponentExecutor&lt;TMsg&gt; {
     task_set: JoinSet&lt;Result&lt;(), <a class="enum" href="error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt;,
     cmp_in_out: <a class="struct" href="cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;,
@@ -147,7 +147,7 @@ spawn_local(context);
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">"Logger: "</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -298,6 +298,149 @@ spawn_local(context);
             .<span class="kw">await
     </span>});
     task_set.<span class="kw">await</span>;
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[62,62],&quot;../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#67&quot;,&quot;line 67&quot;]]"><div class="scraped-example-title">examples/cmp_esp_nvs/cmp_esp_nvs.rs (<a href="../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#67">line 67</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>esp_idf_svc::{log::EspLogger, sys::link_patches};
+    <span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_esp_nvs, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    link_patches();
+    EspLogger::initialize_default();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">10</span>,
+        executor_name: <span class="string">"cmp_storage_esp_example"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: std::time::Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
+    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
+    };
+
+    <span class="comment">// cmp_storage_esp -----------------------------------------------------------------------------
+    </span><span class="attr">#[derive(Debug, Default, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">struct </span>StorageData {
+        <span class="kw">pub </span>test_f64: f64,
+        <span class="kw">pub </span>test_i32: i32,
+    }
+
+    <span class="kw">let </span>storage_config = cmp_esp_nvs::Config {
+        fn_input: |data: <span class="kw-2">&amp;</span>StorageData, msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| <span class="kw">match </span>msg.data {
+            MsgData::Custom(Custom::ValueInstantF64(value)) =&gt; <span class="prelude-val">Some</span>(StorageData {
+                test_f64: value,
+                ..<span class="kw-2">*</span>data
+            }),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+        },
+        fn_output: |data: <span class="kw-2">&amp;</span>StorageData| {
+            <span class="macro">vec!</span>[Message::new(MsgData::Custom(Custom::ValueInstantF64(
+                data.test_f64,
+            )))]
+        },
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        <span class="highlight focus">ComponentExecutor::&lt;Custom&gt;::new</span>(executor_config)
+            .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+            .add_cmp(cmp_logger::Cmp::new(logger_config))
+            .add_cmp(cmp_esp_nvs::Cmp::new(storage_config))
+            .wait_result()
+            .<span class="kw">await
+            </span>.unwrap()
+    });
+    local_set.<span class="kw">await</span>;
 }</code></pre></div></div></div><div class="scraped-example " data-locs="[[[89,89],&quot;../../src/cmp_derive/cmp_derive.rs.html#102&quot;,&quot;line 102&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../src/cmp_derive/cmp_derive.rs.html#102">line 102</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
 <span>14</span>
 <span>15</span>
@@ -450,7 +593,7 @@ spawn_local(context);
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -507,7 +650,7 @@ spawn_local(context);
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[97,97],&quot;../../src/cmp_esp/cmp_esp.rs.html#104&quot;,&quot;line 104&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#104">line 104</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[114,114],&quot;../../src/cmp_esp/cmp_esp.rs.html#121&quot;,&quot;line 121&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#121">line 121</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -616,32 +759,52 @@ spawn_local(context);
 <span>113</span>
 <span>114</span>
 <span>115</span>
+<span>116</span>
+<span>117</span>
+<span>118</span>
+<span>119</span>
+<span>120</span>
+<span>121</span>
+<span>122</span>
+<span>123</span>
+<span>124</span>
+<span>125</span>
+<span>126</span>
+<span>127</span>
+<span>128</span>
+<span>129</span>
+<span>130</span>
+<span>131</span>
+<span>132</span>
+<span>133</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
-    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
+            cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
+        logging::configure_logging,
         message::<span class="kw-2">*</span>,
     };
 
     link_patches();
-    EspLogger::initialize_default();
+    configure_logging(LevelFilter::INFO).unwrap();
 
     <span class="comment">// message
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
         Relay0(bool),
+        Analog3(f32),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -662,7 +825,7 @@ spawn_local(context);
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
     </span><span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
@@ -702,6 +865,21 @@ spawn_local(context);
         }],
     };
 
+    <span class="comment">// ADC
+    </span><span class="kw">let </span>config_esp_adc = cmp_esp_adc::Config::&lt;Custom&gt; {
+        adc1: peripherals.adc1,
+        adc2: peripherals.adc2,
+        inputs: <span class="macro">vec!</span>[cmp_esp_adc::ConfigInput {
+            peripherals: cmp_esp_adc::ConfigInputType::Gpio3(peripherals.pins.gpio3),
+            attenuation: cmp_esp_adc::ConfigInputAttenuation::Db11,
+            update_period: Duration::from_secs(<span class="number">1</span>),
+            fn_output: |value| {
+                <span class="kw">let </span>value = value <span class="kw">as </span>f32 / <span class="number">1000.0</span>;
+                Message::new_custom(Custom::Analog3(value))
+            },
+        }],
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -719,6 +897,7 @@ spawn_local(context);
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
+            .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
@@ -849,7 +1028,7 @@ spawn_local(context);
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">"Logger: "</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -1000,6 +1179,149 @@ spawn_local(context);
             .<span class="kw">await
     </span>});
     task_set.<span class="kw">await</span>;
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[63,63],&quot;../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#68&quot;,&quot;line 68&quot;],[[64,64],&quot;../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#69&quot;,&quot;line 69&quot;],[[65,65],&quot;../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#70&quot;,&quot;line 70&quot;]]"><div class="scraped-example-title">examples/cmp_esp_nvs/cmp_esp_nvs.rs (<a href="../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#68">line 68</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>esp_idf_svc::{log::EspLogger, sys::link_patches};
+    <span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_esp_nvs, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    link_patches();
+    EspLogger::initialize_default();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">10</span>,
+        executor_name: <span class="string">"cmp_storage_esp_example"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: std::time::Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
+    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
+    };
+
+    <span class="comment">// cmp_storage_esp -----------------------------------------------------------------------------
+    </span><span class="attr">#[derive(Debug, Default, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">struct </span>StorageData {
+        <span class="kw">pub </span>test_f64: f64,
+        <span class="kw">pub </span>test_i32: i32,
+    }
+
+    <span class="kw">let </span>storage_config = cmp_esp_nvs::Config {
+        fn_input: |data: <span class="kw-2">&amp;</span>StorageData, msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| <span class="kw">match </span>msg.data {
+            MsgData::Custom(Custom::ValueInstantF64(value)) =&gt; <span class="prelude-val">Some</span>(StorageData {
+                test_f64: value,
+                ..<span class="kw-2">*</span>data
+            }),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+        },
+        fn_output: |data: <span class="kw-2">&amp;</span>StorageData| {
+            <span class="macro">vec!</span>[Message::new(MsgData::Custom(Custom::ValueInstantF64(
+                data.test_f64,
+            )))]
+        },
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+            .<span class="highlight focus">add_cmp</span>(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+            .<span class="highlight">add_cmp</span>(cmp_logger::Cmp::new(logger_config))
+            .<span class="highlight">add_cmp</span>(cmp_esp_nvs::Cmp::new(storage_config))
+            .wait_result()
+            .<span class="kw">await
+            </span>.unwrap()
+    });
+    local_set.<span class="kw">await</span>;
 }</code></pre></div></div></div><div class="scraped-example " data-locs="[[[90,90],&quot;../../src/cmp_derive/cmp_derive.rs.html#103&quot;,&quot;line 103&quot;],[[91,91],&quot;../../src/cmp_derive/cmp_derive.rs.html#104&quot;,&quot;line 104&quot;],[[92,92],&quot;../../src/cmp_derive/cmp_derive.rs.html#105&quot;,&quot;line 105&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../src/cmp_derive/cmp_derive.rs.html#103">line 103</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
 <span>14</span>
 <span>15</span>
@@ -1152,7 +1474,7 @@ spawn_local(context);
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -1209,7 +1531,7 @@ spawn_local(context);
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[98,98],&quot;../../src/cmp_esp/cmp_esp.rs.html#105&quot;,&quot;line 105&quot;],[[99,99],&quot;../../src/cmp_esp/cmp_esp.rs.html#106&quot;,&quot;line 106&quot;],[[100,100],&quot;../../src/cmp_esp/cmp_esp.rs.html#107&quot;,&quot;line 107&quot;],[[101,101],&quot;../../src/cmp_esp/cmp_esp.rs.html#108&quot;,&quot;line 108&quot;],[[102,102],&quot;../../src/cmp_esp/cmp_esp.rs.html#109&quot;,&quot;line 109&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#105">line 105</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[115,115],&quot;../../src/cmp_esp/cmp_esp.rs.html#122&quot;,&quot;line 122&quot;],[[116,116],&quot;../../src/cmp_esp/cmp_esp.rs.html#123&quot;,&quot;line 123&quot;],[[117,117],&quot;../../src/cmp_esp/cmp_esp.rs.html#124&quot;,&quot;line 124&quot;],[[118,118],&quot;../../src/cmp_esp/cmp_esp.rs.html#125&quot;,&quot;line 125&quot;],[[119,119],&quot;../../src/cmp_esp/cmp_esp.rs.html#126&quot;,&quot;line 126&quot;],[[120,120],&quot;../../src/cmp_esp/cmp_esp.rs.html#127&quot;,&quot;line 127&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#122">line 122</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -1318,32 +1640,52 @@ spawn_local(context);
 <span>113</span>
 <span>114</span>
 <span>115</span>
+<span>116</span>
+<span>117</span>
+<span>118</span>
+<span>119</span>
+<span>120</span>
+<span>121</span>
+<span>122</span>
+<span>123</span>
+<span>124</span>
+<span>125</span>
+<span>126</span>
+<span>127</span>
+<span>128</span>
+<span>129</span>
+<span>130</span>
+<span>131</span>
+<span>132</span>
+<span>133</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
-    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
+            cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
+        logging::configure_logging,
         message::<span class="kw-2">*</span>,
     };
 
     link_patches();
-    EspLogger::initialize_default();
+    configure_logging(LevelFilter::INFO).unwrap();
 
     <span class="comment">// message
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
         Relay0(bool),
+        Analog3(f32),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -1364,7 +1706,7 @@ spawn_local(context);
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
     </span><span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
@@ -1404,6 +1746,21 @@ spawn_local(context);
         }],
     };
 
+    <span class="comment">// ADC
+    </span><span class="kw">let </span>config_esp_adc = cmp_esp_adc::Config::&lt;Custom&gt; {
+        adc1: peripherals.adc1,
+        adc2: peripherals.adc2,
+        inputs: <span class="macro">vec!</span>[cmp_esp_adc::ConfigInput {
+            peripherals: cmp_esp_adc::ConfigInputType::Gpio3(peripherals.pins.gpio3),
+            attenuation: cmp_esp_adc::ConfigInputAttenuation::Db11,
+            update_period: Duration::from_secs(<span class="number">1</span>),
+            fn_output: |value| {
+                <span class="kw">let </span>value = value <span class="kw">as </span>f32 / <span class="number">1000.0</span>;
+                Message::new_custom(Custom::Analog3(value))
+            },
+        }],
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -1421,6 +1778,7 @@ spawn_local(context);
             .<span class="highlight">add_cmp</span>(cmp_esp_wifi::Cmp::new(wifi_config))
             .<span class="highlight">add_cmp</span>(cmp_esp_gpio::Cmp::new(gpio_config))
             .<span class="highlight">add_cmp</span>(cmp_inject_periodic::Cmp::new(config_inject_periodic))
+            .<span class="highlight">add_cmp</span>(cmp_esp_adc::Cmp::new(config_esp_adc))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
@@ -1553,7 +1911,7 @@ spawn_local(context);
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">"Logger: "</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -1704,6 +2062,149 @@ spawn_local(context);
             .<span class="kw">await
     </span>});
     task_set.<span class="kw">await</span>;
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[66,66],&quot;../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#71&quot;,&quot;line 71&quot;]]"><div class="scraped-example-title">examples/cmp_esp_nvs/cmp_esp_nvs.rs (<a href="../../src/cmp_esp_nvs/cmp_esp_nvs.rs.html#71">line 71</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
+    <span class="kw">use </span>esp_idf_svc::{log::EspLogger, sys::link_patches};
+    <span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_esp_nvs, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    link_patches();
+    EspLogger::initialize_default();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">10</span>,
+        executor_name: <span class="string">"cmp_storage_esp_example"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
+    </span><span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: std::time::Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Message::new_custom(Custom::ValueInstantF64(counter));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
+    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
+    };
+
+    <span class="comment">// cmp_storage_esp -----------------------------------------------------------------------------
+    </span><span class="attr">#[derive(Debug, Default, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">struct </span>StorageData {
+        <span class="kw">pub </span>test_f64: f64,
+        <span class="kw">pub </span>test_i32: i32,
+    }
+
+    <span class="kw">let </span>storage_config = cmp_esp_nvs::Config {
+        fn_input: |data: <span class="kw-2">&amp;</span>StorageData, msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| <span class="kw">match </span>msg.data {
+            MsgData::Custom(Custom::ValueInstantF64(value)) =&gt; <span class="prelude-val">Some</span>(StorageData {
+                test_f64: value,
+                ..<span class="kw-2">*</span>data
+            }),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+        },
+        fn_output: |data: <span class="kw-2">&amp;</span>StorageData| {
+            <span class="macro">vec!</span>[Message::new(MsgData::Custom(Custom::ValueInstantF64(
+                data.test_f64,
+            )))]
+        },
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+            .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+            .add_cmp(cmp_logger::Cmp::new(logger_config))
+            .add_cmp(cmp_esp_nvs::Cmp::new(storage_config))
+            .<span class="highlight focus">wait_result</span>()
+            .<span class="kw">await
+            </span>.unwrap()
+    });
+    local_set.<span class="kw">await</span>;
 }</code></pre></div></div></div><div class="scraped-example " data-locs="[[[93,93],&quot;../../src/cmp_derive/cmp_derive.rs.html#106&quot;,&quot;line 106&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../src/cmp_derive/cmp_derive.rs.html#106">line 106</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
 <span>14</span>
 <span>15</span>
@@ -1856,7 +2357,7 @@ spawn_local(context);
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -1913,7 +2414,7 @@ spawn_local(context);
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[103,103],&quot;../../src/cmp_esp/cmp_esp.rs.html#110&quot;,&quot;line 110&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#110">line 110</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[121,121],&quot;../../src/cmp_esp/cmp_esp.rs.html#128&quot;,&quot;line 128&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#128">line 128</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -2022,32 +2523,52 @@ spawn_local(context);
 <span>113</span>
 <span>114</span>
 <span>115</span>
+<span>116</span>
+<span>117</span>
+<span>118</span>
+<span>119</span>
+<span>120</span>
+<span>121</span>
+<span>122</span>
+<span>123</span>
+<span>124</span>
+<span>125</span>
+<span>126</span>
+<span>127</span>
+<span>128</span>
+<span>129</span>
+<span>130</span>
+<span>131</span>
+<span>132</span>
+<span>133</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
     <span class="kw">use </span>esp_idf_svc::{
-        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, log::EspLogger,
-        sys::link_patches,
+        eventloop::EspSystemEventLoop, hal::peripherals::Peripherals, sys::link_patches,
     };
     <span class="kw">use </span>tokio::task::LocalSet;
-    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic, cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
+            cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
+        logging::configure_logging,
         message::<span class="kw-2">*</span>,
     };
 
     link_patches();
-    EspLogger::initialize_default();
+    configure_logging(LevelFilter::INFO).unwrap();
 
     <span class="comment">// message
     </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     </span><span class="kw">pub enum </span>Custom {
         BootButton(bool),
         Relay0(bool),
+        Analog3(f32),
     }
 
     <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {}
@@ -2068,7 +2589,7 @@ spawn_local(context);
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
     </span><span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="comment">// cmp_inject_periodic -------------------------------------------------------------------------
@@ -2108,6 +2629,21 @@ spawn_local(context);
         }],
     };
 
+    <span class="comment">// ADC
+    </span><span class="kw">let </span>config_esp_adc = cmp_esp_adc::Config::&lt;Custom&gt; {
+        adc1: peripherals.adc1,
+        adc2: peripherals.adc2,
+        inputs: <span class="macro">vec!</span>[cmp_esp_adc::ConfigInput {
+            peripherals: cmp_esp_adc::ConfigInputType::Gpio3(peripherals.pins.gpio3),
+            attenuation: cmp_esp_adc::ConfigInputAttenuation::Db11,
+            update_period: Duration::from_secs(<span class="number">1</span>),
+            fn_output: |value| {
+                <span class="kw">let </span>value = value <span class="kw">as </span>f32 / <span class="number">1000.0</span>;
+                Message::new_custom(Custom::Analog3(value))
+            },
+        }],
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -2125,6 +2661,7 @@ spawn_local(context);
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
+            .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
             .<span class="highlight focus">wait_result</span>()
             .<span class="kw">await
             </span>.unwrap()
@@ -2136,15 +2673,15 @@ spawn_local(context);
     T: 'static + ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl"><a href="#method.type_id" class="anchor">§</a><h4 class="code-header">fn <a class="fn">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-T" class="impl"><a href="#impl-Borrow%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<div class="where">where
     T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl"><a href="#method.borrow" class="anchor">§</a><h4 class="code-header">fn <a class="fn">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-T" class="impl"><a href="#impl-BorrowMut%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<div class="where">where
     T: ?Sized,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl"><a href="#method.borrow_mut" class="anchor">§</a><h4 class="code-header">fn <a class="fn">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-T" class="impl"><a href="#impl-From%3CT%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.from" class="method trait-impl"><a href="#method.from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
-</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Instrument-for-T" class="impl"><a class="src rightside" href="../../src/tracing/instrument.rs.html#325">source</a><a href="#impl-Instrument-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../tracing/instrument/trait.Instrument.html" title="trait tracing::instrument::Instrument">Instrument</a> for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.instrument" class="method trait-impl"><a class="src rightside" href="../../src/tracing/instrument.rs.html#86">source</a><a href="#method.instrument" class="anchor">§</a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.Instrument.html#method.instrument" class="fn">instrument</a>(self, span: <a class="struct" href="../../tracing/span/struct.Span.html" title="struct tracing::span::Span">Span</a>) -&gt; <a class="struct" href="../../tracing/instrument/struct.Instrumented.html" title="struct tracing::instrument::Instrumented">Instrumented</a>&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the provided <a href="../../tracing/span/struct.Span.html" title="struct tracing::span::Span"><code>Span</code></a>, returning an
-<code>Instrumented</code> wrapper. <a href="../../tracing/instrument/trait.Instrument.html#method.instrument">Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.in_current_span" class="method trait-impl"><a class="src rightside" href="../../src/tracing/instrument.rs.html#128">source</a><a href="#method.in_current_span" class="anchor">§</a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.Instrument.html#method.in_current_span" class="fn">in_current_span</a>(self) -&gt; <a class="struct" href="../../tracing/instrument/struct.Instrumented.html" title="struct tracing::instrument::Instrumented">Instrumented</a>&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the <a href="../../tracing/span/struct.Span.html#method.current" title="associated function tracing::span::Span::current">current</a> <a href="../../tracing/span/struct.Span.html" title="struct tracing::span::Span"><code>Span</code></a>, returning an
-<code>Instrumented</code> wrapper. <a href="../../tracing/instrument/trait.Instrument.html#method.in_current_span">Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-T" class="impl"><a href="#impl-Into%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<div class="where">where
+</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Instrument-for-T" class="impl"><a href="#impl-Instrument-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; Instrument for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.instrument" class="method trait-impl"><a href="#method.instrument" class="anchor">§</a><h4 class="code-header">fn <a class="fn">instrument</a>(self, span: Span) -&gt; Instrumented&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the provided [<code>Span</code>], returning an
+<code>Instrumented</code> wrapper. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.in_current_span" class="method trait-impl"><a href="#method.in_current_span" class="anchor">§</a><h4 class="code-header">fn <a class="fn">in_current_span</a>(self) -&gt; Instrumented&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the <a href="super::Span::current()">current</a> <a href="crate::Span"><code>Span</code></a>, returning an
+<code>Instrumented</code> wrapper. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-T" class="impl"><a href="#impl-Into%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<div class="where">where
     U: From&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.into" class="method trait-impl"><a href="#method.into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
 <p>That is, this conversion is whatever the implementation of
 <code>[From]&lt;T&gt; for U</code> chooses to do.</p>
 </div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-T" class="impl"><a href="#impl-TryFrom%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<div class="where">where
     U: Into&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl"><a href="#associatedtype.Error-1" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl"><a href="#method.try_from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-T" class="impl"><a href="#impl-TryInto%3CU%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<div class="where">where
-    U: TryFrom&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl"><a href="#associatedtype.Error" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-WithSubscriber-for-T" class="impl"><a class="src rightside" href="../../src/tracing/instrument.rs.html#393">source</a><a href="#impl-WithSubscriber-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../tracing/instrument/trait.WithSubscriber.html" title="trait tracing::instrument::WithSubscriber">WithSubscriber</a> for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.with_subscriber" class="method trait-impl"><a class="src rightside" href="../../src/tracing/instrument.rs.html#176-178">source</a><a href="#method.with_subscriber" class="anchor">§</a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_subscriber" class="fn">with_subscriber</a>&lt;S&gt;(self, subscriber: S) -&gt; <a class="struct" href="../../tracing/instrument/struct.WithDispatch.html" title="struct tracing::instrument::WithDispatch">WithDispatch</a>&lt;Self&gt;<div class="where">where
-    S: Into&lt;<a class="struct" href="../../tracing_core/dispatcher/struct.Dispatch.html" title="struct tracing_core::dispatcher::Dispatch">Dispatch</a>&gt;,</div></h4></section></summary><div class='docblock'>Attaches the provided <a href="../../tracing_core/subscriber/trait.Subscriber.html" title="trait tracing_core::subscriber::Subscriber"><code>Subscriber</code></a> to this type, returning a
-<a href="../../tracing/instrument/struct.WithDispatch.html" title="struct tracing::instrument::WithDispatch"><code>WithDispatch</code></a> wrapper. <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_subscriber">Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.with_current_subscriber" class="method trait-impl"><a class="src rightside" href="../../src/tracing/instrument.rs.html#228">source</a><a href="#method.with_current_subscriber" class="anchor">§</a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_current_subscriber" class="fn">with_current_subscriber</a>(self) -&gt; <a class="struct" href="../../tracing/instrument/struct.WithDispatch.html" title="struct tracing::instrument::WithDispatch">WithDispatch</a>&lt;Self&gt;</h4></section></summary><div class='docblock'>Attaches the current <a href="../../tracing/dispatcher/index.html#setting-the-default-subscriber" title="mod tracing::dispatcher">default</a> <a href="../../tracing_core/subscriber/trait.Subscriber.html" title="trait tracing_core::subscriber::Subscriber"><code>Subscriber</code></a> to this type, returning a
-<a href="../../tracing/instrument/struct.WithDispatch.html" title="struct tracing::instrument::WithDispatch"><code>WithDispatch</code></a> wrapper. <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_current_subscriber">Read more</a></div></details></div></details></div></section></div></main></body></html>
+    U: TryFrom&lt;T&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl"><a href="#associatedtype.Error" class="anchor">§</a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor">§</a><h4 class="code-header">fn <a class="fn">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="toggle implementors-toggle"><summary><section id="impl-WithSubscriber-for-T" class="impl"><a href="#impl-WithSubscriber-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; WithSubscriber for T</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.with_subscriber" class="method trait-impl"><a href="#method.with_subscriber" class="anchor">§</a><h4 class="code-header">fn <a class="fn">with_subscriber</a>&lt;S&gt;(self, subscriber: S) -&gt; WithDispatch&lt;Self&gt;<div class="where">where
+    S: Into&lt;Dispatch&gt;,</div></h4></section></summary><div class='docblock'>Attaches the provided <a href="super::Subscriber"><code>Subscriber</code></a> to this type, returning a
+[<code>WithDispatch</code>] wrapper. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.with_current_subscriber" class="method trait-impl"><a href="#method.with_current_subscriber" class="anchor">§</a><h4 class="code-header">fn <a class="fn">with_current_subscriber</a>(self) -&gt; WithDispatch&lt;Self&gt;</h4></section></summary><div class='docblock'>Attaches the current <a href="crate::dispatcher#setting-the-default-subscriber">default</a> <a href="super::Subscriber"><code>Subscriber</code></a> to this type, returning a
+[<code>WithDispatch</code>] wrapper. <a>Read more</a></div></details></div></details></div></section></div></main></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Сообщение"><title>Message in rsiot::message::message - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.77</span></h2></div><h2 class="location"><a href="#">Message</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.data">data</a></li><li><a href="#structfield.key">key</a></li><li><a href="#structfield.trace">trace</a></li><li><a href="#structfield.ts">ts</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.add_trace_item">add_trace_item</a></li><li><a href="#method.contains_trace_item">contains_trace_item</a></li><li><a href="#method.deserialize">deserialize</a></li><li><a href="#method.get_custom_data">get_custom_data</a></li><li><a href="#method.new">new</a></li><li><a href="#method.new_custom">new_custom</a></li><li><a href="#method.serialize">serialize</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-Message%3CTCustom%3E">Clone</a></li><li><a href="#impl-Debug-for-Message%3CTCustom%3E">Debug</a></li><li><a href="#impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E">Deserialize&lt;&#x27;de&gt;</a></li><li><a href="#impl-PartialEq-for-Message%3CTCustom%3E">PartialEq</a></li><li><a href="#impl-Serialize-for-Message%3CTCustom%3E">Serialize</a></li><li><a href="#impl-StructuralPartialEq-for-Message%3CTCustom%3E">StructuralPartialEq</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-Message%3CTCustom%3E">RefUnwindSafe</a></li><li><a href="#impl-Send-for-Message%3CTCustom%3E">Send</a></li><li><a href="#impl-Sync-for-Message%3CTCustom%3E">Sync</a></li><li><a href="#impl-Unpin-for-Message%3CTCustom%3E">Unpin</a></li><li><a href="#impl-UnwindSafe-for-Message%3CTCustom%3E">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-AdaptInto%3CD,+Swp,+Dwp,+T%3E-for-S">AdaptInto&lt;D, Swp, Dwp, T&gt;</a></li><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-ArraysFrom%3CC%3E-for-T">ArraysFrom&lt;C&gt;</a></li><li><a href="#impl-ArraysInto%3CC%3E-for-T">ArraysInto&lt;C&gt;</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-ComponentsFrom%3CC%3E-for-T">ComponentsFrom&lt;C&gt;</a></li><li><a href="#impl-DeserializeOwned-for-T">DeserializeOwned</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-FromAngle%3CT%3E-for-T">FromAngle&lt;T&gt;</a></li><li><a href="#impl-FromQuery-for-T">FromQuery</a></li><li><a href="#impl-FromReq%3CCbor,+Request,+CustErr%3E-for-T">FromReq&lt;Cbor, Request, CustErr&gt;</a></li><li><a href="#impl-FromReq%3CGetUrl,+Request,+CustErr%3E-for-T">FromReq&lt;GetUrl, Request, CustErr&gt;</a></li><li><a href="#impl-FromReq%3CJson,+Request,+CustErr%3E-for-T">FromReq&lt;Json, Request, CustErr&gt;</a></li><li><a href="#impl-FromReq%3CPostUrl,+Request,+CustErr%3E-for-T">FromReq&lt;PostUrl, Request, CustErr&gt;</a></li><li><a href="#impl-FromRes%3CCbor,+Response,+CustErr%3E-for-T">FromRes&lt;Cbor, Response, CustErr&gt;</a></li><li><a href="#impl-FromRes%3CJson,+Response,+CustErr%3E-for-T">FromRes&lt;Json, Response, CustErr&gt;</a></li><li><a href="#impl-FromStimulus%3CU%3E-for-T">FromStimulus&lt;U&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-IntoAngle%3CU%3E-for-T">IntoAngle&lt;U&gt;</a></li><li><a href="#impl-IntoColor%3CU%3E-for-T">IntoColor&lt;U&gt;</a></li><li><a href="#impl-IntoColorUnclamped%3CU%3E-for-T">IntoColorUnclamped&lt;U&gt;</a></li><li><a href="#impl-IntoReq%3CCbor,+Request,+CustErr%3E-for-T">IntoReq&lt;Cbor, Request, CustErr&gt;</a></li><li><a href="#impl-IntoReq%3CGetUrl,+Request,+CustErr%3E-for-T">IntoReq&lt;GetUrl, Request, CustErr&gt;</a></li><li><a href="#impl-IntoReq%3CJson,+Request,+CustErr%3E-for-T">IntoReq&lt;Json, Request, CustErr&gt;</a></li><li><a href="#impl-IntoReq%3CPostUrl,+Request,+CustErr%3E-for-T">IntoReq&lt;PostUrl, Request, CustErr&gt;</a></li><li><a href="#impl-IntoRes%3CCbor,+Response,+CustErr%3E-for-T">IntoRes&lt;Cbor, Response, CustErr&gt;</a></li><li><a href="#impl-IntoRes%3CJson,+Response,+CustErr%3E-for-T">IntoRes&lt;Json, Response, CustErr&gt;</a></li><li><a href="#impl-IntoStimulus%3CT%3E-for-T">IntoStimulus&lt;T&gt;</a></li><li><a href="#impl-Serializable-for-T">Serializable</a></li><li><a href="#impl-ToOwned-for-T">ToOwned</a></li><li><a href="#impl-ToQuery-for-T">ToQuery</a></li><li><a href="#impl-TryComponentsInto%3CC%3E-for-T">TryComponentsInto&lt;C&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-TryIntoColor%3CU%3E-for-T">TryIntoColor&lt;U&gt;</a></li><li><a href="#impl-UintsFrom%3CC%3E-for-U">UintsFrom&lt;C&gt;</a></li><li><a href="#impl-UintsInto%3CC%3E-for-U">UintsInto&lt;C&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li></ul></section><h2><a href="index.html">In rsiot::message::message</a></h2></div></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Сообщение"><title>Message in rsiot::message::message - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.78</span></h2></div><h2 class="location"><a href="#">Message</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.data">data</a></li><li><a href="#structfield.key">key</a></li><li><a href="#structfield.trace">trace</a></li><li><a href="#structfield.ts">ts</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.add_trace_item">add_trace_item</a></li><li><a href="#method.contains_trace_item">contains_trace_item</a></li><li><a href="#method.deserialize">deserialize</a></li><li><a href="#method.get_custom_data">get_custom_data</a></li><li><a href="#method.new">new</a></li><li><a href="#method.new_custom">new_custom</a></li><li><a href="#method.serialize">serialize</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-Message%3CTCustom%3E">Clone</a></li><li><a href="#impl-Debug-for-Message%3CTCustom%3E">Debug</a></li><li><a href="#impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E">Deserialize&lt;&#x27;de&gt;</a></li><li><a href="#impl-PartialEq-for-Message%3CTCustom%3E">PartialEq</a></li><li><a href="#impl-Serialize-for-Message%3CTCustom%3E">Serialize</a></li><li><a href="#impl-StructuralPartialEq-for-Message%3CTCustom%3E">StructuralPartialEq</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-Message%3CTCustom%3E">RefUnwindSafe</a></li><li><a href="#impl-Send-for-Message%3CTCustom%3E">Send</a></li><li><a href="#impl-Sync-for-Message%3CTCustom%3E">Sync</a></li><li><a href="#impl-Unpin-for-Message%3CTCustom%3E">Unpin</a></li><li><a href="#impl-UnwindSafe-for-Message%3CTCustom%3E">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-AdaptInto%3CD,+Swp,+Dwp,+T%3E-for-S">AdaptInto&lt;D, Swp, Dwp, T&gt;</a></li><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-ArraysFrom%3CC%3E-for-T">ArraysFrom&lt;C&gt;</a></li><li><a href="#impl-ArraysInto%3CC%3E-for-T">ArraysInto&lt;C&gt;</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-ComponentsFrom%3CC%3E-for-T">ComponentsFrom&lt;C&gt;</a></li><li><a href="#impl-DeserializeOwned-for-T">DeserializeOwned</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-FromAngle%3CT%3E-for-T">FromAngle&lt;T&gt;</a></li><li><a href="#impl-FromQuery-for-T">FromQuery</a></li><li><a href="#impl-FromReq%3CCbor,+Request,+CustErr%3E-for-T">FromReq&lt;Cbor, Request, CustErr&gt;</a></li><li><a href="#impl-FromReq%3CGetUrl,+Request,+CustErr%3E-for-T">FromReq&lt;GetUrl, Request, CustErr&gt;</a></li><li><a href="#impl-FromReq%3CJson,+Request,+CustErr%3E-for-T">FromReq&lt;Json, Request, CustErr&gt;</a></li><li><a href="#impl-FromReq%3CPostUrl,+Request,+CustErr%3E-for-T">FromReq&lt;PostUrl, Request, CustErr&gt;</a></li><li><a href="#impl-FromRes%3CCbor,+Response,+CustErr%3E-for-T">FromRes&lt;Cbor, Response, CustErr&gt;</a></li><li><a href="#impl-FromRes%3CJson,+Response,+CustErr%3E-for-T">FromRes&lt;Json, Response, CustErr&gt;</a></li><li><a href="#impl-FromStimulus%3CU%3E-for-T">FromStimulus&lt;U&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-IntoAngle%3CU%3E-for-T">IntoAngle&lt;U&gt;</a></li><li><a href="#impl-IntoColor%3CU%3E-for-T">IntoColor&lt;U&gt;</a></li><li><a href="#impl-IntoColorUnclamped%3CU%3E-for-T">IntoColorUnclamped&lt;U&gt;</a></li><li><a href="#impl-IntoReq%3CCbor,+Request,+CustErr%3E-for-T">IntoReq&lt;Cbor, Request, CustErr&gt;</a></li><li><a href="#impl-IntoReq%3CGetUrl,+Request,+CustErr%3E-for-T">IntoReq&lt;GetUrl, Request, CustErr&gt;</a></li><li><a href="#impl-IntoReq%3CJson,+Request,+CustErr%3E-for-T">IntoReq&lt;Json, Request, CustErr&gt;</a></li><li><a href="#impl-IntoReq%3CPostUrl,+Request,+CustErr%3E-for-T">IntoReq&lt;PostUrl, Request, CustErr&gt;</a></li><li><a href="#impl-IntoRes%3CCbor,+Response,+CustErr%3E-for-T">IntoRes&lt;Cbor, Response, CustErr&gt;</a></li><li><a href="#impl-IntoRes%3CJson,+Response,+CustErr%3E-for-T">IntoRes&lt;Json, Response, CustErr&gt;</a></li><li><a href="#impl-IntoStimulus%3CT%3E-for-T">IntoStimulus&lt;T&gt;</a></li><li><a href="#impl-Serializable-for-T">Serializable</a></li><li><a href="#impl-ToOwned-for-T">ToOwned</a></li><li><a href="#impl-ToQuery-for-T">ToQuery</a></li><li><a href="#impl-TryComponentsInto%3CC%3E-for-T">TryComponentsInto&lt;C&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-TryIntoColor%3CU%3E-for-T">TryIntoColor&lt;U&gt;</a></li><li><a href="#impl-UintsFrom%3CC%3E-for-U">UintsFrom&lt;C&gt;</a></li><li><a href="#impl-UintsInto%3CC%3E-for-U">UintsInto&lt;C&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li></ul></section><h2><a href="index.html">In rsiot::message::message</a></h2></div></nav><div class="sidebar-resizer"></div>
     <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">message</a>::<wbr><a href="index.html">message</a>::<wbr><a class="struct" href="#">Message</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/message/message.rs.html#12-21">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct Message&lt;TCustom&gt; {
     pub data: <a class="enum" href="../msg_data/enum.MsgData.html" title="enum rsiot::message::msg_data::MsgData">MsgData</a>&lt;TCustom&gt;,
     pub key: String,
@@ -216,7 +216,7 @@
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -347,7 +347,7 @@
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">"Logger: "</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -527,7 +527,7 @@
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">""</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
@@ -591,7 +591,317 @@
 сообщения, которые он же и сгенерировал</p>
 </div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Message%3CTData%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#8-49">source</a><a href="#impl-Message%3CTData%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TData&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TData&gt;<div class="where">where
     TData: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> + <a class="trait" href="../trait.Serialize.html" title="trait rsiot::message::Serialize">Serialize</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.serialize" class="method"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#27-35">source</a><h4 class="code-header">pub fn <a href="#method.serialize" class="fn">serialize</a>(&amp;self) -&gt; Result&lt;String, <a class="enum" href="../error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Сериализация сообщений в json</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.deserialize" class="method"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#39-48">source</a><h4 class="code-header">pub fn <a href="#method.deserialize" class="fn">deserialize</a>(text: &amp;str) -&gt; Result&lt;Self, <a class="enum" href="../error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Десериализация сообщений из json</p>
+</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-2"><a href="#scraped-examples-2">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[22,22],&quot;../../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#32&quot;,&quot;line 32&quot;]]"><div class="scraped-example-title">examples/cmp_inject_periodic/cmp_inject_periodic.rs (<a href="../../../src/cmp_inject_periodic/cmp_inject_periodic.rs.html#32">line 32</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>tokio::{task::LocalSet, time::Duration};
+    <span class="kw">use </span>tracing::{level_filters::LevelFilter, Level};
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, Message},
+    };
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::DEBUG)
+        .init();
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"cmp_inject_periodic"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>)),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg = Custom::ValueInstantF64(counter);
+            <span class="kw">let </span>msg = Message::new_custom(msg);
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg]
+        },
+    };
+
+    <span class="kw">let </span>local_set = LocalSet::new();
+
+    local_set.spawn_local(<span class="kw">async </span>{
+        ComponentExecutor::&lt;Custom&gt;::new(executor_config)
+            .add_cmp(cmp_logger::Cmp::new(logger_config))
+            .add_cmp(cmp_inject_periodic::Cmp::new(inject_config))
+            .wait_result()
+            .<span class="kw">await
+            </span>.unwrap();
+    });
+
+    local_set.<span class="kw">await</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div><details class="toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="scraped-example " data-locs="[[[47,47],&quot;../../../src/cmp_derive/cmp_derive.rs.html#60&quot;,&quot;line 60&quot;]]"><div class="scraped-example-title">examples/cmp_derive/cmp_derive.rs (<a href="../../../src/cmp_derive/cmp_derive.rs.html#60">line 60</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+<span>48</span>
+<span>49</span>
+<span>50</span>
+<span>51</span>
+<span>52</span>
+<span>53</span>
+<span>54</span>
+<span>55</span>
+<span>56</span>
+<span>57</span>
+<span>58</span>
+<span>59</span>
+<span>60</span>
+<span>61</span>
+<span>62</span>
+<span>63</span>
+<span>64</span>
+<span>65</span>
+<span>66</span>
+<span>67</span>
+<span>68</span>
+<span>69</span>
+<span>70</span>
+<span>71</span>
+<span>72</span>
+<span>73</span>
+<span>74</span>
+<span>75</span>
+<span>76</span>
+<span>77</span>
+<span>78</span>
+<span>79</span>
+<span>80</span>
+<span>81</span>
+<span>82</span>
+<span>83</span>
+<span>84</span>
+<span>85</span>
+<span>86</span>
+<span>87</span>
+<span>88</span>
+<span>89</span>
+<span>90</span>
+<span>91</span>
+<span>92</span>
+<span>93</span>
+<span>94</span>
+<span>95</span>
+<span>96</span>
+<span>97</span>
+<span>98</span>
+<span>99</span>
+<span>100</span>
+<span>101</span>
+<span>102</span>
+<span>103</span>
+<span>104</span>
+<span>105</span>
+<span>106</span>
+<span>107</span>
+<span>108</span>
+<span>109</span>
+<span>110</span>
+<span>111</span>
+<span>112</span>
+<span>113</span>
+<span>114</span>
+<span>115</span>
+<span>116</span>
+<span>117</span>
+</pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>tokio::runtime;
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span><span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tracing::Level;
+
+    <span class="kw">use </span>rsiot::{
+        components::{
+            cmp_derive::{<span class="self">self</span>, DeriveItem},
+            cmp_inject_periodic, cmp_logger,
+        },
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
+    };
+
+    tracing_subscriber::fmt().init();
+
+    <span class="attr">#[derive(Clone, Default, PartialEq)]
+    </span><span class="kw">struct </span>ValueInstantString {
+        <span class="kw">pub </span>f64: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+        <span class="kw">pub </span>bool: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    }
+
+    <span class="kw">let </span>derive_config = cmp_derive::Config {
+        derive_items: <span class="macro">vec!</span>[Box::new(DeriveItem {
+            store: ValueInstantString::default(),
+            fn_input: |msg, store| <span class="kw">match </span><span class="kw-2">&amp;</span>msg.data {
+                MsgData::Custom(data) =&gt; <span class="kw">match </span>data {
+                    Custom::ValueInstantF64(content) =&gt; store.f64 = <span class="prelude-val">Some</span>(<span class="kw-2">*</span>content),
+                    Custom::ValueInstantBool(content) =&gt; store.bool = <span class="prelude-val">Some</span>(<span class="kw-2">*</span>content),
+                    <span class="kw">_ </span>=&gt; (),
+                },
+                MsgData::System(<span class="kw">_</span>) =&gt; (),
+            },
+            fn_output: |store| {
+                <span class="kw">let </span>msg_content =
+                    <span class="macro">format!</span>(<span class="string">"New Message: bool: {}, f64: {}"</span>, store.bool<span class="question-mark">?</span>, store.f64<span class="question-mark">?</span>);
+                <span class="kw">let </span>msg = Message::new(MsgData::Custom(Custom::ValueInstantString(msg_content)));
+                <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg])
+            },
+        })],
+    };
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.<span class="highlight focus">serialize</span>()<span class="question-mark">?</span>)),
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg1 = Message::new_custom(Custom::ValueInstantF64(counter));
+            <span class="kw">let </span>msg2 = Message::new_custom(Custom::ValueInstantBool(<span class="bool-val">true</span>));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg1, msg2]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        executor_name: <span class="string">"example_single_thread"</span>.into(),
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
+    </span>runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            ComponentExecutor::new(executor_config)
+                .add_cmp(cmp_derive::Cmp::new(derive_config))
+                .add_cmp(cmp_logger::Cmp::new(logger_config))
+                .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                .wait_result()
+                .<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span>runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            <span class="kw">let </span>local_set = LocalSet::new();
+
+            local_set.spawn_local(<span class="kw">async move </span>{
+                ComponentExecutor::new(executor_config)
+                    .add_cmp(cmp_derive::Cmp::new(derive_config))
+                    .add_cmp(cmp_logger::Cmp::new(logger_config))
+                    .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                    .wait_result()
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+            });
+
+            local_set.<span class="kw">await</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.deserialize" class="method"><a class="src rightside" href="../../../src/rsiot/message/msg_serde.rs.html#39-48">source</a><h4 class="code-header">pub fn <a href="#method.deserialize" class="fn">deserialize</a>(text: &amp;str) -&gt; Result&lt;Self, <a class="enum" href="../error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Десериализация сообщений из json</p>
 </div></details></div></details></div><h2 id="trait-implementations" class="section-header">Trait Implementations<a href="#trait-implementations" class="anchor">§</a></h2><div id="trait-implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Clone-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#impl-Clone-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom: Clone&gt; Clone for <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TCustom&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.clone" class="method trait-impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#method.clone" class="anchor">§</a><h4 class="code-header">fn <a class="fn">clone</a>(&amp;self) -&gt; <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TCustom&gt;</h4></section></summary><div class='docblock'>Returns a copy of the value. <a>Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.clone_from" class="method trait-impl"><span class="since rightside" title="Stable since Rust version 1.0.0">1.0.0</span><a href="#method.clone_from" class="anchor">§</a><h4 class="code-header">fn <a class="fn">clone_from</a>(&amp;mut self, source: &amp;Self)</h4></section></summary><div class='docblock'>Performs copy-assignment from <code>source</code>. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Debug-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#impl-Debug-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom: Debug&gt; Debug for <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TCustom&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#method.fmt" class="anchor">§</a><h4 class="code-header">fn <a class="fn">fmt</a>(&amp;self, f: &amp;mut Formatter&lt;'_&gt;) -&gt; Result</h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a>Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#impl-Deserialize%3C'de%3E-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;'de, TCustom&gt; <a class="trait" href="../trait.Deserialize.html" title="trait rsiot::message::Deserialize">Deserialize</a>&lt;'de&gt; for <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TCustom&gt;<div class="where">where
     TCustom: <a class="trait" href="../trait.Deserialize.html" title="trait rsiot::message::Deserialize">Deserialize</a>&lt;'de&gt;,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.deserialize-1" class="method trait-impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#method.deserialize-1" class="anchor">§</a><h4 class="code-header">fn <a href="../trait.Deserialize.html#tymethod.deserialize" class="fn">deserialize</a>&lt;__D&gt;(__deserializer: __D) -&gt; Result&lt;Self, __D::<a class="associatedtype" href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#associatedtype.Error" title="type serde::de::Deserializer::Error">Error</a>&gt;<div class="where">where
     __D: <a class="trait" href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Deserializer</a>&lt;'de&gt;,</div></h4></section></summary><div class='docblock'>Deserialize this value from the given Serde deserializer. <a href="../trait.Deserialize.html#tymethod.deserialize">Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-PartialEq-for-Message%3CTCustom%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#impl-PartialEq-for-Message%3CTCustom%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TCustom: PartialEq&gt; PartialEq for <a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TCustom&gt;</h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.eq" class="method trait-impl"><a class="src rightside" href="../../../src/rsiot/message/message.rs.html#11">source</a><a href="#method.eq" class="anchor">§</a><h4 class="code-header">fn <a class="fn">eq</a>(&amp;self, other: &amp;<a class="struct" href="struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TCustom&gt;) -&gt; bool</h4></section></summary><div class='docblock'>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used

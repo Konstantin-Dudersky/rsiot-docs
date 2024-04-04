@@ -70,10 +70,11 @@
 <a href="#68" id="68">68</a>
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Запуск:
 //!
 //! ```bash
-//! cargo run -p rsiot-plc --example plc-multi-thread
+//! cargo run --example cmp_plc --target x86_64-unknown-linux-gnu --features="cmp_plc"
 //! ```
 
 </span><span class="attr">#[cfg(any(target_arch = <span class="string">"x86_64"</span>, target_arch = <span class="string">"aarch64"</span>))]
@@ -101,6 +102,7 @@
     tracing_subscriber::fmt().init();
 
     <span class="kw">let </span>plc_config = cmp_plc::Config {
+        fn_cycle_init: |_input: <span class="kw-2">&amp;mut </span>fb1_example::I| {},
         fn_input: |_input: <span class="kw-2">&amp;mut </span>fb1_example::I, msg: <span class="kw-2">&amp;</span>Message&lt;Data&gt;| {
             <span class="kw">let </span>msg = <span class="kw">match </span>msg.get_custom_data() {
                 <span class="prelude-val">Some</span>(val) =&gt; val,
@@ -120,7 +122,7 @@
 
     <span class="kw">let </span>logger_config = cmp_logger::Config {
         level: Level::INFO,
-        header: <span class="string">"Logger: "</span>.into(),
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
 
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
