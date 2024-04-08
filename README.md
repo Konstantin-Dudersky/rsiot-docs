@@ -4,8 +4,12 @@
 
 ```bash
 cargo install mdbook
-sudo apt -y install pandoc
+
+# скачать pandoc, в репозитории старая версия - https://github.com/jgm/pandoc/releases/latest
+sudo dpkg -i
+
 cargo install mdbook-pandoc
+
 cargo install --git https://github.com/typst/typst --locked typst-cli
 ```
 
