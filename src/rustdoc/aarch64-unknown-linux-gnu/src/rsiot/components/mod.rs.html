@@ -126,6 +126,10 @@
 <a href="#124" id="124">124</a>
 <a href="#125" id="125">125</a>
 <a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
@@ -149,6 +153,10 @@
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[cfg(riscv32imc_esp_espidf)]
 </span><span class="kw">pub mod </span>cmp_esp_gpio;
+
+<span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
+#[cfg(riscv32imc_esp_espidf)]
+</span><span class="kw">pub mod </span>cmp_esp_mqtt_client;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[cfg(riscv32imc_esp_espidf)]

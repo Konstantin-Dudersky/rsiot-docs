@@ -817,7 +817,7 @@
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[56,56],&quot;../../src/cmp_esp/cmp_esp.rs.html#63&quot;,&quot;line 63&quot;],[[76,76],&quot;../../src/cmp_esp/cmp_esp.rs.html#83&quot;,&quot;line 83&quot;],[[98,98],&quot;../../src/cmp_esp/cmp_esp.rs.html#105&quot;,&quot;line 105&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#63">line 63</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[56,56],&quot;../../src/cmp_esp/cmp_esp.rs.html#63&quot;,&quot;line 63&quot;],[[84,84],&quot;../../src/cmp_esp/cmp_esp.rs.html#91&quot;,&quot;line 91&quot;],[[106,106],&quot;../../src/cmp_esp/cmp_esp.rs.html#113&quot;,&quot;line 113&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#63">line 63</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -944,6 +944,28 @@
 <span>131</span>
 <span>132</span>
 <span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
@@ -955,8 +977,8 @@
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -990,7 +1012,7 @@
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
@@ -1014,6 +1036,14 @@
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -1047,6 +1077,19 @@
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -1059,12 +1102,13 @@
 
     local_set.spawn_local(<span class="kw">async </span>{
         ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .add_cmp(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
@@ -1530,7 +1574,7 @@
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[36,36],&quot;../../src/cmp_esp/cmp_esp.rs.html#43&quot;,&quot;line 43&quot;],[[48,48],&quot;../../src/cmp_esp/cmp_esp.rs.html#55&quot;,&quot;line 55&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#43">line 43</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[36,36],&quot;../../src/cmp_esp/cmp_esp.rs.html#43&quot;,&quot;line 43&quot;],[[48,48],&quot;../../src/cmp_esp/cmp_esp.rs.html#55&quot;,&quot;line 55&quot;],[[116,116],&quot;../../src/cmp_esp/cmp_esp.rs.html#123&quot;,&quot;line 123&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#43">line 43</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -1657,6 +1701,28 @@
 <span>131</span>
 <span>132</span>
 <span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
@@ -1668,8 +1734,8 @@
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -1703,7 +1769,7 @@
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.<span class="highlight">serialize</span>()<span class="question-mark">?</span>)),
     };
@@ -1727,6 +1793,14 @@
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -1760,6 +1834,19 @@
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.<span class="highlight">serialize</span>()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -1772,19 +1859,20 @@
 
     local_set.spawn_local(<span class="kw">async </span>{
         ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .add_cmp(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
     });
     local_set.<span class="kw">await</span>;
 }</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.deserialize" class="method"><a class="src rightside" href="../../src/rsiot/message/msg_serde.rs.html#39-48">source</a><h4 class="code-header">pub fn <a href="#method.deserialize" class="fn">deserialize</a>(text: &amp;str) -&gt; Result&lt;Self, <a class="enum" href="error/enum.Error.html" title="enum rsiot::message::error::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Десериализация сообщений из json</p>
-</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-3"><a href="#scraped-examples-3">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[40,40],&quot;../../src/cmp_esp/cmp_esp.rs.html#47&quot;,&quot;line 47&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#47">line 47</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+</div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-3"><a href="#scraped-examples-3">Examples found in repository</a><a class="scrape-help" href="../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[40,40],&quot;../../src/cmp_esp/cmp_esp.rs.html#47&quot;,&quot;line 47&quot;],[[119,119],&quot;../../src/cmp_esp/cmp_esp.rs.html#126&quot;,&quot;line 126&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../src/cmp_esp/cmp_esp.rs.html#47">line 47</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -1911,6 +1999,28 @@
 <span>131</span>
 <span>132</span>
 <span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
@@ -1922,8 +2032,8 @@
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -1957,7 +2067,7 @@
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
@@ -1981,6 +2091,14 @@
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -2014,6 +2132,19 @@
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = <span class="highlight">Message::deserialize</span>(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -2026,12 +2157,13 @@
 
     local_set.spawn_local(<span class="kw">async </span>{
         ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .add_cmp(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()

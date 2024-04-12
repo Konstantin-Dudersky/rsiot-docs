@@ -6,9 +6,16 @@
 </div></details><h2 id="fields" class="fields section-header">Fields<a href="#fields" class="anchor">§</a></h2><span id="structfield.level" class="structfield section-header"><a href="#structfield.level" class="anchor field">§</a><code>level: Level</code></span><div class="docblock"><p>Уровень логгирования</p>
 </div><span id="structfield.fn_input" class="structfield section-header"><a href="#structfield.fn_input" class="anchor field">§</a><code>fn_input: fn(_: <a class="struct" href="../../message/message/struct.Message.html" title="struct rsiot::message::message::Message">Message</a>&lt;TMsg&gt;) -&gt; <a class="type" href="https://docs.rs/anyhow/1.0.81/anyhow/type.Result.html" title="type anyhow::Result">Result</a>&lt;Option&lt;String&gt;&gt;</code></span><div class="docblock"><p>Функция преобразования входящих сообщений в записи.</p>
 <p>Можно реализовать фильтрацию сообщений.</p>
-<h3 id="Примеры"><a class="doc-anchor" href="#Примеры">§</a>Примеры</h3><h4 id="Логгирование-всех-сообщений"><a class="doc-anchor" href="#Логгирование-всех-сообщений">§</a>Логгирование всех сообщений</h4>
+<p><strong>Примеры</strong></p>
+<ul>
+<li>Логгирование всех сообщений</li>
+</ul>
+
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code>fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),</code></pre></div>
-<h4 id="Логгирование-всех-сообщений-с-заголовком"><a class="doc-anchor" href="#Логгирование-всех-сообщений-с-заголовком">§</a>Логгирование всех сообщений с заголовком</h4>
+<ul>
+<li>Логгирование всех сообщений с заголовком</li>
+</ul>
+
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code>fn_input: |msg| {
     <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
     <span class="kw">let </span>text = <span class="macro">format!</span>(<span class="string">"Header: {text}"</span>);

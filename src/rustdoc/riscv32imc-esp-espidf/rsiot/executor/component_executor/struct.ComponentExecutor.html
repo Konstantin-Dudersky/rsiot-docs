@@ -1,18 +1,28 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Запуск коллекции компонентов в работу"><title>ComponentExecutor in rsiot::executor::component_executor - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><script defer src="../../../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.79</span></h2></div><h2 class="location"><a href="#">ComponentExecutor</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block structfield"><li><a href="#structfield.cmp_in_out">cmp_in_out</a></li><li><a href="#structfield.task_set">task_set</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.add_cmp">add_cmp</a></li><li><a href="#method.new">new</a></li><li><a href="#method.wait_result">wait_result</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-ComponentExecutor%3CTMsg%3E">!RefUnwindSafe</a></li><li><a href="#impl-UnwindSafe-for-ComponentExecutor%3CTMsg%3E">!UnwindSafe</a></li><li><a href="#impl-Send-for-ComponentExecutor%3CTMsg%3E">Send</a></li><li><a href="#impl-Sync-for-ComponentExecutor%3CTMsg%3E">Sync</a></li><li><a href="#impl-Unpin-for-ComponentExecutor%3CTMsg%3E">Unpin</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-Instrument-for-T">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li><li><a href="#impl-WithSubscriber-for-T">WithSubscriber</a></li></ul></section><h2><a href="index.html">In rsiot::executor::component_executor</a></h2></div></nav><div class="sidebar-resizer"></div>
-    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">executor</a>::<wbr><a href="index.html">component_executor</a>::<wbr><a class="struct" href="#">ComponentExecutor</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/executor/component_executor.rs.html#43-46">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct ComponentExecutor&lt;TMsg&gt; {
+    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">executor</a>::<wbr><a href="index.html">component_executor</a>::<wbr><a class="struct" href="#">ComponentExecutor</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/executor/component_executor.rs.html#44-47">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct ComponentExecutor&lt;TMsg&gt; {
     task_set: JoinSet&lt;Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt;,
     cmp_in_out: <a class="struct" href="../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;,
 }</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Запуск коллекции компонентов в работу</p>
-<h2 id="Примеры"><a class="doc-anchor" href="#Примеры">§</a>Примеры</h2><h3 id="Многопоточное-окружение"><a class="doc-anchor" href="#Многопоточное-окружение">§</a>Многопоточное окружение</h3>
+<p><strong>Примеры</strong></p>
+<ul>
+<li>Многопоточное окружение</li>
+</ul>
 <p>TODO</p>
-<h3 id="Однопоточное-окружение"><a class="doc-anchor" href="#Однопоточное-окружение">§</a>Однопоточное окружение</h3>
+<ul>
+<li>Однопоточное окружение</li>
+</ul>
 <p>TODO</p>
-<h3 id="Однопоточное-окружение---wasm-leptos"><a class="doc-anchor" href="#Однопоточное-окружение---wasm-leptos">§</a>Однопоточное окружение - WASM (Leptos)</h3>
+<ul>
+<li>Однопоточное окружение - WASM (Leptos)</li>
+</ul>
+
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
 
-<span class="kw">let </span>context = LocalSet::new();
+<span class="comment">// функция main - обычная, не async
+
+</span><span class="kw">let </span>context = LocalSet::new();
 context.spawn_local(<span class="kw">async move </span>{
-    ComponentExecutor::&lt;Message&gt;::new(<span class="number">100</span>, <span class="string">"example"</span>)
+    ComponentExecutor::&lt;Custom&gt;::new(config_executor)
         .add_cmp(cmp_websocket_client_wasm::Cmp::new(ws_client_config))
         .add_cmp(cmp_leptos::Cmp::new(leptos_config))
         .wait_result()
@@ -21,8 +31,8 @@ context.spawn_local(<span class="kw">async move </span>{
 });
 spawn_local(context);
 <span class="prelude-val">Ok</span>(())</code></pre></div>
-</div></details><h2 id="fields" class="fields section-header">Fields<a href="#fields" class="anchor">§</a></h2><span id="structfield.task_set" class="structfield section-header"><a href="#structfield.task_set" class="anchor field">§</a><code>task_set: JoinSet&lt;Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt;</code></span><span id="structfield.cmp_in_out" class="structfield section-header"><a href="#structfield.cmp_in_out" class="anchor field">§</a><code>cmp_in_out: <a class="struct" href="../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;</code></span><h2 id="implementations" class="section-header">Implementations<a href="#implementations" class="anchor">§</a></h2><div id="implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-ComponentExecutor%3CTMsg%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#74-161">source</a><a href="#impl-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;<div class="where">where
-    TMsg: <a class="trait" href="../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.new" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#79-117">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fn">new</a>(config: <a class="struct" href="struct.ComponentExecutorConfig.html" title="struct rsiot::executor::component_executor::ComponentExecutorConfig">ComponentExecutorConfig</a>&lt;TMsg&gt;) -&gt; Self</h4></section></summary><div class="docblock"><p>Создание коллекции компонентов</p>
+</div></details><h2 id="fields" class="fields section-header">Fields<a href="#fields" class="anchor">§</a></h2><span id="structfield.task_set" class="structfield section-header"><a href="#structfield.task_set" class="anchor field">§</a><code>task_set: JoinSet&lt;Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;&gt;</code></span><span id="structfield.cmp_in_out" class="structfield section-header"><a href="#structfield.cmp_in_out" class="anchor field">§</a><code>cmp_in_out: <a class="struct" href="../cmp_in_out/struct.CmpInOut.html" title="struct rsiot::executor::cmp_in_out::CmpInOut">CmpInOut</a>&lt;TMsg&gt;</code></span><h2 id="implementations" class="section-header">Implementations<a href="#implementations" class="anchor">§</a></h2><div id="implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-ComponentExecutor%3CTMsg%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#75-162">source</a><a href="#impl-ComponentExecutor%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="struct" href="struct.ComponentExecutor.html" title="struct rsiot::executor::component_executor::ComponentExecutor">ComponentExecutor</a>&lt;TMsg&gt;<div class="where">where
+    TMsg: <a class="trait" href="../../message/msg_data_bound/trait.MsgDataBound.html" title="trait rsiot::message::msg_data_bound::MsgDataBound">MsgDataBound</a> + 'static,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.new" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#80-118">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fn">new</a>(config: <a class="struct" href="struct.ComponentExecutorConfig.html" title="struct rsiot::executor::component_executor::ComponentExecutorConfig">ComponentExecutorConfig</a>&lt;TMsg&gt;) -&gt; Self</h4></section></summary><div class="docblock"><p>Создание коллекции компонентов</p>
 </div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples"><a href="#scraped-examples">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[17,17],&quot;../../../src/executor_single_thread/main.rs.html#33&quot;,&quot;line 33&quot;]]"><div class="scraped-example-title">examples/executor/executor-single-thread/main.rs (<a href="../../../src/executor_single_thread/main.rs.html#33">line 33</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>16</span>
 <span>17</span>
 <span>18</span>
@@ -650,7 +660,7 @@ spawn_local(context);
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[114,114],&quot;../../../src/cmp_esp/cmp_esp.rs.html#121&quot;,&quot;line 121&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#121">line 121</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[135,135],&quot;../../../src/cmp_esp/cmp_esp.rs.html#142&quot;,&quot;line 142&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#142">line 142</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -777,6 +787,28 @@ spawn_local(context);
 <span>131</span>
 <span>132</span>
 <span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
@@ -788,8 +820,8 @@ spawn_local(context);
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -823,7 +855,7 @@ spawn_local(context);
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
@@ -847,6 +879,14 @@ spawn_local(context);
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -880,6 +920,19 @@ spawn_local(context);
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -892,18 +945,19 @@ spawn_local(context);
 
     local_set.spawn_local(<span class="kw">async </span>{
         <span class="highlight focus">ComponentExecutor::&lt;Custom&gt;::new</span>(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .add_cmp(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
     });
     local_set.<span class="kw">await</span>;
-}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.add_cmp" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#130-136">source</a><h4 class="code-header">pub fn <a href="#method.add_cmp" class="fn">add_cmp</a>(self, component: impl <a class="trait" href="../component/single_thread/trait.IComponent.html" title="trait rsiot::executor::component::single_thread::IComponent">IComponent</a>&lt;TMsg&gt; + 'static) -&gt; Self</h4></section></summary><div class="docblock"><p>Добавить компонент (?Send)</p>
+}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.add_cmp" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#131-137">source</a><h4 class="code-header">pub fn <a href="#method.add_cmp" class="fn">add_cmp</a>(self, component: impl <a class="trait" href="../component/single_thread/trait.IComponent.html" title="trait rsiot::executor::component::single_thread::IComponent">IComponent</a>&lt;TMsg&gt; + 'static) -&gt; Self</h4></section></summary><div class="docblock"><p>Добавить компонент (?Send)</p>
 </div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-1"><a href="#scraped-examples-1">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[18,18],&quot;../../../src/executor_single_thread/main.rs.html#34&quot;,&quot;line 34&quot;],[[19,19],&quot;../../../src/executor_single_thread/main.rs.html#35&quot;,&quot;line 35&quot;]]"><div class="scraped-example-title">examples/executor/executor-single-thread/main.rs (<a href="../../../src/executor_single_thread/main.rs.html#34">line 34</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>16</span>
 <span>17</span>
 <span>18</span>
@@ -1531,7 +1585,7 @@ spawn_local(context);
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[115,115],&quot;../../../src/cmp_esp/cmp_esp.rs.html#122&quot;,&quot;line 122&quot;],[[116,116],&quot;../../../src/cmp_esp/cmp_esp.rs.html#123&quot;,&quot;line 123&quot;],[[117,117],&quot;../../../src/cmp_esp/cmp_esp.rs.html#124&quot;,&quot;line 124&quot;],[[118,118],&quot;../../../src/cmp_esp/cmp_esp.rs.html#125&quot;,&quot;line 125&quot;],[[119,119],&quot;../../../src/cmp_esp/cmp_esp.rs.html#126&quot;,&quot;line 126&quot;],[[120,120],&quot;../../../src/cmp_esp/cmp_esp.rs.html#127&quot;,&quot;line 127&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#122">line 122</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[137,137],&quot;../../../src/cmp_esp/cmp_esp.rs.html#144&quot;,&quot;line 144&quot;],[[138,138],&quot;../../../src/cmp_esp/cmp_esp.rs.html#145&quot;,&quot;line 145&quot;],[[139,139],&quot;../../../src/cmp_esp/cmp_esp.rs.html#146&quot;,&quot;line 146&quot;],[[140,140],&quot;../../../src/cmp_esp/cmp_esp.rs.html#147&quot;,&quot;line 147&quot;],[[141,141],&quot;../../../src/cmp_esp/cmp_esp.rs.html#148&quot;,&quot;line 148&quot;],[[142,142],&quot;../../../src/cmp_esp/cmp_esp.rs.html#149&quot;,&quot;line 149&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#144">line 144</a>)</div><div class="code-wrapper"><button class="prev">&pr;</button> <button class="next">&sc;</button><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -1658,6 +1712,28 @@ spawn_local(context);
 <span>131</span>
 <span>132</span>
 <span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
@@ -1669,8 +1745,8 @@ spawn_local(context);
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -1704,7 +1780,7 @@ spawn_local(context);
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
@@ -1728,6 +1804,14 @@ spawn_local(context);
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -1761,6 +1845,19 @@ spawn_local(context);
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -1773,18 +1870,19 @@ spawn_local(context);
 
     local_set.spawn_local(<span class="kw">async </span>{
         ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .<span class="highlight focus">add_cmp</span>(cmp_logger::Cmp::new(logger_config))
-            .<span class="highlight">add_cmp</span>(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.<span class="highlight focus">add_cmp</span>(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .<span class="highlight">add_cmp</span>(cmp_esp_wifi::Cmp::new(wifi_config))
             .<span class="highlight">add_cmp</span>(cmp_esp_gpio::Cmp::new(gpio_config))
             .<span class="highlight">add_cmp</span>(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .<span class="highlight">add_cmp</span>(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .<span class="highlight">add_cmp</span>(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()
     });
     local_set.<span class="kw">await</span>;
-}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.wait_result" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#142-160">source</a><h4 class="code-header">pub async fn <a href="#method.wait_result" class="fn">wait_result</a>(&amp;mut self) -&gt; Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;</h4></section></summary><div class="docblock"><p>Запустить на выполнение все компоненты.</p>
+}</code></pre></div></div></div></div></details></div></details><details class="toggle method-toggle" open><summary><section id="method.wait_result" class="method"><a class="src rightside" href="../../../src/rsiot/executor/component_executor.rs.html#143-161">source</a><h4 class="code-header">pub async fn <a href="#method.wait_result" class="fn">wait_result</a>(&amp;mut self) -&gt; Result&lt;(), <a class="enum" href="../error/enum.ComponentError.html" title="enum rsiot::executor::error::ComponentError">ComponentError</a>&gt;</h4></section></summary><div class="docblock"><p>Запустить на выполнение все компоненты.</p>
 <p>Компоненты не должны заканчивать выполнение. Если хоть один остановился (неважно по какой
 причине - по ошибке или нет), это ошибка выполнения.</p>
 </div><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples-2"><a href="#scraped-examples-2">Examples found in repository</a><a class="scrape-help" href="../../../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[21,21],&quot;../../../src/executor_single_thread/main.rs.html#37&quot;,&quot;line 37&quot;]]"><div class="scraped-example-title">examples/executor/executor-single-thread/main.rs (<a href="../../../src/executor_single_thread/main.rs.html#37">line 37</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>16</span>
@@ -2414,7 +2512,7 @@ spawn_local(context);
         })<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
-}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[121,121],&quot;../../../src/cmp_esp/cmp_esp.rs.html#128&quot;,&quot;line 128&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#128">line 128</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
+}</code></pre></div></div></div><div class="scraped-example " data-locs="[[[143,143],&quot;../../../src/cmp_esp/cmp_esp.rs.html#150&quot;,&quot;line 150&quot;]]"><div class="scraped-example-title">examples/cmp_esp/cmp_esp.rs (<a href="../../../src/cmp_esp/cmp_esp.rs.html#150">line 150</a>)</div><div class="code-wrapper"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><span>7</span>
 <span>8</span>
 <span>9</span>
 <span>10</span>
@@ -2541,6 +2639,28 @@ spawn_local(context);
 <span>131</span>
 <span>132</span>
 <span>133</span>
+<span>134</span>
+<span>135</span>
+<span>136</span>
+<span>137</span>
+<span>138</span>
+<span>139</span>
+<span>140</span>
+<span>141</span>
+<span>142</span>
+<span>143</span>
+<span>144</span>
+<span>145</span>
+<span>146</span>
+<span>147</span>
+<span>148</span>
+<span>149</span>
+<span>150</span>
+<span>151</span>
+<span>152</span>
+<span>153</span>
+<span>154</span>
+<span>155</span>
 </pre></div><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">async fn </span>main() {
     <span class="kw">use </span>std::time::Duration;
 
@@ -2552,8 +2672,8 @@ spawn_local(context);
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -2587,7 +2707,7 @@ spawn_local(context);
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
@@ -2611,6 +2731,14 @@ spawn_local(context);
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -2644,6 +2772,19 @@ spawn_local(context);
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -2656,12 +2797,13 @@ spawn_local(context);
 
     local_set.spawn_local(<span class="kw">async </span>{
         ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .add_cmp(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .<span class="highlight focus">wait_result</span>()
             .<span class="kw">await
             </span>.unwrap()

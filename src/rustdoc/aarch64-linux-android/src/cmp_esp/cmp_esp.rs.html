@@ -136,9 +136,31 @@
 <a href="#134" id="134">134</a>
 <a href="#135" id="135">135</a>
 <a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Example based on developer board ESP32-C3
 //!
-//! cargo run --example cmp_esp --target="riscv32imc-esp-espidf" --features="cmp_esp" --release
+//! cargo run --example cmp_esp --target="riscv32imc-esp-espidf" --features="cmp_esp, logging" --release
 
 </span><span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[tokio::main(flavor = <span class="string">"current_thread"</span>)]
@@ -153,8 +175,8 @@
 
     <span class="kw">use </span>rsiot::{
         components::{
-            cmp_esp_adc, cmp_esp_gpio, cmp_esp_wifi, cmp_http_server_esp, cmp_inject_periodic,
-            cmp_logger,
+            cmp_esp_adc, cmp_esp_gpio, cmp_esp_mqtt_client, cmp_esp_wifi, cmp_http_server_esp,
+            cmp_inject_periodic, cmp_logger,
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
         logging::configure_logging,
@@ -188,7 +210,7 @@
     };
 
     <span class="comment">// cmp_logger ----------------------------------------------------------------------------------
-    </span><span class="kw">let </span>logger_config = cmp_logger::Config {
+    </span><span class="kw">let </span>_logger_config = cmp_logger::Config::&lt;Custom&gt; {
         level: Level::INFO,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
     };
@@ -212,6 +234,14 @@
     </span><span class="kw">let </span>wifi_config = cmp_esp_wifi::Config {
         peripherals: peripherals.modem,
         event_loop: event_loop.clone(),
+        access_point: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigAccessPoint {
+            ssid: <span class="string">"test_esp"</span>.into(),
+        }),
+        client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
+            ssid: <span class="string">"internet"</span>.into(),
+            password: <span class="string">"k33n3+Ik"</span>.into(),
+            auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
+        }),
     };
 
     <span class="comment">// GPIO
@@ -245,6 +275,19 @@
         }],
     };
 
+    <span class="comment">// MQTT
+    </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
+        client_id: <span class="string">"cmp_esp_example"</span>.into(),
+        host: <span class="string">"192.168.101.123"</span>.into(),
+        port: <span class="number">1883</span>,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
+        fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
+            <span class="kw">let </span>payload = String::from_utf8_lossy(<span class="kw-2">&amp;</span>payload);
+            <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>payload)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+    };
+
     <span class="comment">// executor ------------------------------------------------------------------------------------
 
     </span><span class="kw">let </span>executor_config = ComponentExecutorConfig {
@@ -257,12 +300,13 @@
 
     local_set.spawn_local(<span class="kw">async </span>{
         ComponentExecutor::&lt;Custom&gt;::new(executor_config)
-            .add_cmp(cmp_logger::Cmp::new(logger_config))
-            .add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
+            <span class="comment">// .add_cmp(cmp_logger::Cmp::new(logger_config))
+            </span>.add_cmp(cmp_http_server_esp::Cmp::new(http_server_esp_config))
             .add_cmp(cmp_esp_wifi::Cmp::new(wifi_config))
             .add_cmp(cmp_esp_gpio::Cmp::new(gpio_config))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_adc::Cmp::new(config_esp_adc))
+            .add_cmp(cmp_esp_mqtt_client::Cmp::new(config_esp_mqtt_client))
             .wait_result()
             .<span class="kw">await
             </span>.unwrap()

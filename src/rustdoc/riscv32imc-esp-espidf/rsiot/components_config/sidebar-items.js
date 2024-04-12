@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["http_server"]};
+window.SIDEBAR_ITEMS = {"mod":["http_server","mqtt_client"]};

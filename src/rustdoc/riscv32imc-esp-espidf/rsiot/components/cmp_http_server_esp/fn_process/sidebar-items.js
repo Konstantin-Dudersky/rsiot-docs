@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process"]};
+window.SIDEBAR_ITEMS = {"constant":["HEADERS"],"fn":["fn_process"]};

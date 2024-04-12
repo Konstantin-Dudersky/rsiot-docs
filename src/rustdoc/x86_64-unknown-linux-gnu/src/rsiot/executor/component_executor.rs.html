@@ -225,6 +225,7 @@
 <a href="#223" id="223">223</a>
 <a href="#224" id="224">224</a>
 <a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>tokio::{
     sync::{broadcast, mpsc},
     task::JoinSet,
@@ -239,25 +240,26 @@
 
 <span class="doccomment">/// Запуск коллекции компонентов в работу
 ///
-/// # Примеры
+/// **Примеры**
 ///
-/// ## Многопоточное окружение
-///
-/// TODO
-///
-/// ## Однопоточное окружение
+/// - Многопоточное окружение
 ///
 /// TODO
 ///
-/// ## Однопоточное окружение - WASM (Leptos)
+/// - Однопоточное окружение
 ///
+/// TODO
+///
+/// - Однопоточное окружение - WASM (Leptos)
 ///
 /// ```rust
 /// use leptos::*;
 ///
+/// // функция main - обычная, не async
+///
 /// let context = LocalSet::new();
 /// context.spawn_local(async move {
-///     ComponentExecutor::&lt;Message&gt;::new(100, "example")
+///     ComponentExecutor::&lt;Custom&gt;::new(config_executor)
 ///         .add_cmp(cmp_websocket_client_wasm::Cmp::new(ws_client_config))
 ///         .add_cmp(cmp_leptos::Cmp::new(leptos_config))
 ///         .wait_result()
@@ -282,15 +284,15 @@
 
     <span class="doccomment">/// Функция фильтрации сообщений в зависимости от текущей авторизации
     ///
-    /// # Примеры
+    /// **Примеры**
     ///
-    /// ## Все сообщения блокируются
+    /// - Все сообщения блокируются
     ///
     /// ```rust
     /// |_, _| None
     /// ```
     ///
-    /// ## Все сообщения разрешены
+    /// - Все сообщения разрешены
     ///
     /// ```rust
     /// |msg, _| Some(msg)

@@ -114,51 +114,7 @@
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
 <a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
-<a href="#124" id="124">124</a>
-<a href="#125" id="125">125</a>
-<a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-</pre></div><pre class="rust"><code><span class="comment">// Пробовал для настройки CORS вместо
-//
-// ```rust
-// let mut response = request.into_ok_response().unwrap();
-// ```
-//
-// использовать
-//
-// ```rust
-// let mut response = request
-//     .into_response(
-//         200,
-//         None,
-//         &amp;[
-//             ("Access-Control-Allow-Origin", "*"),
-//             ("Access-Control-Max-Age", "600"),
-//             ("Access-Control-Allow-Methods", "PUT,POST,GET,OPTIONS"),
-//             ("Access-Control-Allow-Headers", "*"),
-//         ],
-//     )
-//     .unwrap();
-// ```
-//
-// Работает или нет, непонятно
-
-</span><span class="kw">use </span>std::time::Duration;
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>embedded_svc::{http::Headers, io::Read};
 <span class="kw">use </span>esp_idf_svc::{
@@ -169,7 +125,7 @@
     io::Write,
 };
 <span class="kw">use </span>tokio::time::sleep;
-<span class="kw">use </span>tracing::info;
+<span class="kw">use </span>tracing::{info, trace};
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
@@ -177,6 +133,14 @@
 };
 
 <span class="kw">use </span><span class="kw">super</span>::Config;
+
+<span class="doccomment">/// Заголовки для разрешения CORS
+</span><span class="kw">const </span>HEADERS: [(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str); <span class="number">4</span>] = [
+    (<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>),
+    (<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"600"</span>),
+    (<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"PUT,POST,GET,OPTIONS"</span>),
+    (<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"*"</span>),
+];
 
 <span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(in_out: CmpInOut&lt;TMsg&gt;, _config: Config&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
@@ -195,7 +159,7 @@
     </span><span class="kw">let </span>cache_clone = in_out.cache.clone();
     server
         .fn_handler(<span class="string">"/messages"</span>, Method::Get, <span class="kw">move </span>|request| {
-            <span class="macro">info!</span>(<span class="string">"new request for messages"</span>);
+            <span class="macro">trace!</span>(<span class="string">"Get request"</span>);
             <span class="kw">let </span><span class="kw-2">mut </span>msgs_json: Vec&lt;String&gt; = <span class="macro">vec!</span>[];
             {
                 <span class="kw">let </span>lock = cache_clone.blocking_read();
@@ -206,7 +170,7 @@
             }
             <span class="kw">let </span>json = msgs_json.join(<span class="string">","</span>);
             <span class="kw">let </span>json = <span class="macro">format!</span>(<span class="string">"[{}]"</span>, json);
-            <span class="kw">let </span><span class="kw-2">mut </span>response = request.into_ok_response().unwrap();
+            <span class="kw">let </span><span class="kw-2">mut </span>response = request.into_response(<span class="number">200</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span>HEADERS).unwrap();
             response.write_all(json.as_bytes()).unwrap();
             <span class="prelude-val">Ok</span>(()) <span class="kw">as </span><span class="kw">super</span>::Result&lt;()&gt;
         })
@@ -222,8 +186,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>buf = <span class="macro">vec!</span>[<span class="number">0</span>; len];
             request.read_exact(<span class="kw-2">&amp;mut </span>buf).unwrap();
             <span class="kw">let </span>buf_str = String::from_utf8_lossy(<span class="kw-2">&amp;</span>buf);
-
-            <span class="kw">let </span><span class="kw-2">mut </span>response = request.into_ok_response().unwrap();
+            <span class="kw">let </span><span class="kw-2">mut </span>response = request.into_response(<span class="number">200</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span>HEADERS).unwrap();
             <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>buf_str);
             <span class="kw">match </span>msg {
                 <span class="prelude-val">Ok</span>(val) =&gt; in_out_clone.send_output_blocking(val).unwrap(),
@@ -247,8 +210,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>buf = <span class="macro">vec!</span>[<span class="number">0</span>; len];
             request.read_exact(<span class="kw-2">&amp;mut </span>buf).unwrap();
             <span class="kw">let </span>buf_str = String::from_utf8_lossy(<span class="kw-2">&amp;</span>buf);
-
-            <span class="kw">let </span><span class="kw-2">mut </span>response = request.into_ok_response().unwrap();
+            <span class="kw">let </span><span class="kw-2">mut </span>response = request.into_response(<span class="number">200</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span>HEADERS).unwrap();
             <span class="kw">let </span>msg = Message::deserialize(<span class="kw-2">&amp;</span>buf_str);
             <span class="kw">match </span>msg {
                 <span class="prelude-val">Ok</span>(val) =&gt; in_out_clone.send_output_blocking(val).unwrap(),

@@ -74,10 +74,29 @@
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
 <a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
-<span class="kw">use </span>esp_idf_svc::wifi::EspWifi;
+<span class="kw">use </span>esp_idf_svc::{
+    eventloop::{EspEventLoop, System},
+    wifi::{BlockingWifi, ClientConfiguration, Configuration, EspWifi},
+};
 <span class="kw">use </span>tokio::time::sleep;
+<span class="kw">use </span>tracing::info;
 
 <span class="kw">use crate</span>::{executor::CmpInOut, message::MsgDataBound};
 
@@ -87,44 +106,55 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
+    <span class="kw">let </span>wifi_config = prepare_wifi_config(<span class="kw-2">&amp;</span>config);
+
     <span class="kw">let </span><span class="kw-2">mut </span>driver = EspWifi::new(config.peripherals, config.event_loop.clone(), <span class="prelude-val">None</span>).unwrap();
 
-    wifi_setup(
-        <span class="kw-2">&amp;mut </span>driver,
-        config.event_loop,
-        <span class="comment">// Configuration::Mixed(
-        //     ClientConfiguration {
-        //         ssid: "Fermenter".into(),
-        //         password: "k33n3+Ik".into(),
-        //         auth_method: AuthMethod::None,
-
-        //         ..Default::default()
-        //     },
-        //     AccessPointConfiguration {
-        //         ssid: "test_esp_ap".into(),
-        //         ..Default::default()
-        //     },
-        // ),
-        </span>Configuration::AccessPoint(esp_idf_svc::wifi::AccessPointConfiguration {
-            ssid: heapless::String::try_from(<span class="string">"test_esp"</span>).unwrap(),
-            ..Default::default()
-        }),
-    );
+    wifi_setup(<span class="kw-2">&amp;mut </span>driver, config.event_loop, wifi_config);
 
     <span class="kw">loop </span>{
         sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
     }
 }
 
-<span class="kw">use </span>esp_idf_svc::{
-    eventloop::{EspEventLoop, System},
-    wifi::{BlockingWifi, Configuration},
-};
-<span class="kw">use </span>tracing::info;
+<span class="kw">fn </span>prepare_wifi_config(config: <span class="kw-2">&amp;</span>Config) -&gt; Configuration {
+    <span class="kw">let </span>access_point_config = <span class="kw">match </span><span class="kw-2">&amp;</span>config.access_point {
+        <span class="prelude-val">Some</span>(ap) =&gt; <span class="prelude-val">Some</span>(esp_idf_svc::wifi::AccessPointConfiguration {
+            ssid: heapless::String::try_from(ap.ssid.as_str()).unwrap(),
+            ..Default::default()
+        }),
+        <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+    };
+
+    <span class="kw">let </span>client_config: <span class="prelude-ty">Option</span>&lt;ClientConfiguration&gt; = <span class="kw">match </span><span class="kw-2">&amp;</span>config.client {
+        <span class="prelude-val">Some</span>(cl) =&gt; <span class="prelude-val">Some</span>(ClientConfiguration {
+            ssid: heapless::String::try_from(cl.ssid.as_str()).unwrap(),
+            password: heapless::String::try_from(cl.password.as_str()).unwrap(),
+            auth_method: cl.auth_method,
+            ..Default::default()
+        }),
+        <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+    };
+
+    <span class="kw">if </span>access_point_config.is_some() &amp;&amp; client_config.is_some() {
+        Configuration::Mixed(
+            client_config.expect(<span class="string">"Already checked"</span>),
+            access_point_config.expect(<span class="string">"Already checked"</span>),
+        )
+    } <span class="kw">else if </span>access_point_config.is_some() {
+        Configuration::AccessPoint(access_point_config.expect(<span class="string">"Already checked"</span>))
+    } <span class="kw">else if </span>client_config.is_some() {
+        Configuration::Client(client_config.expect(<span class="string">"Already checked"</span>))
+    } <span class="kw">else </span>{
+        <span class="macro">todo!</span>()
+    }
+}
 
 <span class="doccomment">/// Запустить Wi-Fi в комбинированном режиме.
 ///
-/// TODO - обработка ошибок, перезапуск
+/// TODO - обработка ошибок
+/// TODO - перезапуск
+/// TODO - AsyncWifi
 </span><span class="kw">pub fn </span>wifi_setup(
     wifi: <span class="kw-2">&amp;mut </span>EspWifi&lt;<span class="lifetime">'static</span>&gt;,
     sys_loop: EspEventLoop&lt;System&gt;,
@@ -141,7 +171,7 @@
         || <span class="macro">matches!</span>(configuration, Configuration::Mixed(<span class="kw">_</span>, <span class="kw">_</span>))
     {
         wifi.connect().unwrap();
-        <span class="macro">info!</span>(<span class="string">"Wifi connected"</span>);
+        <span class="macro">info!</span>(<span class="string">"Wifi connected to external AP"</span>);
         wifi.wait_netif_up().unwrap();
         <span class="macro">info!</span>(<span class="string">"Wifi netif up"</span>);
         <span class="kw">let </span>ip_info = wifi.wifi().sta_netif().get_ip_info().unwrap();
