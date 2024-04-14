@@ -4,8 +4,10 @@ language = "ru"
 multilingual = false
 src = "src"
 
+[preprocessor.autosummary]
 [preprocessor.pagetoc]
 [preprocessor.shiftinclude]
+
 
 [output.html]
 additional-css = ["theme/pagetoc.css"]
@@ -21,3 +23,7 @@ to = "typst"
 [output.pandoc.profile.pdf.variables]
 papersize = "a4"
 section-numbering = "1.1.1"
+
+
+[build]
+create-missing = false
