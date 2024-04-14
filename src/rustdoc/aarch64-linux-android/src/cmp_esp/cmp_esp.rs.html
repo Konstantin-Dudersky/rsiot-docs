@@ -238,8 +238,8 @@
             ssid: <span class="string">"test_esp"</span>.into(),
         }),
         client: <span class="prelude-val">Some</span>(cmp_esp_wifi::ConfigClient {
-            ssid: <span class="string">"internet"</span>.into(),
-            password: <span class="string">"k33n3+Ik"</span>.into(),
+            ssid: <span class="string">"KonstantinAP"</span>.into(),
+            password: <span class="string">"Admin123!"</span>.into(),
             auth_method: cmp_esp_wifi::ConfigAuthMethod::WPA2Personal,
         }),
     };
@@ -247,11 +247,11 @@
     <span class="comment">// GPIO
     </span><span class="kw">let </span>gpio_config = cmp_esp_gpio::Config {
         inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
-            peripherals: peripherals.pins.gpio9.into(),
+            peripherals: peripherals.pins.gpio0.into(),
             fn_output: |value| Message::new_custom(Custom::BootButton(value)),
         }],
         outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
-            peripherals: peripherals.pins.gpio0.into(),
+            peripherals: peripherals.pins.gpio1.into(),
             fn_input: |msg| <span class="kw">match </span>msg.data {
                 MsgData::Custom(Custom::Relay0(value)) =&gt; <span class="prelude-val">Some</span>(value),
                 <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -265,7 +265,7 @@
         adc1: peripherals.adc1,
         adc2: peripherals.adc2,
         inputs: <span class="macro">vec!</span>[cmp_esp_adc::ConfigInput {
-            peripherals: cmp_esp_adc::ConfigInputType::Gpio3(peripherals.pins.gpio3),
+            peripherals: cmp_esp_adc::ConfigInputType::Gpio2(peripherals.pins.gpio2),
             attenuation: cmp_esp_adc::ConfigInputAttenuation::Db11,
             update_period: Duration::from_secs(<span class="number">1</span>),
             fn_output: |value| {
@@ -278,7 +278,7 @@
     <span class="comment">// MQTT
     </span><span class="kw">let </span>config_esp_mqtt_client = cmp_esp_mqtt_client::Config {
         client_id: <span class="string">"cmp_esp_example"</span>.into(),
-        host: <span class="string">"192.168.101.123"</span>.into(),
+        host: <span class="string">"195.43.142.106"</span>.into(),
         port: <span class="number">1883</span>,
         fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>.into_bytes())),
         fn_output: |payload: <span class="kw-2">&amp;</span>[u8]| {
