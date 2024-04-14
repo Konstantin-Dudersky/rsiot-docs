@@ -3,6 +3,7 @@
 [Начало](README.md)
 
 - [Компоненты](./components/components.md)
+  - [cmp_auth](./components/cmp_auth.md)
   - [cmp_plc]()
 - [Подготовка среды разработки](./dev_prepare/dev_prepare.md)
   - [По платформам](./dev_prepare/targets/mod.md)
