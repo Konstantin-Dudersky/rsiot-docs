@@ -4,7 +4,12 @@ language = "ru"
 multilingual = false
 src = "src"
 
+[preprocessor.pagetoc]
+[preprocessor.shiftinclude]
+
 [output.html]
+additional-css = ["theme/pagetoc.css"]
+additional-js = ["theme/pagetoc.js"]
 
 [output.pandoc]
 optional = true

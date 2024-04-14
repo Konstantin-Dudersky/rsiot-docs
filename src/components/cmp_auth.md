@@ -23,3 +23,9 @@
 #### store
 
 Хранилище данных доступа
+
+**Примеры**
+
+```rust
+{{#shiftinclude auto:../src-rsiot/components/cmp_auth/config.rs:store_local}}
+```

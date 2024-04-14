@@ -3,7 +3,7 @@
 ## Установить зависимостей
 
 ```bash
-cargo install mdbook
+cargo install mdbook mdbook-shiftinclude mdbook-pagetoc
 
 # скачать pandoc, в репозитории старая версия - https://github.com/jgm/pandoc/releases/latest
 sudo dpkg -i
