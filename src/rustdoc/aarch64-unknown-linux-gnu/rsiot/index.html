@@ -1,16 +1,8 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компоненты для построения системы сбора, обработки и визуализации данных"><title>rsiot - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../static.files/storage-4c98445ec4002617.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-48f368f3872407c8.js"></script><script defer src="../static.files/scrape-examples-ef1e698c1d417c0c.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../rsiot/index.html">rsiot</a><span class="version">0.0.80</span></h2></div><div class="sidebar-elems"><ul class="block">
             <li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li></ul></section></div></nav><div class="sidebar-resizer"></div>
-    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">rsiot</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/rsiot/lib.rs.html#1-169">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компоненты для построения системы сбора, обработки и визуализации данных</p>
+    <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../rsiot/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">rsiot</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/rsiot/lib.rs.html#1-84">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компоненты для построения системы сбора, обработки и визуализации данных</p>
 <p><a href="https://konstantin-dudersky.github.io/rsiot-docs/">Документация</a></p>
-<p>Поддерживаемые архитектуры (<a href="https://doc.rust-lang.org/rustc/platform-support.html">подробнее</a>):</p>
-<ul>
-<li>x86_64-unknown-linux-gnu - 64-bit Linux - использование в бекенд (target_arch = “x86_64”)</li>
-<li>aarch64-unknown-linux-gnu - ARM64 Linux - использование в бекенд (target_arch = “aarch64”)</li>
-<li>wasm32-unknown-unknown - WebAssembly - для создания веб-интерфейсов (target_arch = “wasm32”)</li>
-<li>riscv32imc-esp-espidf - RISC-V ESP-IDF - микроконтроллеры ESP32 на базе процессора RISC-V
-(target_arch = “riscv32”)</li>
-</ul>
-<h3 id="Зачем-это-надо"><a class="doc-anchor" href="#Зачем-это-надо">§</a>Зачем это надо</h3><h3 id="Обзор"><a class="doc-anchor" href="#Обзор">§</a>Обзор</h3><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<h3 id="Обзор"><a class="doc-anchor" href="#Обзор">§</a>Обзор</h3><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <p><svg
    version="1.1"
@@ -76,42 +68,6 @@ bleed=“0” /&gt;
 </g>
 </svg>
 <img src="./rsiot/doc/%D0%9D%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%86%D0%B8%D1%8F-2024-01-03-10-46.svg" alt="" /></p>
-<h3 id="Компоненты"><a class="doc-anchor" href="#Компоненты">§</a>Компоненты</h3><h5 id="Взаимодействие-с-устройствами-нижнего-уровня"><a class="doc-anchor" href="#Взаимодействие-с-устройствами-нижнего-уровня">§</a>Взаимодействие с устройствами нижнего уровня</h5>
-<p><a href="https://docs.rs/rsiot-modbus-client/latest/rsiot_modbus_client/cmp_modbus_client"><strong>modbus-client</strong></a></p>
-<p>Взаимодейтсвие с устройствами, поддерживающими протокол Modbus TCP сервер / Modbus RTU slave.</p>
-<p><a href="https://docs.rs/rsiot-http-client/latest/rsiot_http_client/cmp_http_client"><strong>http-client</strong></a></p>
-<p>Взаимодействие с устройствами, имеющими HTTP API.</p>
-<p><a href="https://docs.rs/rsiot-websocket-client/latest/rsiot_websocket_client/cmp_websocket_client"><strong>websocket-client</strong></a></p>
-<p>Взаимодействие с устройствами, поддерживющими функциональность Websocket сервера.</p>
-<p>TODO <strong>opcua-client</strong></p>
-<p>Взаимодействие с контроллерами, имеющими функциональность OPC UA сервера.</p>
-<p>TODO <strong>s7-client</strong></p>
-<p>Взаимодействие с контроллерами Siemens по протоколу S7.</p>
-<p><a href="https://docs.rs/rsiot-esp/latest/rsiot_esp"><strong>esp</strong></a></p>
-<p>Компоненты для взаимодействия с HAL (hardware access level) микроконтроллера ESP32.</p>
-<h5 id="Взаимодействие-с-системами-верхнего-уровня"><a class="doc-anchor" href="#Взаимодействие-с-системами-верхнего-уровня">§</a>Взаимодействие с системами верхнего уровня</h5>
-<p><a href="https://docs.rs/rsiot-http-server/latest/rsiot_http_server/cmp_http_server"><strong>http-server</strong></a></p>
-<p>Поддержка HTTP API, через который внешние клиенты могут получать и вводить данные.</p>
-<p><a href="https://docs.rs/rsiot-websocket-server/latest/rsiot_websocket_server/cmp_websocket_server"><strong>websocket-server</strong></a></p>
-<p>Поддержка Websocket сервера, к которому могут подключаться внешние клиенты.</p>
-<p>TODO <strong>telegram</strong></p>
-<h5 id="Брокеры-сообщений"><a class="doc-anchor" href="#Брокеры-сообщений">§</a>Брокеры сообщений</h5>
-<p><a href="https://docs.rs/rsiot-redis-client/latest/rsiot_redis_client/cmp_redis_client"><strong>redis-client</strong></a></p>
-<p>Подписка и публикация сообщения в Redis.</p>
-<p>TODO <strong>mqtt</strong></p>
-<h5 id="Сохранение-данных-в-БД"><a class="doc-anchor" href="#Сохранение-данных-в-БД">§</a>Сохранение данных в БД</h5>
-<p><a href="https://docs.rs/rsiot-timescaledb-storing/latest/rsiot_timescaledb_storing/cmp_timescaledb_storing"><strong>timescaledb-storing</strong></a></p>
-<p>Сохрание сообщений в виде временных рядов в TimescaleDB.</p>
-<h5 id="Интерфейсы-пользователя"><a class="doc-anchor" href="#Интерфейсы-пользователя">§</a>Интерфейсы пользователя</h5>
-<p><a href="https://docs.rs/rsiot-leptos/latest"><strong>leptos</strong></a></p>
-<p>Веб-интерфейс. Используется фреймворк leptos.</p>
-<h5 id="Вспомогательные-крейты"><a class="doc-anchor" href="#Вспомогательные-крейты">§</a>Вспомогательные крейты</h5>
-<p><a href="https://docs.rs/rsiot-plc/latest"><strong>plc</strong></a></p>
-<p>Выполнение произвольной логики в “стиле PLC”.</p>
-<p><a href="https://docs.rs/rsiot-env-vars/latest"><strong>env-vars</strong></a></p>
-<p>Чтение конфигурации из файла <code>.env</code>.</p>
-<p><a href="https://docs.rs/rsiot-logging/latest"><strong>logging</strong></a></p>
-<p>Настройка логгирования</p>
 <h3 id="Описание"><a class="doc-anchor" href="#Описание">§</a>Описание</h3>
 <p><strong>Компоненты</strong> представляют собой асинхронные функции. У всех функций три аргумента:</p>
 
@@ -151,7 +107,6 @@ bleed=“0” /&gt;
 <p>Трейт <code>IMessage</code> реализует основные методы - см. документацию по крейту
 <a href="https://docs.rs/rsiot-messages-core/latest">rsiot-messages-core</a></p>
 <p>Для упрощения компоненты можно создавать и объединять в <strong>цепочку компонентов</strong>.</p>
-<p>TODO - компонент для симуляции</p>
 <ul>
 <li>может генерировать сообщения как на основе входных сообщений</li>
 <li>может генерировать сообщения периодически</li>
@@ -181,7 +136,6 @@ bleed=“0” /&gt;
 <li><strong><code>cmp_websocket_client</code></strong> —  Компонент websocket клиента</li>
 <li><strong><code>cmp_websocket_client_wasm</code></strong> —  Компонент websocket клиента</li>
 <li><strong><code>cmp_websocket_server</code></strong> —  Компонент websocket сервера</li>
-<li><strong><code>cmp_webstorage</code></strong> —  Хранение и загрузка сообщений используя Web Storage API браузера
-TODO Написать про роутинг сообщений</li>
+<li><strong><code>cmp_webstorage</code></strong> —  Хранение и загрузка сообщений используя Web Storage API браузера</li>
 </ul>
 </div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="components/index.html" title="mod rsiot::components">components</a></div><div class="desc docblock-short">Компоненты</div></li><li><div class="item-name"><a class="mod" href="components_config/index.html" title="mod rsiot::components_config">components_config</a><span title="Restricted Visibility">&nbsp;🔒</span> </div><div class="desc docblock-short">Структуры для конфигурации компонентов.</div></li><li><div class="item-name"><a class="mod" href="env_vars/index.html" title="mod rsiot::env_vars">env_vars</a></div><div class="desc docblock-short">Загрузка переменных среды из ОС и из файла .env</div></li><li><div class="item-name"><a class="mod" href="executor/index.html" title="mod rsiot::executor">executor</a></div><div class="desc docblock-short">Исполнитель - структура для запуска компонентов</div></li><li><div class="item-name"><a class="mod" href="logging/index.html" title="mod rsiot::logging">logging</a></div><div class="desc docblock-short">Настройки логгирования для разных платформ.</div></li><li><div class="item-name"><a class="mod" href="message/index.html" title="mod rsiot::message">message</a></div><div class="desc docblock-short">Представление сообщений в системе.</div></li></ul></section></div></main></body></html>

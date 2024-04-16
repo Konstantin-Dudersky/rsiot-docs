@@ -77,17 +77,21 @@
 <a href="#75" id="75">75</a>
 <a href="#76" id="76">76</a>
 <a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::gpio::{AnyInputPin, AnyOutputPin};
 
 <span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
-<span class="kw">pub struct </span>Config&lt;TMsg&gt;
+<span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_auth.html#config
+</span><span class="kw">pub struct </span>Config&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="kw">pub </span>inputs: Vec&lt;ConfigGpioInput&lt;TMsg&gt;&gt;,
-
-    <span class="kw">pub </span>outputs: Vec&lt;ConfigGpioOutput&lt;TMsg&gt;&gt;,
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_esp_gpio.html#inputs
+    </span><span class="kw">pub </span>inputs: Vec&lt;ConfigGpioInput&lt;TMsg&gt;&gt;,
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_esp_gpio.html#outputs
+    </span><span class="kw">pub </span>outputs: Vec&lt;ConfigGpioOutput&lt;TMsg&gt;&gt;,
 }
 
 <span class="doccomment">/// Конфигурация одного входа
