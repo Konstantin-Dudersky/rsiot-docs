@@ -18,4 +18,14 @@ layout {
             start_suspended true
         }
     }
+
+    tab name="chromium" cwd="." {
+        pane {
+            command "chromium"
+            args "http://localhost:3000"
+            cwd "."
+            name "chromium"
+            start_suspended true
+        }
+    }
 }

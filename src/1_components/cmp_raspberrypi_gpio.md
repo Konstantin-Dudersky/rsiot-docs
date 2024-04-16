@@ -25,4 +25,20 @@
 
 #### inputs
 
+Обработка входов
+
+**Примеры**
+
+- Чтение входа с 4 пина
+
+{{#shiftinclude auto:../src-rsiot/components/cmp_raspberrypi_gpio/config.rs:inputs}}
+
 #### outputs
+
+Обработка выходов
+
+**Примеры**
+
+- Управление вторым выходом
+
+{{#shiftinclude auto:../src-rsiot/components/cmp_raspberrypi_gpio/config.rs:outputs}}
