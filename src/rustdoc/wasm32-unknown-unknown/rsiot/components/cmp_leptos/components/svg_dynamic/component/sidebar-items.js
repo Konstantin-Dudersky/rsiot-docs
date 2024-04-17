@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["SvgDynamic","change_svg_element_prop"],"struct":["SvgDynamicProps"]};
+window.SIDEBAR_ITEMS = {"fn":["SvgDynamic","change_svg_element"],"struct":["SvgDynamicProps"]};

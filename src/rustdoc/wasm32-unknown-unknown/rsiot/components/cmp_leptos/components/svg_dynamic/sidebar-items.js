@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["SvgInputSignal"],"fn":["SvgDynamic"],"mod":["component","svg_input"],"struct":["SvgInput"]};
+window.SIDEBAR_ITEMS = {"fn":["SvgDynamic"],"mod":["component","svg_input"],"struct":["SvgInput"]};

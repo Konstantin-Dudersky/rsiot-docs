@@ -31,7 +31,9 @@
 
 - Чтение входа с 4 пина
 
+```rust
 {{#shiftinclude auto:../src-rsiot/components/cmp_raspberrypi_gpio/config.rs:inputs}}
+```
 
 #### outputs
 
@@ -41,4 +43,6 @@
 
 - Управление вторым выходом
 
+```rust
 {{#shiftinclude auto:../src-rsiot/components/cmp_raspberrypi_gpio/config.rs:outputs}}
+```
