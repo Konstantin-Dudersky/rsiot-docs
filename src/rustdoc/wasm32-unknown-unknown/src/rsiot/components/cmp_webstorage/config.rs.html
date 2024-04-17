@@ -17,23 +17,69 @@
 <a href="#17" id="17">17</a>
 <a href="#18" id="18">18</a>
 <a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
+<a href="#42" id="42">42</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::<span class="kw-2">*</span>;
 
-<span class="kw">pub struct </span>Config&lt;TMsg&gt;
+<span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#Config
+</span><span class="kw">pub struct </span>Config&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="doccomment">/// Вид хранилища - localStorage или sessionStorage
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#kind
     </span><span class="kw">pub </span>kind: ConfigKind,
 
-    <span class="kw">pub </span>fn_input: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Message&lt;TMsg&gt;&gt;,
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#fn_input
+    </span><span class="kw">pub </span>fn_input: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Message&lt;TMsg&gt;&gt;,
 
-    <span class="kw">pub </span>fn_output: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Message&lt;TMsg&gt;&gt;,
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#fn_output
+    </span><span class="kw">pub </span>fn_output: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Message&lt;TMsg&gt;&gt;,
 }
 
-<span class="doccomment">/// Вид хранилища
+<span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#ConfigKind
 </span><span class="kw">pub enum </span>ConfigKind {
-    LocalStorage,
-    SessionStorage,
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#LocalStorage
+    </span>LocalStorage,
+    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_webstorage.html#SessionStorage
+    </span>SessionStorage,
+}
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use crate</span>::{components::cmp_webstorage, message::example_message::<span class="kw-2">*</span>};
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>fn_input() {
+        cmp_webstorage::Config::&lt;Custom&gt; {
+            kind: cmp_webstorage::ConfigKind::SessionStorage,
+            <span class="comment">// ANCHOR: fn_input_save_all
+            </span>fn_input: <span class="prelude-val">Some</span>,
+            <span class="comment">// ANCHOR_END: fn_input_save_all
+            // ANCHOR: fn_output_not_load
+            </span>fn_output: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
+            <span class="comment">// ANCHOR_END: fn_output_not_load
+        </span>};
+    }
 }
 </code></pre></div></section></main></body></html>

@@ -17,14 +17,14 @@
 <a href="#17" id="17">17</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для интеграции веб-приложения на основе фреймворка Leptos
 
-</span><span class="kw">mod </span>cmp_leptos;
+</span><span class="kw">mod </span>component;
 <span class="kw">pub mod </span>components;
 <span class="kw">pub mod </span>create_signal_from_msg;
 <span class="kw">mod </span>error;
 <span class="kw">mod </span>global_state;
 <span class="kw">pub mod </span>utils;
 
-<span class="kw">pub use </span>cmp_leptos::{Cmp, Config};
+<span class="kw">pub use </span>component::{Cmp, Config};
 <span class="kw">pub use </span>error::Error;
 <span class="kw">pub use </span>global_state::GlobalState;
 <span class="kw">pub use </span>rsiot_macros::create_signal_from_msg;
