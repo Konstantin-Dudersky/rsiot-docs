@@ -30,7 +30,11 @@ npx tailwindcss init
 ```json
 module.exports = {
   content: {
-    files: ["*.html", "./src/**/*.rs"],
+    files:  [
+      "*.html",
+    "./src/**/*.rs",
+    "../../rsiot/src/components/cmp_leptos/components/tailwind/**/*.rs"
+    ],
   },
   plugins: [require('@tailwindcss/forms'),],
 }
