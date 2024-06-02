@@ -28,6 +28,8 @@ npx tailwindcss init
 **`tailwind.config.js`**
 
 ```json
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: {
     files:  [
