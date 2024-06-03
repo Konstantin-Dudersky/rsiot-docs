@@ -94,7 +94,7 @@ npx rollup -p @rollup/plugin-node-resolve input.js -o ./target/output.js
 ```toml
 # Сборка MWC
 [[hooks]]
-stage = "post_build"
+stage = "pre_build"
 command = "npx"
 command_arguments = [
     "rollup",
@@ -215,18 +215,48 @@ module.exports = {
 
 </details>
 
+### Material Theme
+
 Создаем тему в [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/).
-Скачиваем css, вставляем в файл `input.css`:
+Скачиваем набор файлов css, распаковываем в папку `material-theme`. В начале файла `input.css` прописываем:
 
 ```css
-@layer base {
-  :root {
-    --md-sys-color-primary: rgb(170 199 255);
-    --md-sys-color-surface-tint: rgb(170 199 255);
-    ...;
-  }
+/* Material theme */
+@import "./material-theme/dark.css";
+@import "./material-theme/dark-hc.css";
+@import "./material-theme/dark-mc.css";
+@import "./material-theme/light.css";
+@import "./material-theme/light-hc.css";
+@import "./material-theme/light-mc.css";
+```
+
+Для выбора темы применяем класс к элементу `html.body`:
+
+```html
+<body class="dark"></body>
+```
+
+Допустимые классы:
+
+- dark-high-contrast
+- dark-medium-contrast
+- dark
+- light-high-contrast
+- light-medium-contrast
+- light
+
+### Material font
+
+Добавить в файл `input.css`:
+
+```css
+:root {
+  --md-ref-typeface-brand: "Roboto";
+  --md-ref-typeface-plain: system-ui;
 }
 ```
+
+Material theme builder почему-то не экспортирует настройки шрифтов. Когда пофиксят - пересмотреть.
 
 ### Material Symbols
 
