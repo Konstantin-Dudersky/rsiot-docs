@@ -52,3 +52,31 @@ $env.NDK_HOME = $"($env.ANDROID_HOME)/ndk/26.2.11394342"
 ```
 
 Проверить пути
+
+## Rustiwind
+
+Для сортировки классов Tailwind можно поставить утилиту:
+
+```bash
+cargo install rustywind
+```
+
+Вызов:
+
+```bash
+rustywind --write src/
+```
+
+## Leptosfmt
+
+Установка
+
+```bash
+cargo install leptosfmt
+```
+
+В файле `settings.json`:
+
+```json
+  "rust-analyzer.rustfmt.overrideCommand": ["leptosfmt", "--stdin", "--rustfmt"]
+```

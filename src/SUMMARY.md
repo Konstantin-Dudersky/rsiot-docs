@@ -50,7 +50,6 @@
     - [wasm32-unknown-unknown](2_dev_prepare/targets/wasm32-unknown-unknown.md)
     - [x86_64-linux-android](2_dev_prepare/targets/x86_64-linux-android.md)
 - [Создание проекта](3_create_project/index.md)
-  - [Tauri](3_create_project/tauri.md)
   - [По компонентам](3_create_project/components/index.md)
     - [cmp_leptos](3_create_project/components/cmp_leptos.md)
   - [По платформам](3_create_project/targets/index.md)

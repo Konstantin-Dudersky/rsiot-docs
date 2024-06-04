@@ -78,9 +78,8 @@ npm install rollup @rollup/plugin-node-resolve
 Создать файл `input.js` и прописывать все подключаемые [компоненты](https://material-web.dev):
 
 ```js
-import "@material/web/icon/icon";
-
-import "@material/web/button/filled-button.js";
+/// В релизе лучше импортировать только необходимые компоненты
+import "@material/web/all";
 ```
 
 Для сборки можно вызывать команду:
@@ -291,18 +290,4 @@ npm install material-symbols@latest
   rel="copy-file"
   href="./node_modules/material-symbols/material-symbols-sharp.woff2"
 />
-```
-
-### Rustiwind
-
-Для сортировки классов Tailwind можно поставить утилиту:
-
-```bash
-cargo install rustywind
-```
-
-Вызов:
-
-```bash
-rustywind --write src/
 ```
