@@ -2,6 +2,8 @@
 
 Хранение и загрузка сообщений используя LocalStorage или SessionStorage браузера. Подробнее на [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
 
+Используется модуль `storage` библиотеки [`gloo`](https://docs.rs/gloo/latest/gloo/storage/index.html).
+
 ## Платформы
 
 | Платформа                 | Поддержка |
