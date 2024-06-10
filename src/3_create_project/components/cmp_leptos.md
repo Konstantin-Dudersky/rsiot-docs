@@ -57,7 +57,7 @@ module.exports = {
 ```html
 <html>
   <head>
-    <!-- Подключаем стили, которые компилирует Tailwind -->
+    <!-- Подключаем стили Tailwind -->
     <link data-trunk rel="tailwind-css" href="input.css" />
   </head>
 </html>
@@ -113,6 +113,7 @@ command_arguments = [
     <!-- Подключаем Material Web Components -->
     <link data-trunk rel="copy-file" href="./target/output.js" />
     <script src="./output.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 </html>
 ```
