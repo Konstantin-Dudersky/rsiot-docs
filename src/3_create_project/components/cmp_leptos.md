@@ -37,7 +37,7 @@ module.exports = {
     files:  [
       "*.html",
     "./src/**/*.rs",
-    "../../rsiot/src/components/cmp_leptos/components/tailwind/**/*.rs"
+    "../../rsiot/src/components/cmp_leptos/components/**/*.rs"
     ],
   },
   plugins: [require('@tailwindcss/forms'),],
