@@ -24,3 +24,10 @@ mdbook serve
 ## Публикация
 
 Доступно по адресу https://konstantin-dudersky.github.io/rsiot-docs/
+
+
+## Typst
+
+```nushell
+typst compile --font-path /home/konstantin/projects/ust-fermenter/doc/tech_spec/fonts/ main.typ
+```
