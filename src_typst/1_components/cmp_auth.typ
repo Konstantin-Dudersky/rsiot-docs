@@ -17,18 +17,21 @@
 
 === Конфигурация
 
-==== Config
+==== `Config`
 
-===== secret_key
+#table(
+  columns: (auto, auto, 1fr),
+  [`secret_key`],
+  [String],
+  [Секретный ключ для валидации токенов],
 
-Секретный ключ для валидации токенов
+  [`store`],
+  [],
+  [Хранилище данных доступа],
 
-===== store
+  table.cell(colspan: 3)[
+    Локальное сохранение:
 
-Хранилище данных доступа
-
-**Примеры**
-
-```rust
-{{#shiftinclude auto:../src-rsiot/components/cmp_auth/config.rs:store_local}}
-```
+    #raw(read("/rsiot/components/cmp_auth/config/store_local.rs"), lang: "rust")
+  ]
+)

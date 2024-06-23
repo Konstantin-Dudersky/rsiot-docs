@@ -64,3 +64,6 @@
 #include "cmp_add_input_stream.typ"
 #include "cmp_add_output_stream.typ"
 #include "cmp_auth.typ"
+#include "cmp_derive.typ"
+#include "cmp_esp_adc.typ"
+#include "cmp_esp_gpio.typ"
