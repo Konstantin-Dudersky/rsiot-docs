@@ -29,5 +29,5 @@ mdbook serve
 ## Typst
 
 ```nushell
-typst compile --font-path /home/konstantin/projects/rsiot-docs/fonts src/main.typ rsiot-docs.pdf
+typst compile --font-path ./fonts src/main.typ rsiot-docs.pdf
 ```

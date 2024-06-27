@@ -8,24 +8,26 @@ layout {
             plugin location="zellij:status-bar"
         }
     }
-    
-    tab name="mdbook serve" cwd="." {
+
+    tab name="typst compile" cwd="." {
         pane {
-            command "mdbook"
-            args "serve"
+            command "typst"
+            args "compile" "--font-path" "./fonts" "src/main.typ" "rsiot-docs.pdf"
             cwd "."
-            name "mdbook serve"
+            name "typst compile"
             start_suspended true
         }
     }
 
-    tab name="chromium" cwd="." {
+    tab name="show pdf" cwd="." {
         pane {
-            command "chromium"
-            args "http://localhost:3000"
+            command "okular"
+            args "rsiot-docs.pdf"
             cwd "."
-            name "chromium"
+            name "okular"
             start_suspended true
         }
     }
+
+
 }
