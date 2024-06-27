@@ -1,0 +1,38 @@
+services:
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: grafana/grafana:10.2.3 # https://hub.docker.com/r/grafana/grafana/tags
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+        # настройки источника - TimescaleDB
+      - TIMESCALEDB_HOST=timescaledb
+      - TIMESCALEDB_PORT=5432
+      - TIMESCALEDB_DB_DATA=db_data
+        # настройки источника - логгер loki
+      - LOKI_HOST=loki
+      - LOKI_PORT=3100
+        # настройки источника - InfluxDB
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_ORG=org
+      - INFLUXDB_BUCKET=bucket
+      - INFLUXDB_TOKEN=token
+    ports:
+      - "3000:3000"
+    profiles:
+      - dev
+      - target
+    volumes:
+      - ./config_services/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./config_services/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - network_internal
+
+networks:
+  network_internal:

@@ -29,5 +29,13 @@ layout {
         }
     }
 
-
+    tab name="extract docs" cwd="." {
+        pane {
+            command "nu"
+            args "scripts/extract-docs.nu"
+            cwd "."
+            name "extract docs"
+            start_suspended true
+        }
+    }
 }
