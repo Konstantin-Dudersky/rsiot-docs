@@ -94,5 +94,5 @@ embuild = { version = "*", features = ["espidf"] }
 Первой строкой в функции main():
 
 ```rust
-esp_idf_svc::sys::link_patches()
+esp_idf_svc::sys::link_patches();
 ```
