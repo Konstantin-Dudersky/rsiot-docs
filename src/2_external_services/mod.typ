@@ -10,5 +10,8 @@
 #include "loki.typ"
 #include "portainer.typ"
 #include "redis.typ"
-
+#include "rust.typ"
 #include "sentryshot.typ"
+#include "surrealdb.typ"
+#include "systemd.typ"
+#include "timescaledb.typ"
