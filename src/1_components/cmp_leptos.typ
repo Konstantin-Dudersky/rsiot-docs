@@ -161,48 +161,30 @@ module.exports = {
         "primary-fixed": "var(--md-sys-color-primary-fixed)",
         "on-primary-fixed": "var(--md-sys-color-on-primary-fixed)",
         "primary-fixed-dim": "var(--md-sys-color-primary-fixed-dim)",
-        "on-primary-fixed-variant":
-          "var(--md-sys-color-on-primary-fixed-variant)",
+        "on-primary-fixed-variant": "var(--md-sys-color-on-primary-fixed-variant)",
         "secondary-fixed": "var(--md-sys-color-secondary-fixed)",
         "on-secondary-fixed": "var(--md-sys-color-on-secondary-fixed)",
         "secondary-fixed-dim": "var(--md-sys-color-secondary-fixed-dim)",
-        "on-secondary-fixed-variant":
-          "var(--md-sys-color-on-secondary-fixed-variant)",
+        "on-secondary-fixed-variant": "var(--md-sys-color-on-secondary-fixed-variant)",
         "tertiary-fixed": "var(--md-sys-color-tertiary-fixed)",
         "on-tertiary-fixed": "var(--md-sys-color-on-tertiary-fixed)",
         "tertiary-fixed-dim": "var(--md-sys-color-tertiary-fixed-dim)",
-        "on-tertiary-fixed-variant":
-          "var(--md-sys-color-on-tertiary-fixed-variant)",
+        "on-tertiary-fixed-variant": "var(--md-sys-color-on-tertiary-fixed-variant)",
         "surface-dim": "var(--md-sys-color-surface-dim)",
         "surface-bright": "var(--md-sys-color-surface-bright)",
-        "surface-container-lowest":
-          "var(--md-sys-color-surface-container-lowest)",
+        "surface-container-lowest": "var(--md-sys-color-surface-container-lowest)",
         "surface-container-low": "var(--md-sys-color-surface-container-low)",
         "surface-container": "var(--md-sys-color-surface-container)",
         "surface-container-high": "var(--md-sys-color-surface-container-high)",
-        "surface-container-highest":
-          "var(--md-sys-color-surface-container-highest)",
-        "custom-color1-color": "var(--md-extended-color-custom-color1-color)",
-        "custom-color1-on-color":
-          "var(--md-extended-color-custom-color1-on-color)",
-        "custom-color1-color-container":
-          "var(--md-extended-color-custom-color1-color-container)",
-        "custom-color1-on-color-container":
-          "var(--md-extended-color-custom-color1-on-color-container)",
-        "custom-color2-color": "var(--md-extended-color-custom-color2-color)",
-        "custom-color2-on-color":
-          "var(--md-extended-color-custom-color2-on-color)",
-        "custom-color2-color-container":
-          "var(--md-extended-color-custom-color2-color-container)",
-        "custom-color2-on-color-container":
-          "var(--md-extended-color-custom-color2-on-color-container)",
-        "custom-color3-color": "var(--md-extended-color-custom-color3-color)",
-        "custom-color3-on-color":
-          "var(--md-extended-color-custom-color3-on-color)",
-        "custom-color3-color-container":
-          "var(--md-extended-color-custom-color3-color-container)",
-        "color3-on-color-container":
-          "var(--md-extended-color-custom-color3-on-color-container)",
+        "surface-container-highest": "var(--md-sys-color-surface-container-highest)",
+        "green-color": "var(--md-extended-color-green-color)",
+        "green-on-color": "var(--md-extended-color-green-on-color)",
+        "green-color-container": "var(--md-extended-color-green-color-container)",
+        "green-on-color-container": "var (--md-extended-color-green-on-color-container)",
+        "yellow-color": "var(--md-extended-color-yellow-color)",
+        "yellow-on-color": "var(--md-extended-color-yellow-on-color)",
+        "yellow-color-container": "var(--md-extended-color-yellow-color-container)",
+        "yellow-on-color-container": "var(--md-extended-color-yellow-on-color-container)",
       },
     },
   },
@@ -242,4 +224,22 @@ Material theme builder почему-то не экспортирует наст�
 ```bash
 npm i -D @iconify/tailwind
 npm i -D @iconify/json
+```
+
+Добавить в файл `tailwind.config.js`:
+
+```json
+const { addIconSelectors } = require("@iconify/tailwind");
+
+module.exports = {
+  plugins: [addIconSelectors(["mdi", "material-symbols"])],
+}
+```
+
+Добавить в параметры `addIconSelectors` семейства иконок.
+
+Далее в проекте иконки можно вставлять:
+
+```html
+<span class="iconify material-symbols--menu-rounded h-5 w-5"></span>
 ```
