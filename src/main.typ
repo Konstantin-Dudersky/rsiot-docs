@@ -11,4 +11,5 @@
 #outline()
 
 #include "1_components/mod.typ"
+#include "2_executor/mod.typ"
 #include "6_external_services/mod.typ"
