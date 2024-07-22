@@ -12,6 +12,25 @@ cargo new project_name
 }
 ```
 
+** `.zed/settings.json` **
+
+```json
+{
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy"
+        },
+        "cargo": {
+          "target": "riscv32imc-esp-espidf"
+        }
+      }
+    }
+  }
+}
+```
+
 **`.cargo/config.toml`**
 
 ```toml
@@ -36,7 +55,7 @@ MCU = "esp32c3"
 # install all libraries globally, in folder ~/.espressif
 ESP_IDF_TOOLS_INSTALL_DIR = "global"
 # check current version on https://docs.espressif.com/projects/esp-idf/en/latest/esp32/index.html
-ESP_IDF_VERSION = "v5.2.1"
+ESP_IDF_VERSION = "v5.2.2"
 ```
 
 **`build.rs`**
@@ -73,13 +92,9 @@ CONFIG_HTTPD_WS_SUPPORT=y
 
 # Настройка логгирования
 CONFIG_LOG_DEFAULT_LEVEL_VERBOSE=y
-CONFIG_LOG_DEFAULT_LEVEL=5
-CONFIG_LOG_MAXIMUM_EQUALS_DEFAULT=y
-CONFIG_LOG_MAXIMUM_LEVEL=5
-CONFIG_LOG_COLORS=y
 ```
 
-**`Config.toml`**
+**`Cargo.toml`**
 
 ```toml
 [dependencies]
