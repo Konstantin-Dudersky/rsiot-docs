@@ -46,10 +46,29 @@
 }
 ```
 
+==== `.zed/settings.json`
+
+```json
+{
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy"
+        },
+        "cargo": {
+          "target": "wasm32-unknown-unknown"
+        }
+      }
+    }
+  }
+}
+```
+
 ==== Tauri
 
 ```bash
-cargo create-tauri-app --beta
+cargo create-tauri-app --rc
 
 # добавить поддержку Android
 cargo tauri android init
