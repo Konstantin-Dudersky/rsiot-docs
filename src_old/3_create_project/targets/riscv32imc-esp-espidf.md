@@ -54,8 +54,8 @@ build-std = ["std", "panic_abort"]
 MCU = "esp32c3"
 # install all libraries globally, in folder ~/.espressif
 ESP_IDF_TOOLS_INSTALL_DIR = "global"
-# check current version on https://docs.espressif.com/projects/esp-idf/en/latest/esp32/index.html
-ESP_IDF_VERSION = "v5.2.2"
+# check current version on https://github.com/espressif/esp-idf/releases
+ESP_IDF_VERSION = "v5.3"
 ```
 
 **`build.rs`**
