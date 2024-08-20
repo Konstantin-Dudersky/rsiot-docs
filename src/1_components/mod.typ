@@ -78,4 +78,5 @@
 #include "cmp_influxdb.typ"
 #include "cmp_inject_periodic.typ"
 #include "cmp_leptos.typ"
+#include "cmp_plc.typ"
 #include "cmp_telegram.typ"

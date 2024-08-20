@@ -4,5 +4,5 @@
 
 #raw(
   lang: "rust",
-  read("/rsiot/executor/component_executor/wasm_leptos.rs")
+  read("/rsiot-src/executor/component_executor/wasm_leptos.rs")
 )

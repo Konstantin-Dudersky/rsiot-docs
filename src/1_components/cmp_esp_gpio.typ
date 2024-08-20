@@ -23,13 +23,13 @@
     [Конфигурация входов],
 
     table.cell(colspan: 3)[
-      #raw(read("/rsiot/components/cmp_esp_gpio/config/inputs.rs"), lang: "rust")
+      #raw(read("/rsiot-src/components/cmp_esp_gpio/config/inputs.rs"), lang: "rust")
     ],
 
     [`outputs`],
     [],
     [Конфигурация выходов],
     table.cell(colspan: 3)[
-      #raw(read("/rsiot/components/cmp_esp_gpio/config/outputs.rs"), lang: "rust")
+      #raw(read("/rsiot-src/components/cmp_esp_gpio/config/outputs.rs"), lang: "rust")
     ],
 )

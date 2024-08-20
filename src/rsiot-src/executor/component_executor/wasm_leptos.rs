@@ -8,6 +8,10 @@
                 view! {}
             }
 
+            console_error_panic_hook::set_once();
+
+            configure_logging("info").unwrap();
+
             // cmp_leptos --------------------------------------------------------------------------
             let config_leptos = cmp_leptos::Config {
                 body_component: || view! { <App/> },
@@ -17,12 +21,11 @@
             // config_executor ---------------------------------------------------------------------
             let config_executor = ComponentExecutorConfig {
                 buffer_size: 100,
-                executor_name: "example_leptos".into(),
+                service: Services::frontend,
                 fn_auth: |msg, _| Some(msg),
             };
 
             // executor ----------------------------------------------------------------------------
-
             let context = LocalSet::new();
             context.spawn_local(async move {
                 ComponentExecutor::<Custom>::new(config_executor)

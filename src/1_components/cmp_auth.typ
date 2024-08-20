@@ -32,6 +32,6 @@
   table.cell(colspan: 3)[
     Локальное сохранение:
 
-    #raw(read("/rsiot/components/cmp_auth/config/store_local.rs"), lang: "rust")
+    #raw(read("/rsiot-src/components/cmp_auth/config/store_local.rs"), lang: "rust")
   ]
 )
