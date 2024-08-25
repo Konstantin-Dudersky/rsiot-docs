@@ -1,1 +1,1 @@
-fn_output: |_| None,
+fn_output: |_| Ok(None),

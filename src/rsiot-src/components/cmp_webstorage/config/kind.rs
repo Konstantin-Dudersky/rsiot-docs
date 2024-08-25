@@ -1,0 +1,1 @@
+kind: cmp_webstorage::ConfigKind::SessionStorage,

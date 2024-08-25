@@ -80,3 +80,4 @@
 #include "cmp_leptos.typ"
 #include "cmp_plc.typ"
 #include "cmp_telegram.typ"
+#include "cmp_webstorage.typ"
