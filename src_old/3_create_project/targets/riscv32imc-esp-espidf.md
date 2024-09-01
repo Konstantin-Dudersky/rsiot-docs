@@ -70,7 +70,7 @@ fn main() {
 
 ```toml
 [toolchain]
-channel = "nightly-2024-02-01"
+channel = "nightly"
 components = ["rust-src"]
 ```
 
