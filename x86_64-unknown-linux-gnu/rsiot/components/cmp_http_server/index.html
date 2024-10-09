@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент для получения данных через HTTP server."><title>rsiot::components::cmp_http_server - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.82</span></h2></div><h2 class="location"><a href="#">Module cmp_http_server</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#types">Type Aliases</a></li></ul></section><h2><a href="../index.html">In rsiot::components</a></h2></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a>::<wbr><a class="mod" href="#">cmp_http_server</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/components/cmp_http_server/mod.rs.html#1-32">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент для получения данных через HTTP server.</p>
+<p>Ссылки:</p>
+<ul>
+<li>
+<p><a href="https://docs.rs/rsiot-http-server/latest/">Документация docs.rs</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Konstantin-Dudersky/rsiot/tree/main/rsiot-http-server">Репозиторий GitHub</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Konstantin-Dudersky/rsiot/tree/main/rsiot-http-server/examples">Примеры</a></p>
+</li>
+</ul>
+<h3 id="Определение-api"><a class="doc-anchor" href="#Определение-api">§</a>Определение API</h3>
+<p><strong>GET <code>/messages</code></strong></p>
+<p>Получение коллекции всех сообщений.</p>
+<p><strong>GET <code>/messages/&lt;KEY&gt;</code></strong></p>
+<p>Получение сообщения по ключу.</p>
+<p><strong>PUT <code>/messages</code></strong></p>
+<p>Ввод сообщения. Значение передается в виде JSON в теле запроса.</p>
+<h3 id="Пример"><a class="doc-anchor" href="#Пример">§</a>Пример</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="doccomment">//! Запуск:
+//!
+//! ```bash
+//! cargo run -p rsiot-http-server --example http-server-example
+//! cargo run -p rsiot-http-server --example http-server-example --features single-thread
+//!
+//! Можно задать сообщение:
+//!
+//! ```json
+//! {"MessageSet":{"value":24.0,"ts":"2024-02-12T18:57:16.717277474Z","source":null}}
+//! ```
+
+</span><span class="attr">#[cfg(feature = <span class="string">"cmp_http_server"</span>)]
+</span><span class="kw">fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">use </span>serde::{Deserialize, Serialize};
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span><span class="kw">use </span>tokio::task::LocalSet;
+    <span class="kw">use </span>tokio::{runtime, time::Duration};
+    <span class="kw">use </span>tracing::Level;
+    <span class="kw">use </span>tracing_subscriber::filter::LevelFilter;
+
+    <span class="kw">use </span>rsiot::{
+        components::{cmp_http_server, cmp_inject_periodic, cmp_logger},
+        executor::{ComponentExecutor, ComponentExecutorConfig},
+        message::{example_service::Service, Message, MsgDataBound},
+    };
+
+    <span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+    </span><span class="kw">enum </span>Data {
+        Msg0(f64),
+        Msg1(f64),
+        MsgSet(f64),
+    }
+
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {
+        <span class="kw">type </span>TService = Service;
+    }
+
+    tracing_subscriber::fmt()
+        .with_max_level(LevelFilter::DEBUG)
+        .init();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
+
+    <span class="kw">let </span>logger_config = cmp_logger::Config {
+        level: Level::INFO,
+        fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
+    };
+
+    <span class="kw">let </span>http_server_config = cmp_http_server::Config {
+        port: <span class="number">8011</span>,
+        fn_output: |text: <span class="kw-2">&amp;</span>str| {
+            <span class="kw">let </span>msg = Message::&lt;Data&gt;::deserialize(text)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
+        },
+        fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Data&gt;| {
+            <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
+        },
+    };
+
+    <span class="kw">let </span>inject_periodic_config = cmp_inject_periodic::Config {
+        period: Duration::from_secs(<span class="number">2</span>),
+        fn_periodic: <span class="kw">move </span>|| {
+            <span class="kw">let </span>msg1 = Message::new_custom(Data::Msg0(counter));
+            <span class="kw">let </span>msg2 = Message::new_custom(Data::Msg1(counter * <span class="number">2.0</span>));
+            counter += <span class="number">1.0</span>;
+            <span class="macro">vec!</span>[msg1, msg2]
+        },
+    };
+
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig {
+        buffer_size: <span class="number">100</span>,
+        service: Service::example_service,
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+    };
+
+    <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
+    </span>runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            ComponentExecutor::new(executor_config)
+                .add_cmp(cmp_logger::Cmp::new(logger_config))
+                .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                .add_cmp(cmp_http_server::Cmp::new(http_server_config))
+                .wait_result()
+                .<span class="kw">await</span><span class="question-mark">?</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
+    </span>runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()<span class="question-mark">?
+        </span>.block_on(<span class="kw">async move </span>{
+            <span class="kw">let </span>local_set = LocalSet::new();
+
+            local_set.spawn_local(<span class="kw">async move </span>{
+                ComponentExecutor::new(executor_config)
+                    .add_cmp(cmp_logger::Cmp::new(logger_config))
+                    .add_cmp(cmp_inject_periodic::Cmp::new(inject_periodic_config))
+                    .add_cmp(cmp_http_server::Cmp::new(http_server_config))
+                    .wait_result()
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+            });
+
+            local_set.<span class="kw">await</span>;
+
+            <span class="prelude-val">Ok</span>(()) <span class="kw">as </span>anyhow::Result&lt;()&gt;
+        })<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="attr">#[cfg(not(feature = <span class="string">"cmp_http_server"</span>))]
+</span><span class="kw">fn </span>main() {}</code></pre></div>
+<h3 id="Тестирование"><a class="doc-anchor" href="#Тестирование">§</a>Тестирование</h3>
+<p>См. папку .bruno</p>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_http_server::Config">Config</a></div><div class="desc docblock-short">Конфигурация компонента http-server</div></li></ul><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_http_server::Cmp">Cmp</a></div><div class="desc docblock-short">Компонент cmp_http_server</div></li></ul></section></div></main></body></html>

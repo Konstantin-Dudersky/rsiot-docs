@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["EventSeverity"],"fn":["define_max_severity"],"mod":["collect_events","event"]};

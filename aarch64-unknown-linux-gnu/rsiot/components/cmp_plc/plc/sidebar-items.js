@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["library","types"],"struct":["FbSystemData","FunctionBlockBase"],"trait":["IFunctionBlock"]};

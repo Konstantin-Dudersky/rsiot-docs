@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Config"],"trait":["BufferData"],"type":["Cmp","FnI2cComm","FnInput","FnOutput"]};

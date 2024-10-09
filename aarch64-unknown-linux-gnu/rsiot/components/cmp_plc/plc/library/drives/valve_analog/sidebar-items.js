@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["IHmiCommand","QState"],"struct":["I","Q","QHmiPermission","QHmiStatus","S"],"type":["FB"]};
