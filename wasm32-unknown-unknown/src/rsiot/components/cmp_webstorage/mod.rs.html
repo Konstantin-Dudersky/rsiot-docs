@@ -13,15 +13,25 @@
 <a href="#13" id="13">13</a>
 <a href="#14" id="14">14</a>
 <a href="#15" id="15">15</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//! Хранение и загрузка сообщений используя LocalStorage или SessionStorage браузера. Подробнее на #link("https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API")[MDN].
+<a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! Хранение и загрузка сообщений используя LocalStorage или SessionStorage браузера.
 //!
-//! Используется модуль `storage` библиотеки #link("https://docs.rs/gloo/latest/gloo/storage/index.html")[gloo].
+//!  Подробнее на [MDN]("https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API").
+//!
+//! Используется модуль `storage` библиотеки [gloo]("https://docs.rs/gloo/latest/gloo/storage/index.html").
 
 </span><span class="kw">mod </span>component;
 <span class="kw">mod </span>config;
 <span class="kw">mod </span>error;
 <span class="kw">mod </span>fn_process;
 <span class="kw">mod </span>tasks;
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>test;
 
 <span class="kw">pub use </span>component::Cmp;
 <span class="kw">pub use </span>config::{Config, ConfigStorageKind};

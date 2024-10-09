@@ -99,6 +99,26 @@
 <a href="#99" id="99">99</a>
 <a href="#100" id="100">100</a>
 <a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>serde::Serialize;
@@ -165,6 +185,26 @@
 
     <span class="doccomment">/// Настройки сохранения состояния и восстановления при запуске
     </span><span class="kw">pub </span>retention: <span class="prelude-ty">Option</span>&lt;ConfigRetention&lt;TMsg, I, Q, S&gt;&gt;,
+}
+
+<span class="kw">impl</span>&lt;TMsg, I, Q, S&gt; Default <span class="kw">for </span>Config&lt;TMsg, I, Q, S&gt;
+<span class="kw">where
+    </span>TMsg: MsgDataBound,
+    I: Clone + Default + Serialize,
+    Q: Clone + Default + Serialize,
+    S: Clone + Default + Serialize,
+    FunctionBlockBase&lt;I, Q, S&gt;: IFunctionBlock&lt;I, Q, S&gt;,
+{
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            fn_cycle_init: |<span class="kw">_</span>| (),
+            fn_input: |<span class="kw">_</span>, <span class="kw">_</span>| (),
+            fn_output: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
+            fb_main: FunctionBlockBase::new(),
+            period: Duration::default(),
+            retention: <span class="prelude-val">None</span>,
+        }
+    }
 }
 
 <span class="doccomment">/// Настройка сохранения и восстановления области Static
