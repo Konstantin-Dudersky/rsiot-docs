@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["components","env_vars","executor","external_service","logging","message"]};
+window.SIDEBAR_ITEMS = {"mod":["components","env_vars","executor","external_services","logging","message"]};

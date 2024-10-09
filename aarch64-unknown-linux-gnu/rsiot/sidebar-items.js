@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["components","drivers_i2c","env_vars","executor","external_service","logging","message"]};
+window.SIDEBAR_ITEMS = {"mod":["components","drivers_i2c","env_vars","executor","external_services","logging","message"]};
