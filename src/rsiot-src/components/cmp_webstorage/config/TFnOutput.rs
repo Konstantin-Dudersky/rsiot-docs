@@ -1,1 +1,0 @@
-type TFnOutput<TMsg> = fn(ConfigWebstorageItem) -> Result<Option<Message<TMsg>>, anyhow::Error>;
