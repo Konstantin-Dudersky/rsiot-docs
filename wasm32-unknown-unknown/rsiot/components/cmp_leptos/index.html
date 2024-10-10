@@ -1,10 +1,206 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент для интеграции веб-приложения на основе фреймворка Leptos"><title>rsiot::components::cmp_leptos - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.82</span></h2></div><h2 class="location"><a href="#">Module cmp_leptos</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Aliases</a></li></ul></section><h2><a href="../index.html">In rsiot::components</a></h2></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a>::<wbr><a class="mod" href="#">cmp_leptos</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/components/cmp_leptos/mod.rs.html#1-25">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент для интеграции веб-приложения на основе фреймворка Leptos</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент для интеграции веб-приложения на основе фреймворка Leptos"><title>rsiot::components::cmp_leptos - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.82</span></h2></div><h2 class="location"><a href="#">Module cmp_leptos</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Aliases</a></li></ul></section><h2><a href="../index.html">In rsiot::components</a></h2></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a>::<wbr><a class="mod" href="#">cmp_leptos</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../../../src/rsiot/components/cmp_leptos/mod.rs.html#1-243">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент для интеграции веб-приложения на основе фреймворка Leptos</p>
 <h2 id="Подготовка-среды-разработки"><a class="doc-anchor" href="#Подготовка-среды-разработки">§</a>Подготовка среды разработки</h2><h3 id="Таргеты"><a class="doc-anchor" href="#Таргеты">§</a>Таргеты</h3>
 <ul>
 <li><a href="../../doc/dev_prepare/wasm32_unknown_unknown/index.html" title="mod rsiot::doc::dev_prepare::wasm32_unknown_unknown">wasm32-unknown-unknown</a></li>
-<li><a href="../targets/aarch64-linux-android.md">aarch64-linux-android</a> (Tauri / Android)</li>
-<li><a href="../targets/armv7-linux-androideabi.md">armv7-linux-androideabi</a> (Tauri / Android)</li>
-<li><a href="../targets/i686-linux-android.md">i686-linux-android</a> (Tauri / Android)</li>
-<li><a href="../targets/x86_64-linux-android.md">x86_64-linux-android</a> (Tauri / Android)</li>
+<li><a href="../../doc/dev_prepare/aarch64_linux_android/index.html" title="mod rsiot::doc::dev_prepare::aarch64_linux_android">aarch64-linux-android</a> (Tauri / Android)</li>
+<li><a href="../../doc/dev_prepare/armv7_linux_androideabi/index.html" title="mod rsiot::doc::dev_prepare::armv7_linux_androideabi">armv7-linux-androideabi</a> (Tauri / Android)</li>
+<li><a href="../../doc/dev_prepare/i686_linux_android/index.html" title="mod rsiot::doc::dev_prepare::i686_linux_android">i686-linux-android</a> (Tauri / Android)</li>
+<li><a href="../../doc/dev_prepare/x8664_linux_android/index.html" title="mod rsiot::doc::dev_prepare::x8664_linux_android">x86_64-linux-android</a> (Tauri / Android)</li>
 </ul>
-</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="components/index.html" title="mod rsiot::components::cmp_leptos::components">components</a></div><div class="desc docblock-short">Компоненты для использования в проектах leptos</div></li><li><div class="item-name"><a class="mod" href="create_signal_from_msg/index.html" title="mod rsiot::components::cmp_leptos::create_signal_from_msg">create_signal_from_msg</a></div><div class="desc docblock-short">Создание сигнала на основе сообщения</div></li><li><div class="item-name"><a class="mod" href="utils/index.html" title="mod rsiot::components::cmp_leptos::utils">utils</a></div><div class="desc docblock-short">Вспомогательные функции</div></li></ul><h2 id="macros" class="section-header">Macros<a href="#macros" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="macro" href="macro.create_signal_from_msg.html" title="macro rsiot::components::cmp_leptos::create_signal_from_msg">create_signal_from_msg</a></div><div class="desc docblock-short">Макрос для создания сигналов фреймворка leptos из сообщений.</div></li></ul><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_leptos::Config">Config</a></div><div class="desc docblock-short">https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_leptos.html#config</div></li><li><div class="item-name"><a class="struct" href="struct.GlobalState.html" title="struct rsiot::components::cmp_leptos::GlobalState">GlobalState</a></div><div class="desc docblock-short">Структура глобального состояния</div></li></ul><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Error.html" title="enum rsiot::components::cmp_leptos::Error">Error</a></div><div class="desc docblock-short">Ошибки компонента cmp_leptos</div></li></ul><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_leptos::Cmp">Cmp</a></div><div class="desc docblock-short">Компонент cmp_leptos</div></li></ul></section></div></main></body></html>
+<h3 id="tauri"><a class="doc-anchor" href="#tauri">§</a>Tauri</h3>
+<p>Если требуется разработка приложения Tauri (https://beta.tauri.app/guides/prerequisites/).</p>
+<div class="example-wrap"><pre class="language-bash"><code>(sudo apt install libwebkit2gtk-4.1-dev
+  build-essential
+  curl
+  wget
+  file
+  libssl-dev
+  libayatana-appindicator3-dev
+  librsvg2-dev)
+</code></pre></div><h4 id="tauri-cli"><a class="doc-anchor" href="#tauri-cli">§</a>Tauri CLI</h4><div class="example-wrap"><pre class="language-bash"><code>cargo install tauri-cli --version &quot;^2.0.0-beta&quot;
+</code></pre></div><h4 id="create-tauri-apps"><a class="doc-anchor" href="#create-tauri-apps">§</a>Create tauri apps</h4><div class="example-wrap"><pre class="language-bash"><code>cargo install create-tauri-app
+</code></pre></div><h4 id="android-studio"><a class="doc-anchor" href="#android-studio">§</a>Android Studio</h4><div class="example-wrap"><pre class="language-bash"><code>sudo snap install android-studio --classic
+</code></pre></div>
+<p>Запустить Android Studio, поставить пакеты по-умолчанию. Открыть SDK Manager и установить NDK (Side by side) и Android SDK CLI.</p>
+<h4 id="env-variables"><a class="doc-anchor" href="#env-variables">§</a>Env variables</h4>
+<p><code>~/.config/nushell/config.nu</code>:</p>
+<div class="example-wrap"><pre class="language-toml"><code>$env.JAVA_HOME = &quot;/snap/android-studio/current/jbr&quot;
+$env.ANDROID_HOME = &quot;/home/konstantin/Android/Sdk&quot;
+$env.NDK_HOME = $&quot;($env.ANDROID_HOME)/ndk/26.2.11394342&quot;
+</code></pre></div>
+<p>Проверить пути</p>
+<h3 id="rustiwind"><a class="doc-anchor" href="#rustiwind">§</a>Rustiwind</h3>
+<p>Для сортировки классов Tailwind можно поставить утилиту:</p>
+<div class="example-wrap"><pre class="language-bash"><code>cargo install rustywind
+</code></pre></div>
+<p>Вызов:</p>
+<div class="example-wrap"><pre class="language-bash"><code>rustywind --write src/
+</code></pre></div><h3 id="leptosfmt"><a class="doc-anchor" href="#leptosfmt">§</a>Leptosfmt</h3>
+<p>Установка</p>
+<div class="example-wrap"><pre class="language-bash"><code>cargo install leptosfmt
+</code></pre></div><h2 id="Создание-проекта"><a class="doc-anchor" href="#Создание-проекта">§</a>Создание проекта</h2><h3 id="zedsettingsjson"><a class="doc-anchor" href="#zedsettingsjson">§</a><code>.zed/settings.json</code></h3><div class="example-wrap"><pre class="language-json"><code>{
+  &quot;lsp&quot;: {
+    &quot;rust-analyzer&quot;: {
+      &quot;initialization_options&quot;: {
+        &quot;check&quot;: {
+          &quot;command&quot;: &quot;clippy&quot;
+        },
+        &quot;cargo&quot;: {
+          &quot;target&quot;: &quot;wasm32-unknown-unknown&quot;
+        }
+      }
+    }
+  }
+}
+</code></pre></div><h3 id="tauri-1"><a class="doc-anchor" href="#tauri-1">§</a>Tauri</h3><div class="example-wrap"><pre class="language-bash"><code>cargo create-tauri-app --rc
+
+# добавить поддержку Android
+cargo tauri android init
+</code></pre></div><h3 id="tailwind"><a class="doc-anchor" href="#tailwind">§</a>Tailwind</h3>
+<p>Установить:</p>
+<div class="example-wrap"><pre class="language-bash"><code>npm install -D tailwindcss
+npm install -D @tailwindcss/forms
+npx tailwindcss init
+</code></pre></div>
+<p>Создать файл <code>tailwind.config.js</code>:</p>
+<div class="example-wrap"><pre class="language-json"><code>/** @type {import(&#39;tailwindcss&#39;).Config} */
+
+module.exports = {
+  content: {
+    files:  [
+      &quot;*.html&quot;,
+    &quot;./src/**/*.rs&quot;,
+    &quot;../../rsiot/src/components/cmp_leptos/components/**/*.rs&quot;
+    ],
+  },
+  plugins: [require(&#39;@tailwindcss/forms&#39;),],
+}
+</code></pre></div>
+<p>Создать файл <code>input.css</code> в корне проекта:</p>
+<div class="example-wrap"><pre class="language-css"><code>@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</code></pre></div>
+<p>Добавить в <code>index.html</code>:</p>
+<div class="example-wrap"><pre class="language-html"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;!-- Подключаем стили Tailwind --&gt;
+    &lt;link data-trunk rel=&quot;tailwind-css&quot; href=&quot;input.css&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+  &lt;/head&gt;
+&lt;/html&gt;
+</code></pre></div><h3 id="material-theme"><a class="doc-anchor" href="#material-theme">§</a>Material Theme</h3>
+<p>Создаем тему в <a href="https://material-foundation.github.io/material-theme-builder/">Material Theme Builder</a>.</p>
+<p>Скачиваем набор файлов css, распаковываем в папку <code>material-theme</code>. В начале файла <code>input.css</code> прописываем:</p>
+<div class="example-wrap"><pre class="language-css"><code>/* Material theme */
+@import &quot;./material-theme/dark.css&quot;;
+@import &quot;./material-theme/dark-hc.css&quot;;
+@import &quot;./material-theme/dark-mc.css&quot;;
+@import &quot;./material-theme/light.css&quot;;
+@import &quot;./material-theme/light-hc.css&quot;;
+@import &quot;./material-theme/light-mc.css&quot;;
+</code></pre></div>
+<p>Прописать секцию <code>theme</code> в <code>tailwind.config.json</code>:</p>
+<div class="example-wrap"><pre class="language-json"><code>module.exports = {
+  content: {
+    files:  [...],
+  },
+  plugins: [...],
+  theme: {
+    extend: {
+      colors: {
+        primary: &quot;var(--md-sys-color-primary)&quot;,
+        &quot;surface-tint&quot;: &quot;var(--md-sys-color-surface-tint)&quot;,
+        &quot;on-primary&quot;: &quot;var(--md-sys-color-on-primary)&quot;,
+        &quot;primary-container&quot;: &quot;var(--md-sys-color-primary-container)&quot;,
+        &quot;on-primary-container&quot;: &quot;var(--md-sys-color-on-primary-container)&quot;,
+        secondary: &quot;var(--md-sys-color-secondary)&quot;,
+        &quot;on-secondary&quot;: &quot;var(--md-sys-color-on-secondary)&quot;,
+        &quot;secondary-container&quot;: &quot;var(--md-sys-color-secondary-container)&quot;,
+        &quot;on-secondary-container&quot;: &quot;var(--md-sys-color-on-secondary-container)&quot;,
+        tertiary: &quot;var(--md-sys-color-tertiary)&quot;,
+        &quot;on-tertiary&quot;: &quot;var(--md-sys-color-on-tertiary)&quot;,
+        &quot;tertiary-container&quot;: &quot;var(--md-sys-color-tertiary-container)&quot;,
+        &quot;on-tertiary-container&quot;: &quot;var(--md-sys-color-on-tertiary-container)&quot;,
+        error: &quot;var(--md-sys-color-error)&quot;,
+        &quot;on-error&quot;: &quot;var(--md-sys-color-on-error)&quot;,
+        &quot;error-container&quot;: &quot;var(--md-sys-color-error-container)&quot;,
+        &quot;on-error-container&quot;: &quot;var(--md-sys-color-on-error-container)&quot;,
+        background: &quot;var(--md-sys-color-background)&quot;,
+        &quot;on-background&quot;: &quot;var(--md-sys-color-on-background)&quot;,
+        surface: &quot;var(--md-sys-color-surface)&quot;,
+        &quot;on-surface&quot;: &quot;var(--md-sys-color-on-surface)&quot;,
+        &quot;surface-variant&quot;: &quot;var(--md-sys-color-surface-variant)&quot;,
+        &quot;on-surface-variant&quot;: &quot;var(--md-sys-color-on-surface-variant)&quot;,
+        outline: &quot;var(--md-sys-color-outline)&quot;,
+        &quot;outline-variant&quot;: &quot;var(--md-sys-color-outline-variant)&quot;,
+        shadow: &quot;var(--md-sys-color-shadow)&quot;,
+        scrim: &quot;var(--md-sys-color-scrim)&quot;,
+        &quot;inverse-surface&quot;: &quot;var(--md-sys-color-inverse-surface)&quot;,
+        &quot;inverse-on-surface&quot;: &quot;var(--md-sys-color-inverse-on-surface)&quot;,
+        &quot;inverse-primary&quot;: &quot;var(--md-sys-color-inverse-primary)&quot;,
+        &quot;primary-fixed&quot;: &quot;var(--md-sys-color-primary-fixed)&quot;,
+        &quot;on-primary-fixed&quot;: &quot;var(--md-sys-color-on-primary-fixed)&quot;,
+        &quot;primary-fixed-dim&quot;: &quot;var(--md-sys-color-primary-fixed-dim)&quot;,
+        &quot;on-primary-fixed-variant&quot;: &quot;var(--md-sys-color-on-primary-fixed-variant)&quot;,
+        &quot;secondary-fixed&quot;: &quot;var(--md-sys-color-secondary-fixed)&quot;,
+        &quot;on-secondary-fixed&quot;: &quot;var(--md-sys-color-on-secondary-fixed)&quot;,
+        &quot;secondary-fixed-dim&quot;: &quot;var(--md-sys-color-secondary-fixed-dim)&quot;,
+        &quot;on-secondary-fixed-variant&quot;: &quot;var(--md-sys-color-on-secondary-fixed-variant)&quot;,
+        &quot;tertiary-fixed&quot;: &quot;var(--md-sys-color-tertiary-fixed)&quot;,
+        &quot;on-tertiary-fixed&quot;: &quot;var(--md-sys-color-on-tertiary-fixed)&quot;,
+        &quot;tertiary-fixed-dim&quot;: &quot;var(--md-sys-color-tertiary-fixed-dim)&quot;,
+        &quot;on-tertiary-fixed-variant&quot;: &quot;var(--md-sys-color-on-tertiary-fixed-variant)&quot;,
+        &quot;surface-dim&quot;: &quot;var(--md-sys-color-surface-dim)&quot;,
+        &quot;surface-bright&quot;: &quot;var(--md-sys-color-surface-bright)&quot;,
+        &quot;surface-container-lowest&quot;: &quot;var(--md-sys-color-surface-container-lowest)&quot;,
+        &quot;surface-container-low&quot;: &quot;var(--md-sys-color-surface-container-low)&quot;,
+        &quot;surface-container&quot;: &quot;var(--md-sys-color-surface-container)&quot;,
+        &quot;surface-container-high&quot;: &quot;var(--md-sys-color-surface-container-high)&quot;,
+        &quot;surface-container-highest&quot;: &quot;var(--md-sys-color-surface-container-highest)&quot;,
+        &quot;green-color&quot;: &quot;var(--md-extended-color-green-color)&quot;,
+        &quot;green-on-color&quot;: &quot;var(--md-extended-color-green-on-color)&quot;,
+        &quot;green-color-container&quot;: &quot;var(--md-extended-color-green-color-container)&quot;,
+        &quot;green-on-color-container&quot;: &quot;var (--md-extended-color-green-on-color-container)&quot;,
+        &quot;yellow-color&quot;: &quot;var(--md-extended-color-yellow-color)&quot;,
+        &quot;yellow-on-color&quot;: &quot;var(--md-extended-color-yellow-on-color)&quot;,
+        &quot;yellow-color-container&quot;: &quot;var(--md-extended-color-yellow-color-container)&quot;,
+        &quot;yellow-on-color-container&quot;: &quot;var(--md-extended-color-yellow-on-color-container)&quot;,
+      },
+    },
+  },
+}
+</code></pre></div>
+<p>Для выбора темы применяем класс к элементу <code>html.body</code>:</p>
+<div class="example-wrap"><pre class="language-html"><code>&lt;body class=&quot;dark&quot;&gt;&lt;/body&gt;
+</code></pre></div>
+<p>Допустимые классы:</p>
+<ul>
+<li>dark-high-contrast</li>
+<li>dark-medium-contrast</li>
+<li>dark</li>
+<li>light-high-contrast</li>
+<li>light-medium-contrast</li>
+<li>light</li>
+</ul>
+<p>Добавить в файл <code>input.css</code>:</p>
+<div class="example-wrap"><pre class="language-css"><code>:root {
+  --md-ref-typeface-brand: &quot;Roboto&quot;;
+  --md-ref-typeface-plain: system-ui;
+}
+</code></pre></div>
+<p>Material theme builder почему-то не экспортирует настройки шрифтов. Когда пофиксят - пересмотреть.</p>
+<h3 id="iconify"><a class="doc-anchor" href="#iconify">§</a>Iconify</h3><div class="example-wrap"><pre class="language-bash"><code>npm i -D @iconify/tailwind
+npm i -D @iconify/json
+</code></pre></div>
+<p>Добавить в файл <code>tailwind.config.js</code>:</p>
+<div class="example-wrap"><pre class="language-json"><code>const { addIconSelectors } = require(&quot;@iconify/tailwind&quot;);
+
+module.exports = {
+  plugins: [addIconSelectors([&quot;mdi&quot;, &quot;material-symbols&quot;])],
+}
+</code></pre></div>
+<p>Добавить в параметры <code>addIconSelectors</code> семейства иконок.</p>
+<p>Далее в проекте иконки можно вставлять:</p>
+<div class="example-wrap"><pre class="language-html"><code>&lt;span class=&quot;iconify material-symbols--menu-rounded h-5 w-5&quot;&gt;&lt;/span&gt;
+</code></pre></div></div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="components/index.html" title="mod rsiot::components::cmp_leptos::components">components</a></div><div class="desc docblock-short">Компоненты для использования в проектах leptos</div></li><li><div class="item-name"><a class="mod" href="create_signal_from_msg/index.html" title="mod rsiot::components::cmp_leptos::create_signal_from_msg">create_signal_from_msg</a></div><div class="desc docblock-short">Создание сигнала на основе сообщения</div></li><li><div class="item-name"><a class="mod" href="utils/index.html" title="mod rsiot::components::cmp_leptos::utils">utils</a></div><div class="desc docblock-short">Вспомогательные функции</div></li></ul><h2 id="macros" class="section-header">Macros<a href="#macros" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="macro" href="macro.create_signal_from_msg.html" title="macro rsiot::components::cmp_leptos::create_signal_from_msg">create_signal_from_msg</a></div><div class="desc docblock-short">Макрос для создания сигналов фреймворка leptos из сообщений.</div></li></ul><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_leptos::Config">Config</a></div><div class="desc docblock-short">Конфигурация компонента cmp_leptos</div></li><li><div class="item-name"><a class="struct" href="struct.GlobalState.html" title="struct rsiot::components::cmp_leptos::GlobalState">GlobalState</a></div><div class="desc docblock-short">Структура глобального состояния</div></li></ul><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Error.html" title="enum rsiot::components::cmp_leptos::Error">Error</a></div><div class="desc docblock-short">Ошибки компонента cmp_leptos</div></li></ul><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_leptos::Cmp">Cmp</a></div><div class="desc docblock-short">Компонент cmp_leptos</div></li></ul></section></div></main></body></html>

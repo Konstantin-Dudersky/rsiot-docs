@@ -71,31 +71,44 @@
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
-<a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
-<a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a>
-<a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::gpio::{AnyIOPin, AnyOutputPin, Pull};
+<a href="#73" id="73">73</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::gpio::{AnyIOPin, AnyOutputPin, Pull};
 
 <span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
-<span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_auth.html#config
+<span class="doccomment">/// Конфигурация компонента cmp_esp_gpio
 </span><span class="kw">pub struct </span>Config&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_esp_gpio.html#inputs
+    <span class="doccomment">/// Конфигурация входов
+    ///
+    /// **Примеры**
+    ///
+    /// ```rust
+    </span><span class="attr">#[doc = <span class="macro">include_str!</span>(<span class="string">"test/config_inputs.rs"</span>)]
+    </span><span class="doccomment">/// ```
     </span><span class="kw">pub </span>inputs: Vec&lt;ConfigGpioInput&lt;TMsg&gt;&gt;,
-    <span class="doccomment">/// https://konstantin-dudersky.github.io/rsiot-docs/1_components/cmp_esp_gpio.html#outputs
+
+    <span class="doccomment">/// Конфигурация выходов
+    ///
+    /// **Примеры**
+    ///
+    /// ```rust
+    </span><span class="attr">#[doc = <span class="macro">include_str!</span>(<span class="string">"test/config_outputs.rs"</span>)]
+    </span><span class="doccomment">/// ```
     </span><span class="kw">pub </span>outputs: Vec&lt;ConfigGpioOutput&lt;TMsg&gt;&gt;,
+}
+
+<span class="kw">impl</span>&lt;TMsg&gt; Default <span class="kw">for </span>Config&lt;TMsg&gt;
+<span class="kw">where
+    </span>TMsg: MsgDataBound,
+{
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            inputs: <span class="macro">vec!</span>[],
+            outputs: <span class="macro">vec!</span>[],
+        }
+    }
 }
 
 <span class="doccomment">/// Конфигурация одного входа
@@ -130,42 +143,5 @@
 
     <span class="doccomment">/// Подается ли напряжения в отключенном состоянии или нет
     </span><span class="kw">pub </span>is_low_triggered: bool,
-}
-
-<span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>esp_idf_svc::hal::peripherals::Peripherals;
-
-    <span class="kw">use crate</span>::{
-        components::cmp_esp_gpio,
-        message::{example_message::<span class="kw-2">*</span>, Message, MsgData},
-    };
-
-    <span class="kw">use </span><span class="kw">super</span>::Pull;
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test() {
-        <span class="kw">let </span>peripherals = Peripherals::take().unwrap();
-
-        <span class="kw">let </span>_gpio_config = cmp_esp_gpio::Config {
-            <span class="comment">// ANCHOR: inputs
-            </span>inputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioInput {
-                peripherals: peripherals.pins.gpio9.into(),
-                fn_output: |value| Message::new_custom(Custom::EspBootButton(value)),
-                pull: Pull::Down,
-            }],
-            <span class="comment">// ANCHOR_END: inputs
-            // ANCHOR: outputs
-            </span>outputs: <span class="macro">vec!</span>[cmp_esp_gpio::ConfigGpioOutput {
-                peripherals: peripherals.pins.gpio1.into(),
-                fn_input: |msg| <span class="kw">match </span>msg.data {
-                    MsgData::Custom(Custom::EspRelay(value)) =&gt; <span class="prelude-val">Some</span>(value),
-                    <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-                },
-                is_low_triggered: <span class="bool-val">false</span>,
-            }],
-            <span class="comment">// ANCHOR_END: outputs
-        </span>};
-    }
 }
 </code></pre></div></section></main></body></html>

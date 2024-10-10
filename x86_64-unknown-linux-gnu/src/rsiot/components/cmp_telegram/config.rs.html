@@ -19,6 +19,8 @@
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
 <a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
 <span class="doccomment">/// Конфигурация cmp_telegram
@@ -28,9 +30,11 @@
     </span>TMsg: MsgDataBound,
 {
     <span class="doccomment">/// Токен бота
+    ///
+    /// Определяется при создании бота через BotFather
     </span><span class="kw">pub </span>bot_token: String,
 
-    <span class="doccomment">/// Идентфикатор пользователя или канала, в который рассылаются сообщения
+    <span class="doccomment">/// Идентификатор чата, в который бот будет отправлять сообщения. Определить идентификатор можно разными способами. Один из способов - через телеграм бот  [usinfbot](https://t.me/usinfbot). Нужно переслать сообщение из канала в данный бот, в ответе будет идентификатор канала.
     </span><span class="kw">pub </span>chat_id: i64,
 
     <span class="doccomment">/// # Пример
