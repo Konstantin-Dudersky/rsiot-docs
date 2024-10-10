@@ -17,7 +17,22 @@
 <a href="#16" id="16">16</a>
 <a href="#17" id="17">17</a>
 <a href="#18" id="18">18</a>
-<a href="#19" id="19">19</a></pre></div><pre class="rust"><code><span class="doccomment">//! Исполнитель - структура для запуска компонентов
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a></pre></div><pre class="rust"><code><span class="doccomment">//! Исполнитель - структура для запуска компонентов
+//!
+//! # Пример с WASM и cmp_leptos
+//!
+//! ```rust
+</span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"./test/executor_wasm_leptos.rs"</span>)]
+</span><span class="doccomment">//! ```
 
 </span><span class="kw">mod </span>cache;
 <span class="kw">mod </span>cmp_in_out;
@@ -27,6 +42,9 @@
 <span class="kw">mod </span>join_set_spawn;
 <span class="kw">mod </span>sleep;
 <span class="kw">mod </span>types;
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>test;
 
 <span class="kw">pub use </span>cache::Cache;
 <span class="kw">pub use </span>cmp_in_out::CmpInOut;
