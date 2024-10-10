@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","handle_request","task_main"]};

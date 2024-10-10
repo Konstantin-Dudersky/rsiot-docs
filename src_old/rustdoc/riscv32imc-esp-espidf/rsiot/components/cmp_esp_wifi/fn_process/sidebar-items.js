@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","prepare_wifi_config","wifi_setup"]};

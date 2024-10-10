@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"mod":["component","config","error","fn_process"],"struct":["Config","ConfigInput","ConfigOutput"],"type":["Cmp","Result"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["Go2rtc"],"struct":["Go2rtcProps"]};

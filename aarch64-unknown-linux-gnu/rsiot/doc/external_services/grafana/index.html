@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Grafana"><title>rsiot::doc::external_services::grafana - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../../rsiot/index.html">rsiot</a><span class="version">0.0.82</span></h2></div><h2 class="location"><a href="#">Module grafana</a></h2><div class="sidebar-elems"><h2><a href="../index.html">In rsiot::doc::external_services</a></h2></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../../index.html">rsiot</a>::<wbr><a href="../../index.html">doc</a>::<wbr><a href="../index.html">external_services</a>::<wbr><a class="mod" href="#">grafana</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../../../../src/rsiot/doc/external_services/grafana/mod.rs.html#1-35">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="grafana"><a class="doc-anchor" href="#grafana">§</a>Grafana</h2><h3 id="docker"><a class="doc-anchor" href="#docker">§</a>docker</h3><div class="example-wrap"><pre class="language-yaml"><code>services:
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: grafana/grafana:10.2.3 # https://hub.docker.com/r/grafana/grafana/tags
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+        # настройки источника - TimescaleDB
+      - TIMESCALEDB_HOST=timescaledb
+      - TIMESCALEDB_PORT=5432
+      - TIMESCALEDB_DB_DATA=db_data
+        # настройки источника - логгер loki
+      - LOKI_HOST=loki
+      - LOKI_PORT=3100
+        # настройки источника - InfluxDB
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_ORG=org
+      - INFLUXDB_BUCKET=bucket
+      - INFLUXDB_TOKEN=token
+    ports:
+      - &quot;3000:3000&quot;
+    profiles:
+      - dev
+      - target
+    volumes:
+      - ./config_services/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./config_services/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - network_internal
+
+networks:
+  network_internal:
+</code></pre></div><h3 id="Файлы-конфигурации"><a class="doc-anchor" href="#Файлы-конфигурации">§</a>Файлы конфигурации</h3><h4 id="datasources"><a class="doc-anchor" href="#datasources">§</a><code>datasources/</code></h4>
+<p>В папке хранятся файлы для настройки источников данных.</p>
+<p><code>influxdb.yaml:</code></p>
+<div class="example-wrap"><pre class="language-yaml"><code>apiVersion: 1
+
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    url: http://${INFLUXDB_HOST}:${INFLUXDB_PORT}
+    jsonData:
+      version: Flux
+      organization: ${INFLUXDB_ORG}
+      defaultBucket: ${INFLUXDB_BUCKET}
+      tlsSkipVerify: true
+    secureJsonData:
+      token: ${INFLUXDB_TOKEN}
+</code></pre></div>
+<p><code>loki.yaml:</code></p>
+<div class="example-wrap"><pre class="language-yaml"><code>apiVersion: 1
+
+datasources:
+  - name: loki
+    type: loki
+    access: proxy
+    orgId: 1
+    url: http://${LOKI_HOST}:${LOKI_PORT}
+    basicAuth: false
+    isDefault: true
+    version: 1
+    editable: false
+</code></pre></div>
+<p><code>timescaledb.yaml:</code></p>
+<div class="example-wrap"><pre class="language-yaml"><code>apiVersion: 1
+
+datasources:
+  - name: timescaledb
+    type: postgres
+    url: ${TIMESCALEDB_HOST}:${TIMESCALEDB_PORT}
+    user: postgres
+    secureJsonData:
+      password: &quot;postgres&quot;
+    jsonData:
+      database: ${TIMESCALEDB_DB_DATA}
+      sslmode: &quot;disable&quot; # disable/require/verify-ca/verify-full
+      maxOpenConns: 100 # Grafana v5.4+
+      maxIdleConns: 100 # Grafana v5.4+
+      maxIdleConnsAuto: true # Grafana v9.5.1+
+      connMaxLifetime: 14400 # Grafana v5.4+
+      postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+      timescaledb: true
+    editable: false
+</code></pre></div><h4 id="datasources-1"><a class="doc-anchor" href="#datasources-1">§</a><code>datasources/</code></h4>
+<p>В папке хранятся все дашбоарды. Структура папок переносится в структуру дашбоардов. В корне папки нужно разместить файл config.yaml:</p>
+<div class="example-wrap"><pre class="language-yaml"><code>apiVersion: 1
+
+providers:
+  - name: dashboards
+    type: file
+    updateIntervalSeconds: 5
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: true
+</code></pre></div></div></details></section></div></main></body></html>

@@ -43,14 +43,12 @@
     <span class="comment">// Загружать все сообщения
     </span><span class="kw">let </span>fn_output_1 = |msg: Message&lt;Custom&gt;| <span class="prelude-val">Some</span>(msg.clone());
 
-    <span class="kw">let _ </span>= cmp_webstorage::Config::&lt;Custom&gt; {
-        fn_output: fn_output_0,
-        ..Default::default()
-    };
-    <span class="kw">let _ </span>= cmp_webstorage::Config::&lt;Custom&gt; {
-        fn_output: fn_output_1,
-        ..Default::default()
-    };
+    <span class="kw">for </span>fn_output <span class="kw">in </span>[fn_output_0, fn_output_1] {
+        <span class="kw">let _ </span>= cmp_webstorage::Config::&lt;Custom&gt; {
+            fn_output,
+            ..Default::default()
+        };
+    }
 }</code></pre></div>
 </div><span id="structfield.default_messages" class="structfield section-header"><a href="#structfield.default_messages" class="anchor field">§</a><code>default_messages: <a class="struct" href="https://doc.rust-lang.org/1.81.0/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../message/struct.Message.html" title="struct rsiot::message::Message">Message</a>&lt;TMsg&gt;&gt;</code></span><div class="docblock"><p>Сообщения по-умолчанию, когда хранилище пустое</p>
 <p><strong>Примеры</strong></p>
@@ -67,14 +65,12 @@
     <span class="comment">// Есть значения
     </span><span class="kw">let </span>default_messages_1 = <span class="macro">vec!</span>[Message::new_custom(Custom::ValueInstantF64(<span class="number">1.2</span>))];
 
-    <span class="kw">let _ </span>= cmp_webstorage::Config::&lt;Custom&gt; {
-        default_messages: default_messages_0,
-        ..Default::default()
-    };
-    <span class="kw">let _ </span>= cmp_webstorage::Config::&lt;Custom&gt; {
-        default_messages: default_messages_1,
-        ..Default::default()
-    };
+    <span class="kw">for </span>default_messages <span class="kw">in </span>[default_messages_0, default_messages_1] {
+        <span class="kw">let _ </span>= cmp_webstorage::Config::&lt;Custom&gt; {
+            default_messages,
+            ..Default::default()
+        };
+    }
 }</code></pre></div>
 </div><h2 id="trait-implementations" class="section-header">Trait Implementations<a href="#trait-implementations" class="anchor">§</a></h2><div id="trait-implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Default-for-Config%3CTMsg%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/components/cmp_webstorage/config.rs.html#43-55">source</a><a href="#impl-Default-for-Config%3CTMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="https://doc.rust-lang.org/1.81.0/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_webstorage::Config">Config</a>&lt;TMsg&gt;<div class="where">where
     TMsg: <a class="trait" href="../../message/trait.MsgDataBound.html" title="trait rsiot::message::MsgDataBound">MsgDataBound</a>,</div></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.default" class="method trait-impl"><a class="src rightside" href="../../../src/rsiot/components/cmp_webstorage/config.rs.html#47-54">source</a><a href="#method.default" class="anchor">§</a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/1.81.0/core/default/trait.Default.html#tymethod.default" class="fn">default</a>() -&gt; Self</h4></section></summary><div class='docblock'>Returns the “default value” for a type. <a href="https://doc.rust-lang.org/1.81.0/core/default/trait.Default.html#tymethod.default">Read more</a></div></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E" class="impl"><a class="src rightside" href="../../../src/rsiot/components/cmp_webstorage/component.rs.html#12-28">source</a><a href="#impl-IComponentProcess%3CConfig%3CTMsg%3E,+TMsg%3E-for-Component%3CConfig%3CTMsg%3E,+TMsg%3E" class="anchor">§</a><h3 class="code-header">impl&lt;TMsg&gt; <a class="trait" href="../../executor/trait.IComponentProcess.html" title="trait rsiot::executor::IComponentProcess">IComponentProcess</a>&lt;<a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_webstorage::Config">Config</a>&lt;TMsg&gt;, TMsg&gt; for <a class="struct" href="../../executor/struct.Component.html" title="struct rsiot::executor::Component">Component</a>&lt;<a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_webstorage::Config">Config</a>&lt;TMsg&gt;, TMsg&gt;<div class="where">where

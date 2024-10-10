@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","plc_cycle_execute","plc_cycle_execute_loop","save_input_msg_in_cache"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_input","fn_output","fn_process"]};

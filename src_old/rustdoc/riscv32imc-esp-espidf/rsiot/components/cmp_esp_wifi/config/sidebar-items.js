@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ConfigAuthMethod"],"struct":["Config","ConfigAccessPoint","ConfigClient"]};

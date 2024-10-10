@@ -93,6 +93,11 @@
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты для построения системы сбора, обработки и визуализации данных
 //!
 //! Документация по платформам:
@@ -173,19 +178,24 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![warn(missing_docs)]
 
-#[cfg(feature = <span class="string">"executor"</span>)]
-</span><span class="kw">pub mod </span>components;
-<span class="kw">mod </span>components_config;
-<span class="attr">#[cfg(any(feature = <span class="string">"cmp_esp"</span>, feature = <span class="string">"cmp_raspberrypi"</span>))]
-</span><span class="kw">pub mod </span>drivers_i2c;
-<span class="attr">#[cfg(feature = <span class="string">"env_vars"</span>)]
-</span><span class="kw">pub mod </span>env_vars;
-<span class="attr">#[cfg(feature = <span class="string">"executor"</span>)]
-</span><span class="kw">pub mod </span>executor;
-<span class="attr">#[cfg(feature = <span class="string">"logging"</span>)]
-</span><span class="kw">pub mod </span>logging;
+</span><span class="kw">mod </span>components_config;
 <span class="kw">pub mod </span>message;
 
+<span class="attr">#[cfg(feature = <span class="string">"executor"</span>)]
+</span><span class="kw">pub mod </span>components;
+
+<span class="attr">#[cfg(any(feature = <span class="string">"cmp_esp"</span>, feature = <span class="string">"cmp_raspberrypi"</span>))]
+</span><span class="kw">pub mod </span>drivers_i2c;
+
+<span class="attr">#[cfg(feature = <span class="string">"env_vars"</span>)]
+</span><span class="kw">pub mod </span>env_vars;
+
+<span class="attr">#[cfg(feature = <span class="string">"executor"</span>)]
+</span><span class="kw">pub mod </span>executor;
+
+<span class="attr">#[cfg(feature = <span class="string">"logging"</span>)]
+</span><span class="kw">pub mod </span>logging;
+
 <span class="attr">#[cfg(feature = <span class="string">"rustdoc"</span>)]
-</span><span class="kw">pub mod </span>external_services;
+</span><span class="kw">pub mod </span>doc;
 </code></pre></div></section></main></body></html>

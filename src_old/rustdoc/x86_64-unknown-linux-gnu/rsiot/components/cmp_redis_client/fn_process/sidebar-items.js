@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fn_process","task_main","task_publication","task_read_hash","task_subscription"],"type":["Result"]};

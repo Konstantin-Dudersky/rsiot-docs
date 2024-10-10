@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["component","config","error","fn_process"],"struct":["Config"],"type":["Cmp"]};
