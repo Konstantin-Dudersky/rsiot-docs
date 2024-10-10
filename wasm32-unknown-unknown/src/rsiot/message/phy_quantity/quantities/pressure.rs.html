@@ -46,7 +46,7 @@
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::{PhyQuantity, QuantityName};
 
 <span class="kw">impl </span>PhyQuantity {
-    <span class="doccomment">/// Задать давление в [Па]
+    <span class="doccomment">/// Задать давление в \[Па\]
     </span><span class="kw">pub fn </span>new_pressure_Pa(value: f64) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             value,
@@ -54,7 +54,7 @@
         }
     }
 
-    <span class="doccomment">/// Получить давление в [Па]
+    <span class="doccomment">/// Получить давление в \[Па\]
     </span><span class="kw">pub fn </span>pressure_Pa(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;f64, String&gt; {
         <span class="kw">match </span><span class="self">self</span>.quantity_name {
             QuantityName::Pressure =&gt; {
@@ -71,7 +71,7 @@
         }
     }
 
-    <span class="doccomment">/// Получить давление в [мм рт столба]
+    <span class="doccomment">/// Получить давление в \[мм рт столба\]
     </span><span class="kw">pub fn </span>pressure_mmHg(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;f64, String&gt; {
         <span class="kw">match </span><span class="self">self</span>.quantity_name {
             QuantityName::Pressure =&gt; {

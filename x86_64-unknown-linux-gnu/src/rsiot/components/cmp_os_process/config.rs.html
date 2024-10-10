@@ -19,9 +19,11 @@
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
 <a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
-<span class="attr">#[derive(Clone)]
+<span class="doccomment">/// Конфигурация компонента cmp_os_process
+</span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>Config&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
