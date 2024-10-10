@@ -1,18 +1,5 @@
 # cmp_leptos
 
-## Таргеты
-
-- [wasm32-unknown-unknown](../targets/wasm32-unknown-unknown.md)
-- [aarch64-linux-android](../targets/aarch64-linux-android.md) (Tauri / Android)
-- [armv7-linux-androideabi](../targets/armv7-linux-androideabi.md) (Tauri / Android)
-- [i686-linux-android](../targets/i686-linux-android.md) (Tauri / Android)
-- [x86_64-linux-android](../targets/x86_64-linux-android.md) (Tauri / Android)
-
-## Trunk
-
-```bash
-cargo install trunk
-```
 
 ## Tauri
 

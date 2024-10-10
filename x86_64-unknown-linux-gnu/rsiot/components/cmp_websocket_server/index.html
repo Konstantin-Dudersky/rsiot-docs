@@ -58,6 +58,7 @@
         buffer_size: <span class="number">100</span>,
         service: Service::example_service,
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+        delay_publish: Duration::from_millis(<span class="number">100</span>),
     };
 
     ComponentExecutor::new(executor_config)
