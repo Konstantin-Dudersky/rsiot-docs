@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["ton"]};
+window.SIDEBAR_ITEMS = {"mod":["ton","tp"]};

@@ -86,13 +86,13 @@
 </span><span class="attr">#[derive(Clone, Copy, Debug, Default, PartialEq, Deserialize, Serialize)]
 </span><span class="kw">pub enum </span>QMode {
     <span class="doccomment">/// Автоматический режим
+    </span><span class="attr">#[default]
     </span>Auto,
 
     <span class="doccomment">/// Местный
     </span>Local,
 
     <span class="doccomment">/// Ручной
-    </span><span class="attr">#[default]
     </span>Manual,
 
     <span class="doccomment">/// Out of service - выведен из эксплуатации

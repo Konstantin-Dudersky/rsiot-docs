@@ -64,7 +64,7 @@
 <span class="kw">pub use </span><span class="kw">super</span>::<span class="kw">super</span>::select_mode::QMode;
 
 <span class="doccomment">/// Область памяти output
-</span><span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
+</span><span class="attr">#[derive(Clone, Default, Debug, Deserialize, Serialize)]
 </span><span class="kw">pub struct </span>Q {
     <span class="doccomment">/// Статус для вывода на hmi
     </span><span class="kw">pub </span>hmi_status: QHmiStatus,
