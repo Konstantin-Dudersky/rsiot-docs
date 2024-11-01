@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Config"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"enum":["ConfigCmpPlcData","Error"],"struct":["Config"],"type":["Cmp"]};

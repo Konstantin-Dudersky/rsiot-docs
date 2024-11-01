@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_http_server/fn_process.rs`."><title>fn_process.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_http_server/fn_process.rs`."><title>fn_process.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -78,59 +78,58 @@
 <a href="#78" id="78">78</a>
 <a href="#79" id="79">79</a>
 <a href="#80" id="80">80</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::{
-    net::{IpAddr, Ipv4Addr, SocketAddr},
-    sync::Arc,
-};
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>axum::routing;
-<span class="kw">use </span>tokio::time::{sleep, Duration};
+<span class="kw">use </span>tokio::{sync::Mutex, task::JoinSet};
 <span class="kw">use </span>tower_http::{
     cors::CorsLayer,
     trace::{DefaultMakeSpan, DefaultOnRequest, DefaultOnResponse, TraceLayer},
     LatencyUnit,
 };
-<span class="kw">use </span>tracing::{error, info, Level};
+<span class="kw">use </span>tracing::{info, Level};
 
 <span class="kw">use crate</span>::{
-    executor::{CmpInOut, ComponentError},
+    executor::{join_set_spawn, CmpInOut, ComponentError},
     message::MsgDataBound,
 };
 
-<span class="kw">use super</span>::{config::Config, error::Error, routes, shared_state::SharedState};
+<span class="kw">use super</span>::{config::Config, routes, shared_state::SharedState, tasks};
 
 <span class="doccomment">/// Компонент для получения и ввода сообщений через HTTP Server
 </span><span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
-    output: CmpInOut&lt;TMsg&gt;,
+    msg_bus: CmpInOut&lt;TMsg&gt;,
     config: Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Component started, configuration: {:?}"</span>, config);
-    <span class="comment">// общее состояние
-    </span><span class="kw">let </span>shared_state = Arc::new(SharedState {
-        cmp_interface: output,
+
+    <span class="comment">// Общее состояние
+    </span><span class="kw">let </span>shared_state = Arc::new(Mutex::new(SharedState {
+        msg_bus: msg_bus.clone(),
         config: config.clone(),
-    });
-    <span class="kw">loop </span>{
-        <span class="kw">let </span>result = task_main(shared_state.clone(), config.port).<span class="kw">await</span>;
-        <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = result {
-            <span class="macro">error!</span>(<span class="string">"{:?}"</span>, err);
-        }
-        <span class="macro">info!</span>(<span class="string">"Restarting..."</span>);
-        sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await
-    </span>}
-}
+        cmp_plc_input: <span class="string">"Data not received"</span>.to_string(),
+        cmp_plc_output: <span class="string">"Data not received"</span>.to_string(),
+        cmp_plc_static: <span class="string">"Data not received"</span>.to_string(),
+    }));
 
-<span class="kw">async fn </span>task_main&lt;TMsg&gt;(shared_state: Arc&lt;SharedState&lt;TMsg&gt;&gt;, port: u16) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;
-<span class="kw">where
-    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-{
-    <span class="kw">let </span>ipaddr = IpAddr::V4(Ipv4Addr::new(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));
-    <span class="kw">let </span>socket_addr = SocketAddr::new(ipaddr, port);
+    <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt; = JoinSet::new();
 
-    <span class="kw">let </span>layer_cors = CorsLayer::permissive();
+    <span class="comment">// Задача обработки данных из `cmp_plc` --------------------------------------------------------
+    </span><span class="kw">let </span>task = tasks::CmpPlcData {
+        input: msg_bus.clone(),
+        shared_state: shared_state.clone(),
+        fn_input: config.cmp_plc,
+    };
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
+
+    <span class="comment">// Задача работы сервера Axum ------------------------------------------------------------------
+    </span><span class="kw">let </span>layer_cors = CorsLayer::permissive();
 
     <span class="kw">let </span>layer_trace = TraceLayer::new_for_http()
         .make_span_with(DefaultMakeSpan::new().level(Level::DEBUG))
@@ -141,21 +140,28 @@
                 .latency_unit(LatencyUnit::Micros),
         );
 
-    <span class="kw">let </span>app = routing::Router::new()
+    <span class="kw">let </span>router = routing::Router::new()
         .route(<span class="string">"/"</span>, routing::get(routes::root))
         .route(<span class="string">"/messages"</span>, routing::get(routes::list::&lt;TMsg&gt;))
         .route(<span class="string">"/messages/:id"</span>, routing::get(routes::get::&lt;TMsg&gt;))
         .route(<span class="string">"/messages"</span>, routing::put(routes::replace::&lt;TMsg&gt;))
+        .route(<span class="string">"/plc/input"</span>, routing::get(routes::plc_input::&lt;TMsg&gt;))
+        .route(<span class="string">"/plc/output"</span>, routing::get(routes::plc_output::&lt;TMsg&gt;))
+        .route(<span class="string">"/plc/static"</span>, routing::get(routes::plc_static::&lt;TMsg&gt;))
         .with_state(shared_state)
         .layer(layer_cors)
         .layer(layer_trace);
 
-    <span class="kw">let </span>listener = tokio::net::TcpListener::bind(socket_addr)
-        .<span class="kw">await
-        </span>.map_err(Error::BindPort)<span class="question-mark">?</span>;
+    <span class="kw">let </span>task = tasks::AxumServe {
+        port: config.port,
+        router,
+    };
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
 
-    axum::serve(listener, app).<span class="kw">await</span>.map_err(Error::AxumServe)<span class="question-mark">?</span>;
-
+    <span class="comment">// Ждем выполнения всех задач ------------------------------------------------------------------
+    </span><span class="kw">while let </span><span class="prelude-val">Some</span>(res) = task_set.join_next().<span class="kw">await </span>{
+        res.unwrap().unwrap()
+    }
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

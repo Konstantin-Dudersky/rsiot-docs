@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_plc/plc/function_block_base.rs`."><title>function_block_base.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-405f8b29f52305f8.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.83.0-nightly (c2f74c3f9 2024-09-09)" data-channel="nightly" data-search-js="search-0cfde64e8ad3a7fe.js" data-settings-js="settings-7e3bb6c46e92e77c.js" ><script src="../../../../../static.files/storage-29b1d5a9048d38fe.js"></script><script defer src="../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-14659ec02b58af51.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-40f72c9259523cb3.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_plc/plc/function_block_base.rs`."><title>function_block_base.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-b0742ba02757f159.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0-nightly (e92993dbb 2024-10-18)" data-channel="nightly" data-search-js="search-e056c65ede92db13.js" data-settings-js="settings-805db61a62df4bd2.js" ><script src="../../../../../static.files/storage-1d39b6787ed640ff.js"></script><script defer src="../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-f070b9041d14864c.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-0111fcff984fae8f.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/components/cmp_plc/plc/</div>function_block_base.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
 <a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -72,12 +72,30 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a></pre></div><pre class="rust"><code><span class="doccomment">//! Функциональный блок
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a></pre></div><pre class="rust"><code><span class="doccomment">//! Функциональный блок
 
-</span><span class="kw">use </span>serde::{Deserialize, Serialize};
+</span><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="doccomment">/// Функциональный блок
-</span><span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>FunctionBlockBase&lt;I, Q, S&gt;
 <span class="kw">where
     </span>I: Clone + Default + Serialize,
@@ -91,7 +109,6 @@
     </span><span class="kw">pub </span>output: Q,
     <span class="doccomment">/// Статичные данные - сохраняются между вызовами
     </span><span class="kw">pub </span>stat: S,
-
     <span class="doccomment">/// Системные данные функционального блока
     </span>fb_system_data: FbSystemData,
 }
@@ -103,18 +120,25 @@
     S: Clone + Default + Serialize,
     <span class="self">Self</span>: IFunctionBlock&lt;I, Q, S&gt;,
 {
-    <span class="doccomment">/// Создание экземпляря функционального блока со значениями по-умолчанию
-    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Создание экземпляра функционального блока со значениями по-умолчанию
+    </span><span class="kw">pub fn </span>new(period: Duration) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            fb_system_data: FbSystemData { first_call: <span class="bool-val">true </span>},
+            fb_system_data: FbSystemData {
+                first_call: <span class="bool-val">true</span>,
+                period,
+            },
             ..Default::default()
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_with_restore_stat(<span class="self">self</span>, stat: S) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Создание экземпляра функционального блока с восстановленными значениями области stat
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_with_restore_stat(<span class="self">self</span>, stat: S, period: Duration) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             stat,
-            fb_system_data: FbSystemData { first_call: <span class="bool-val">true </span>},
+            fb_system_data: FbSystemData {
+                first_call: <span class="bool-val">true</span>,
+                period,
+            },
             ..Default::default()
         }
     }
@@ -125,6 +149,11 @@
         <span class="self">self</span>.input = input.clone();
         <span class="self">self</span>.fb_system_data.first_call = <span class="bool-val">false</span>;
         <span class="self">self</span>.output.clone()
+    }
+
+    <span class="doccomment">/// Период вызова блока
+    </span><span class="kw">pub fn </span>get_period(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Duration {
+        <span class="self">self</span>.fb_system_data.period
     }
 }
 
@@ -141,9 +170,12 @@
 }
 
 <span class="doccomment">/// Системные данные функционального блока
-</span><span class="attr">#[derive(Clone, Default, Deserialize, Serialize)]
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>FbSystemData {
     <span class="doccomment">/// true - первый вызов функционального блока
     </span><span class="kw">pub </span>first_call: bool,
+
+    <span class="doccomment">/// Период вызова блока
+    </span><span class="kw">pub </span>period: Duration,
 }
 </code></pre></div></section></main></body></html>
