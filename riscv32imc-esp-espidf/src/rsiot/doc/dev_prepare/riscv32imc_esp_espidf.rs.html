@@ -135,9 +135,7 @@
 <a href="#134" id="134">134</a>
 <a href="#135" id="135">135</a>
 <a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a></pre></div><pre class="rust"><code><span class="doccomment">//! # riscv32imc-esp-espidf
+<a href="#137" id="137">137</a></pre></div><pre class="rust"><code><span class="doccomment">//! # riscv32imc-esp-espidf
 //!
 //! ## Подготовка среды разработки
 //!
@@ -248,14 +246,12 @@
 //! **`rust-toolchain.toml`**
 //!
 //! ```toml
-//! [toolchain]
-//! channel = "nightly"
-//! components = ["rust-src"]
-//! ```
+</span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"../../../rust-toolchain.toml"</span>)]
+</span><span class="doccomment">//! ```
 //!
 //! **`sdkconfig.defaults`**
 //!
-//! ```
+//! ```toml
 </span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"../../../sdkconfig.defaults"</span>)]
 </span><span class="doccomment">//! ```
 //!
