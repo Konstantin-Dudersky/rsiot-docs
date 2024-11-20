@@ -149,7 +149,7 @@
         <span class="kw">let </span>(ch_2_send, ch_2_recv) = channel(<span class="number">100</span>);
 
         <span class="comment">// Входящие сообщения в канал mpsc
-        </span><span class="kw">let </span>task = shared_tasks::msg_bus_to_mpsc::MsgBusToMpsc {
+        </span><span class="kw">let </span>task = shared_tasks::msgbus_to_mpsc::MsgBusToMpsc {
             msg_bus: <span class="self">self</span>.msg_bus.clone(),
             output: ch_0_send,
         };

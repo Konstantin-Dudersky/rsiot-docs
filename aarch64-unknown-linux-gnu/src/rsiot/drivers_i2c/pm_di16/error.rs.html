@@ -18,7 +18,7 @@
 <a href="#18" id="18">18</a>
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{components::shared_tasks, drivers_i2c::postcard_serde};
+</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{components::shared_tasks, serde_utils::postcard_serde};
 
 <span class="attr">#[allow(missing_docs)]
 #[derive(Debug, thiserror::Error)]
@@ -27,7 +27,7 @@
     </span>TaskFilterIdenticalData(shared_tasks::filter_identical_data::Error),
 
     <span class="attr">#[error(transparent)]
-    </span>TaskMpscToMsgBus(shared_tasks::mpsc_to_msg_bus::Error),
+    </span>TaskMpscToMsgBus(shared_tasks::mpsc_to_msgbus::Error),
 
     <span class="attr">#[error(transparent)]
     </span>Serde(<span class="attr">#[from] </span>postcard_serde::Error),

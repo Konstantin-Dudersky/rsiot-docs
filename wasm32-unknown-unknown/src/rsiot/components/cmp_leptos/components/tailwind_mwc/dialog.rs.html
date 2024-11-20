@@ -103,7 +103,7 @@
 <a href="#103" id="103">103</a>
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Диалог
 ///
@@ -142,14 +142,14 @@
     </span>actions: FActions,
 ) -&gt; <span class="kw">impl </span>IntoView
 <span class="kw">where
-    </span>FHeadline: Fn() -&gt; IvHeadline + <span class="lifetime">'static</span>,
-    IvHeadline: IntoView,
+    </span>FHeadline: Fn() -&gt; IvHeadline + <span class="lifetime">'static </span>+ Send + Sync,
+    IvHeadline: IntoView + <span class="lifetime">'static</span>,
 
-    FContent: Fn() -&gt; IvContent + <span class="lifetime">'static</span>,
-    IvContent: IntoView,
+    FContent: Fn() -&gt; IvContent + <span class="lifetime">'static </span>+ Send + Sync,
+    IvContent: IntoView + <span class="lifetime">'static</span>,
 
-    FActions: Fn() -&gt; IvActions + <span class="lifetime">'static</span>,
-    IvActions: IntoView,
+    FActions: Fn() -&gt; IvActions + <span class="lifetime">'static </span>+ Send + Sync,
+    IvActions: IntoView + <span class="lifetime">'static</span>,
 {
     <span class="macro">view!</span> {
         &lt;Show when=<span class="kw">move </span>|| visible.get()&gt;

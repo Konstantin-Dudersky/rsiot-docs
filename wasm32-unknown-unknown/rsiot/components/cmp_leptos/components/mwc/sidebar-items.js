@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["IconButtonKind","TextFieldKind"],"fn":["Dialog","FilledButton","IconButton","Switch","TextField","Valve","ValveAnalog"]};

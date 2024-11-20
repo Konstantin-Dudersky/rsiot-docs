@@ -58,20 +58,30 @@
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
 <a href="#60" id="60">60</a>
-</pre></div><pre class="rust"><code><span class="kw">use super</span>::{IHmiCommand, QHmiPermission, QHmiStatus, QMode, QState, I, Q, S};
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::cmp_plc::plc::FbSystemData;
+
+<span class="kw">use super</span>::{IHmiCommand, QHmiPermission, QHmiStatus, QMode, QState, I, Q, S};
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::select_mode;
 
-<span class="kw">pub fn </span>logic(input: <span class="kw-2">&amp;</span>I, stat: <span class="kw-2">&amp;mut </span>S) -&gt; Q {
+<span class="kw">pub fn </span>logic(input: <span class="kw-2">&amp;</span>I, stat: <span class="kw-2">&amp;mut </span>S, system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
     <span class="comment">// Выбор режима
-    </span>stat.mode.call(<span class="kw-2">&amp;mut </span>select_mode::I {
-        mode_source: input.mode_source,
-        mode_auto: input.mode_auto,
-        mode_man: input.mode_man,
-        mode_local: <span class="bool-val">false</span>,
-        mode_oos: <span class="bool-val">false</span>,
-        hmi_command: input.hmi_command.into(),
-    });
+    </span>stat.mode.call(
+        <span class="kw-2">&amp;mut </span>select_mode::I {
+            mode_source: input.mode_source,
+            mode_auto: input.mode_auto,
+            mode_man: input.mode_man,
+            mode_local: <span class="bool-val">false</span>,
+            mode_oos: <span class="bool-val">false</span>,
+            hmi_command: input.hmi_command.into(),
+        },
+        system_data.period,
+    );
     <span class="kw">let </span>mode = stat.mode.output.mode;
 
     <span class="comment">// Команда на запуск

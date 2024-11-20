@@ -34,9 +34,7 @@
 <a href="#34" id="34">34</a>
 <a href="#35" id="35">35</a>
 <a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a>
-<a href="#38" id="38">38</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">const </span>CLASS_NAMES: <span class="kw-2">&amp;</span>str = <span class="string">"h-full bg-background text-on-background"</span>;
 <span class="kw">const </span>STYLE: <span class="kw-2">&amp;</span>str = <span class="string">"color-scheme: $color_scheme"</span>;
@@ -55,13 +53,13 @@
     /// - light-high-contrast
     /// - light-medium-contrast
     /// - light
-    </span><span class="attr">#[prop(default = MaybeSignal::Static(<span class="string">"light"</span>.into()))]
-    </span>theme: MaybeSignal&lt;String&gt;,
+    </span><span class="attr">#[prop(default = Signal::derive(|| <span class="string">"light"</span>.into()))]
+    </span>theme: Signal&lt;String&gt;,
 
     <span class="doccomment">/// Свойство CSS color-scheme
-    </span>html_color_scheme: MaybeSignal&lt;String&gt;,
+    </span>html_color_scheme: Signal&lt;String&gt;,
 ) -&gt; <span class="kw">impl </span>IntoView {
-    create_effect(<span class="kw">move </span>|<span class="kw">_</span>| {
+    Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| {
         <span class="kw">let </span>body_element = document().get_element_by_id(<span class="string">"body"</span>).unwrap();
 
         <span class="kw">let </span>theme = theme.get();
@@ -71,7 +69,5 @@
         <span class="kw">let </span>style = STYLE.replace(<span class="string">"$color_scheme"</span>, <span class="kw-2">&amp;</span>html_color_scheme.get());
         body_element.set_attribute(<span class="string">"style"</span>, <span class="kw-2">&amp;</span>style).unwrap();
     });
-
-    <span class="macro">view!</span> {}
 }
 </code></pre></div></section></main></body></html>

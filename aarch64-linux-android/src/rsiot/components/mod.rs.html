@@ -170,6 +170,14 @@
 <a href="#170" id="170">170</a>
 <a href="#171" id="171">171</a>
 <a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
@@ -220,6 +228,10 @@
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[cfg(riscv32imc_esp_espidf)]
+</span><span class="kw">pub mod </span>cmp_esp_uart_slave;
+
+<span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
+#[cfg(riscv32imc_esp_espidf)]
 </span><span class="kw">pub mod </span>cmp_esp_wifi;
 
 <span class="kw">pub mod </span>cmp_external_fn_process;
@@ -261,6 +273,10 @@
 <span class="attr">#[cfg(feature = <span class="string">"cmp_leptos"</span>)]
 #[cfg(wasm32_unknown_unknown)]
 </span><span class="kw">pub mod </span>cmp_leptos;
+
+<span class="attr">#[cfg(feature = <span class="string">"cmp_linux_uart_master"</span>)]
+#[cfg(any(aarch64_unknown_linux_gnu, x8664_unknown_linux_gnu))]
+</span><span class="kw">pub mod </span>cmp_linux_uart_master;
 
 <span class="kw">pub mod </span>cmp_logger;
 

@@ -46,7 +46,7 @@
     </span>TokioTaskJoin(<span class="attr">#[from] </span>tokio::task::JoinError),
 
     <span class="attr">#[error(transparent)]
-    </span>ToCmpOutput(<span class="attr">#[from] </span>shared_tasks::mpsc_to_msg_bus::Error),
+    </span>ToCmpOutput(<span class="attr">#[from] </span>shared_tasks::mpsc_to_msgbus::Error),
 }
 
 <span class="kw">impl </span>From&lt;Error&gt; <span class="kw">for </span>ComponentError {

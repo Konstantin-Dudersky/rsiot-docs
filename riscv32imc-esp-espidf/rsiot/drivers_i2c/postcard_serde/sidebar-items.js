@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["MESSAGE_LEN"],"enum":["Error"],"fn":["deserialize","deserialize_crc","deserialize_nocrc","serialize","serialize_crc","serialize_nocrc"]};

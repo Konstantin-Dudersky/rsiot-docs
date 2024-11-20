@@ -109,8 +109,31 @@
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>gloo::storage::{LocalStorage, Storage};
-<span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+<span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>tokio::task::JoinSet;
 <span class="kw">use </span>tracing::debug;
 
@@ -133,21 +156,26 @@
     TView: Fn() -&gt; TIntoView + <span class="lifetime">'static</span>,
     TIntoView: IntoView,
 {
-    provide_context(GlobalState::&lt;TMsg&gt; {
+    <span class="kw">let </span>gs = GlobalState::&lt;TMsg&gt; {
         hostname: config.hostname,
-        input: create_rw_signal(<span class="prelude-val">None</span>),
-        output: create_rw_signal(<span class="prelude-val">None</span>),
+        input: RwSignal::new(<span class="prelude-val">None</span>),
+        output: RwSignal::new(<span class="prelude-val">None</span>),
         cache: in_out.cache.clone(),
-        auth_perm: create_rw_signal(AuthPermissions::NoAccess),
-    });
-    <span class="kw">let </span>gs = use_context::&lt;GlobalState&lt;TMsg&gt;&gt;().expect(<span class="string">"No global state"</span>);
+        auth_perm: RwSignal::new(AuthPermissions::NoAccess),
+    };
 
-    mount_to_body(config.body_component);
+    <span class="comment">// Монтируем корневой компонент
+    </span><span class="kw">let </span>gs_clone = gs.clone();
+    mount_to_body(<span class="kw">move </span>|| {
+        <span class="macro">view!</span> {
+            &lt;RootComponent body_component = config.body_component global_state=gs_clone /&gt;
+        }
+    });
     <span class="macro">debug!</span>(<span class="string">"Leptos app mounted"</span>);
 
     <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="prelude-ty">Result</span>&gt; = JoinSet::new();
     task_set.spawn_local(task_input(in_out.clone(), gs.clone()));
-    task_set.spawn_local(task_output(in_out, gs));
+    task_set.spawn_local(task_output(in_out, gs.clone()));
     <span class="kw">while let </span><span class="prelude-val">Some</span>(task_result) = task_set.join_next().<span class="kw">await </span>{
         task_result<span class="question-mark">??
     </span>}
@@ -156,7 +184,7 @@
 
 <span class="kw">async fn </span>task_input&lt;TMsg&gt;(<span class="kw-2">mut </span>input: CmpInOut&lt;TMsg&gt;, global_state: GlobalState&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
-    </span>TMsg: MsgDataBound,
+    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
         <span class="comment">// Разрешения
@@ -177,9 +205,9 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>task_output&lt;TMsg&gt;(output: CmpInOut&lt;TMsg&gt;, gs: GlobalState&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Result
+<span class="kw">async fn </span>task_output&lt;TMsg&gt;(output: CmpInOut&lt;TMsg&gt;, global_state: GlobalState&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
-    </span>TMsg: MsgDataBound,
+    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = try_to_find_token() {
         output.send_output(msg).<span class="kw">await</span>.map_err(Error::CmpOutput)<span class="question-mark">?</span>;
@@ -187,8 +215,8 @@
 
     <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = tokio::sync::mpsc::channel(<span class="number">100</span>);
 
-    create_effect(<span class="kw">move </span>|<span class="kw">_</span>| {
-        <span class="kw">let </span>msg = gs.output.get();
+    Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| {
+        <span class="kw">let </span>msg = global_state.output.get();
         <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = msg {
             tx.blocking_send(msg)
                 .map_err(|e| Error::TokioMpscSend(e.to_string()))<span class="question-mark">?</span>;
@@ -218,6 +246,24 @@
             <span class="prelude-val">Some</span>(msg)
         }
         <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+    }
+}
+
+<span class="doccomment">/// Корневой компонент
+</span><span class="attr">#[component]
+</span><span class="kw">fn </span>RootComponent&lt;TMsg, TView, TIntoView&gt;(
+    body_component: TView,
+    global_state: GlobalState&lt;TMsg&gt;,
+) -&gt; <span class="kw">impl </span>IntoView
+<span class="kw">where
+    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TView: Fn() -&gt; TIntoView,
+    TIntoView: IntoView,
+{
+    provide_context(global_state);
+
+    <span class="macro">view!</span> {
+        { body_component() }
     }
 }
 </code></pre></div></section></main></body></html>

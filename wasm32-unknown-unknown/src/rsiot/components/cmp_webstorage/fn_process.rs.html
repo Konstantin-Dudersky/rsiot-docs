@@ -86,7 +86,7 @@
     <span class="kw">let </span>(taskout_output, taskin_mpsc_to_msgbus) = channel(channel_capacity);
 
     <span class="comment">// Со входа компонента на задачу Input
-    </span><span class="kw">let </span>task_0 = shared_tasks::msg_bus_to_mpsc::MsgBusToMpsc {
+    </span><span class="kw">let </span>task_0 = shared_tasks::msgbus_to_mpsc::MsgBusToMpsc {
         msg_bus: msg_bus.clone(),
         output: taskout_msgbus_to_mpsc,
     };
@@ -113,7 +113,7 @@
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task_2.spawn());
 
     <span class="comment">// Отправка исходящих сообщений
-    </span><span class="kw">let </span>task_3 = shared_tasks::mpsc_to_msg_bus::MpscToMsgBus {
+    </span><span class="kw">let </span>task_3 = shared_tasks::mpsc_to_msgbus::MpscToMsgBus {
         input: taskin_mpsc_to_msgbus,
         cmp_in_out: msg_bus.clone(),
     };

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["components","doc","drivers_i2c","executor","logging","message"]};
+window.SIDEBAR_ITEMS = {"mod":["components","doc","drivers_i2c","executor","logging","message","serde_utils"]};

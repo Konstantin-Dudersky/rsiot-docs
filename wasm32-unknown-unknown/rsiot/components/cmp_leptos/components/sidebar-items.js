@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["MaterialTheme"],"fn":["Go2rtc","Theme"],"mod":["mwc","plc_lib","svg_dynamic","tailwind","tailwind_mwc"]};
+window.SIDEBAR_ITEMS = {"enum":["MaterialTheme"],"fn":["Go2rtc","Theme"],"mod":["plc_lib","svg_dynamic","tailwind","tailwind_mwc"]};

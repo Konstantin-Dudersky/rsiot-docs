@@ -45,13 +45,13 @@
 <a href="#45" id="45">45</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Изменить стили всех элементов файла svg. Полезно для переключения темы
 
-</span><span class="kw">use </span>leptos::{document, wasm_bindgen::JsCast};
+</span><span class="kw">use </span>leptos::{leptos_dom::helpers::document, wasm_bindgen::JsCast};
 
 <span class="kw">use super</span>::{<span class="kw">super</span>::material_theme::MaterialTheme, change_svg_prop, INK_LABEL};
 
-<span class="kw">pub fn </span>set_global_style(svg_id: String) {
+<span class="kw">pub fn </span>set_global_style(svg_id: <span class="kw-2">&amp;</span>str) {
     <span class="kw">let </span>root_node = document()
-        .get_element_by_id(<span class="kw-2">&amp;</span>svg_id)
+        .get_element_by_id(svg_id)
         .unwrap()
         .parent_node()
         .unwrap();

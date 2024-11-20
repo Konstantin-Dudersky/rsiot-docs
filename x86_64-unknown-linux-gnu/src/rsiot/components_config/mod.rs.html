@@ -36,6 +36,9 @@
 <a href="#36" id="36">36</a>
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Структуры для конфигурации компонентов.
 //!
 //! Конфигурация описывается в элементах языка Rust, не зависит от конкретных коммуникационных
@@ -74,4 +77,7 @@
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_websocket_server"</span>)]
 </span><span class="kw">pub mod </span>websocket_server;
+
+<span class="attr">#[cfg(any(feature = <span class="string">"cmp_esp"</span>, feature = <span class="string">"cmp_linux_uart_master"</span>,))]
+</span><span class="kw">pub mod </span>uart_general;
 </code></pre></div></section></main></body></html>

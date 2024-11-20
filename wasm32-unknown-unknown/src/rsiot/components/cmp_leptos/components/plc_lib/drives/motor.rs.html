@@ -168,8 +168,7 @@
 <a href="#168" id="168">168</a>
 <a href="#169" id="169">169</a>
 <a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">use </span><span class="kw">crate</span>::components::cmp_plc::plc::library::drives::{
     motor::{IHmiCommand, QHmiStatus, QState},
@@ -197,11 +196,11 @@
     </span>visible: Signal&lt;bool&gt;,
 
     <span class="doccomment">/// Нажатие кнопки "Закрыть"
-    </span>on_close: <span class="kw">impl </span>Fn() + <span class="lifetime">'static </span>+ Copy,
+    </span>on_close: <span class="kw">impl </span>Fn() + <span class="lifetime">'static </span>+ Copy + Send + Sync,
 ) -&gt; <span class="kw">impl </span>IntoView {
     <span class="macro">view!</span> {
         &lt;Dialog
-            visible=<span class="kw">move </span>|| visible.get()
+            visible=visible
             headline=<span class="kw">move </span>|| <span class="macro">view!</span> { {title} }
             content=<span class="kw">move </span>|| {
                 <span class="macro">view!</span> { &lt;Content hmi_status=hmi_status hmi_command=hmi_command/&gt; }
@@ -234,11 +233,11 @@
 
             <span class="comment">// Режим работы ------------------------------------------------------------------------
             </span>&lt;SelectMode
-                mode = <span class="kw">move </span>|| hmi_status.get().mode
-                hmi_permission_mode_man = <span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_man
-                hmi_permission_mode_auto = <span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_auto
-                hmi_permission_mode_local = <span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_local
-                hmi_permission_mode_oos = <span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_oos
+                mode = Signal::derive(<span class="kw">move </span>|| hmi_status.get().mode)
+                hmi_permission_mode_man = Signal::derive(<span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_man)
+                hmi_permission_mode_auto = Signal::derive(<span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_auto)
+                hmi_permission_mode_local = Signal::derive(<span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_local)
+                hmi_permission_mode_oos = Signal::derive(<span class="kw">move </span>|| hmi_status.get().hmi_permission.mode_oos)
                 on_hmi_command = <span class="kw">move </span>|hc| {
                     <span class="kw">let </span>hc = <span class="kw">match </span>hc {
                         select_mode::IHmiCommand::no_command =&gt; IHmiCommand::no_command,
@@ -250,7 +249,6 @@
                     hmi_command.set(hc);
                 }
             /&gt;
-
         &lt;/div&gt;
     }
 }
@@ -262,7 +260,7 @@
     <span class="doccomment">/// Управление
     </span>hmi_command: WriteSignal&lt;IHmiCommand&gt;,
 ) -&gt; <span class="kw">impl </span>IntoView {
-    <span class="kw">let </span>(visible_state, visible_state_set) = create_signal(<span class="bool-val">false</span>);
+    <span class="kw">let </span>(visible_state, visible_state_set) = signal(<span class="bool-val">false</span>);
 
     <span class="macro">view!</span> {
         &lt;div class=<span class="string">"flex flex-row items-center gap-4"</span>&gt;
@@ -288,11 +286,11 @@
                     icon=|| <span class="macro">view!</span> {
                         &lt;span class=<span class="string">"iconify material-symbols--more-horiz h-6 w-6"</span>&gt;&lt;/span&gt;
                     }
-                    disabled=MaybeSignal::derive(<span class="kw">move </span>|| {
+                    disabled=Signal::derive(<span class="kw">move </span>|| {
                         !hmi_status.get().hmi_permission.man_start
                             &amp;&amp; !hmi_status.get().hmi_permission.man_stop
                     })
-                    toggled=MaybeSignal::derive(<span class="kw">move </span>|| visible_state.get())
+                    toggled=Signal::derive(<span class="kw">move </span>|| visible_state.get())
                     on_click= <span class="kw">move </span>|| visible_state_set.update(|v| <span class="kw-2">*</span>v = !<span class="kw-2">*</span>v)
                 /&gt;
             &lt;/div&gt;
@@ -307,7 +305,7 @@
                             hmi_command.set(IHmiCommand::man_start)
                         }
 
-                        disabled=MaybeSignal::derive(<span class="kw">move </span>|| {
+                        disabled=Signal::derive(<span class="kw">move </span>|| {
                             !hmi_status.get().hmi_permission.man_start
                         })
 
@@ -325,7 +323,7 @@
                             hmi_command.set(IHmiCommand::man_stop)
                         }
 
-                        disabled=MaybeSignal::derive(<span class="kw">move </span>|| {
+                        disabled=Signal::derive(<span class="kw">move </span>|| {
                             !hmi_status.get().hmi_permission.man_stop
                         })
 

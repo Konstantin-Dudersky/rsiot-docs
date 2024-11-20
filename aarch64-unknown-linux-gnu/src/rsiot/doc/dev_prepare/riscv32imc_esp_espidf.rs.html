@@ -137,20 +137,6 @@
 <a href="#137" id="137">137</a>
 <a href="#138" id="138">138</a>
 <a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # riscv32imc-esp-espidf
 //!
 //! ## Подготовка среды разработки
@@ -270,22 +256,8 @@
 //! **`sdkconfig.defaults`**
 //!
 //! ```
-//! # Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
-//! CONFIG_ESP_MAIN_TASK_STACK_SIZE=8000
-//!
-//! # Use this to set FreeRTOS kernel tick frequency to 1000 Hz (100 Hz by default).
-//! # This allows to use 1 ms granuality for thread sleeps (10 ms by default).
-//! #CONFIG_FREERTOS_HZ=1000
-//!
-//! # Workaround for https://github.com/espressif/esp-idf/issues/7631
-//! #CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=n
-//! #CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=n
-//!
-//! CONFIG_HTTPD_WS_SUPPORT=y
-//!
-//! # Настройка логгирования
-//! CONFIG_LOG_DEFAULT_LEVEL_VERBOSE=y
-//! ```
+</span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"../../../sdkconfig.defaults"</span>)]
+</span><span class="doccomment">//! ```
 //!
 //! **`Cargo.toml`**
 //!

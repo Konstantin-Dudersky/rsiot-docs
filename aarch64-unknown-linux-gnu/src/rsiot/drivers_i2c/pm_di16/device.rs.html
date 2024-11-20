@@ -164,7 +164,7 @@
         join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
 
         <span class="comment">// Фильтрация одинаковых сообщений
-        </span><span class="kw">let </span>task = shared_tasks::FilterIdenticalData {
+        </span><span class="kw">let </span>task = shared_tasks::filter_identical_data::FilterIdenticalData {
             input: ch_output_to_filter_recv,
             output: ch_filter_to_msgbus_send,
         };
@@ -174,7 +174,7 @@
         );
 
         <span class="comment">// Отправка исходящих сообщений
-        </span><span class="kw">let </span>task = shared_tasks::MpscToMsgBus {
+        </span><span class="kw">let </span>task = shared_tasks::mpsc_to_msgbus::MpscToMsgBus {
             input: ch_filter_to_msgbus_recv,
             cmp_in_out: <span class="self">self</span>.msg_bus,
         };

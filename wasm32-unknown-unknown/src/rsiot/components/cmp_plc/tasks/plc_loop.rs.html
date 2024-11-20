@@ -110,7 +110,6 @@
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>instant::Instant;
@@ -203,7 +202,6 @@
     FunctionBlockBase&lt;I, Q, S&gt;: IFunctionBlock&lt;I, Q, S&gt;,
 {
     <span class="comment">// Инициализация структуры входов в начале цикла
-    // TODO - удалить после внедрения Resettable
     </span>(config.fn_cycle_init)(fb_main_input);
 
     <span class="comment">// Обновляем входную структуру по данным из входящих сообщений
@@ -219,7 +217,7 @@
     </span><span class="kw">let </span>msgs;
     {
         <span class="kw">let </span><span class="kw-2">mut </span>fb_main = fb_main.lock().<span class="kw">await</span>;
-        fb_main.call(fb_main_input);
+        fb_main.call(fb_main_input, config.period);
         msgs = (config.fn_output)(<span class="kw-2">&amp;</span>fb_main.output);
     }
     <span class="prelude-val">Ok</span>(msgs)

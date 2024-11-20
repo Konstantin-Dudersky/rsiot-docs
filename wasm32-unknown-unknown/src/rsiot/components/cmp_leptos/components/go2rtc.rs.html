@@ -29,9 +29,10 @@
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для интеграции видеопотока с сервиса go2rtc
 
-</span><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+</span><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Компонент для интеграции видеопотока с сервиса go2rtc
 </span><span class="attr">#[component]
@@ -58,6 +59,7 @@
     <span class="comment">// let url = format!("http://{hostname}:{port}/webrtc.html?src={camera}");
     </span><span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{hostname}:{port}/stream.html?src={camera}"</span>);
 
-    <span class="macro">view!</span> { &lt;iframe src=url width=width height=height allow=<span class="string">"fullscreen;" </span>scrolling=<span class="string">"no"</span>&gt;&lt;/iframe&gt; }
-}
+    <span class="macro">view!</span> { &lt;iframe src=url width=width height=height allow=<span class="string">"fullscreen;"</span>&gt;&lt;/iframe&gt; }
+    <span class="comment">// TODO: добавить scrolling="no"
+</span>}
 </code></pre></div></section></main></body></html>

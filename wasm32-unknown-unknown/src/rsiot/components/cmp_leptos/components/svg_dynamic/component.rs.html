@@ -146,12 +146,71 @@
 <a href="#146" id="146">146</a>
 <a href="#147" id="147">147</a>
 <a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{rc::Rc, sync::Mutex};
 
-<span class="kw">use </span>ev::Event;
 <span class="kw">use </span>gloo::dialogs::alert;
-<span class="kw">use </span>leptos::<span class="kw-2">*</span>;
-<span class="kw">use </span>tracing::{info, warn};
+<span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>leptos::tachys::html::event::Event;
+<span class="kw">use </span>tracing::warn;
 <span class="kw">use </span>uuid::Uuid;
 <span class="kw">use </span>wasm_bindgen::{closure::Closure, JsCast};
 
@@ -169,54 +228,77 @@
     svg_output: SvgOutput&lt;FOutput&gt;,
 ) -&gt; <span class="kw">impl </span>IntoView
 <span class="kw">where
-    </span>FOutput: Fn(<span class="kw-2">&amp;</span>str) + <span class="lifetime">'static</span>,
+    </span>FOutput: Fn(<span class="kw-2">&amp;</span>str) + <span class="lifetime">'static </span>+ Clone,
 {
     <span class="kw">let </span>id = <span class="macro">format!</span>(<span class="string">"svg_{}"</span>, Uuid::new_v4());
-    <span class="kw">let </span>div_ref = create_node_ref();
+    <span class="kw">let </span>div_ref = NodeRef::new();
+
+    <span class="kw">let </span>id_clone = id.clone();
+
+    <span class="comment">// track_counter отслеживает кол-во обновлений элемента div_ref. Значение 2 означает, что
+    // svg загружен и можно запускать обновление элементов. Почему 2? ХЗ
+    </span><span class="kw">let </span><span class="kw-2">mut </span>track_counter = <span class="number">0</span>;
+    Effect::new(<span class="kw">move </span>|| {
+        div_ref.track();
+        track_counter += <span class="number">1</span>;
+        <span class="kw">if </span>track_counter == <span class="number">2 </span>{
+            <span class="kw">let </span>id_clone = id_clone.clone();
+            <span class="kw">let </span>svg_input = svg_input.clone();
+            <span class="kw">let </span>svg_output = svg_output.clone();
+            setup_svg_input_and_output(id_clone, svg_input, svg_output);
+        }
+    });
+
+    <span class="macro">view!</span> {
+        &lt;div id=id node_ref=div_ref inner_html=file&gt;&lt;/div&gt;
+    }
+}
+
+<span class="kw">fn </span>setup_svg_input_and_output&lt;FOutput&gt;(
+    id_clone: String,
+    svg_input: Vec&lt;SvgInput&gt;,
+    svg_output: SvgOutput&lt;FOutput&gt;,
+) <span class="kw">where
+    </span>FOutput: Fn(<span class="kw-2">&amp;</span>str) + <span class="lifetime">'static</span>,
+{
+    <span class="comment">// Задаем стили элементов svg файла
+    </span><span class="kw">let </span>id_clone = id_clone.clone();
+    Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| set_global_style(<span class="kw-2">&amp;</span>id_clone));
+
+    <span class="comment">// Создаем эффекты для анимации svg
+    </span><span class="kw">for </span>input <span class="kw">in </span>svg_input {
+        <span class="kw">let </span>input_clone = input.clone();
+        Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| create_effect_for_svg_input(<span class="kw-2">&amp;</span>input_clone).unwrap());
+    }
 
     <span class="kw">let </span>output_callback = Rc::new(Mutex::new(Closure::wrap(Box::new(<span class="kw">move </span>|e: Event| {
         <span class="kw">let </span>id = extract_id_from_event(e).unwrap();
         (svg_output.callback)(<span class="kw-2">&amp;</span>id)
     }) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>FnMut(<span class="kw">_</span>)&gt;)));
 
-    <span class="kw">let </span>id_clone = id.clone();
+    <span class="comment">// Создаем обработчики событий из svg
+    </span><span class="kw">for </span>id <span class="kw">in </span><span class="kw-2">&amp;</span>svg_output.ids {
+        <span class="kw">let </span>id_clone = id.clone();
 
-    div_ref.on_load(<span class="kw">move </span>|<span class="kw">_</span>| {
-        <span class="comment">// Задаем стили элементов svg файла
-        </span>create_effect(<span class="kw">move </span>|<span class="kw">_</span>| {
-            <span class="kw">let </span>id_clone = id_clone.clone();
-            set_global_style(id_clone)
+        <span class="kw">let </span>cb_clone = output_callback.clone();
+        <span class="comment">// Не знаю, зачем нужно оборачивать в create_effect, но без него `get_element_by_id` не
+        // находится
+        </span>Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| {
+            <span class="kw">let </span><span class="prelude-val">Some</span>(svg_element) = get_svg_element_by_id(<span class="kw-2">&amp;</span>id_clone) <span class="kw">else </span>{
+                <span class="kw">return</span>;
+            };
+
+            <span class="kw">let </span>lock = cb_clone.lock().unwrap();
+
+            svg_element
+                .add_event_listener_with_callback(<span class="string">"click"</span>, lock.as_ref().unchecked_ref())
+                .unwrap();
+            svg_element
+                .style()
+                .set_property(<span class="string">"cursor"</span>, <span class="string">"pointer"</span>)
+                .unwrap();
         });
-
-        <span class="kw">for </span>input <span class="kw">in </span>svg_input {
-            create_effect(<span class="kw">move </span>|<span class="kw">_</span>| create_effect_for_svg_input(<span class="kw-2">&amp;</span>input).unwrap());
-        }
-
-        <span class="kw">for </span>id <span class="kw">in </span>svg_output.ids {
-            <span class="kw">let </span>cb_clone = output_callback.clone();
-            <span class="comment">// Не знаю, зачем нужно оборачивать в create_effect, но без него `get_element_by_id` не
-            // находится
-            </span>create_effect(<span class="kw">move </span>|<span class="kw">_</span>| {
-                <span class="kw">let </span><span class="prelude-val">Some</span>(svg_element) = get_svg_element_by_id(<span class="kw-2">&amp;</span>id) <span class="kw">else </span>{
-                    <span class="kw">return</span>;
-                };
-
-                <span class="macro">info!</span>(<span class="string">"Регистрация коллбеков для вызова"</span>);
-
-                <span class="kw">let </span>lock = cb_clone.lock().unwrap();
-
-                svg_element
-                    .add_event_listener_with_callback(<span class="string">"click"</span>, lock.as_ref().unchecked_ref())
-                    .unwrap();
-                svg_element
-                    .style()
-                    .set_property(<span class="string">"cursor"</span>, <span class="string">"pointer"</span>)
-                    .unwrap();
-            });
-        }
-    });
-
-    <span class="macro">view!</span> { &lt;div id=id node_ref=div_ref inner_html=file&gt;&lt;/div&gt; }
+    }
 }
 
 <span class="doccomment">/// Извлечение id элемента из события
@@ -294,4 +376,40 @@
     }
     <span class="prelude-val">Some</span>(())
 }
-</code></pre></div></section></main></body></html>
+
+<span class="comment">// div_ref.on_load(move |_| {
+// Задаем стили элементов svg файла
+// create_effect(move |_| {
+//     let id_clone = id_clone.clone();
+//     set_global_style(id_clone)
+// });
+
+// for input in svg_input {
+//     create_effect(move |_| create_effect_for_svg_input(&amp;input).unwrap());
+// }
+
+// for id in svg_output.ids {
+//     let cb_clone = output_callback.clone();
+//     // Не знаю, зачем нужно оборачивать в create_effect, но без него `get_element_by_id` не
+//     // находится
+//     create_effect(move |_| {
+//         let Some(svg_element) = get_svg_element_by_id(&amp;id) else {
+//             return;
+//         };
+
+//         info!("Регистрация коллбеков для вызова");
+
+//         let lock = cb_clone.lock().unwrap();
+
+//         svg_element
+//             .add_event_listener_with_callback("click", lock.as_ref().unchecked_ref())
+//             .unwrap();
+//         svg_element
+//             .style()
+//             .set_property("cursor", "pointer")
+//             .unwrap();
+//     });
+// }
+// });
+//
+</span></code></pre></div></section></main></body></html>

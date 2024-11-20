@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["BMP180Oversampling","I2cDevices","I2cSlaveAddress","PCF8575PinMode"],"mod":["ads1115","ds3231","general","pca9555","pcf8523","pm_di16","pm_rq8","postcard_serde","ssd1306"]};
+window.SIDEBAR_ITEMS = {"enum":["BMP180Oversampling","I2cDevices","I2cSlaveAddress","PCF8575PinMode"],"mod":["ads1115","ds3231","general","pca9555","pcf8523","pm_di16","pm_rq8","ssd1306"]};

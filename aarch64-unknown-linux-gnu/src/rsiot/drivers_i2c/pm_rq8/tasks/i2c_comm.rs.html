@@ -63,12 +63,18 @@
 <a href="#63" id="63">63</a>
 <a href="#64" id="64">64</a>
 <a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>tokio::sync::{Mutex, MutexGuard};
 <span class="kw">use </span>tracing::warn;
 
-<span class="kw">use </span><span class="kw">crate</span>::drivers_i2c::{postcard_serde, I2cSlaveAddress, RsiotI2cDriverBase};
+<span class="kw">use crate</span>::{
+    drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},
+    serde_utils::postcard_serde,
+};
 
 <span class="kw">use super</span>::{I2cRequest, I2cResponse, TaskInput, TaskOutput};
 

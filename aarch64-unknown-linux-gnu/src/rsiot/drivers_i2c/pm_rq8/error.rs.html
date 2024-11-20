@@ -24,7 +24,7 @@
 <a href="#24" id="24">24</a>
 <a href="#25" id="25">25</a>
 <a href="#26" id="26">26</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{components::shared_tasks, drivers_i2c::postcard_serde};
+</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{components::shared_tasks, serde_utils::postcard_serde};
 
 <span class="attr">#[allow(missing_docs)]
 #[derive(Debug, thiserror::Error)]
@@ -36,7 +36,7 @@
     </span>TaskI2cComm,
 
     <span class="attr">#[error(transparent)]
-    </span>TaskMsgBusToMpsc(<span class="attr">#[from] </span>shared_tasks::msg_bus_to_mpsc::Error),
+    </span>TaskMsgBusToMpsc(<span class="attr">#[from] </span>shared_tasks::msgbus_to_mpsc::Error),
 
     <span class="attr">#[error(<span class="string">"TaskOutput"</span>)]
     </span>TaskOutput,

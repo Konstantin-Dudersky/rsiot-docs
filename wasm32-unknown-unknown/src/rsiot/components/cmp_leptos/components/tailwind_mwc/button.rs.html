@@ -62,7 +62,7 @@
 <a href="#62" id="62">62</a>
 <a href="#63" id="63">63</a>
 <a href="#64" id="64">64</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="attr">#[allow(missing_docs)]
 </span><span class="kw">pub enum </span>ButtonKind {
@@ -96,8 +96,8 @@
     </span>on_click: <span class="kw">impl </span>Fn() + <span class="lifetime">'static</span>,
 
     <span class="doccomment">/// true = кнопка заблокирована
-    </span><span class="attr">#[prop(default = MaybeSignal::from(<span class="bool-val">false</span>))]
-    </span>disabled: MaybeSignal&lt;bool&gt;,
+    </span><span class="attr">#[prop(default = Signal::derive(|| <span class="bool-val">false</span>))]
+    </span>disabled: Signal&lt;bool&gt;,
 ) -&gt; <span class="kw">impl </span>IntoView
 <span class="kw">where
     </span>FIcon: Fn() -&gt; IVIcon,

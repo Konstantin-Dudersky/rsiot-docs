@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Baudrate","DataBits","Error","Parity","StopBits"],"mod":["devices"],"struct":["Config","UartMessage"],"trait":["BufferBound","RequestResponseBound"],"type":["Cmp"]};

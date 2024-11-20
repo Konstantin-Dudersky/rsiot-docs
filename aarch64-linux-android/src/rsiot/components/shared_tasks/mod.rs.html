@@ -5,15 +5,11 @@
 <a href="#5" id="5">5</a>
 <a href="#6" id="6">6</a>
 <a href="#7" id="7">7</a>
-<a href="#8" id="8">8</a>
-<a href="#9" id="9">9</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Задачи, которые можно использовать в других компонентах
 
 </span><span class="kw">pub mod </span>change_mpsc_msg;
 <span class="kw">pub mod </span>filter_identical_data;
-<span class="kw">pub mod </span>mpsc_to_msg_bus;
-<span class="kw">pub mod </span>msg_bus_to_mpsc;
-
-<span class="kw">pub use </span>filter_identical_data::FilterIdenticalData;
-<span class="kw">pub use </span>mpsc_to_msg_bus::MpscToMsgBus;
+<span class="kw">pub mod </span>mpsc_to_msgbus;
+<span class="kw">pub mod </span>msgbus_to_broadcast;
+<span class="kw">pub mod </span>msgbus_to_mpsc;
 </code></pre></div></section></main></body></html>

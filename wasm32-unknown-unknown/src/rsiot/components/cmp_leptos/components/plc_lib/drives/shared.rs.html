@@ -105,7 +105,8 @@
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+<a href="#108" id="108">108</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">use </span><span class="kw">crate</span>::components::cmp_plc::plc::library::drives::select_mode::{IHmiCommand, QMode};
 
@@ -113,18 +114,19 @@
 
 <span class="attr">#[component]
 </span><span class="kw">pub fn </span>SelectMode(
-    <span class="attr">#[prop(into)] </span>mode: Signal&lt;QMode&gt;,
+    mode: Signal&lt;QMode&gt;,
     <span class="attr">#[prop(into)] </span>hmi_permission_mode_man: Signal&lt;bool&gt;,
     <span class="attr">#[prop(into)] </span>hmi_permission_mode_auto: Signal&lt;bool&gt;,
     <span class="attr">#[prop(into)] </span>hmi_permission_mode_local: Signal&lt;bool&gt;,
     <span class="attr">#[prop(into)] </span>hmi_permission_mode_oos: Signal&lt;bool&gt;,
 
-    on_hmi_command: <span class="kw">impl </span>Fn(IHmiCommand) + <span class="lifetime">'static </span>+ Copy,
+    on_hmi_command: <span class="kw">impl </span>Fn(IHmiCommand) + <span class="lifetime">'static </span>+ Copy + Send + Sync,
 ) -&gt; <span class="kw">impl </span>IntoView {
-    <span class="kw">let </span>(visible_mode, visible_mode_set) = create_signal(<span class="bool-val">false</span>);
+    <span class="kw">let </span>(visible_mode, visible_mode_set) = signal(<span class="bool-val">false</span>);
 
     <span class="macro">view!</span> {
         &lt;div class=<span class="string">"flex flex-row items-center gap-4"</span>&gt;
+
             &lt;div class=<span class="string">"grow"</span>&gt;Режим работы&lt;/div&gt;
 
             &lt;div&gt;
@@ -157,13 +159,13 @@
                 &lt;IconButton
                     kind=IconButtonKind::OutlinedToggle
                     icon=|| <span class="macro">view!</span> { &lt;span class=<span class="string">"iconify material-symbols--more-horiz h-6 w-6"</span>&gt;&lt;/span&gt; }
-                    disabled=MaybeSignal::derive(<span class="kw">move </span>|| {
+                    disabled=Signal::derive(<span class="kw">move </span>|| {
                         !hmi_permission_mode_man.get()
                             &amp;&amp; !hmi_permission_mode_auto.get()
                             &amp;&amp; !hmi_permission_mode_local.get()
                             &amp;&amp; !hmi_permission_mode_oos.get()
                     })
-                    toggled=MaybeSignal::derive(<span class="kw">move </span>|| visible_mode.get())
+                    toggled=Signal::derive(<span class="kw">move </span>|| visible_mode.get())
                     on_click= <span class="kw">move </span>|| visible_mode_set.update(|v| <span class="kw-2">*</span>v = !<span class="kw-2">*</span>v)
                 /&gt;
             &lt;/div&gt;

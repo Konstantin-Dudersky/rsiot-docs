@@ -57,7 +57,7 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+</pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">use </span><span class="kw">crate</span>::message::MsgDataBound;
 
@@ -68,14 +68,14 @@
     config: Config&lt;TMsg, TValue&gt;,
 ) -&gt; (ReadSignal&lt;TValue&gt;, WriteSignal&lt;TValue&gt;)
 <span class="kw">where
-    </span>TValue: Clone + std::fmt::Debug + Default + <span class="lifetime">'static</span>,
+    </span>TValue: Clone + std::fmt::Debug + Default + <span class="lifetime">'static </span>+ Send + Sync,
     TMsg: MsgDataBound + <span class="lifetime">'static</span>,
 {
-    <span class="kw">let </span>gs = use_context::&lt;GlobalState&lt;TMsg&gt;&gt;().unwrap();
+    <span class="kw">let </span>gs = use_context::&lt;GlobalState&lt;TMsg&gt;&gt;().expect(<span class="string">"No global state in create_signal_from_msg"</span>);
 
     <span class="kw">let </span>default_content = (config.fn_input)(<span class="kw-2">&amp;</span>config.default).unwrap();
-    <span class="kw">let </span>(input, input_set) = create_signal(default_content.clone());
-    <span class="kw">let </span>(output, output_set) = create_signal(TValue::default());
+    <span class="kw">let </span>(input, input_set) = signal(default_content.clone());
+    <span class="kw">let </span>(output, output_set) = signal(TValue::default());
 
     <span class="kw">let </span>cache = gs.cache.clone();
     {
@@ -89,7 +89,7 @@
     }
 
     <span class="kw">let </span>gs_clone = gs.clone();
-    create_effect(<span class="kw">move </span>|<span class="kw">_</span>| {
+    Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| {
         <span class="kw">let </span>msg = <span class="kw">match </span>gs_clone.input.get() {
             <span class="prelude-val">Some</span>(msg) =&gt; msg,
             <span class="prelude-val">None </span>=&gt; <span class="kw">return</span>,
@@ -101,7 +101,7 @@
     });
 
     <span class="kw">let </span>gs_clone = gs.clone();
-    create_effect(<span class="kw">move </span>|prev_value| {
+    Effect::new(<span class="kw">move </span>|prev_value: <span class="prelude-ty">Option</span>&lt;()&gt;| {
         <span class="kw">let </span>output = output.get();
         <span class="kw">if </span>prev_value.is_none() {
             <span class="kw">return</span>;

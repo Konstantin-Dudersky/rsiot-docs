@@ -48,8 +48,8 @@
 </span><span class="kw">pub type </span>FB = FunctionBlockBase&lt;I, Q, S&gt;;
 
 <span class="kw">impl </span>IFunctionBlock&lt;I, Q, S&gt; <span class="kw">for </span>FunctionBlockBase&lt;I, Q, S&gt; {
-    <span class="kw">fn </span>logic(input: <span class="kw-2">&amp;mut </span>I, stat: <span class="kw-2">&amp;mut </span>S, _system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
-        logic(input, stat)
+    <span class="kw">fn </span>logic(input: <span class="kw-2">&amp;mut </span>I, stat: <span class="kw-2">&amp;mut </span>S, system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
+        logic(input, stat, system_data)
     }
 }
 </code></pre></div></section></main></body></html>

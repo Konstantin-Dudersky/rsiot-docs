@@ -126,6 +126,7 @@
 <a href="#126" id="126">126</a>
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>pm_firmware_lib::pm_di16_dc24sink_v0_0_2::{I2cRequest, I2cResponse};
@@ -136,8 +137,9 @@
 <span class="kw">use </span>tracing::warn;
 
 <span class="kw">use crate</span>::{
-    drivers_i2c::{postcard_serde, I2cSlaveAddress, RsiotI2cDriverBase},
+    drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},
     message::{Message, MsgDataBound},
+    serde_utils::postcard_serde,
 };
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::config::FnOutput;

@@ -117,7 +117,7 @@
 <a href="#117" id="117">117</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Display;
 
-<span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+<span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>web_sys::KeyboardEvent;
 
 <span class="doccomment">/// Тип визуального отображения
@@ -186,7 +186,7 @@
     </span><span class="attr">#[prop(default = <span class="string">"Default"</span>)]
     </span>placeholder: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
 ) -&gt; <span class="kw">impl </span>IntoView {
-    <span class="kw">let </span>(input_text, input_text_set) = create_signal(String::from(<span class="string">""</span>));
+    <span class="kw">let </span>(input_text, input_text_set) = signal(String::from(<span class="string">""</span>));
 
     <span class="macro">view!</span> {
         &lt;div class=<span class="string">"relative"</span>&gt;

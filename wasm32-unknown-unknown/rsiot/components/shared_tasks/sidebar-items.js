@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["change_mpsc_msg","filter_identical_data","mpsc_to_msg_bus","msg_bus_to_mpsc"]};
+window.SIDEBAR_ITEMS = {"mod":["change_mpsc_msg","filter_identical_data","mpsc_to_msgbus","msgbus_to_broadcast","msgbus_to_mpsc"]};
