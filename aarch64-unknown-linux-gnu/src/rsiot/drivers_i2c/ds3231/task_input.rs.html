@@ -69,6 +69,8 @@
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>tokio::sync::Mutex;
@@ -76,7 +78,7 @@
 <span class="kw">use crate</span>::{
     drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},
     executor::CmpInOut,
-    message::{Message, MsgDataBound},
+    message::{Message, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use </span><span class="kw">super</span>::data_models;
@@ -97,21 +99,23 @@
     </span><span class="kw">pub </span>second: u8,
 }
 
-<span class="kw">pub struct </span>TaskInput&lt;TMsg, Driver&gt;
+<span class="kw">pub struct </span>TaskInput&lt;TMsg, TService, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">pub </span>address: I2cSlaveAddress,
     <span class="kw">pub </span>driver: Arc&lt;Mutex&lt;Driver&gt;&gt;,
     <span class="kw">pub </span>fn_input: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;InputData&gt;,
-    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
+    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, Driver&gt; TaskInput&lt;TMsg, Driver&gt;
+<span class="kw">impl</span>&lt;TMsg, TService, Driver&gt; TaskInput&lt;TMsg, TService, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
         <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = <span class="self">self</span>.in_out.recv_input().<span class="kw">await </span>{

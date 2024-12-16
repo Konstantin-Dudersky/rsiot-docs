@@ -178,6 +178,8 @@
 <a href="#178" id="178">178</a>
 <a href="#179" id="179">179</a>
 <a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
@@ -191,6 +193,8 @@
 <span class="attr">#[cfg(feature = <span class="string">"cmp_auth"</span>)]
 #[cfg(any(aarch64_unknown_linux_gnu, x8664_unknown_linux_gnu))]
 </span><span class="kw">pub mod </span>cmp_auth;
+
+<span class="kw">pub mod </span>cmp_create_if_not_exist;
 
 <span class="kw">pub mod </span>cmp_derive;
 

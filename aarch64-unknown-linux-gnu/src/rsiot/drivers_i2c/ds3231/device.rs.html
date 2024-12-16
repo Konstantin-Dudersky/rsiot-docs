@@ -64,6 +64,8 @@
 <a href="#64" id="64">64</a>
 <a href="#65" id="65">65</a>
 <a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>tokio::{sync::Mutex, task::JoinSet};
@@ -71,7 +73,7 @@
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
-    message::{Message, MsgDataBound},
+    message::{Message, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{
@@ -81,9 +83,10 @@
 };
 
 <span class="doccomment">/// Часы реального времени
-</span><span class="kw">pub struct </span>DS3231&lt;TMsg&gt;
+</span><span class="kw">pub struct </span>DS3231&lt;TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="doccomment">/// Адрес. По-умолчанию 0x68
     </span><span class="kw">pub </span>address: I2cSlaveAddress,
@@ -94,12 +97,13 @@
     <span class="doccomment">/// Период чтения данных с часов
     </span><span class="kw">pub </span>fn_output_period: Duration,
     <span class="doccomment">/// Внутренняя шина сообщений
-    </span><span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
+    </span><span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg&gt; DS3231&lt;TMsg&gt;
+<span class="kw">impl</span>&lt;TMsg, TService&gt; DS3231&lt;TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="doccomment">/// Запустить опрос датчика
     </span><span class="kw">pub async fn </span>spawn(<span class="kw-2">&amp;</span><span class="self">self</span>, driver: Arc&lt;Mutex&lt;<span class="kw">impl </span>RsiotI2cDriverBase + <span class="lifetime">'static</span>&gt;&gt;) {

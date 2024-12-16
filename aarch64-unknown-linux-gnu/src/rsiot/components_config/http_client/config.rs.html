@@ -53,14 +53,24 @@
 <a href="#53" id="53">53</a>
 <a href="#54" id="54">54</a>
 <a href="#55" id="55">55</a>
-</pre></div><pre class="rust"><code><span class="kw">use super</span>::{
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::MsgDataBound;
+
+<span class="kw">use super</span>::{
     connection_config::ConnectionConfig, request_input::RequestInput,
     request_periodic::RequestPeriodic,
 };
 
 <span class="doccomment">/// Параметры компонента http-client
 </span><span class="attr">#[derive(Clone, Debug)]
-</span><span class="kw">pub struct </span>Config&lt;TMessage&gt; {
+</span><span class="kw">pub struct </span>Config&lt;TMessage&gt;
+<span class="kw">where
+    </span>TMessage: MsgDataBound,
+{
     <span class="doccomment">/// Параметры подключения
     </span><span class="kw">pub </span>connection_config: ConnectionConfig,
     <span class="doccomment">/// Запросы, которые формируются на основе входящих сообщений

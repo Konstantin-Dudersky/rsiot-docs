@@ -30,29 +30,31 @@
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>slint::ComponentHandle;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound},
+    message::{AuthPermissions, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{fn_process::fn_process, Config};
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
-</span><span class="kw">impl</span>&lt;TMainWindow, TMsg&gt; IComponentProcess&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg&gt;
-    <span class="kw">for </span>Component&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg&gt;
+</span><span class="kw">impl</span>&lt;TMainWindow, TMsg, TService&gt; IComponentProcess&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg, TService&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
     <span class="self">Self</span>: Sync,
     TMainWindow: ComponentHandle + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         config: Config&lt;TMainWindow, TMsg&gt;,
-        input: CmpInOut&lt;TMsg&gt;,
+        input: CmpInOut&lt;TMsg, TService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         <span class="kw">let </span>input = input.clone_with_new_id(<span class="string">"cmp_slint"</span>, AuthPermissions::FullAccess);
         fn_process(config, input).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -61,5 +63,5 @@
 }
 
 <span class="doccomment">/// Компонент cmp_slint
-</span><span class="kw">pub type </span>Cmp&lt;TMainWindow, TMsg&gt; = Component&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMainWindow, TMsg, TService&gt; = Component&lt;Config&lt;TMainWindow, TMsg&gt;, TMsg, TService&gt;;
 </code></pre></div></section></main></body></html>

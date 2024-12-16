@@ -168,6 +168,9 @@
 <a href="#168" id="168">168</a>
 <a href="#169" id="169">169</a>
 <a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты для построения системы сбора, обработки и визуализации данных
 //!
 //! Документация по платформам:
@@ -316,7 +319,10 @@
 #![warn(rustdoc::bare_urls)]
 #![warn(missing_docs)]
 
-</span><span class="kw">mod </span>components_config;
+</span><span class="doccomment">//! TODO - какая-то проблема в tokio
+</span><span class="comment">// #![allow(clippy::needless_return)]
+
+</span><span class="kw">pub mod </span>components_config;
 <span class="kw">pub mod </span>message;
 
 <span class="attr">#[cfg(feature = <span class="string">"executor"</span>)]

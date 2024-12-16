@@ -62,7 +62,7 @@ MCU = &quot;esp32c3&quot;
 # install all libraries globally, in folder ~/.espressif
 ESP_IDF_TOOLS_INSTALL_DIR = &quot;global&quot;
 # check current version on https://github.com/espressif/esp-idf/releases
-ESP_IDF_VERSION = &quot;v5.2.2&quot;
+ESP_IDF_VERSION = &quot;v5.3.1&quot;
 </code></pre></div>
 <p><strong><code>build.rs</code></strong></p>
 
@@ -71,7 +71,8 @@ ESP_IDF_VERSION = &quot;v5.2.2&quot;
 }</code></pre></div>
 <p><strong><code>rust-toolchain.toml</code></strong></p>
 <div class="example-wrap"><pre class="language-toml"><code>[toolchain]
-channel = &quot;nightly&quot;
+channel = &quot;stable&quot;
+# channel = &quot;nightly&quot;
 # channel = &quot;nightly-2024-10-01&quot;
 components = [&quot;rust-src&quot;]
 </code></pre></div>

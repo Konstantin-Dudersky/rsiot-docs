@@ -26,6 +26,7 @@
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>axum::extract;
 
 <span class="kw">use </span><span class="kw">crate</span>::message::<span class="kw-2">*</span>;
@@ -33,12 +34,13 @@
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::{error::Error, shared_state::TSharedState};
 
 <span class="doccomment">/// Маршрут для получения сообщений
-</span><span class="kw">pub async fn </span>get&lt;TMsg&gt;(
+</span><span class="kw">pub async fn </span>get&lt;TMsg, TService&gt;(
     extract::Path(key): extract::Path&lt;String&gt;,
-    extract::State(shared_state): extract::State&lt;TSharedState&lt;TMsg&gt;&gt;,
+    extract::State(shared_state): extract::State&lt;TSharedState&lt;TMsg, TService&gt;&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">let </span>shared_state = shared_state.lock().<span class="kw">await</span>;
 

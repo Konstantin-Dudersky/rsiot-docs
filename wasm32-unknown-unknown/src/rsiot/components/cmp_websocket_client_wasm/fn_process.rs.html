@@ -119,6 +119,13 @@
 <a href="#119" id="119">119</a>
 <a href="#120" id="120">120</a>
 <a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>futures::{
@@ -135,17 +142,18 @@
 
 <span class="kw">use crate</span>::{
     executor::{join_set_spawn, CmpInOut},
-    message::MsgDataBound,
+    message::{MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{Config, Error};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService&gt;(
     config: Config&lt;TMessage&gt;,
-    input: CmpInOut&lt;TMessage&gt;,
+    input: CmpInOut&lt;TMessage, TService&gt;,
 ) -&gt; <span class="kw">super</span>::Result
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Starting cmp_websocket_client_wasm. Config: {config:?}"</span>);
     <span class="kw">loop </span>{
@@ -156,9 +164,13 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMessage&gt;(config: Config&lt;TMessage&gt;, msg_bus: CmpInOut&lt;TMessage&gt;) -&gt; <span class="kw">super</span>::Result
+<span class="kw">async fn </span>task_main&lt;TMessage, TService&gt;(
+    config: Config&lt;TMessage&gt;,
+    msg_bus: CmpInOut&lt;TMessage, TService&gt;,
+) -&gt; <span class="kw">super</span>::Result
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.url).map_err(Error::BadUrl)<span class="question-mark">?</span>;
     <span class="kw">let </span>url = url.to_string();
@@ -183,13 +195,14 @@
 }
 
 <span class="doccomment">/// Задача отправки входящего потока сообщений на Websocker сервер
-</span><span class="kw">async fn </span>task_input&lt;TMsg&gt;(
+</span><span class="kw">async fn </span>task_input&lt;TMsg, TService&gt;(
     config: Config&lt;TMsg&gt;,
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg&gt;,
+    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg, TService&gt;,
     <span class="kw-2">mut </span>write_stream: SplitSink&lt;WebSocket, Message&gt;,
 ) -&gt; <span class="kw">super</span>::Result
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>ws_msg = (config.fn_input)(<span class="kw-2">&amp;</span>msg).map_err(Error::FnInput)<span class="question-mark">?</span>;
@@ -205,13 +218,14 @@
 }
 
 <span class="doccomment">/// Задача получения текста из Websoket сервера и преобразование в исходящий поток сообщений
-</span><span class="kw">async fn </span>task_output&lt;TMessage&gt;(
+</span><span class="kw">async fn </span>task_output&lt;TMessage, TService&gt;(
     config: Config&lt;TMessage&gt;,
-    output: CmpInOut&lt;TMessage&gt;,
+    output: CmpInOut&lt;TMessage, TService&gt;,
     <span class="kw-2">mut </span>read_stream: SplitStream&lt;WebSocket&gt;,
 ) -&gt; <span class="kw">super</span>::Result
 <span class="kw">where
     </span>TMessage: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Some</span>(text) = read_stream.next().<span class="kw">await </span>{
         <span class="macro">trace!</span>(<span class="string">"New message from Websocket server: {:?}"</span>, text);

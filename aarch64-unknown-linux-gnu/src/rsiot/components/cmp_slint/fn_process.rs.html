@@ -51,19 +51,33 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>slint::ComponentHandle;
 <span class="kw">use </span>tokio::{sync::mpsc, task::JoinSet};
 
-<span class="kw">use crate</span>::{executor::CmpInOut, message::MsgDataBound};
+<span class="kw">use crate</span>::{
+    executor::CmpInOut,
+    message::{MsgDataBound, ServiceBound},
+};
 
 <span class="kw">use super</span>::{Config, <span class="prelude-ty">Result</span>};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMainWindow, TMsg&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMainWindow, TMsg, TService&gt;(
     config: Config&lt;TMainWindow, TMsg&gt;,
-    input: CmpInOut&lt;TMsg&gt;,
+    input: CmpInOut&lt;TMsg, TService&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
     TMainWindow: ComponentHandle + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>task_set = JoinSet::new();
@@ -77,9 +91,12 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>fn_input&lt;TMainWindow, TMsg&gt;(config: Config&lt;TMainWindow, TMsg&gt;, <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg&gt;)
-<span class="kw">where
+<span class="kw">async fn </span>fn_input&lt;TMainWindow, TMsg, TService&gt;(
+    config: Config&lt;TMainWindow, TMsg&gt;,
+    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg, TService&gt;,
+) <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
     TMainWindow: ComponentHandle,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
@@ -88,9 +105,12 @@
     }
 }
 
-<span class="kw">async fn </span>fn_output&lt;TMainWindow, TMsg&gt;(config: Config&lt;TMainWindow, TMsg&gt;, input: CmpInOut&lt;TMsg&gt;)
-<span class="kw">where
+<span class="kw">async fn </span>fn_output&lt;TMainWindow, TMsg, TService&gt;(
+    config: Config&lt;TMainWindow, TMsg&gt;,
+    input: CmpInOut&lt;TMsg, TService&gt;,
+) <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
     TMainWindow: ComponentHandle,
 {
     <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = mpsc::channel(<span class="number">100</span>);

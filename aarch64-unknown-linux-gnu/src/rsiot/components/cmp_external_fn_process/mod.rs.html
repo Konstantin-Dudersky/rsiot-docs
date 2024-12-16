@@ -212,6 +212,30 @@
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
 <a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Тестирование документации:
 //!
 //! ```bash
@@ -236,13 +260,19 @@
 };
 
 <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
-</span><span class="kw">type </span>FnProcess&lt;TMsg&gt; = Box&lt;<span class="kw">dyn </span>Fn(CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;&gt;;
+</span><span class="kw">type </span>FnProcess&lt;TMsg, TService&gt; =
+    Box&lt;<span class="kw">dyn </span>Fn(CmpInOut&lt;TMsg, TService&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;&gt;;
 
 <span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
-</span><span class="kw">type </span>FnProcess&lt;TMsg&gt; = Box&lt;<span class="kw">dyn </span>Fn(CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt; + Send + Sync&gt;;
+</span><span class="kw">type </span>FnProcess&lt;TMsg, TService&gt; =
+    Box&lt;<span class="kw">dyn </span>Fn(CmpInOut&lt;TMsg, TService&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt; + Send + Sync&gt;;
 
 <span class="doccomment">/// Настройки cmp_external_fn_process
-</span><span class="kw">pub struct </span>Config&lt;TMsg&gt; {
+</span><span class="kw">pub struct </span>Config&lt;TMsg, TService&gt;
+<span class="kw">where
+    </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
+{
     <span class="doccomment">/// Внешняя функция для выполнения
     ///
     /// Выполняемую асинхронную функцию `fn_external` необходимо обернуть в функцию.
@@ -283,7 +313,7 @@
     /// # // insert-end
     /// ```
     </span><span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
-    </span><span class="kw">pub </span>fn_process: FnProcess&lt;TMsg&gt;,
+    </span><span class="kw">pub </span>fn_process: FnProcess&lt;TMsg, TService&gt;,
 
     <span class="doccomment">/// Внешняя функция для выполнения
     ///
@@ -325,20 +355,22 @@
     /// # // insert-end
     /// ```
     </span><span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
-    </span><span class="kw">pub </span>fn_process: FnProcess&lt;TMsg&gt;,
+    </span><span class="kw">pub </span>fn_process: FnProcess&lt;TMsg, TService&gt;,
 }
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
 #[async_trait(<span class="question-mark">?</span>Send)]
-</span><span class="kw">impl</span>&lt;TMsg&gt; IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg&gt; <span class="kw">for </span>Component&lt;Config&lt;TMsg&gt;, TMsg&gt;
+</span><span class="kw">impl</span>&lt;TMsg, TService&gt; IComponentProcess&lt;Config&lt;TMsg, TService&gt;, TMsg, TService&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TService&gt;, TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        config: Config&lt;TMsg&gt;,
-        in_out: CmpInOut&lt;TMsg&gt;,
+        config: Config&lt;TMsg, TService&gt;,
+        in_out: CmpInOut&lt;TMsg, TService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         (config.fn_process)(
             in_out.clone_with_new_id(<span class="string">"cmp_extrenal_fn_process"</span>, AuthPermissions::FullAccess),
@@ -348,7 +380,7 @@
 }
 
 <span class="doccomment">/// Компонент cmp_external_fn_process
-</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;Config&lt;TMsg&gt;, TMsg&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMsg, TService&gt; = Component&lt;Config&lt;TMsg, TService&gt;, TMsg, TService&gt;;
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
@@ -359,6 +391,7 @@
     </span><span class="kw">fn </span>single_thread() {
         <span class="kw">use </span>std::time::Duration;
 
+        <span class="kw">use </span>example_service::Service;
         <span class="kw">use </span>futures::future::LocalBoxFuture;
 
         <span class="attr">#[cfg(target_arch = <span class="string">"wasm32"</span>)]
@@ -374,13 +407,20 @@
             message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
         };
 
-        <span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(in_out: CmpInOut&lt;TMsg&gt;) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
+        <span class="kw">fn </span>fn_process_wrapper&lt;TMsg, TService&gt;(
+            in_out: CmpInOut&lt;TMsg, TService&gt;,
+        ) -&gt; LocalBoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
         <span class="kw">where
             </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+            TService: ServiceBound + <span class="lifetime">'static</span>,
         {
             Box::pin(<span class="kw">async </span>{ fn_process(in_out).<span class="kw">await </span>})
         }
-        <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_in_out: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
+        <span class="kw">async fn </span>fn_process&lt;TMsg, TService&gt;(_in_out: CmpInOut&lt;TMsg, TService&gt;) -&gt; CmpResult
+        <span class="kw">where
+            </span>TMsg: MsgDataBound,
+            TService: ServiceBound,
+        {
             <span class="kw">loop </span>{
                 <span class="macro">info!</span>(<span class="string">"External fn process"</span>);
                 sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
@@ -388,7 +428,7 @@
         }
 
         <span class="kw">let </span>_config = cmp_external_fn_process::Config {
-            fn_process: Box::new(fn_process_wrapper::&lt;Custom&gt;),
+            fn_process: Box::new(fn_process_wrapper::&lt;Custom, Service&gt;),
         };
     }
 
@@ -397,6 +437,7 @@
     </span><span class="kw">fn </span>multi_thread() {
         <span class="kw">use </span>std::time::Duration;
 
+        <span class="kw">use </span>example_service::Service;
         <span class="kw">use </span>futures::future::BoxFuture;
         <span class="kw">use </span>tokio::time::sleep;
         <span class="kw">use </span>tracing::info;
@@ -407,14 +448,21 @@
             message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
         };
 
-        <span class="kw">fn </span>fn_process_wrapper&lt;TMsg&gt;(in_out: CmpInOut&lt;TMsg&gt;) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
+        <span class="kw">fn </span>fn_process_wrapper&lt;TMsg, TService&gt;(
+            in_out: CmpInOut&lt;TMsg, TService&gt;,
+        ) -&gt; BoxFuture&lt;<span class="lifetime">'static</span>, CmpResult&gt;
         <span class="kw">where
             </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+            TService: ServiceBound + <span class="lifetime">'static</span>,
         {
             Box::pin(<span class="kw">async </span>{ fn_process(in_out).<span class="kw">await </span>})
         }
 
-        <span class="kw">async fn </span>fn_process&lt;TMsg&gt;(_in_out: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
+        <span class="kw">async fn </span>fn_process&lt;TMsg, TService&gt;(_in_out: CmpInOut&lt;TMsg, TService&gt;) -&gt; CmpResult
+        <span class="kw">where
+            </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+            TService: ServiceBound + <span class="lifetime">'static</span>,
+        {
             <span class="kw">loop </span>{
                 <span class="macro">info!</span>(<span class="string">"External fn process"</span>);
                 sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
@@ -422,7 +470,7 @@
         }
 
         <span class="kw">let </span>_config = cmp_external_fn_process::Config {
-            fn_process: Box::new(fn_process_wrapper::&lt;Custom&gt;),
+            fn_process: Box::new(fn_process_wrapper::&lt;Custom, Service&gt;),
         };
     }
 }

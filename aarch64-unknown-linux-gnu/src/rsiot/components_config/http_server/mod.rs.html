@@ -145,6 +145,15 @@
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
 <a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация HTTP-сервера
 //!
 //! Тестирование:
@@ -159,8 +168,11 @@
 </span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Config&lt;TMsg&gt;
 <span class="kw">where
-    </span>TMsg: Clone,
+    </span>TMsg: MsgDataBound,
 {
+    <span class="kw">pub </span>this_service: TMsg::TService,
+    <span class="kw">pub </span>client_service: TMsg::TService,
+
     <span class="doccomment">/// Порт, через который доступен сервер
     </span><span class="kw">pub </span>port: u16,
 
@@ -251,12 +263,14 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::{Config, ConfigCmpPlcData};
-    <span class="kw">use </span><span class="kw">crate</span>::message::{example_message::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
+    <span class="kw">use </span><span class="kw">crate</span>::message::{example_message::<span class="kw-2">*</span>, example_service::Service, <span class="kw-2">*</span>};
 
     <span class="attr">#[allow(clippy::no_effect)]
     #[test]
     </span><span class="kw">fn </span>stub() {
         Config::&lt;Custom&gt; {
+            this_service: Service::example_service,
+            client_service: Service::example_service,
             port: <span class="number">8000</span>,
             fn_input: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
             fn_output: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
@@ -268,6 +282,8 @@
     #[test]
     </span><span class="kw">fn </span>fn_input_json() {
         Config::&lt;Custom&gt; {
+            this_service: Service::example_service,
+            client_service: Service::example_service,
             port: <span class="number">8000</span>,
             fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
                 <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
@@ -282,6 +298,8 @@
     #[test]
     </span><span class="kw">fn </span>fn_output_json() {
         Config::&lt;Custom&gt; {
+            this_service: Service::example_service,
+            client_service: Service::example_service,
             port: <span class="number">8000</span>,
             fn_input: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
             fn_output: |text: <span class="kw-2">&amp;</span>str| {

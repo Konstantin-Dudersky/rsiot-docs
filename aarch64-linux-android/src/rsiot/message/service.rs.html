@@ -43,7 +43,7 @@
 /// ```rust
 /// #[derive(Debug, Clone, PartialEq)]
 /// ```
-</span><span class="kw">pub trait </span>ServiceBound: Debug + Clone + PartialEq + Send {
+</span><span class="kw">pub trait </span>ServiceBound: Debug + Clone + PartialEq + Send + Sync {
     <span class="doccomment">/// Возвращает строку для добавления в трассировку
     </span><span class="kw">fn </span>trace_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="kw">let </span>full_str = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>);

@@ -38,21 +38,19 @@
 <span class="kw">use </span>tokio::sync::{broadcast, Mutex};
 <span class="kw">use </span>tracing::trace;
 
-<span class="kw">use </span><span class="kw">crate</span>::serde_utils::postcard_serde;
+<span class="kw">use </span><span class="kw">super</span>::UartMessageRaw;
 
-<span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::UartMessageRaw;
-
-<span class="kw">pub struct </span>UartRead {
-    <span class="kw">pub </span>output: broadcast::Sender&lt;UartMessageRaw&gt;,
+<span class="kw">pub struct </span>UartRead&lt;<span class="kw">const </span>MESSAGE_LEN: usize&gt; {
+    <span class="kw">pub </span>output: broadcast::Sender&lt;UartMessageRaw&lt;MESSAGE_LEN&gt;&gt;,
     <span class="kw">pub </span>port: Arc&lt;Mutex&lt;Box&lt;<span class="kw">dyn </span>SerialPort&gt;&gt;&gt;,
 }
 
-<span class="kw">impl </span>UartRead {
+<span class="kw">impl</span>&lt;<span class="kw">const </span>MESSAGE_LEN: usize&gt; UartRead&lt;MESSAGE_LEN&gt; {
     <span class="kw">pub fn </span>spawn(<span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">loop </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>port = <span class="self">self</span>.port.blocking_lock();
 
-            <span class="kw">let </span><span class="kw-2">mut </span>read_buf = [<span class="number">0</span>; postcard_serde::MESSAGE_LEN];
+            <span class="kw">let </span><span class="kw-2">mut </span>read_buf = [<span class="number">0</span>; MESSAGE_LEN];
 
             <span class="kw">let </span>port_read_result = port.read_exact(<span class="kw-2">&amp;mut </span>read_buf);
             <span class="kw">if </span>port_read_result.is_err() {
@@ -62,7 +60,9 @@
 
             <span class="macro">trace!</span>(<span class="string">"Read: {:?}"</span>, read_buf);
 
-            <span class="self">self</span>.output.send(read_buf).unwrap();
+            <span class="self">self</span>.output
+                .send(read_buf)
+                .map_err(|e| <span class="kw">super</span>::Error::TokioSyncBroadcastSend(e.to_string()))<span class="question-mark">?</span>;
         }
     }
 }

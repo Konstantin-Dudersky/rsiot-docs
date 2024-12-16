@@ -38,8 +38,8 @@
 </span><span class="attr">#[component]
 </span><span class="kw">pub fn </span>Go2rtc&lt;<span class="lifetime">'a</span>&gt;(
     <span class="doccomment">/// Адрес хоста, на котором развернут сервис go2rtc; по-умолчанию `localhost`
-    </span><span class="attr">#[prop(default = <span class="string">"localhost"</span>)]
-    </span>hostname: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
+    </span><span class="attr">#[prop(default = String::from(<span class="string">"localhost"</span>))]
+    </span>hostname: String,
 
     <span class="doccomment">/// Порт сервиса, по-умолчанию 1984
     </span><span class="attr">#[prop(default = <span class="number">1984</span>)]

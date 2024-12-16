@@ -51,6 +51,8 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Debug;
 
 <span class="kw">use </span>serde::{de::DeserializeOwned, Deserialize, Serialize};
@@ -71,13 +73,15 @@
     </span>T: Debug + DeserializeOwned + Serialize,
 {
     <span class="doccomment">/// Сериализация сообщения
-    </span><span class="kw">pub fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;[u8; postcard_serde::MESSAGE_LEN], postcard_serde::Error&gt; {
-        postcard_serde::serialize_crc_new(<span class="self">self</span>)
+    </span><span class="kw">pub fn </span>serialize&lt;<span class="kw">const </span>MESSAGE_LEN: usize&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;[u8; MESSAGE_LEN], postcard_serde::Error&gt; {
+        postcard_serde::serialize(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Десериализация сообщения
     </span><span class="kw">pub fn </span>deserialize(data: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, postcard_serde::Error&gt; {
-        postcard_serde::deserialize_crc(data)
+        postcard_serde::deserialize(data)
     }
 }
 
@@ -99,7 +103,7 @@
             payload: <span class="number">123</span>,
         };
 
-        <span class="kw">let </span><span class="kw-2">mut </span>ser = msg.serialize().unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>ser = msg.serialize::&lt;<span class="number">32</span>&gt;().unwrap();
 
         <span class="kw">let </span>_deser: UartMessage&lt;i32&gt; = UartMessage::deserialize(<span class="kw-2">&amp;mut </span>ser).unwrap();
     }

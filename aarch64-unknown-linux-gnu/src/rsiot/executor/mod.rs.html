@@ -26,6 +26,8 @@
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Исполнитель - структура для запуска компонентов
 //!
 //! # Пример с WASM и cmp_leptos
@@ -35,6 +37,7 @@
 </span><span class="doccomment">//! ```
 
 </span><span class="kw">mod </span>cache;
+<span class="kw">mod </span>check_capacity;
 <span class="kw">mod </span>cmp_in_out;
 <span class="kw">mod </span>component;
 <span class="kw">mod </span>component_executor;
@@ -47,6 +50,7 @@
 </span><span class="kw">mod </span>test;
 
 <span class="kw">pub use </span>cache::Cache;
+<span class="kw">pub use </span>check_capacity::CheckCapacity;
 <span class="kw">pub use </span>cmp_in_out::CmpInOut;
 <span class="kw">pub use </span>component::{Component, IComponentProcess};
 <span class="kw">pub use </span>component_executor::{ComponentExecutor, ComponentExecutorConfig};

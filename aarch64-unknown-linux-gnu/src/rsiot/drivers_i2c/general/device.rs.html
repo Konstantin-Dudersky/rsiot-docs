@@ -67,6 +67,10 @@
 <a href="#67" id="67">67</a>
 <a href="#68" id="68">68</a>
 <a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>std::time::Duration;
 
@@ -74,20 +78,23 @@
 <span class="kw">use </span>tracing::warn;
 
 <span class="kw">use crate</span>::{
-    drivers_i2c::RsiotI2cDriverBase, executor::CmpInOut, message::MsgDataBound,
+    drivers_i2c::RsiotI2cDriverBase,
+    executor::CmpInOut,
+    message::{MsgDataBound, ServiceBound},
     serde_utils::postcard_serde,
 };
 
 <span class="kw">use </span><span class="kw">super</span>::Config;
 
 <span class="doccomment">/// Устройство I2C
-</span><span class="kw">pub struct </span>Device&lt;TMsg, TDriver&gt;
+</span><span class="kw">pub struct </span>Device&lt;TMsg, TService, TDriver&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
     TDriver: RsiotI2cDriverBase,
 {
     <span class="doccomment">/// Внутренняя шина сообщений
-    </span><span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg&gt;,
+    </span><span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg, TService&gt;,
 
     <span class="doccomment">/// Конфигурация
     </span><span class="kw">pub </span>config: Config&lt;TMsg&gt;,
@@ -96,9 +103,10 @@
     </span><span class="kw">pub </span>driver: Arc&lt;Mutex&lt;TDriver&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TDriver&gt; Device&lt;TMsg, TDriver&gt;
+<span class="kw">impl</span>&lt;TMsg, TService, TDriver&gt; Device&lt;TMsg, TService, TDriver&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound,
     TDriver: RsiotI2cDriverBase + <span class="lifetime">'static</span>,
 {
     <span class="doccomment">/// Запуск на выполнение

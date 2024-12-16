@@ -37,20 +37,28 @@
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
+<a href="#42" id="42">42</a>
+<a href="#43" id="43">43</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>tokio::fs::{read, read_dir};
 <span class="kw">use </span>tracing::warn;
 
-<span class="kw">use crate</span>::{executor::CmpInOut, message::MsgDataBound};
+<span class="kw">use crate</span>::{
+    executor::CmpInOut,
+    message::{MsgDataBound, ServiceBound},
+};
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::{config::FnOutput, Error};
 
-<span class="kw">pub async fn </span>output&lt;TMsg&gt;(
+<span class="kw">pub async fn </span>output&lt;TMsg, TService&gt;(
     directory: String,
     config_fn_output: FnOutput&lt;TMsg&gt;,
-    in_out: CmpInOut&lt;TMsg&gt;,
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="comment">// Читаем содержимое папки
     </span><span class="kw">let </span><span class="kw-2">mut </span>reader = read_dir(directory).<span class="kw">await</span>.map_err(Error::CreateDirError)<span class="question-mark">?</span>;

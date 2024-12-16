@@ -32,27 +32,31 @@
 <a href="#32" id="32">32</a>
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use </span>tracing::error;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound},
+    message::{AuthPermissions, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{config::ConfigAlias, fn_process::fn_process};
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
-</span><span class="kw">impl</span>&lt;TMsg&gt; IComponentProcess&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt; <span class="kw">for </span>Component&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;
+</span><span class="kw">impl</span>&lt;TMsg, TService&gt; IComponentProcess&lt;ConfigAlias&lt;TMsg&gt;, TMsg, TService&gt;
+    <span class="kw">for </span>Component&lt;ConfigAlias&lt;TMsg&gt;, TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         config: ConfigAlias&lt;TMsg&gt;,
-        in_out: CmpInOut&lt;TMsg&gt;,
+        in_out: CmpInOut&lt;TMsg, TService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         fn_process(
             in_out.clone_with_new_id(<span class="string">"cmp_influxdb"</span>, AuthPermissions::FullAccess),
@@ -65,5 +69,5 @@
 }
 
 <span class="doccomment">/// Компонент cmp_influxdb
-</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;ConfigAlias&lt;TMsg&gt;, TMsg&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMsg, TService&gt; = Component&lt;ConfigAlias&lt;TMsg&gt;, TMsg, TService&gt;;
 </code></pre></div></section></main></body></html>

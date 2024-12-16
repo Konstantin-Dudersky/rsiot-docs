@@ -106,9 +106,13 @@
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Пример реализации сообщения. Можно использовать для тестирования компонентов
 
-</span><span class="kw">use super</span>::{example_service::Service, Deserialize, MsgDataBound, Serialize, TimeToLiveValue};
+</span><span class="kw">use super</span>::{
+    example_service::Service, Deserialize, MsgDataBound, MsgRoute, Serialize, TimeToLiveValue,
+};
 
 <span class="doccomment">/// Пример реализации сообщения. Можно использовать для тестирования компонентов
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -164,8 +168,8 @@
 <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {
     <span class="kw">type </span>TService = Service;
 
-    <span class="kw">fn </span>define_enabled_routes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::TService&gt;, <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::TService&gt;)&gt; {
-        <span class="macro">todo!</span>()
+    <span class="kw">fn </span>define_enabled_routes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MsgRoute&lt;<span class="self">Self</span>::TService&gt; {
+        MsgRoute::default()
     }
 
     <span class="kw">fn </span>define_time_to_live(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TimeToLiveValue {

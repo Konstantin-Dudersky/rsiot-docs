@@ -243,6 +243,11 @@
 <a href="#243" id="243">243</a>
 <a href="#244" id="244">244</a>
 <a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Датчик давления BMP180
 
 </span><span class="kw">mod </span>calculate_values;
@@ -255,23 +260,28 @@
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
-    message::{Message, MsgDataBound, PhyQuantity},
+    message::{Message, MsgDataBound, PhyQuantity, ServiceBound},
 };
 
 <span class="kw">use super</span>::{I2cSlaveAddress, RsiotI2cDriverBase};
 
 <span class="kw">use </span>calculate_values::calculate_values;
 
-<span class="kw">pub struct </span>BMP180&lt;TMsg&gt; {
+<span class="kw">pub struct </span>BMP180&lt;TMsg, TService&gt;
+<span class="kw">where
+    </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
+{
     <span class="kw">pub </span>address: I2cSlaveAddress,
     <span class="kw">pub </span>fn_output: <span class="kw">fn</span>(BMP180Data) -&gt; Vec&lt;Message&lt;TMsg&gt;&gt;,
     <span class="kw">pub </span>oversampling: BMP180Oversampling,
-    <span class="kw">pub </span>cmp_in_out: CmpInOut&lt;TMsg&gt;,
+    <span class="kw">pub </span>cmp_in_out: CmpInOut&lt;TMsg, TService&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg&gt; BMP180&lt;TMsg&gt;
+<span class="kw">impl</span>&lt;TMsg, TService&gt; BMP180&lt;TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>fn_process(<span class="kw-2">&amp;</span><span class="self">self</span>, driver: Arc&lt;Mutex&lt;<span class="kw">impl </span>RsiotI2cDriverBase&gt;&gt;) {
         <span class="kw">let </span>calibration_data: CalibrationData = <span class="kw">loop </span>{

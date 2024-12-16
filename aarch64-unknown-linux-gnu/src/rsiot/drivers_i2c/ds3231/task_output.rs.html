@@ -85,14 +85,17 @@
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
 <a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>tokio::{sync::Mutex, time::sleep};
+<span class="kw">use </span>tracing::debug;
 
 <span class="kw">use crate</span>::{
     drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},
     executor::CmpInOut,
-    message::{Message, MsgDataBound},
+    message::{Message, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use </span><span class="kw">super</span>::data_models;
@@ -113,27 +116,27 @@
     </span><span class="kw">pub </span>second: u8,
 }
 <span class="doccomment">/// Задача чтения данных с модуля
-</span><span class="kw">pub struct </span>TaskOutput&lt;TMsg, Driver&gt;
+</span><span class="kw">pub struct </span>TaskOutput&lt;TMsg, TService, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">pub </span>address: I2cSlaveAddress,
     <span class="kw">pub </span>period: Duration,
     <span class="kw">pub </span>driver: Arc&lt;Mutex&lt;Driver&gt;&gt;,
     <span class="kw">pub </span>fn_output: <span class="kw">fn</span>(OutputData) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;,
-    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
+    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, Driver&gt; TaskOutput&lt;TMsg, Driver&gt;
+<span class="kw">impl</span>&lt;TMsg, TService, Driver&gt; TaskOutput&lt;TMsg, TService, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
         <span class="kw">loop </span>{
-            sleep(<span class="self">self</span>.period).<span class="kw">await</span>;
-
             <span class="kw">let </span><span class="kw-2">mut </span>driver = <span class="self">self</span>.driver.lock().<span class="kw">await</span>;
             <span class="kw">let </span>res = driver
                 .write_read(<span class="self">self</span>.address, <span class="kw-2">&amp;</span>[<span class="number">0x00</span>], <span class="number">19</span>, Duration::from_secs(<span class="number">2</span>))
@@ -149,8 +152,8 @@
             <span class="kw">let </span>res = driver
                 .write_read(<span class="self">self</span>.address, <span class="kw-2">&amp;</span>[<span class="number">0x0E</span>], <span class="number">2</span>, Duration::from_secs(<span class="number">2</span>))
                 .<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="macro">println!</span>(<span class="string">"Control: {:?}"</span>, res[<span class="number">0</span>]);
-            <span class="macro">println!</span>(<span class="string">"Status: {:?}"</span>, res[<span class="number">1</span>]);
+            <span class="macro">debug!</span>(<span class="string">"Control: {:?}"</span>, res[<span class="number">0</span>]);
+            <span class="macro">debug!</span>(<span class="string">"Status: {:?}"</span>, res[<span class="number">1</span>]);
 
             <span class="kw">let </span>output = OutputData {
                 year: year.get_dec(),
@@ -169,6 +172,7 @@
                     .<span class="kw">await
                     </span>.map_err(|e| e.to_string())<span class="question-mark">?</span>;
             }
+            sleep(<span class="self">self</span>.period).<span class="kw">await</span>;
         }
     }
 }

@@ -191,6 +191,10 @@
 <a href="#191" id="191">191</a>
 <a href="#192" id="192">192</a>
 <a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>reqwest::{Client, Response, StatusCode};
@@ -203,22 +207,23 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{Message, MsgDataBound},
+    message::{Message, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{config, Error};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
-    in_out: CmpInOut&lt;TMsg&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
     config: config::Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Starting http-client, configuration: {:?}"</span>, config);
 
     <span class="kw">loop </span>{
-        <span class="kw">let </span>res = task_main::&lt;TMsg&gt;(in_out.clone(), config.clone()).<span class="kw">await</span>;
+        <span class="kw">let </span>res = task_main(in_out.clone(), config.clone()).<span class="kw">await</span>;
         <span class="kw">match </span>res {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
             <span class="prelude-val">Err</span>(err) =&gt; {
@@ -231,12 +236,13 @@
 }
 
 <span class="doccomment">/// Основная задача
-</span><span class="kw">async fn </span>task_main&lt;TMsg&gt;(
-    in_out: CmpInOut&lt;TMsg&gt;,
+</span><span class="kw">async fn </span>task_main&lt;TMsg, TService&gt;(
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
     config: config::Config&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Парсим url
     </span><span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.connection_config.base_url);
@@ -253,7 +259,7 @@
 
     <span class="comment">// запускаем периодические запросы
     </span><span class="kw">for </span>req <span class="kw">in </span>config.requests_periodic {
-        <span class="kw">let </span>future = task_periodic_request::&lt;TMsg&gt;(in_out.clone(), req, url.clone());
+        <span class="kw">let </span>future = task_periodic_request(in_out.clone(), req, url.clone());
         set.spawn(future);
     }
     <span class="comment">// Запускаем задачи запросов на основе входного потока сообщений
@@ -268,13 +274,14 @@
 }
 
 <span class="doccomment">/// Задача обработки периодического запроса
-</span><span class="kw">async fn </span>task_periodic_request&lt;TMsg&gt;(
-    in_out: CmpInOut&lt;TMsg&gt;,
+</span><span class="kw">async fn </span>task_periodic_request&lt;TMsg, TService&gt;(
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
     config: config::RequestPeriodic&lt;TMsg&gt;,
     url: Url,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">loop </span>{
         <span class="kw">let </span>begin = Instant::now();
@@ -301,13 +308,14 @@
 }
 
 <span class="doccomment">/// Задача обработки запросов на основе входящего потока сообщений
-</span><span class="kw">async fn </span>task_input_request&lt;TMessage&gt;(
-    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage&gt;,
+</span><span class="kw">async fn </span>task_input_request&lt;TMessage, TService&gt;(
+    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage, TService&gt;,
     url: Url,
     config: config::RequestInput&lt;TMessage&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMessage&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = in_out.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>http_param = (config.fn_input)(<span class="kw-2">&amp;</span>msg);

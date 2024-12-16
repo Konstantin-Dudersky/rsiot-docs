@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Config","ConfigFnInputItem"],"type":["FnInput","FnOutput"]};

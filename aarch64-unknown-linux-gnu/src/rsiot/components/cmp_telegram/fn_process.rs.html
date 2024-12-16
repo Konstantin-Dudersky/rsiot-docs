@@ -29,18 +29,26 @@
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>tokio::task::JoinSet;
 
 <span class="kw">use crate</span>::{
     executor::{join_set_spawn, CmpInOut},
-    message::MsgDataBound,
+    message::{MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{tasks, Config, TelegramBot};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, msg_bus: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
+    config: Config&lt;TMsg&gt;,
+    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>bot = TelegramBot::new(config.bot_token, config.chat_id);
 

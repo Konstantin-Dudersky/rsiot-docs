@@ -140,6 +140,10 @@
 <a href="#140" id="140">140</a>
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>tokio::{sync::Mutex, task::JoinSet};
@@ -147,14 +151,18 @@
 <span class="kw">use crate</span>::{
     drivers_i2c,
     executor::{join_set_spawn, CmpInOut},
-    message::MsgDataBound,
+    message::{MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{rsiot_i2c_driver::RsiotI2cDriver, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
+    config: Config&lt;TMsg&gt;,
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
+) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>driver = Arc::new(Mutex::new(RsiotI2cDriver::new().unwrap()));
 

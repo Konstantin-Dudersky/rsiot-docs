@@ -57,6 +57,11 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>bitvec::prelude::<span class="kw-2">*</span>;
@@ -65,23 +70,28 @@
 <span class="kw">use crate</span>::{
     drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},
     executor::CmpInOut,
-    message::MsgDataBound,
+    message::{MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{state::State, TPinFnOutput};
 
 <span class="doccomment">/// Чтение и обработка входов
-</span><span class="kw">pub struct </span>TaskReadInputs&lt;TMsg, Driver&gt; {
-    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
+</span><span class="kw">pub struct </span>TaskReadInputs&lt;TMsg, TService, Driver&gt;
+<span class="kw">where
+    </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
+{
+    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
     <span class="kw">pub </span>driver: Arc&lt;Mutex&lt;Driver&gt;&gt;,
     <span class="kw">pub </span>address: I2cSlaveAddress,
     <span class="kw">pub </span>pin_and_fn_output: TPinFnOutput&lt;TMsg&gt;,
     <span class="kw">pub </span>state: State,
 }
 
-<span class="kw">impl</span>&lt;TMsg, Driver&gt; TaskReadInputs&lt;TMsg, Driver&gt;
+<span class="kw">impl</span>&lt;TMsg, TService, Driver&gt; TaskReadInputs&lt;TMsg, TService, Driver&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
+    TService: ServiceBound,
     Driver: RsiotI2cDriverBase,
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {

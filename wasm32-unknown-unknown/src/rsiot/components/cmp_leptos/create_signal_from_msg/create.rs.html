@@ -57,7 +57,10 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>tracing::{info, trace, warn};
 
 <span class="kw">use </span><span class="kw">crate</span>::message::MsgDataBound;
 
@@ -94,6 +97,7 @@
             <span class="prelude-val">Some</span>(msg) =&gt; msg,
             <span class="prelude-val">None </span>=&gt; <span class="kw">return</span>,
         };
+        <span class="macro">trace!</span>(<span class="string">"create_signal_from_msg: {}"</span>, msg.key);
         <span class="kw">let </span>msg = (config.fn_input)(<span class="kw-2">&amp;</span>msg);
         <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = msg {
             input_set.set(msg)

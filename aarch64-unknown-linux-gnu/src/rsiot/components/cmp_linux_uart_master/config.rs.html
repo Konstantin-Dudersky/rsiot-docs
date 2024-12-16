@@ -106,16 +106,15 @@
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
-<span class="kw">use </span><span class="kw">crate</span>::components_config::uart_general::<span class="kw-2">*</span>;
+<span class="kw">use </span><span class="kw">crate</span>::components_config::{uart_general::<span class="kw-2">*</span>, uart_master::DeviceTrait};
 <span class="kw">use </span><span class="kw">crate</span>::message::MsgDataBound;
-
-<span class="kw">use </span><span class="kw">super</span>::devices;
 
 <span class="doccomment">/// Конфигурация cmp_linux_uart_master
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>Config&lt;TMsg&gt;
+</span><span class="kw">pub struct </span>Config&lt;TMsg, <span class="kw">const </span>MESSAGE_LEN: usize&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
@@ -156,16 +155,19 @@
     ///
     /// ```rust
     /// // На raspberry pi 17 пин - 11 физ. вывод на гребенке
-    /// pin_rts: 17
+    /// pin_rts: Some(17),
+    ///
+    /// // Если пин RTS не нужен
+    /// pin_rts: None
     /// ```
-    </span><span class="kw">pub </span>pin_rts: u32,
+    </span><span class="kw">pub </span>pin_rts: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 
     <span class="doccomment">/// TODO - переделать на вектор универсальных устройств
     </span><span class="comment">// pub devices: Vec&lt;TestDevice&lt;TMsg&gt;&gt;,
-    </span><span class="kw">pub </span>devices: Vec&lt;Box&lt;<span class="kw">dyn </span>devices::DeviceTrait&lt;TMsg&gt;&gt;&gt;,
+    </span><span class="kw">pub </span>devices: Vec&lt;Box&lt;<span class="kw">dyn </span>DeviceTrait&lt;TMsg, MESSAGE_LEN&gt;&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg&gt; Default <span class="kw">for </span>Config&lt;TMsg&gt;
+<span class="kw">impl</span>&lt;TMsg, <span class="kw">const </span>MESSAGE_LEN: usize&gt; Default <span class="kw">for </span>Config&lt;TMsg, MESSAGE_LEN&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
@@ -179,7 +181,7 @@
             devices: <span class="macro">vec!</span>[],
             wait_after_write: Duration::from_millis(<span class="number">50</span>),
             gpio_chip: <span class="string">"/dev/gpiochip0"</span>,
-            pin_rts: <span class="number">17</span>,
+            pin_rts: <span class="prelude-val">Some</span>(<span class="number">17</span>),
         }
     }
 }

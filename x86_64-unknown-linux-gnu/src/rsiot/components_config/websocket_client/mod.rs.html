@@ -84,9 +84,15 @@
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::Message;
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация websocket-клиента
 
-<span class="kw">pub type </span>FnOutput&lt;TMsg&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;&gt;;
+</span><span class="kw">use </span><span class="kw">crate</span>::message::Message;
+
+<span class="doccomment">/// Преобразование полученного от сервера текста в исходящие сообщения
+</span><span class="kw">pub type </span>FnOutput&lt;TMsg&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;&gt;;
 
 <span class="doccomment">/// Настройки Websocket-клиента
 </span><span class="attr">#[derive(Clone, Debug)]

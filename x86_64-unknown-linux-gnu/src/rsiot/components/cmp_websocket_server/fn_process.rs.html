@@ -83,6 +83,8 @@
 <a href="#83" id="83">83</a>
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для подключения через websocket server.
 //!
 //! Перенаправляет поток входящих сообщений подключенным вебсокет-клиентам
@@ -98,7 +100,7 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{AuthPermissions, MsgDataBound},
+    message::{AuthPermissions, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{
@@ -106,12 +108,13 @@
     handle_ws_connection::handle_ws_connection,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage&gt;(
-    input: CmpInOut&lt;TMessage&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService&gt;(
+    input: CmpInOut&lt;TMessage, TService&gt;,
     config: Config&lt;TMessage&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(
         <span class="string">"Component cmp_websocket_server started. Config: {:?}"</span>,
@@ -131,13 +134,14 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMessage&gt;(
-    in_out: CmpInOut&lt;TMessage&gt;,
+<span class="kw">async fn </span>task_main&lt;TMessage, TService&gt;(
+    in_out: CmpInOut&lt;TMessage, TService&gt;,
     config: Config&lt;TMessage&gt;,
     cancel: CancellationToken,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>addr = <span class="macro">format!</span>(<span class="string">"0.0.0.0:{}"</span>, config.port);
 

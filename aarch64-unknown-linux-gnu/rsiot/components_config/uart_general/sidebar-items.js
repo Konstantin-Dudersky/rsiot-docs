@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Baudrate","DataBits","Parity","StopBits"],"struct":["UartMessage"],"trait":["BufferBound","RequestResponseBound"],"type":["UartMessageRaw"]};

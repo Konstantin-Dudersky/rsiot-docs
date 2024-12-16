@@ -107,6 +107,10 @@
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>futures::{
     stream::{SplitSink, SplitStream},
     SinkExt, StreamExt,
@@ -124,7 +128,7 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{Message, MsgDataBound},
+    message::{Message, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{
@@ -132,12 +136,13 @@
     error::Error,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage&gt;(
-    input: CmpInOut&lt;TMessage&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService&gt;(
+    input: CmpInOut&lt;TMessage, TService&gt;,
     config: Config&lt;TMessage&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"cmp_websocket_client starting"</span>);
 
@@ -153,12 +158,13 @@
 }
 
 <span class="doccomment">/// Подключаемся к серверу и запускаем потоки получения и отправки
-</span><span class="kw">async fn </span>task_connect&lt;TMessage&gt;(
-    in_out: CmpInOut&lt;TMessage&gt;,
+</span><span class="kw">async fn </span>task_connect&lt;TMessage, TService&gt;(
+    in_out: CmpInOut&lt;TMessage, TService&gt;,
     config: Config&lt;TMessage&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&lt;TMessage&gt;&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.url).map_err(Error::BadUrl)<span class="question-mark">?</span>;
 
@@ -176,13 +182,14 @@
 }
 
 <span class="doccomment">/// Задача отправки данных на сервер Websocket
-</span><span class="kw">async fn </span>task_send&lt;TMessage&gt;(
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMessage&gt;,
+</span><span class="kw">async fn </span>task_send&lt;TMessage, TService&gt;(
+    <span class="kw-2">mut </span>input: CmpInOut&lt;TMessage, TService&gt;,
     <span class="kw-2">mut </span>write: SplitSink&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;, TungsteniteMessage&gt;,
     fn_send: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMessage&gt;) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&lt;TMessage&gt;&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>text = (fn_send)(<span class="kw-2">&amp;</span>msg).map_err(Error::FnInput)<span class="question-mark">?</span>;
@@ -195,13 +202,14 @@
 }
 
 <span class="doccomment">/// Задача приема данных с сервера Websocket
-</span><span class="kw">async fn </span>task_recv&lt;TMessage&gt;(
-    output: CmpInOut&lt;TMessage&gt;,
+</span><span class="kw">async fn </span>task_recv&lt;TMessage, TService&gt;(
+    output: CmpInOut&lt;TMessage, TService&gt;,
     <span class="kw-2">mut </span>read: SplitStream&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;&gt;,
     fn_recv: FnOutput&lt;TMessage&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&lt;TMessage&gt;&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
+    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = read.next().<span class="kw">await </span>{
         <span class="kw">let </span>data = msg<span class="question-mark">?</span>.into_text()<span class="question-mark">?</span>;

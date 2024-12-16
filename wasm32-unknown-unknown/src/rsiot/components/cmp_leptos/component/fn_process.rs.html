@@ -132,10 +132,36 @@
 <a href="#132" id="132">132</a>
 <a href="#133" id="133">133</a>
 <a href="#134" id="134">134</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>gloo::storage::{LocalStorage, Storage};
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>gloo::{
+    storage::{LocalStorage, Storage},
+    timers::future::sleep,
+};
 <span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>tokio::task::JoinSet;
-<span class="kw">use </span>tracing::debug;
+<span class="kw">use </span>tracing::{debug, trace};
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
@@ -143,21 +169,24 @@
 };
 
 <span class="kw">use super</span>::{
-    <span class="kw">super</span>::{Error, GlobalState, <span class="prelude-ty">Result</span>},
+    <span class="kw">super</span>::{utils, Error, GlobalState, <span class="prelude-ty">Result</span>},
     Config,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TView, TIntoView&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TView, TIntoView, TService&gt;(
     config: Config&lt;TView, TIntoView&gt;,
-    in_out: CmpInOut&lt;TMsg&gt;,
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
 ) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     TView: Fn() -&gt; TIntoView + <span class="lifetime">'static</span>,
     TIntoView: IntoView,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
+    <span class="kw">let </span>hostname = utils::define_hostname().unwrap();
+
     <span class="kw">let </span>gs = GlobalState::&lt;TMsg&gt; {
-        hostname: config.hostname,
+        hostname,
         input: RwSignal::new(<span class="prelude-val">None</span>),
         output: RwSignal::new(<span class="prelude-val">None</span>),
         cache: in_out.cache.clone(),
@@ -182,11 +211,17 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>task_input&lt;TMsg&gt;(<span class="kw-2">mut </span>input: CmpInOut&lt;TMsg&gt;, global_state: GlobalState&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Result
+<span class="kw">async fn </span>task_input&lt;TMsg, TService&gt;(
+    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg, TService&gt;,
+    global_state: GlobalState&lt;TMsg&gt;,
+) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
+        <span class="macro">trace!</span>(<span class="string">"New message in Leptos input: {}"</span>, msg.key);
+
         <span class="comment">// Разрешения
         </span><span class="kw">match </span><span class="kw-2">&amp;</span>msg.data {
             MsgData::System(System::AuthResponseOk(value)) =&gt; {
@@ -201,13 +236,20 @@
         }
         <span class="comment">// Пересылаем сообщение в сигнал
         </span>global_state.input.set(<span class="prelude-val">Some</span>(msg));
+
+        <span class="comment">// Добавлена задержка. Возможно без задержки сообщения теряются?
+        </span>sleep(Duration::from_millis(<span class="number">1</span>)).<span class="kw">await</span>;
     }
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>task_output&lt;TMsg&gt;(output: CmpInOut&lt;TMsg&gt;, global_state: GlobalState&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Result
+<span class="kw">async fn </span>task_output&lt;TMsg, TService&gt;(
+    output: CmpInOut&lt;TMsg, TService&gt;,
+    global_state: GlobalState&lt;TMsg&gt;,
+) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = try_to_find_token() {
         output.send_output(msg).<span class="kw">await</span>.map_err(Error::CmpOutput)<span class="question-mark">?</span>;

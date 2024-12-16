@@ -29,26 +29,28 @@
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound},
+    message::{AuthPermissions, MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{config::Config, fn_process::fn_process};
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
-</span><span class="kw">impl</span>&lt;TMessage&gt; IComponentProcess&lt;Config&lt;TMessage&gt;, TMessage&gt;
-    <span class="kw">for </span>Component&lt;Config&lt;TMessage&gt;, TMessage&gt;
+</span><span class="kw">impl</span>&lt;TMessage, TService&gt; IComponentProcess&lt;Config&lt;TMessage&gt;, TMessage, TService&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMessage&gt;, TMessage, TService&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         config: Config&lt;TMessage&gt;,
-        in_out: CmpInOut&lt;TMessage&gt;,
+        in_out: CmpInOut&lt;TMessage, TService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         fn_process(
             in_out.clone_with_new_id(<span class="string">"cmp_modbus_client"</span>, AuthPermissions::FullAccess),
@@ -59,5 +61,5 @@
 }
 
 <span class="doccomment">/// Компонент cmp_modbus_client
-</span><span class="kw">pub type </span>Cmp&lt;TMessage&gt; = Component&lt;Config&lt;TMessage&gt;, TMessage&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMessage, TService&gt; = Component&lt;Config&lt;TMessage&gt;, TMessage, TService&gt;;
 </code></pre></div></section></main></body></html>

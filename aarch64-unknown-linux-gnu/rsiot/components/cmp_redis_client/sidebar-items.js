@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Config","ConfigFnInputItem"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"type":["Cmp"]};

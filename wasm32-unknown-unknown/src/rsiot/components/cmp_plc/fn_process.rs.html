@@ -94,6 +94,7 @@
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>futures::TryFutureExt;
@@ -104,7 +105,7 @@
 <span class="kw">use crate</span>::{
     components::shared_tasks,
     executor::{join_set_spawn, Cache, CmpInOut},
-    message::MsgDataBound,
+    message::{MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{
@@ -113,12 +114,13 @@
     tasks, Error,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, I, Q, S&gt;(
-    in_out: CmpInOut&lt;TMsg&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService, I, Q, S&gt;(
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
     config: Config&lt;TMsg, I, Q, S&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
     I: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     Q: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     S: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,

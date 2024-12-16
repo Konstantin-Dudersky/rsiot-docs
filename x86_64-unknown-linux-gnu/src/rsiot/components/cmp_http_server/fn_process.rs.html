@@ -81,6 +81,7 @@
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
 <a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>axum::routing;
@@ -94,18 +95,19 @@
 
 <span class="kw">use crate</span>::{
     executor::{join_set_spawn, CmpInOut, ComponentError},
-    message::MsgDataBound,
+    message::{MsgDataBound, ServiceBound},
 };
 
 <span class="kw">use super</span>::{config::Config, routes, shared_state::SharedState, tasks};
 
 <span class="doccomment">/// Компонент для получения и ввода сообщений через HTTP Server
-</span><span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
-    msg_bus: CmpInOut&lt;TMsg&gt;,
+</span><span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
+    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
     config: Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
+    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Component started, configuration: {:?}"</span>, config);
 
@@ -142,12 +144,12 @@
 
     <span class="kw">let </span>router = routing::Router::new()
         .route(<span class="string">"/"</span>, routing::get(routes::root))
-        .route(<span class="string">"/messages"</span>, routing::get(routes::list::&lt;TMsg&gt;))
-        .route(<span class="string">"/messages/:id"</span>, routing::get(routes::get::&lt;TMsg&gt;))
-        .route(<span class="string">"/messages"</span>, routing::put(routes::replace::&lt;TMsg&gt;))
-        .route(<span class="string">"/plc/input"</span>, routing::get(routes::plc_input::&lt;TMsg&gt;))
-        .route(<span class="string">"/plc/output"</span>, routing::get(routes::plc_output::&lt;TMsg&gt;))
-        .route(<span class="string">"/plc/static"</span>, routing::get(routes::plc_static::&lt;TMsg&gt;))
+        .route(<span class="string">"/messages"</span>, routing::get(routes::list))
+        .route(<span class="string">"/messages/:id"</span>, routing::get(routes::get))
+        .route(<span class="string">"/messages"</span>, routing::put(routes::replace))
+        .route(<span class="string">"/plc/input"</span>, routing::get(routes::plc_input))
+        .route(<span class="string">"/plc/output"</span>, routing::get(routes::plc_output))
+        .route(<span class="string">"/plc/static"</span>, routing::get(routes::plc_static))
         .with_state(shared_state)
         .layer(layer_cors)
         .layer(layer_trace);

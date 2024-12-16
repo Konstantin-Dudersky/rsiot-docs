@@ -74,6 +74,9 @@
 <a href="#74" id="74">74</a>
 <a href="#75" id="75">75</a>
 <a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для периодического генерирования сообщений
 
 </span><span class="kw">use </span>async_trait::async_trait;
@@ -81,7 +84,7 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, Message, MsgDataBound},
+    message::{AuthPermissions, Message, MsgDataBound, ServiceBound},
 };
 
 <span class="doccomment">/// Конфигурация cmp_inject_periodic
@@ -102,16 +105,17 @@
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
-</span><span class="kw">impl</span>&lt;TMsg, TFnPeriodic&gt; IComponentProcess&lt;Config&lt;TMsg, TFnPeriodic&gt;, TMsg&gt;
-    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TFnPeriodic&gt;, TMsg&gt;
+</span><span class="kw">impl</span>&lt;TMsg, TFnPeriodic, TService&gt; IComponentProcess&lt;Config&lt;TMsg, TFnPeriodic&gt;, TMsg, TService&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TFnPeriodic&gt;, TMsg, TService&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
     TFnPeriodic: FnMut() -&gt; Vec&lt;Message&lt;TMsg&gt;&gt; + Send + Sync,
+    TService: ServiceBound,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         config: Config&lt;TMsg, TFnPeriodic&gt;,
-        in_out: CmpInOut&lt;TMsg&gt;,
+        in_out: CmpInOut&lt;TMsg, TService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         fn_process(
             config,
@@ -121,13 +125,14 @@
     </span>}
 }
 
-<span class="kw">async fn </span>fn_process&lt;TMsg, TFnPeriodic&gt;(
+<span class="kw">async fn </span>fn_process&lt;TMsg, TFnPeriodic, TService&gt;(
     <span class="kw-2">mut </span>config: Config&lt;TMsg, TFnPeriodic&gt;,
-    in_out: CmpInOut&lt;TMsg&gt;,
+    in_out: CmpInOut&lt;TMsg, TService&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
     TFnPeriodic: FnMut() -&gt; Vec&lt;Message&lt;TMsg&gt;&gt; + Send + Sync,
+    TService: ServiceBound,
 {
     <span class="kw">loop </span>{
         <span class="kw">let </span>begin = Instant::now();
@@ -149,5 +154,6 @@
 }
 
 <span class="doccomment">/// Компонент cmp_inject_periodic
-</span><span class="kw">pub type </span>Cmp&lt;TMessage, TFnPeriodic&gt; = Component&lt;Config&lt;TMessage, TFnPeriodic&gt;, TMessage&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMessage, TFnPeriodic, TService&gt; =
+    Component&lt;Config&lt;TMessage, TFnPeriodic&gt;, TMessage, TService&gt;;
 </code></pre></div></section></main></body></html>

@@ -116,6 +116,15 @@
 <a href="#116" id="116">116</a>
 <a href="#117" id="117">117</a>
 <a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Сериализация / десериализация, используя Postcard - &lt;https://postcard.jamesmunns.com/intro&gt;
 
 </span><span class="kw">use </span>std::fmt::Debug;
@@ -128,14 +137,6 @@
 </span><span class="kw">pub const </span>MESSAGE_LEN: usize = <span class="number">32</span>;
 
 <span class="kw">const </span>CRC_DIGEST: Digest&lt;u32, Table&lt;<span class="number">1</span>&gt;&gt; = Crc::&lt;u32&gt;::new(<span class="kw-2">&amp;</span>CRC_32_ISCSI).digest();
-
-<span class="doccomment">/// Сериализация данных в формат Postcard
-</span><span class="kw">pub fn </span>serialize&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;[u8; MESSAGE_LEN], Error&gt;
-<span class="kw">where
-    </span>T: Debug + Serialize,
-{
-    serialize_crc_new(data)
-}
 
 <span class="doccomment">/// Сериализация данных в формат Postcard
 </span><span class="kw">pub fn </span>serialize_nocrc&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Error&gt;
@@ -172,8 +173,25 @@
     <span class="prelude-val">Ok</span>(buffer)
 }
 
-<span class="doccomment">/// Сериализация данных в формат Postcard
-</span><span class="kw">pub fn </span>serialize_crc_new&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;[u8; MESSAGE_LEN], Error&gt;
+<span class="comment">// /// Сериализация данных в формат Postcard
+// pub fn serialize_crc_new&lt;T&gt;(data: &amp;T) -&gt; Result&lt;[u8; MESSAGE_LEN], Error&gt;
+// where
+//     T: Debug + Serialize,
+// {
+//     let mut buffer = [0xFF; MESSAGE_LEN];
+//     let _ = to_slice_crc32(data, &amp;mut buffer, CRC_DIGEST).map_err(Error::SerializationError)?;
+
+//     if buffer.len() &gt; MESSAGE_LEN {
+//         return Err(Error::BufferTooLarge {
+//             buffer_len: buffer.len(),
+//         });
+//     }
+
+//     Ok(buffer)
+// }
+
+</span><span class="doccomment">/// Сериализация данных в формат Postcard
+</span><span class="kw">pub fn </span>serialize&lt;T, <span class="kw">const </span>MESSAGE_LEN: usize&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;[u8; MESSAGE_LEN], Error&gt;
 <span class="kw">where
     </span>T: Debug + Serialize,
 {

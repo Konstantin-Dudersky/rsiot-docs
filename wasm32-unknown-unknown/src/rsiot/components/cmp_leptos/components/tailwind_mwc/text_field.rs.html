@@ -115,6 +115,10 @@
 <a href="#115" id="115">115</a>
 <a href="#116" id="116">116</a>
 <a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Display;
 
 <span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
@@ -130,6 +134,9 @@
 </span><span class="kw">pub enum </span>InputHtmlType {
     <span class="doccomment">/// type="checkbox"
     </span>Checkbox,
+
+    <span class="doccomment">/// type="color"
+    </span>Color,
 
     <span class="doccomment">/// type="date"
     </span>Date,
@@ -151,6 +158,7 @@
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">let </span>txt = <span class="kw">match </span><span class="self">self </span>{
             InputHtmlType::Checkbox =&gt; <span class="string">"checkbox"</span>,
+            InputHtmlType::Color =&gt; <span class="string">"color"</span>,
             InputHtmlType::Date =&gt; <span class="string">"date"</span>,
             InputHtmlType::Datetime =&gt; <span class="string">"datetime-local"</span>,
             InputHtmlType::Number =&gt; <span class="string">"number"</span>,
