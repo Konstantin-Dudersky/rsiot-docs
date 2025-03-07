@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["http_client","http_server","influxdb_v2","modbus_client","mqtt_client","redis_client","timescaledb","uart_general","uart_master","websocket_client","websocket_server"]};
+window.SIDEBAR_ITEMS = {"mod":["http_client","http_server","influxdb_v2","master_device","modbus_client","mqtt_client","redis_client","spi_master","timescaledb","uart_general","uart_master","websocket_client","websocket_server"]};

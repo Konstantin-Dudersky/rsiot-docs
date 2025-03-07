@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["ConfigPeriodicRequest","DeviceBase"],"trait":["BufferBound","DeviceTrait"],"type":["Result"]};

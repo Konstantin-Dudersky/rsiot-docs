@@ -62,17 +62,17 @@ ESP_IDF_VERSION = &quot;v5.3.1&quot;</code></pre></div>
 }</code></pre></div>
 <p><strong><code>rust-toolchain.toml</code></strong></p>
 <div class="example-wrap"><pre class="language-toml"><code>[toolchain]
-channel = &quot;stable&quot;
-# channel = &quot;nightly&quot;
+# channel = &quot;stable&quot;
+channel = &quot;nightly&quot;
 # channel = &quot;nightly-2024-10-01&quot;
 components = [&quot;rust-src&quot;]</code></pre></div>
 <p><strong><code>sdkconfig.defaults</code></strong></p>
 <div class="example-wrap"><pre class="language-toml"><code># Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
-CONFIG_ESP_MAIN_TASK_STACK_SIZE=8000
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=20000
 
 # Use this to set FreeRTOS kernel tick frequency to 1000 Hz (100 Hz by default).
 # This allows to use 1 ms granuality for thread sleeps (10 ms by default).
-#CONFIG_FREERTOS_HZ=1000
+CONFIG_FREERTOS_HZ=1000
 
 # Workaround for https://github.com/espressif/esp-idf/issues/7631
 #CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=n

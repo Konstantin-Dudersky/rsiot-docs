@@ -175,7 +175,7 @@
     <span class="comment">// Пересылка сообщений на выход компонента
     </span><span class="kw">let </span>task = shared_tasks::mpsc_to_msgbus::MpscToMsgBus {
         input: channel_filter_to_output_recv,
-        cmp_in_out: in_out.clone(),
+        msg_bus: in_out.clone(),
     };
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn().map_err(Error::ToCmpOutput));
 

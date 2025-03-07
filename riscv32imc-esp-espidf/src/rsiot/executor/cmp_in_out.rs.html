@@ -303,7 +303,7 @@
                 <span class="kw">continue</span>;
             };
 
-            msg.add_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>.id, <span class="kw-2">&amp;</span><span class="self">self</span>.name);
+            msg.add_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>.id);
             <span class="kw">return </span><span class="prelude-val">Ok</span>(msg);
         }
     }
@@ -332,7 +332,7 @@
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         };
 
-        msg.add_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>.id, <span class="kw-2">&amp;</span><span class="self">self</span>.name);
+        msg.add_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>.id);
         <span class="self">self</span>.output
             .send(msg)
             .<span class="kw">await
@@ -348,7 +348,7 @@
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         };
 
-        msg.add_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>.id, <span class="kw-2">&amp;</span><span class="self">self</span>.name);
+        msg.add_trace_item(<span class="kw-2">&amp;</span><span class="self">self</span>.id);
         <span class="self">self</span>.output
             .blocking_send(msg)
             .map_err(|e| ComponentError::CmpOutput(e.to_string()))

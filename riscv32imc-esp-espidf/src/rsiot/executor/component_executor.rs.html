@@ -260,7 +260,9 @@
 <a href="#259" id="259">259</a>
 <a href="#260" id="260">260</a>
 <a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 <span class="kw">use </span>tokio::{
     sync::{broadcast, mpsc},
     task::JoinSet,
@@ -440,8 +442,10 @@
     </span>sleep(delay_publish).<span class="kw">await</span>;
 
     <span class="kw">while let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>msg) = input.recv().<span class="kw">await </span>{
-        <span class="macro">trace!</span>(<span class="string">"ComponentExecutor: new message: {:?}"</span>, msg);
-        msg.add_trace_item(<span class="kw-2">&amp;</span>executor_id, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}::internal_bus"</span>, service_name));
+        <span class="comment">// TODO
+        </span><span class="macro">trace!</span>(<span class="string">"ComponentExecutor: new message: {:?}"</span>, msg);
+        <span class="comment">// msg.add_trace_item(&amp;executor_id, &amp;format!("{}::internal_bus", service_name));
+        </span>msg.add_trace_item(<span class="kw-2">&amp;</span>executor_id);
         msg.set_service_origin(<span class="kw-2">&amp;</span>service_name);
         <span class="kw">let </span>msg = save_msg_in_cache(msg, <span class="kw-2">&amp;</span>cache).<span class="kw">await</span>;
         <span class="kw">let </span><span class="prelude-val">Some</span>(msg) = msg <span class="kw">else </span>{ <span class="kw">continue </span>};

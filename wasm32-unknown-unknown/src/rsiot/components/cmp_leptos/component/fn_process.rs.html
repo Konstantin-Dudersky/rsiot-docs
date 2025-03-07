@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_leptos/component/fn_process.rs`."><title>fn_process.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_leptos/component/fn_process.rs`."><title>fn_process.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0 (9fc6b4312 2025-01-07)" data-channel="1.84.0" data-search-js="search-92e6798f.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/components/cmp_leptos/component/</div>fn_process.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -141,40 +142,24 @@
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
 <a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
-
-<span class="kw">use </span>gloo::{
-    storage::{LocalStorage, Storage},
-    timers::future::sleep,
-};
+<a href="#144" id="144">144</a></pre></div><pre class="rust"><code><span class="kw">use </span>gloo::storage::{LocalStorage, Storage};
 <span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>tokio::task::JoinSet;
-<span class="kw">use </span>tracing::{debug, trace};
+<span class="kw">use </span>reactive_stores::Store;
+<span class="kw">use </span>tokio::{sync::mpsc, task::JoinSet};
+<span class="kw">use </span>tracing::debug;
 
 <span class="kw">use crate</span>::{
-    executor::CmpInOut,
+    executor::{join_set_spawn, CmpInOut},
     message::{system_messages::<span class="kw-2">*</span>, <span class="kw-2">*</span>},
 };
 
 <span class="kw">use super</span>::{
     <span class="kw">super</span>::{utils, Error, GlobalState, <span class="prelude-ty">Result</span>},
-    Config,
+    Config, StoreBound,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TView, TIntoView, TService&gt;(
-    config: Config&lt;TView, TIntoView&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TView, TIntoView, TService, TInputStore, TOutputStore&gt;(
+    config: Config&lt;TMsg, TView, TIntoView, TInputStore, TOutputStore&gt;,
     in_out: CmpInOut&lt;TMsg, TService&gt;,
 ) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
@@ -182,6 +167,8 @@
     TView: Fn() -&gt; TIntoView + <span class="lifetime">'static</span>,
     TIntoView: IntoView,
     TService: ServiceBound + <span class="lifetime">'static</span>,
+    TInputStore: StoreBound + <span class="lifetime">'static</span>,
+    TOutputStore: StoreBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>hostname = utils::define_hostname().unwrap();
 
@@ -194,80 +181,68 @@
     };
 
     <span class="comment">// Монтируем корневой компонент
-    </span><span class="kw">let </span>gs_clone = gs.clone();
+    </span><span class="kw">let </span>input_store = Store::new(config.input_store);
+    <span class="kw">let </span>input_store_clone = input_store;
+    <span class="kw">let </span>output_store = Store::new(config.output_store);
+    <span class="kw">let </span>output_store_clone = output_store;
     mount_to_body(<span class="kw">move </span>|| {
         <span class="macro">view!</span> {
-            &lt;RootComponent body_component = config.body_component global_state=gs_clone /&gt;
+            &lt;RootComponent
+                body_component = config.body_component
+                input_store=input_store_clone
+                output_store=output_store_clone
+            /&gt;
         }
     });
     <span class="macro">debug!</span>(<span class="string">"Leptos app mounted"</span>);
 
     <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="prelude-ty">Result</span>&gt; = JoinSet::new();
-    task_set.spawn_local(task_input(in_out.clone(), gs.clone()));
-    task_set.spawn_local(task_output(in_out, gs.clone()));
+
+    <span class="kw">let </span>task = task_input(in_out.clone(), config.fn_input, input_store);
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task);
+
+    <span class="kw">let </span>task = task_output(in_out.clone(), config.fn_output, output_store);
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task);
+
     <span class="kw">while let </span><span class="prelude-val">Some</span>(task_result) = task_set.join_next().<span class="kw">await </span>{
         task_result<span class="question-mark">??
     </span>}
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>task_input&lt;TMsg, TService&gt;(
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg, TService&gt;,
-    global_state: GlobalState&lt;TMsg&gt;,
+<span class="kw">async fn </span>task_input&lt;TMsg, TService, TInputStore&gt;(
+    <span class="kw-2">mut </span>msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    fn_input: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;, <span class="kw-2">&amp;</span>Store&lt;TInputStore&gt;),
+    input_store: Store&lt;TInputStore&gt;,
 ) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     TService: ServiceBound + <span class="lifetime">'static</span>,
+    TInputStore: StoreBound + <span class="lifetime">'static</span>,
 {
-    <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
-        <span class="macro">trace!</span>(<span class="string">"New message in Leptos input: {}"</span>, msg.key);
-
-        <span class="comment">// Разрешения
-        </span><span class="kw">match </span><span class="kw-2">&amp;</span>msg.data {
-            MsgData::System(System::AuthResponseOk(value)) =&gt; {
-                global_state.auth_perm.set(value.perm);
-                LocalStorage::set(<span class="kw-2">&amp;</span>msg.key, <span class="kw-2">&amp;</span>msg)<span class="question-mark">?</span>;
-            }
-            MsgData::System(System::AuthResponseErr(<span class="kw">_</span>)) =&gt; {
-                global_state.auth_perm.set(AuthPermissions::NoAccess);
-                LocalStorage::delete(<span class="kw-2">&amp;</span>msg.key);
-            }
-            <span class="kw">_ </span>=&gt; (),
-        }
-        <span class="comment">// Пересылаем сообщение в сигнал
-        </span>global_state.input.set(<span class="prelude-val">Some</span>(msg));
-
-        <span class="comment">// Добавлена задержка. Возможно без задержки сообщения теряются?
-        </span>sleep(Duration::from_millis(<span class="number">1</span>)).<span class="kw">await</span>;
+    <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = msg_bus.recv_input().<span class="kw">await </span>{
+        (fn_input)(<span class="kw-2">&amp;</span>msg, <span class="kw-2">&amp;</span>input_store);
     }
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>task_output&lt;TMsg, TService&gt;(
-    output: CmpInOut&lt;TMsg, TService&gt;,
-    global_state: GlobalState&lt;TMsg&gt;,
+<span class="kw">async fn </span>task_output&lt;TMsg, TService, TOutputStore&gt;(
+    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    fn_output: <span class="kw">fn</span>(Store&lt;TOutputStore&gt;, mpsc::Sender&lt;TMsg&gt;),
+    output_store: Store&lt;TOutputStore&gt;,
 ) -&gt; <span class="prelude-ty">Result
 </span><span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     TService: ServiceBound + <span class="lifetime">'static</span>,
+    TOutputStore: StoreBound + <span class="lifetime">'static</span>,
 {
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = try_to_find_token() {
-        output.send_output(msg).<span class="kw">await</span>.map_err(Error::CmpOutput)<span class="question-mark">?</span>;
-    }
+    <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = mpsc::channel(<span class="number">100</span>);
 
-    <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = tokio::sync::mpsc::channel(<span class="number">100</span>);
-
-    Effect::new(<span class="kw">move </span>|<span class="kw">_</span>| {
-        <span class="kw">let </span>msg = global_state.output.get();
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = msg {
-            tx.blocking_send(msg)
-                .map_err(|e| Error::TokioMpscSend(e.to_string()))<span class="question-mark">?</span>;
-        }
-        <span class="prelude-val">Ok</span>(()) <span class="kw">as </span><span class="prelude-ty">Result
-    </span>});
+    (fn_output)(output_store, tx);
 
     <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = rx.recv().<span class="kw">await </span>{
-        output.send_output(msg).<span class="kw">await</span>.map_err(Error::CmpOutput)<span class="question-mark">?</span>;
+        <span class="kw">let </span>msg = Message::new_custom(msg);
+        msg_bus.send_output(msg).<span class="kw">await</span>.map_err(Error::CmpOutput)<span class="question-mark">?</span>;
     }
 
     <span class="prelude-val">Ok</span>(())
@@ -293,16 +268,19 @@
 
 <span class="doccomment">/// Корневой компонент
 </span><span class="attr">#[component]
-</span><span class="kw">fn </span>RootComponent&lt;TMsg, TView, TIntoView&gt;(
+</span><span class="kw">fn </span>RootComponent&lt;TView, TIntoView, TInputStore, TOutputStore&gt;(
     body_component: TView,
-    global_state: GlobalState&lt;TMsg&gt;,
+    input_store: Store&lt;TInputStore&gt;,
+    output_store: Store&lt;TOutputStore&gt;,
 ) -&gt; <span class="kw">impl </span>IntoView
 <span class="kw">where
-    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TView: Fn() -&gt; TIntoView,
+    </span>TView: Fn() -&gt; TIntoView,
     TIntoView: IntoView,
+    TInputStore: StoreBound + <span class="lifetime">'static</span>,
+    TOutputStore: StoreBound + <span class="lifetime">'static</span>,
 {
-    provide_context(global_state);
+    provide_context(input_store);
+    provide_context(output_store);
 
     <span class="macro">view!</span> {
         { body_component() }

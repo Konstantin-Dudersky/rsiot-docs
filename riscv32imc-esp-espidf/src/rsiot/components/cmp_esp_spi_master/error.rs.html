@@ -27,7 +27,16 @@
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
-<a href="#29" id="29">29</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{components::shared_tasks, executor::ComponentError};
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{components::shared_tasks, components_config::master_device, executor::ComponentError};
 
 <span class="attr">#[allow(missing_docs)]
 #[derive(Debug, thiserror::Error)]
@@ -49,6 +58,15 @@
 
     <span class="attr">#[error(transparent)]
     </span>TaskFilter(shared_tasks::filter_identical_data::Error),
+
+    <span class="attr">#[error(transparent)]
+    </span>TaskMsgbusToBroadcast(shared_tasks::msgbus_to_broadcast::Error),
+
+    <span class="attr">#[error(transparent)]
+    </span>DeviceError(<span class="attr">#[from] </span>master_device::Error),
+
+    <span class="attr">#[error(<span class="string">"CS number {cs} not availbalve; amount of configured CS: {max_cs}"</span>)]
+    </span>CsNotAvailable { cs: u8, max_cs: u8 },
 }
 
 <span class="kw">impl </span>From&lt;Error&gt; <span class="kw">for </span>ComponentError {

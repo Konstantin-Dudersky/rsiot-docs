@@ -189,7 +189,7 @@
 
     <span class="kw">async fn </span>request(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">let </span>req = I2cRequest::GetInput;
-        <span class="kw">let </span>req = postcard_serde::serialize_crc(<span class="kw-2">&amp;</span>req)<span class="question-mark">?</span>;
+        <span class="kw">let </span>req = postcard_serde::serialize_crc_deprecated(<span class="kw-2">&amp;</span>req)<span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>response = {
             <span class="kw">let </span><span class="kw-2">mut </span>driver = <span class="self">self</span>.driver.lock().<span class="kw">await</span>;

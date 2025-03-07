@@ -113,30 +113,8 @@
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
 <a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
-<a href="#124" id="124">124</a>
-<a href="#125" id="125">125</a>
-<a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
+<a href="#115" id="115">115</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
-<span class="kw">use </span>esp_idf_svc::hal::gpio::{AnyIOPin, PinDriver};
 <span class="kw">use </span>esp_idf_svc::hal::{
     gpio,
     peripheral::Peripheral,
@@ -147,30 +125,18 @@
     sync::{mpsc, Mutex},
     task::JoinSet,
 };
-<span class="kw">use </span>tracing::info;
 
+<span class="kw">use </span><span class="kw">crate</span>::components_config::uart_general::Parity;
 <span class="kw">use crate</span>::{
-    components::{
-        cmp_esp_uart_slave::Parity,
-        shared_tasks::{filter_identical_data, mpsc_to_msgbus},
-    },
+    components::shared_tasks::{filter_identical_data, mpsc_to_msgbus},
     executor::{join_set_spawn, CmpInOut},
     message::{MsgDataBound, ServiceBound},
 };
 
-<span class="kw">use super</span>::{tasks, Config, RequestResponseBound};
+<span class="kw">use super</span>::{tasks, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;
-    TMsg,
-    TService,
-    TUart,
-    TPeripheral,
-    TRequest,
-    TResponse,
-    TBufferData,
-    <span class="kw">const </span>MESSAGE_LEN: usize,
-&gt;(
-    config: Config&lt;TMsg, TUart, TPeripheral, TRequest, TResponse, TBufferData, MESSAGE_LEN&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService, TUart, TPeripheral, TBufferData&gt;(
+    config: Config&lt;TMsg, TUart, TPeripheral, TBufferData&gt;,
     msg_bus: CmpInOut&lt;TMsg, TService&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
@@ -178,16 +144,13 @@
     TService: ServiceBound + <span class="lifetime">'static</span>,
     TUart: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
     TPeripheral: Uart,
-    TRequest: <span class="lifetime">'static </span>+ RequestResponseBound,
-    TResponse: <span class="lifetime">'static </span>+ RequestResponseBound,
     TBufferData: <span class="lifetime">'static</span>,
 {
-    <span class="macro">info!</span>(<span class="string">"Starting UART loopback test"</span>);
-
     <span class="kw">let </span>uart_config = uart::config::Config::new()
         .baudrate(config.baudrate.into())
         .data_bits(config.data_bits.into())
-        .stop_bits(config.stop_bits.into());
+        .stop_bits(config.stop_bits.into())
+        .mode(uart::config::Mode::RS485HalfDuplex);
     <span class="kw">let </span>uart_config = <span class="kw">match </span>config.parity {
         Parity::None =&gt; uart_config.parity_none(),
         Parity::Even =&gt; uart_config.parity_even(),
@@ -199,14 +162,10 @@
         config.pin_tx,
         config.pin_rx,
         <span class="prelude-ty">Option</span>::&lt;gpio::Gpio0&gt;::None,
-        <span class="comment">// Option::&lt;gpio::Gpio1&gt;::None,
-        </span><span class="prelude-ty">Option</span>::&lt;AnyIOPin&gt;::None,
-        <span class="comment">// Some(config.pin_rts),
-        </span><span class="kw-2">&amp;</span>uart_config,
+        <span class="prelude-val">Some</span>(config.pin_rts),
+        <span class="kw-2">&amp;</span>uart_config,
     )
     .unwrap();
-
-    <span class="kw">let </span>pin_rts = PinDriver::output(config.pin_rts).unwrap();
 
     <span class="kw">let </span>buffer_data = config.buffer_data_default;
     <span class="kw">let </span>buffer_data = Arc::new(Mutex::new(buffer_data));
@@ -228,11 +187,10 @@
     </span><span class="kw">let </span>task = tasks::UartComm {
         address: config.address,
         uart,
-        pin_rts,
         fn_uart_comm: config.fn_uart_comm,
         buffer_data: buffer_data.clone(),
     };
-    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn::&lt;MESSAGE_LEN&gt;());
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
 
     <span class="comment">// Задача генерирования исходящих сообщений
     </span><span class="kw">let </span>task = tasks::Output {
@@ -256,7 +214,7 @@
     <span class="comment">// Задача передачи сообщений в шину
     </span><span class="kw">let </span>task = mpsc_to_msgbus::MpscToMsgBus {
         input: ch_rx_filter_to_msgbus,
-        cmp_in_out: msg_bus.clone(),
+        msg_bus: msg_bus.clone(),
     };
     join_set_spawn(
         <span class="kw-2">&amp;mut </span>task_set,

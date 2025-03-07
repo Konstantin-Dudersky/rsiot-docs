@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["MESSAGE_LEN"],"enum":["Error"],"fn":["deserialize","deserialize_crc","deserialize_nocrc","serialize","serialize_crc","serialize_nocrc"]};
+window.SIDEBAR_ITEMS = {"constant":["MESSAGE_LEN"],"enum":["Error"],"fn":["deserialize","deserialize_crc","deserialize_nocrc","serialize","serialize_crc","serialize_crc_deprecated","serialize_nocrc","serialize_nocrc_deprecated"]};

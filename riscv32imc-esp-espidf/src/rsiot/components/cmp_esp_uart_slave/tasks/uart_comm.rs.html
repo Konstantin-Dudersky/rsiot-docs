@@ -82,71 +82,72 @@
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
 <a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
-
-<span class="kw">use </span>esp_idf_svc::hal::{
-    gpio::{Output, Pin, PinDriver},
-    io::asynch::Write,
-    uart::{AsyncUartDriver, UartDriver},
+<a href="#84" id="84">84</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::{
+    hal::{
+        io::asynch::Write,
+        uart::{AsyncUartDriver, UartDriver},
+    },
+    sys::uart_flush_input,
 };
-<span class="kw">use </span>tokio::time::sleep;
 <span class="kw">use </span>tracing::{trace, warn};
 
-<span class="kw">use </span><span class="kw">crate</span>::components::cmp_esp_uart_slave::{RequestResponseBound, UartMessage};
+<span class="kw">use </span><span class="kw">crate</span>::components_config::uart_general::{UartRequest, UartResponse};
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::TFnUartComm;
 <span class="kw">use </span><span class="kw">super</span>::Buffer;
 
-<span class="kw">pub struct </span>UartComm&lt;TRequest, TResponse, TBufferData, TPinRts&gt;
-<span class="kw">where
-    </span>TPinRts: Pin,
-{
+<span class="kw">pub struct </span>UartComm&lt;TBufferData&gt; {
     <span class="kw">pub </span>address: u8,
     <span class="kw">pub </span>uart: AsyncUartDriver&lt;<span class="lifetime">'static</span>, UartDriver&lt;<span class="lifetime">'static</span>&gt;&gt;,
-    <span class="kw">pub </span>pin_rts: PinDriver&lt;<span class="lifetime">'static</span>, TPinRts, Output&gt;,
-    <span class="kw">pub </span>fn_uart_comm: TFnUartComm&lt;TRequest, TResponse, TBufferData&gt;,
+    <span class="kw">pub </span>fn_uart_comm: TFnUartComm&lt;UartRequest, UartResponse, TBufferData&gt;,
     <span class="kw">pub </span>buffer_data: Buffer&lt;TBufferData&gt;,
 }
 
-<span class="kw">const </span>BUFFER_LEN: usize = <span class="number">100</span>;
+<span class="kw">const </span>READ_BUFFER_LEN: usize = <span class="number">100</span>;
 
-<span class="kw">impl</span>&lt;TRequest, TResponse, TBufferData, TPinRts&gt; UartComm&lt;TRequest, TResponse, TBufferData, TPinRts&gt;
-<span class="kw">where
-    </span>TRequest: RequestResponseBound,
-    TResponse: RequestResponseBound,
-    TPinRts: Pin,
-{
-    <span class="kw">pub async fn </span>spawn&lt;<span class="kw">const </span>MESSAGE_LEN: usize&gt;(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
+<span class="kw">impl</span>&lt;TBufferData&gt; UartComm&lt;TBufferData&gt; {
+    <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
+        <span class="kw">let </span>port = <span class="self">self</span>.uart.driver().port();
+
         <span class="kw">loop </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>buf = [<span class="number">0_u8</span>; BUFFER_LEN];
+            <span class="kw">let </span><span class="kw-2">mut </span>read_buffer = [<span class="number">0_u8</span>; READ_BUFFER_LEN];
 
-            <span class="kw">let </span>res = <span class="self">self</span>.uart.read(<span class="kw-2">&amp;mut </span>buf).<span class="kw">await</span>;
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = res {
-                <span class="macro">warn!</span>(<span class="string">"Error reading from uart: {:?}"</span>, err);
-                <span class="kw">continue</span>;
-            }
+            <span class="comment">// Очистка буфера чтения
+            // Используется unsafe функция, поскольку AsyncUartDriver не содержит метода clear_rx()
+            </span><span class="kw">unsafe </span>{ uart_flush_input(port) };
 
-            <span class="macro">trace!</span>(<span class="string">"Read UART buffer: {:?}"</span>, buf);
-
-            <span class="kw">let </span>request = UartMessage::deserialize(<span class="kw-2">&amp;mut </span>buf);
-            <span class="kw">let </span>request: UartMessage&lt;TRequest&gt; = <span class="kw">match </span>request {
+            <span class="kw">let </span>res = <span class="self">self</span>.uart.read(<span class="kw-2">&amp;mut </span>read_buffer).<span class="kw">await</span>;
+            <span class="kw">let </span>_read_len = <span class="kw">match </span>res {
                 <span class="prelude-val">Ok</span>(val) =&gt; val,
-                <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">continue</span>,
+                <span class="prelude-val">Err</span>(err) =&gt; {
+                    <span class="macro">warn!</span>(<span class="string">"Error reading from uart: {:?}"</span>, err);
+                    <span class="kw">continue</span>;
+                }
             };
-            <span class="macro">trace!</span>(<span class="string">"Request: {:?}"</span>, request);
+
+            <span class="macro">trace!</span>(<span class="string">"Read UART buffer: {:?}"</span>, read_buffer);
+
+            <span class="kw">let </span>request = <span class="kw">match </span>UartRequest::from_read_buffer(<span class="kw-2">&amp;mut </span>read_buffer) {
+                <span class="prelude-val">Ok</span>(val) =&gt; val,
+                <span class="prelude-val">Err</span>(err) =&gt; {
+                    <span class="macro">warn!</span>(<span class="string">"Deserialization error: {:?}"</span>, err);
+                    <span class="kw">continue</span>;
+                }
+            };
 
             <span class="kw">if </span>request.address != <span class="self">self</span>.address {
                 <span class="kw">continue</span>;
             }
 
+            <span class="macro">trace!</span>(<span class="string">"Request: {:?}"</span>, request);
+            <span class="kw">let </span>address = request.address;
+
             <span class="kw">let </span>response = {
                 <span class="kw">let </span><span class="kw-2">mut </span>buffer_data = <span class="self">self</span>.buffer_data.lock().<span class="kw">await</span>;
-                (<span class="self">self</span>.fn_uart_comm)(request.payload, <span class="kw-2">&amp;mut </span>buffer_data)
+                (<span class="self">self</span>.fn_uart_comm)(request, <span class="kw-2">&amp;mut </span>buffer_data)
             };
 
-            <span class="kw">let </span>response = <span class="kw">match </span>response {
+            <span class="kw">let </span><span class="kw-2">mut </span>response = <span class="kw">match </span>response {
                 <span class="prelude-val">Ok</span>(val) =&gt; val,
                 <span class="prelude-val">Err</span>(err) =&gt; {
                     <span class="kw">let </span>err = <span class="macro">format!</span>(<span class="string">"fn_uart_comm error: {err}"</span>);
@@ -154,19 +155,14 @@
                     <span class="kw">continue</span>;
                 }
             };
+            response.address = address;
 
-            <span class="kw">let </span>response = UartMessage {
-                address: <span class="self">self</span>.address,
-                payload: response,
-            };
             <span class="macro">trace!</span>(<span class="string">"Response: {:?}"</span>, response);
 
-            <span class="kw">let </span>response: [u8; MESSAGE_LEN] = response.serialize().unwrap();
+            <span class="kw">let </span>write_buffer = response.to_write_buffer()<span class="question-mark">?</span>;
 
-            <span class="self">self</span>.pin_rts.set_high().unwrap();
-            <span class="self">self</span>.uart.write_all(<span class="kw-2">&amp;</span>response).<span class="kw">await</span>.unwrap();
-            sleep(Duration::from_millis(<span class="number">10</span>)).<span class="kw">await</span>;
-            <span class="self">self</span>.pin_rts.set_low().unwrap();
+            <span class="self">self</span>.uart.write_all(<span class="kw-2">&amp;</span>write_buffer).<span class="kw">await</span>.unwrap();
+            <span class="self">self</span>.uart.flush().<span class="kw">await</span>.unwrap();
         }
     }
 }

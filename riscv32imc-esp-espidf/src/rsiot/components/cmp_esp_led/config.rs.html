@@ -64,7 +64,7 @@
     </span><span class="kw">pub </span>rmt_channel: TRmt,
 
     <span class="doccomment">/// Функция преобразования входящих сообщений в значение цвета
-    </span><span class="kw">pub </span>fn_input: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;ConfigRgb&gt;&gt;,
+    </span><span class="kw">pub </span>fn_input: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;(u8, ConfigRgb)&gt;&gt;,
 }
 
 <span class="doccomment">/// Задание цвета

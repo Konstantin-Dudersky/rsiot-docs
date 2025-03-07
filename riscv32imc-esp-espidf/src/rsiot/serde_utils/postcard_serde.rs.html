@@ -125,7 +125,12 @@
 <a href="#124" id="124">124</a>
 <a href="#125" id="125">125</a>
 <a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a></pre></div><pre class="rust"><code><span class="doccomment">//! Сериализация / десериализация, используя Postcard - &lt;https://postcard.jamesmunns.com/intro&gt;
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a></pre></div><pre class="rust"><code><span class="doccomment">//! Сериализация / десериализация, используя Postcard - &lt;https://postcard.jamesmunns.com/intro&gt;
 
 </span><span class="kw">use </span>std::fmt::Debug;
 
@@ -138,8 +143,50 @@
 
 <span class="kw">const </span>CRC_DIGEST: Digest&lt;u32, Table&lt;<span class="number">1</span>&gt;&gt; = Crc::&lt;u32&gt;::new(<span class="kw-2">&amp;</span>CRC_32_ISCSI).digest();
 
-<span class="doccomment">/// Сериализация данных в формат Postcard
+<span class="doccomment">/// Сериализация данных в формат, в вектор байт, без CRC
 </span><span class="kw">pub fn </span>serialize_nocrc&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Error&gt;
+<span class="kw">where
+    </span>T: Serialize,
+{
+    <span class="kw">let </span>buffer = to_stdvec(data).map_err(Error::SerializationError)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(buffer)
+}
+
+<span class="doccomment">/// Сериализация данных в формат, в вектор байт, с CRC
+</span><span class="kw">pub fn </span>serialize_crc&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Error&gt;
+<span class="kw">where
+    </span>T: Serialize,
+{
+    <span class="kw">let </span>buffer = to_stdvec_crc32(data, CRC_DIGEST).map_err(Error::SerializationError)<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(buffer)
+}
+
+<span class="doccomment">/// Десериализация данных из формата Postcard
+</span><span class="kw">pub fn </span>deserialize_crc&lt;T&gt;(buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
+<span class="kw">where
+    </span>T: DeserializeOwned,
+{
+    from_bytes_crc32(buffer, CRC_DIGEST).map_err(|e| Error::DeserializationError {
+        error: e,
+        buffer: buffer.to_vec(),
+    })
+}
+
+<span class="doccomment">/// Десериализация данных из формата Postcard
+</span><span class="kw">pub fn </span>deserialize_nocrc&lt;T&gt;(buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
+<span class="kw">where
+    </span>T: DeserializeOwned,
+{
+    from_bytes(buffer).map_err(|e| Error::DeserializationError {
+        error: e,
+        buffer: buffer.to_vec(),
+    })
+}
+
+<span class="doccomment">/// Сериализация данных в формат Postcard
+</span><span class="attr">#[deprecated]
+</span><span class="kw">pub fn </span>serialize_nocrc_deprecated&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Error&gt;
 <span class="kw">where
     </span>T: Debug + Serialize,
 {
@@ -157,7 +204,7 @@
 
 <span class="doccomment">/// Сериализация данных в формат Postcard
 </span><span class="attr">#[deprecated]
-</span><span class="kw">pub fn </span>serialize_crc&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Error&gt;
+</span><span class="kw">pub fn </span>serialize_crc_deprecated&lt;T&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Error&gt;
 <span class="kw">where
     </span>T: Debug + Serialize,
 {
@@ -173,24 +220,8 @@
     <span class="prelude-val">Ok</span>(buffer)
 }
 
-<span class="comment">// /// Сериализация данных в формат Postcard
-// pub fn serialize_crc_new&lt;T&gt;(data: &amp;T) -&gt; Result&lt;[u8; MESSAGE_LEN], Error&gt;
-// where
-//     T: Debug + Serialize,
-// {
-//     let mut buffer = [0xFF; MESSAGE_LEN];
-//     let _ = to_slice_crc32(data, &amp;mut buffer, CRC_DIGEST).map_err(Error::SerializationError)?;
-
-//     if buffer.len() &gt; MESSAGE_LEN {
-//         return Err(Error::BufferTooLarge {
-//             buffer_len: buffer.len(),
-//         });
-//     }
-
-//     Ok(buffer)
-// }
-
-</span><span class="doccomment">/// Сериализация данных в формат Postcard
+<span class="doccomment">/// Сериализация данных в формат Postcard
+</span><span class="attr">#[deprecated]
 </span><span class="kw">pub fn </span>serialize&lt;T, <span class="kw">const </span>MESSAGE_LEN: usize&gt;(data: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;[u8; MESSAGE_LEN], Error&gt;
 <span class="kw">where
     </span>T: Debug + Serialize,
@@ -208,33 +239,12 @@
 }
 
 <span class="doccomment">/// Десериализация данных из формата Postcard
+</span><span class="attr">#[deprecated]
 </span><span class="kw">pub fn </span>deserialize&lt;T&gt;(buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
 <span class="kw">where
     </span>T: Debug + DeserializeOwned,
 {
     deserialize_crc(buffer)
-}
-
-<span class="doccomment">/// Десериализация данных из формата Postcard
-</span><span class="kw">pub fn </span>deserialize_nocrc&lt;T&gt;(buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
-<span class="kw">where
-    </span>T: Debug + DeserializeOwned,
-{
-    from_bytes(buffer).map_err(|e| Error::DeserializationError {
-        error: e,
-        buffer: buffer.to_vec(),
-    })
-}
-
-<span class="doccomment">/// Десериализация данных из формата Postcard
-</span><span class="kw">pub fn </span>deserialize_crc&lt;T&gt;(buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
-<span class="kw">where
-    </span>T: Debug + DeserializeOwned,
-{
-    from_bytes_crc32(buffer, CRC_DIGEST).map_err(|e| Error::DeserializationError {
-        error: e,
-        buffer: buffer.to_vec(),
-    })
 }
 
 <span class="attr">#[allow(missing_docs)]
@@ -246,7 +256,7 @@
     <span class="attr">#[error(<span class="string">"Buffer too large. Buffer len: {buffer_len}, message len: {MESSAGE_LEN}. Increase MESSAGE_LEN constant."</span>)]
     </span>BufferTooLarge { buffer_len: usize },
 
-    <span class="attr">#[error(<span class="string">"Deserialization error: {error}. Buffer: {buffer:?}"</span>)]
+    <span class="attr">#[error(<span class="string">"Deserialization error: {error}. Buffer: {buffer:x?}"</span>)]
     </span>DeserializationError {
         error: postcard::Error,
         buffer: Vec&lt;u8&gt;,

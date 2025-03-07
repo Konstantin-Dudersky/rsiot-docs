@@ -59,7 +59,7 @@
     </span><span class="kw">pub </span>input: mpsc::Receiver&lt;Message&lt;TMsg&gt;&gt;,
 
     <span class="doccomment">/// Исходящие сообщения, шина сообщений между компонентами
-    </span><span class="kw">pub </span>cmp_in_out: CmpInOut&lt;TMsg, TService&gt;,
+    </span><span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg, TService&gt;,
 }
 
 <span class="kw">impl</span>&lt;TMsg, TService&gt; MpscToMsgBus&lt;TMsg, TService&gt;
@@ -70,7 +70,7 @@
     <span class="doccomment">/// Запуск на выполнение
     </span><span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = <span class="self">self</span>.input.recv().<span class="kw">await </span>{
-            <span class="self">self</span>.cmp_in_out.send_output(msg).<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="self">self</span>.msg_bus.send_output(msg).<span class="kw">await</span><span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(())
     }

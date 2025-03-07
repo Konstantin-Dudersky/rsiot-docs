@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["http_client","http_server","mqtt_client","uart_general","uart_master"]};
+window.SIDEBAR_ITEMS = {"mod":["http_client","http_server","master_device","mqtt_client","spi_master","uart_general","uart_master"]};

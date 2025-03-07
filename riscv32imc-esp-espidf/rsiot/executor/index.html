@@ -6,6 +6,7 @@
     prelude::<span class="kw-2">*</span>,
     task::{spawn_local, Executor},
 };
+<span class="kw">use </span>reactive_stores::Store;
 <span class="kw">use </span>tokio::task::LocalSet;
 
 <span class="kw">use crate</span>::{
@@ -24,9 +25,18 @@
 
         configure_logging(<span class="string">"info"</span>).unwrap();
 
+        <span class="attr">#[derive(Default, Clone, Store)]
+        </span><span class="kw">struct </span>GlobalStore {}
+
+        <span class="kw">impl </span>cmp_leptos::StoreBound <span class="kw">for </span>GlobalStore {}
+
         <span class="comment">// cmp_leptos ------------------------------------------------------------------------------
         </span><span class="kw">let </span>config_leptos = cmp_leptos::Config {
             body_component: || <span class="macro">view!</span> { &lt;App/&gt; },
+            input_store: GlobalStore::default(),
+            output_store: GlobalStore::default(),
+            fn_input: |<span class="kw">_</span>, <span class="kw">_</span>| (),
+            fn_output: |<span class="kw">_</span>, <span class="kw">_</span>| (),
         };
 
         <span class="comment">// config_executor -------------------------------------------------------------------------

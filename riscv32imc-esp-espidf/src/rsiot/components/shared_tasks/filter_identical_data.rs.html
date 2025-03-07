@@ -62,12 +62,17 @@
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
 <a href="#63" id="63">63</a>
-<a href="#64" id="64">64</a></pre></div><pre class="rust"><code><span class="doccomment">//! Фильтрация сообщений с одинаковым полем data.
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a></pre></div><pre class="rust"><code><span class="doccomment">//! Фильтрация сообщений с одинаковым полем data.
 
 </span><span class="kw">use </span>std::collections::HashMap;
 <span class="kw">use </span>tokio::sync::mpsc;
+<span class="comment">// use tracing::info;
 
-<span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
+</span><span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
 <span class="doccomment">/// Фильтрация сообщений с одинаковым полем data.
 ///
@@ -97,7 +102,9 @@
         <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = <span class="self">self</span>.input.recv().<span class="kw">await </span>{
             <span class="kw">let </span>key = <span class="kw-2">&amp;</span>msg.key;
 
-            <span class="kw">let </span>msg_cache = cache.get(key);
+            <span class="comment">// info!("Key: {key}");
+
+            </span><span class="kw">let </span>msg_cache = cache.get(key);
 
             <span class="comment">// Если сообщения нет в кеше, сохраняем в кеш и отдаем на выход
             </span><span class="kw">let </span>msg_cache = <span class="kw">match </span>msg_cache {
@@ -115,6 +122,7 @@
             }
 
             <span class="comment">// Сообщение новое, сохраняем в кеш и отдаем на выход
+            // info!("Pass message from filter: {key}");
             </span>cache.insert(key.to_string(), msg.clone()).unwrap();
             <span class="self">self</span>.output.send(msg).<span class="kw">await</span>.unwrap();
         }

@@ -81,20 +81,121 @@
 <a href="#80" id="80">80</a>
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::{
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::{
+    gpio::AnyIOPin,
     peripheral::Peripheral,
-    spi::{Spi, SpiAnyPins},
+    spi::{config, Operation, Spi, SpiAnyPins, SpiDeviceDriver, SpiDriver, SpiDriverConfig},
+    units::FromValueType,
 };
-<span class="kw">use </span>futures::TryFutureExt;
-<span class="kw">use </span>tokio::{sync::mpsc::channel, task::JoinSet};
+<span class="kw">use </span>tokio::{
+    sync::{broadcast, mpsc},
+    task::JoinSet,
+    time::sleep,
+};
+<span class="kw">use </span>tracing::trace;
 
 <span class="kw">use crate</span>::{
-    components::shared_tasks,
+    components::shared_tasks::fn_process_master::FnProcessMaster,
+    components_config::spi_master,
     executor::{join_set_spawn, CmpInOut},
-    message::{Message, MsgDataBound, ServiceBound},
+    message::{MsgDataBound, ServiceBound},
 };
 
-<span class="kw">use super</span>::{tasks, Config, InnerMessage};
+<span class="kw">use super</span>::{config::ConfigDevicesCommSettings, Config};
 
 <span class="kw">pub async fn </span>fn_process&lt;TMsg, TService, TSpi, TPeripheral&gt;(
     config: Config&lt;TMsg, TSpi, TPeripheral&gt;,
@@ -106,62 +207,149 @@
     TSpi: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
     TPeripheral: Spi + SpiAnyPins + <span class="lifetime">'static</span>,
 {
+    <span class="kw">const </span>BUFFER_SIZE: usize = <span class="number">500</span>;
+
     <span class="kw">let </span><span class="kw-2">mut </span>task_set = JoinSet::new();
 
-    <span class="kw">const </span>BUFFER_SIZE: usize = <span class="number">100</span>;
-    <span class="kw">let </span>(ch_input_to_spi_comm_send, ch_input_to_spi_comm_recv) =
-        channel::&lt;InnerMessage&lt;TMsg&gt;&gt;(BUFFER_SIZE);
-    <span class="kw">let </span>(ch_spi_comm_to_filter_send, ch_spi_comm_to_filter_recv) =
-        channel::&lt;Message&lt;TMsg&gt;&gt;(BUFFER_SIZE);
-    <span class="kw">let </span>(ch_filter_to_msgbus_send, ch_filter_to_msgbus_recv) =
-        channel::&lt;Message&lt;TMsg&gt;&gt;(BUFFER_SIZE);
+    <span class="kw">let </span>config_fn_process_master = FnProcessMaster {
+        msg_bus: msg_bus.clone(),
+        buffer_size: BUFFER_SIZE,
+        task_set: <span class="kw-2">&amp;mut </span>task_set,
+        error_msgbus_to_broadcast: <span class="kw">super</span>::Error::TaskMsgbusToBroadcast,
+        error_filter: <span class="kw">super</span>::Error::TaskFilter,
+        error_mpsc_to_msgbus: <span class="kw">super</span>::Error::TaskMpscToMsgBus,
+        error_master_device: <span class="kw">super</span>::Error::DeviceError,
+        devices: config.devices,
+    };
+    <span class="kw">let </span>(ch_rx_devices_to_fieldbus, ch_tx_fieldbus_to_devices) = config_fn_process_master.spawn();
 
-    <span class="comment">// Оборачиваем входящие сообщения в InnerMessage
-    </span><span class="kw">let </span>task = tasks::Input {
-        input: msg_bus.clone(),
-        output: ch_input_to_spi_comm_send.clone(),
+    <span class="comment">// Коммуникация SPI ----------------------------------------------------------------------------
+    </span><span class="kw">let </span>task = SpiComm {
+        input: ch_rx_devices_to_fieldbus,
+        output: ch_tx_fieldbus_to_devices,
+        spi: config.spi,
+        pin_miso: config.pin_miso,
+        pin_mosi: config.pin_mosi,
+        pin_sck: config.pin_sck,
+        devices_comm_settings: config.devices_comm_settings,
     };
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
-
-    <span class="comment">// Оборачиваем периодический вызов в InnerMessage
-    </span><span class="kw">let </span>task = tasks::Period {
-        output: ch_input_to_spi_comm_send.clone(),
-        period: config.fn_output_period,
-    };
-    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
-
-    <span class="comment">// Коммуникация SPI
-    </span><span class="kw">let </span>task = tasks::SpiComm {
-        input: ch_input_to_spi_comm_recv,
-        output: ch_spi_comm_to_filter_send,
-        config,
-    };
-    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
-
-    <span class="comment">// Фильтрация одинаковых сообщений
-    </span><span class="kw">let </span>task = shared_tasks::filter_identical_data::FilterIdenticalData {
-        input: ch_spi_comm_to_filter_recv,
-        output: ch_filter_to_msgbus_send,
-    };
-    join_set_spawn(
-        <span class="kw-2">&amp;mut </span>task_set,
-        task.spawn().map_err(<span class="kw">super</span>::Error::TaskFilter),
-    );
-
-    <span class="comment">// Создаем исходящие сообщения
-    </span><span class="kw">let </span>task = shared_tasks::mpsc_to_msgbus::MpscToMsgBus {
-        input: ch_filter_to_msgbus_recv,
-        cmp_in_out: msg_bus,
-    };
-    join_set_spawn(
-        <span class="kw-2">&amp;mut </span>task_set,
-        task.spawn().map_err(<span class="kw">super</span>::Error::TaskMpscToMsgBus),
-    );
 
     <span class="kw">while let </span><span class="prelude-val">Some</span>(res) = task_set.join_next().<span class="kw">await </span>{
         res<span class="question-mark">??
     </span>}
 
     <span class="prelude-val">Ok</span>(())
+}
+
+<span class="kw">struct </span>SpiComm&lt;TSpi, TPeripheral&gt;
+<span class="kw">where
+    </span>TSpi: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
+    TPeripheral: Spi + SpiAnyPins,
+{
+    <span class="kw">pub </span>input: mpsc::Receiver&lt;spi_master::FieldbusRequest&gt;,
+    <span class="kw">pub </span>output: broadcast::Sender&lt;spi_master::FieldbusResponse&gt;,
+    <span class="kw">pub </span>spi: TSpi,
+    <span class="kw">pub </span>pin_miso: AnyIOPin,
+    <span class="kw">pub </span>pin_mosi: AnyIOPin,
+    <span class="kw">pub </span>pin_sck: AnyIOPin,
+    <span class="kw">pub </span>devices_comm_settings: Vec&lt;ConfigDevicesCommSettings&gt;,
+}
+
+<span class="kw">impl</span>&lt;TSpi, TPeripheral&gt; SpiComm&lt;TSpi, TPeripheral&gt;
+<span class="kw">where
+    </span>TSpi: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
+    TPeripheral: Spi + SpiAnyPins,
+{
+    <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
+        <span class="kw">let </span>spi_master_driver = SpiDriver::new(
+            <span class="self">self</span>.spi,
+            <span class="self">self</span>.pin_sck,
+            <span class="self">self</span>.pin_mosi,
+            <span class="prelude-val">Some</span>(<span class="self">self</span>.pin_miso),
+            <span class="kw-2">&amp;</span>SpiDriverConfig::new(),
+        )
+        .unwrap();
+
+        <span class="comment">// TODO - добавить в конфигурацию
+
+        </span><span class="kw">let </span><span class="kw-2">mut </span>spi_devices: Vec&lt;SpiDeviceDriver&lt;<span class="lifetime">'_</span>, <span class="kw-2">&amp;</span>SpiDriver&lt;<span class="lifetime">'_</span>&gt;&gt;&gt; = <span class="self">self
+            </span>.devices_comm_settings
+            .into_iter()
+            .map(|dvc| {
+                <span class="kw">let </span>config = config::Config::new()
+                    .baudrate(dvc.baudrate.Hz())
+                    .data_mode(dvc.spi_mode.into());
+                SpiDeviceDriver::new(<span class="kw-2">&amp;</span>spi_master_driver, <span class="prelude-val">Some</span>(dvc.pin_cs), <span class="kw-2">&amp;</span>config).unwrap()
+            })
+            .collect();
+
+        <span class="kw">while let </span><span class="prelude-val">Some</span>(request) = <span class="self">self</span>.input.recv().<span class="kw">await </span>{
+            <span class="macro">trace!</span>(<span class="string">"New spi request: {:?}"</span>, request);
+
+            <span class="kw">let </span>pin_cs = request.pin_cs <span class="kw">as </span>usize;
+
+            <span class="comment">// Номер CS недоступен
+            </span><span class="kw">if </span>pin_cs &gt;= spi_devices.len() {
+                <span class="kw">let </span>err = <span class="kw">super</span>::Error::CsNotAvailable {
+                    cs: request.pin_cs,
+                    max_cs: spi_devices.len() <span class="kw">as </span>u8,
+                };
+                <span class="kw">return </span><span class="prelude-val">Err</span>(err);
+            }
+
+            <span class="kw">let </span>selected_device = <span class="kw-2">&amp;mut </span>spi_devices[pin_cs];
+
+            <span class="comment">// Ответы от слейва
+            </span><span class="kw">let </span><span class="kw-2">mut </span>response_payload = <span class="macro">vec!</span>[];
+
+            <span class="comment">// Выполняем все операции в цикле
+            </span><span class="kw">for </span>operation <span class="kw">in </span>request.operations {
+                <span class="kw">let </span>response = make_spi_operation(selected_device, <span class="kw-2">&amp;</span>operation).<span class="kw">await</span>;
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(response) = response {
+                    response_payload.push(response);
+                }
+            }
+
+            <span class="kw">let </span>response = spi_master::FieldbusResponse {
+                pin_cs: request.pin_cs,
+                request_creation_time: request.request_creation_time,
+                request_kind: request.request_kind,
+                payload: response_payload,
+            };
+
+            <span class="self">self</span>.output.send(response).unwrap();
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
+}
+
+<span class="doccomment">/// Выполняем обмен данными
+///
+/// Если присутствует операция чтения, то возвращаем данные
+</span><span class="kw">async fn </span>make_spi_operation&lt;<span class="lifetime">'a</span>&gt;(
+    device: <span class="kw-2">&amp;mut </span>SpiDeviceDriver&lt;<span class="lifetime">'a</span>, <span class="kw-2">&amp;</span>SpiDriver&lt;<span class="lifetime">'a</span>&gt;&gt;,
+    operation: <span class="kw-2">&amp;</span>spi_master::Operation,
+) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt; {
+    <span class="kw">match </span>operation {
+        spi_master::Operation::Delay(duration) =&gt; {
+            sleep(<span class="kw-2">*</span>duration).<span class="kw">await</span>;
+            <span class="prelude-val">None
+        </span>}
+        spi_master::Operation::WriteRead(write_data, read_len) =&gt; {
+            <span class="kw">let </span><span class="kw-2">mut </span>read_data = <span class="macro">vec!</span>[<span class="number">0</span>; <span class="kw-2">*</span>read_len <span class="kw">as </span>usize];
+            <span class="kw">let </span><span class="kw-2">mut </span>transaction = [
+                Operation::Write(write_data),
+                Operation::Read(<span class="kw-2">&amp;mut </span>read_data),
+            ];
+            device.transaction(<span class="kw-2">&amp;mut </span>transaction).unwrap();
+            <span class="prelude-val">Some</span>(read_data)
+        }
+        spi_master::Operation::Write(write_data) =&gt; {
+            <span class="kw">let </span><span class="kw-2">mut </span>transaction = [Operation::Write(write_data)];
+            device.transaction(<span class="kw-2">&amp;mut </span>transaction).unwrap();
+            <span class="prelude-val">None
+        </span>}
+    }
 }
 </code></pre></div></section></main></body></html>

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/message/message.rs`."><title>message.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/message/message.rs`."><title>message.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0 (9fc6b4312 2025-01-07)" data-channel="1.84.0" data-search-js="search-92e6798f.js" data-settings-js="settings-0f613d39.js" ><script src="../../../static.files/storage-59e33391.js"></script><script defer src="../../../static.files/src-script-56102188.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/message/</div>message.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -171,7 +172,32 @@
 <a href="#171" id="171">171</a>
 <a href="#172" id="172">172</a>
 <a href="#173" id="173">173</a>
-</pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::module_inception)]
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a></pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::module_inception)]
 
 </span><span class="kw">use </span>std::{fmt::Debug, time::Duration};
 
@@ -193,6 +219,7 @@
     </span><span class="kw">pub </span>trace: MsgTrace,
     <span class="doccomment">/// Время жизни сообщения
     </span>ttl: TimeToLiveValue,
+
     <span class="doccomment">/// Сервис, в котором было созданно данное сообщение.
     ///
     /// Устанавливается в исполнителе.
@@ -205,7 +232,8 @@
 {
     <span class="doccomment">/// Создать новое сообщение
     </span><span class="kw">pub fn </span>new(data: MsgData&lt;TCustom&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>key = define_key(<span class="kw-2">&amp;</span>data);
+        <span class="comment">// let key = define_key(&amp;data);
+        </span><span class="kw">let </span>key = <span class="kw">super</span>::define_key::define_key(<span class="kw-2">&amp;</span>data);
         <span class="kw">let </span>ttl = data.define_time_to_live();
         <span class="self">Self </span>{
             data,
@@ -220,7 +248,8 @@
     <span class="doccomment">/// Создать новое сообщение типа `MsgData::Custom`
     </span><span class="kw">pub fn </span>new_custom(custom_data: TCustom) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>data = MsgData::Custom(custom_data);
-        <span class="kw">let </span>key = define_key(<span class="kw-2">&amp;</span>data);
+        <span class="comment">// let key = define_key(&amp;data);
+        </span><span class="kw">let </span>key = <span class="kw">super</span>::define_key::define_key(<span class="kw-2">&amp;</span>data);
         <span class="kw">let </span>ttl = data.define_time_to_live();
         <span class="self">Self </span>{
             data,
@@ -241,8 +270,8 @@
     }
 
     <span class="doccomment">/// Добавить запись пути
-    </span><span class="kw">pub fn </span>add_trace_item(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>Uuid, name: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.trace.add_trace_item(<span class="kw-2">*</span>id, name.to_string())
+    </span><span class="kw">pub fn </span>add_trace_item(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>Uuid) {
+        <span class="self">self</span>.trace.add_trace_item(<span class="kw-2">*</span>id)
     }
 
     <span class="doccomment">/// Проверяем, что в трейсе сообщения присутсвует компонент с заданным id.
@@ -322,26 +351,49 @@
             MsgData::Custom(data) =&gt; data.define_enabled_routes(),
         };
         <span class="kw">match </span>route {
-            MsgRoute::SrcToAny { src: route_src } =&gt; <span class="kw-2">*</span>src == route_src,
-            MsgRoute::SrcDst {
-                src: route_src,
-                dst: route_dst,
-            } =&gt; <span class="kw-2">*</span>src == route_src &amp;&amp; <span class="kw-2">*</span>dst == route_dst,
-            MsgRoute::FromAnyToAny =&gt; <span class="bool-val">true</span>,
+            MsgRoute::SrcToAny(route_src) =&gt; <span class="kw-2">*</span>src == route_src,
+            MsgRoute::SrcToDst(route_src, route_dst) =&gt; <span class="kw-2">*</span>src == route_src &amp;&amp; <span class="kw-2">*</span>dst == route_dst,
+            MsgRoute::AnyToAny =&gt; <span class="bool-val">true</span>,
             MsgRoute::None =&gt; <span class="bool-val">false</span>,
+            MsgRoute::SrcToDstSeveral(routes) =&gt; {
+                <span class="kw">for </span>(route_src, route_dst) <span class="kw">in </span>routes {
+                    <span class="kw">if </span><span class="kw-2">*</span>src == route_src &amp;&amp; <span class="kw-2">*</span>dst == route_dst {
+                        <span class="kw">return </span><span class="bool-val">true</span>;
+                    }
+                }
+                <span class="bool-val">false
+            </span>}
         }
     }
 }
 
 <span class="doccomment">/// Определить ключ сообщения по выводу Debug
+</span><span class="attr">#[deprecated]
 </span><span class="kw">fn </span>define_key&lt;TCustom&gt;(data: <span class="kw-2">&amp;</span>MsgData&lt;TCustom&gt;) -&gt; String
 <span class="kw">where
     </span>TCustom: MsgDataBound,
 {
     <span class="kw">let </span>full_str = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, data);
-    <span class="kw">let </span>key = full_str.split(<span class="string">'('</span>).collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>str&gt;&gt;();
-    <span class="comment">// Убираем последний элемент. Если тип unit (), нужно убрать два последних элемента
-    </span><span class="kw">let </span>skip = <span class="kw">if </span>key[key.len() - <span class="number">2</span>].is_empty() { <span class="number">2 </span>} <span class="kw">else </span>{ <span class="number">1 </span>};
-    key[<span class="number">0</span>..key.len() - skip].join(<span class="string">"-"</span>)
+    <span class="kw">let </span>parts = full_str.split(<span class="string">'('</span>).collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>str&gt;&gt;();
+
+    <span class="comment">// let mut final_parts = vec![];
+    // for part in parts {
+    //     if part.chars().next().unwrap().is_alphabetic()
+    //         &amp;&amp; !part.starts_with("true")
+    //         &amp;&amp; !part.starts_with("false")
+    //     {
+    //         final_parts.push(part);
+    //     } else {
+    //         break;
+    //     }
+    // }
+    // final_parts.join("-")
+    // Убираем последний элемент. Если тип unit (), нужно убрать два последних элемента
+    </span><span class="kw">let </span>skip = <span class="kw">if </span>parts[parts.len() - <span class="number">2</span>].is_empty() {
+        <span class="number">2
+    </span>} <span class="kw">else </span>{
+        <span class="number">1
+    </span>};
+    parts[<span class="number">0</span>..parts.len() - skip].join(<span class="string">"-"</span>)
 }
 </code></pre></div></section></main></body></html>

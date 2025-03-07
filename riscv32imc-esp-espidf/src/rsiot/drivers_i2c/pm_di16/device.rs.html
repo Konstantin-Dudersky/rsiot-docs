@@ -180,7 +180,7 @@
         <span class="comment">// Отправка исходящих сообщений
         </span><span class="kw">let </span>task = shared_tasks::mpsc_to_msgbus::MpscToMsgBus {
             input: ch_filter_to_msgbus_recv,
-            cmp_in_out: <span class="self">self</span>.msg_bus,
+            msg_bus: <span class="self">self</span>.msg_bus,
         };
         join_set_spawn(
             <span class="kw-2">&amp;mut </span>task_set,

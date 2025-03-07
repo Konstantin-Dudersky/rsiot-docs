@@ -204,7 +204,7 @@
     <span class="macro">trace!</span>(<span class="string">"Response: {:?}"</span>, response);
 
     <span class="comment">// Сериализация ответа
-    </span><span class="kw">let </span>response_buffer = postcard_serde::serialize_crc(<span class="kw-2">&amp;</span>response)<span class="question-mark">?</span>;
+    </span><span class="kw">let </span>response_buffer = postcard_serde::serialize_crc_deprecated(<span class="kw-2">&amp;</span>response)<span class="question-mark">?</span>;
 
     <span class="comment">// Запись в буфер отправки I2C
     </span><span class="kw">let </span>timeout = TickType::new_millis(<span class="number">100</span>).ticks();

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"mod":["devices"],"struct":["ConfigPeriodicRequest","DeviceBase"],"trait":["DeviceTrait"]};
+window.SIDEBAR_ITEMS = {"enum":["Error"]};
