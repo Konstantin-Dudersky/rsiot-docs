@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"macro":["create_signal_from_msg"],"mod":["components","create_signal_from_msg","utils"],"struct":["Config","GlobalState"],"trait":["StoreBound"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"enum":["Error"],"mod":["components","create_signal_from_msg","utils"],"struct":["Config","GlobalState"],"trait":["StoreBound"],"type":["Cmp"]};

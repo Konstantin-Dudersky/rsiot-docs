@@ -20,12 +20,18 @@
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
 <a href="#21" id="21">21</a>
-<a href="#22" id="22">22</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::collections::HashSet;
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::collections::HashSet;
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>uuid::Uuid;
 
-<span class="kw">use </span><span class="kw">crate</span>::message::AuthPermissions;
+<span class="kw">use </span><span class="kw">crate</span>::message::{AuthPermissions, MsgKey};
 
 <span class="doccomment">/// Подтверждение авторизации
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -41,5 +47,11 @@
 
     <span class="doccomment">/// Логин для входа
     </span><span class="kw">pub </span>login: String,
+}
+
+<span class="kw">impl </span>MsgKey <span class="kw">for </span>AuthResponseOk {
+    <span class="kw">fn </span>key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="string">""</span>.to_string()
+    }
 }
 </code></pre></div></section></main></body></html>

@@ -46,7 +46,6 @@
 //! Сообщения представлены типом перечисления (enum). Данные вложены в варианты перечисления.
 
 </span><span class="kw">mod </span>auth_roles;
-<span class="kw">mod </span>define_key;
 <span class="kw">mod </span>error;
 <span class="kw">pub mod </span>example_message;
 <span class="kw">mod </span>example_message_channel;
@@ -55,6 +54,7 @@
 <span class="kw">mod </span>message_channel;
 <span class="kw">mod </span>msg_data;
 <span class="kw">mod </span>msg_data_bound;
+<span class="kw">mod </span>msg_key;
 <span class="kw">mod </span>msg_serde;
 <span class="kw">mod </span>msg_trace;
 <span class="kw">mod </span>phy_quantity;
@@ -75,9 +75,9 @@
 <span class="kw">pub use </span>message_channel::IMessageChannel;
 <span class="kw">pub use </span>msg_data::MsgData;
 <span class="kw">pub use </span>msg_data_bound::{MsgDataBound, MsgRoute};
+<span class="kw">pub use </span>msg_key::MsgKey;
 <span class="kw">pub use </span>msg_trace::MsgTrace;
 <span class="kw">pub use </span>phy_quantity::PhyQuantity;
-<span class="kw">pub use </span>rsiot_macros::message_new;
 <span class="kw">pub use </span>service::ServiceBound;
 <span class="kw">pub use </span>strum::EnumString;
 <span class="kw">pub use </span>time_to_live::TimeToLiveValue;

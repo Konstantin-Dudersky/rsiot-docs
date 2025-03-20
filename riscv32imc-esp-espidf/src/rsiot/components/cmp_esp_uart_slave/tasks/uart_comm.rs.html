@@ -80,16 +80,11 @@
 <a href="#79" id="79">79</a>
 <a href="#80" id="80">80</a>
 <a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::{
-    hal::{
-        io::asynch::Write,
-        uart::{AsyncUartDriver, UartDriver},
-    },
-    sys::uart_flush_input,
+<a href="#82" id="82">82</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::{
+    io::asynch::Write,
+    uart::{AsyncUartDriver, UartDriver},
 };
-<span class="kw">use </span>tracing::{trace, warn};
+<span class="kw">use </span>tracing::{info, trace, warn};
 
 <span class="kw">use </span><span class="kw">crate</span>::components_config::uart_general::{UartRequest, UartResponse};
 
@@ -108,16 +103,17 @@
 <span class="kw">impl</span>&lt;TBufferData&gt; UartComm&lt;TBufferData&gt; {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">let </span>port = <span class="self">self</span>.uart.driver().port();
+        <span class="macro">info!</span>(<span class="string">"Start uart communication on port: {}"</span>, port);
+
+        <span class="kw">let </span><span class="kw-2">mut </span>read_buffer = [<span class="number">0_u8</span>; READ_BUFFER_LEN];
 
         <span class="kw">loop </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>read_buffer = [<span class="number">0_u8</span>; READ_BUFFER_LEN];
+            <span class="comment">// Очистка буфера. Очищать быстрее, чем создавать массив
+            </span>read_buffer.iter_mut().for_each(|x| <span class="kw-2">*</span>x = <span class="number">0</span>);
 
-            <span class="comment">// Очистка буфера чтения
-            // Используется unsafe функция, поскольку AsyncUartDriver не содержит метода clear_rx()
-            </span><span class="kw">unsafe </span>{ uart_flush_input(port) };
+            <span class="kw">let </span>read_len = <span class="self">self</span>.uart.read(<span class="kw-2">&amp;mut </span>read_buffer).<span class="kw">await</span>;
 
-            <span class="kw">let </span>res = <span class="self">self</span>.uart.read(<span class="kw-2">&amp;mut </span>read_buffer).<span class="kw">await</span>;
-            <span class="kw">let </span>_read_len = <span class="kw">match </span>res {
+            <span class="kw">let </span>_read_len = <span class="kw">match </span>read_len {
                 <span class="prelude-val">Ok</span>(val) =&gt; val,
                 <span class="prelude-val">Err</span>(err) =&gt; {
                     <span class="macro">warn!</span>(<span class="string">"Error reading from uart: {:?}"</span>, err);

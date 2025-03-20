@@ -77,13 +77,15 @@
 <a href="#76" id="76">76</a>
 <a href="#77" id="77">77</a>
 <a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a></pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для периодического генерирования сообщений
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a></pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для периодического генерирования сообщений
 
 </span><span class="kw">use </span>async_trait::async_trait;
-<span class="kw">use </span>tokio::time::{sleep, Duration, Instant};
+<span class="kw">use </span>instant::Instant;
+<span class="kw">use </span>tokio::time::Duration;
 
 <span class="kw">use crate</span>::{
-    executor::{CmpInOut, Component, ComponentError, IComponentProcess},
+    executor::{sleep, CmpInOut, Component, ComponentError, IComponentProcess},
     message::{AuthPermissions, Message, MsgDataBound, ServiceBound},
 };
 

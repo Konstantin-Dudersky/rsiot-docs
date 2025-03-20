@@ -107,24 +107,15 @@
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a></pre></div><pre class="rust"><code><span class="doccomment">//! Пример реализации сообщения. Можно использовать для тестирования компонентов
+<a href="#109" id="109">109</a></pre></div><pre class="rust"><code><span class="doccomment">//! Пример реализации сообщения. Можно использовать для тестирования компонентов
 
 </span><span class="kw">use super</span>::{
-    example_service::Service, Deserialize, MsgDataBound, MsgRoute, Serialize, TimeToLiveValue,
+    example_service::Service, Deserialize, MsgDataBound, MsgKey, MsgRoute, Serialize,
+    TimeToLiveValue,
 };
 
 <span class="doccomment">/// Пример реализации сообщения. Можно использовать для тестирования компонентов
-</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize, MsgKey)]
 #[allow(missing_docs)]
 </span><span class="kw">pub enum </span>Custom {
     <span class="doccomment">/// Мгновенное значение типа f64
@@ -147,10 +138,9 @@
     </span>EspBootButton(bool),
     <span class="doccomment">/// ESP - выход на реле
     </span>EspRelay(bool),
-    MotorM1(Motor),
-    MotorM2(Motor),
     SaveToFilesystem(u64),
-}
+    <span class="comment">// EmptyEnum(EmptyEnum),
+</span>}
 
 <span class="doccomment">/// Пример структуры
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -163,7 +153,7 @@
 
 <span class="doccomment">/// Вложенная группа
 </span><span class="attr">#[allow(missing_docs)]
-#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize, MsgKey)]
 </span><span class="kw">pub enum </span>DataGroup {
     <span class="doccomment">/// Значение типа f64 в структуре
     </span>DataGroupF64(f64),
@@ -173,17 +163,13 @@
     DataGroupVectorTuple(Vec&lt;(bool, String)&gt;),
 }
 
-<span class="doccomment">/// Пример типовой структуры
-</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
-#[allow(missing_docs)]
-</span><span class="kw">pub enum </span>Motor {
-    Status1(bool),
-    Status2(bool),
-    Status3(bool),
-    Status4(bool),
-}
+<span class="comment">// Пустое перечисление
+//
+// TODO - появляется почему-то ошибка, хотя cargo-expand показывает корректный код
+// #[derive(Clone, Debug, Deserialize, MsgKey, PartialEq, Serialize)]
+// pub enum EmptyEnum {}
 
-<span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {
+</span><span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Custom {
     <span class="kw">type </span>TService = Service;
 
     <span class="kw">fn </span>define_enabled_routes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MsgRoute&lt;<span class="self">Self</span>::TService&gt; {
@@ -228,12 +214,6 @@
             },
         )));
         <span class="macro">assert_eq!</span>(<span class="string">"Custom-DataGroup-DataGroupStruct"</span>, msg.key);
-
-        <span class="kw">let </span>msg = Message::new_custom(Custom::MotorM1(Motor::Status1(<span class="bool-val">false</span>)));
-        <span class="macro">assert_eq!</span>(<span class="string">"Custom-MotorM1-Status1"</span>, msg.key);
-
-        <span class="kw">let </span>msg = Message::new_custom(Custom::MotorM2(Motor::Status1(<span class="bool-val">false</span>)));
-        <span class="macro">assert_eq!</span>(<span class="string">"Custom-MotorM2-Status1"</span>, msg.key);
     }
 }
 </code></pre></div></section></main></body></html>

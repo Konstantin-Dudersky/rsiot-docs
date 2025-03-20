@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Custom","DataGroup","Motor"],"struct":["StructInDataGroup"]};
+window.SIDEBAR_ITEMS = {"enum":["Custom","DataGroup"],"struct":["StructInDataGroup"]};

@@ -127,14 +127,70 @@
 <a href="#126" id="126">126</a>
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
-<span class="kw">use </span>pm_firmware_lib::pm_di16_dc24sink_v0_0_2::{I2cRequest, I2cResponse};
+<span class="comment">// use pm_firmware_lib::pm_di16_dc24sink_v0_0_2::{I2cRequest, I2cResponse};
+</span><span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>tokio::{
     sync::{mpsc::Sender, Mutex},
     time::sleep,
 };
 <span class="kw">use </span>tracing::warn;
+
+<span class="attr">#[derive(Debug, Deserialize, Serialize)]
+</span><span class="kw">pub enum </span>I2cRequest {
+    GetInput,
+}
+
+<span class="attr">#[derive(Debug, Deserialize, Serialize)]
+</span><span class="kw">pub enum </span>I2cResponse {
+    InputsState {
+        a0: bool,
+        a1: bool,
+        a2: bool,
+        a3: bool,
+        a4: bool,
+        a5: bool,
+        a6: bool,
+        a7: bool,
+        b0: bool,
+        b1: bool,
+        b2: bool,
+        b3: bool,
+        b4: bool,
+        b5: bool,
+        b6: bool,
+        b7: bool,
+    },
+}
 
 <span class="kw">use crate</span>::{
     drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},

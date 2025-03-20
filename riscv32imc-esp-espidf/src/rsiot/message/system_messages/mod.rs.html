@@ -53,7 +53,9 @@
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
 <a href="#54" id="54">54</a>
-<a href="#55" id="55">55</a></pre></div><pre class="rust"><code><span class="doccomment">//! Типы системных сообщений
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a></pre></div><pre class="rust"><code><span class="doccomment">//! Типы системных сообщений
 
 </span><span class="kw">mod </span>auth_request_by_login;
 <span class="kw">mod </span>auth_request_by_token;
@@ -69,8 +71,10 @@
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
+<span class="kw">use </span><span class="kw">super</span>::MsgKey;
+
 <span class="doccomment">/// Типы системных сообщений
-</span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+</span><span class="attr">#[derive(Clone, Debug, Deserialize, MsgKey, PartialEq, Serialize)]
 </span><span class="kw">pub enum </span>System {
     <span class="doccomment">/// Запрос авторизации по логину и паролю
     </span>AuthRequestByLogin(AuthRequestByLogin),

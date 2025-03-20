@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components_config/http_server/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0 (9fc6b4312 2025-01-07)" data-channel="1.84.0" data-search-js="search-92e6798f.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/components_config/http_server/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components_config/http_server/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-46132b98.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.85.0 (4d91de4e4 2025-02-17)" data-channel="1.85.0" data-search-js="search-75f5ac3e.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/components_config/http_server/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
 <a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -72,89 +72,7 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
-<a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a>
-<a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-<a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a>
-<a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a>
-<a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
-<a href="#124" id="124">124</a>
-<a href="#125" id="125">125</a>
-<a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a></pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация HTTP-сервера
+<a href="#74" id="74">74</a></pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация HTTP-сервера
 //!
 //! Тестирование:
 //!
@@ -162,7 +80,15 @@
 //! cargo test -p rsiot-components-config --doc http_server
 //! ```
 
-</span><span class="kw">use </span><span class="kw">crate</span>::message::<span class="kw-2">*</span>;
+</span><span class="kw">mod </span>get_endpoint;
+<span class="kw">mod </span>handlers;
+<span class="kw">mod </span>put_endpoint;
+
+<span class="kw">pub use </span>get_endpoint::{create_get_endpoints_hashmap, GetEndpoint, GetEndpointConfig};
+<span class="kw">pub use </span>handlers::{handler_get, handler_info, handler_put};
+<span class="kw">pub use </span>put_endpoint::{create_put_endpoints_hashmap, PutEndpoint, PutEndpointConfig};
+
+<span class="kw">use </span><span class="kw">crate</span>::message::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Конфигурация компонента http-server
 </span><span class="attr">#[derive(Clone, Debug)]
@@ -170,111 +96,33 @@
 <span class="kw">where
     </span>TMsg: MsgDataBound,
 {
-    <span class="kw">pub </span>this_service: TMsg::TService,
-    <span class="kw">pub </span>client_service: TMsg::TService,
-
     <span class="doccomment">/// Порт, через который доступен сервер
     </span><span class="kw">pub </span>port: u16,
 
-    <span class="doccomment">/// Функция преобразования сообщений в текст
-    ///
-    /// # Примеры
-    ///
-    /// ## Заглушка
-    ///
-    /// ```rust
-    /// # use rsiot_components_config::http_server as cmp_http_server;
-    /// # use rsiot_messages_core::{example_message::*, *};
-    /// # // insert from tests::stub
-    /// # cmp_http_server::Config::&lt;ExampleMessage&gt; {
-    /// #     port: 8000,
-    /// fn_input: |_| Ok(None),
-    /// #     fn_output: |_| Ok(None),
-    /// # };
-    /// ```
-    ///
-    /// ## Сериализация в json
-    ///
-    /// ```rust
-    /// # use rsiot_components_config::http_server as cmp_http_server;
-    /// # use rsiot_messages_core::{example_message::*, *};
-    /// # // insert from tests::fn_input_json
-    /// # cmp_http_server::Config::&lt;ExampleMessage&gt; {
-    /// #     port: 8000,
-    /// fn_input: |msg: &amp;Message&lt;ExampleMessage&gt;| {
-    ///     let text = msg.serialize()?;
-    ///     Ok(Some(text))
-    /// },
-    /// #    fn_output: |_| Ok(None),
-    /// # };
-    /// ```
-    </span><span class="kw">pub </span>fn_input: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
+    <span class="doccomment">/// Конфигурация точек GET
+    </span><span class="kw">pub </span>get_endpoints: Vec&lt;Box&lt;<span class="kw">dyn </span>GetEndpoint&lt;TMsg&gt;&gt;&gt;,
 
-    <span class="doccomment">/// Данные из компонента `cmp_plc`
-    </span><span class="kw">pub </span>cmp_plc: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; ConfigCmpPlcData,
-
-    <span class="doccomment">/// Функция преобразования текста в сообщения
-    ///
-    /// # Примеры
-    ///
-    /// ## Заглушка
-    ///
-    /// ```rust
-    /// # use rsiot_components_config::http_server as cmp_http_server;
-    /// # use rsiot_messages_core::{example_message::*, *};
-    /// # // insert from tests::stub
-    /// # cmp_http_server::Config::&lt;ExampleMessage&gt; {
-    /// #     port: 8000,
-    /// #     fn_input: |_| Ok(None),
-    /// fn_output: |_| Ok(None),
-    /// # };
-    /// ```
-    ///
-    /// ## Десериализация из json
-    ///
-    /// ```rust
-    /// # use rsiot_components_config::http_server as cmp_http_server;
-    /// # use rsiot_messages_core::{example_message::*, *};
-    /// # // insert from tests::fn_input_json
-    /// # cmp_http_server::Config::&lt;ExampleMessage&gt; {
-    /// #     port: 8000,
-    /// #     fn_input: |_| Ok(None),
-    /// fn_output: |text: &amp;str| {
-    ///     let msg = Message::deserialize(text)?;
-    ///     Ok(Some(msg))
-    /// },
-    /// # };
-    /// ```
-    </span><span class="kw">pub </span>fn_output: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="prelude-ty">Option</span>&lt;Message&lt;TMsg&gt;&gt;&gt;,
+    <span class="doccomment">/// Конфигурация точек PUT
+    </span><span class="kw">pub </span>put_endpoints: Vec&lt;Box&lt;<span class="kw">dyn </span>PutEndpoint&lt;TMsg&gt;&gt;&gt;,
 }
 
-<span class="doccomment">/// Данные, получаемые из компонента `cmp_plc`
-</span><span class="kw">pub enum </span>ConfigCmpPlcData {
-    <span class="doccomment">/// Данные не относятся к компоненту cmp_plc
-    </span>NoData,
-    <span class="doccomment">/// Состояние области `input`
-    </span>Input(String),
-    <span class="doccomment">/// Состояние области `output`
-    </span>Output(String),
-    <span class="doccomment">/// Состояние области `static`
-    </span>Static(String),
-}
+<span class="doccomment">/// Коллекция точек GET
+</span><span class="kw">pub type </span>GetEndpointsHashMap&lt;TMsg&gt; = std::collections::HashMap&lt;String, Box&lt;<span class="kw">dyn </span>GetEndpoint&lt;TMsg&gt;&gt;&gt;;
+<span class="doccomment">/// Коллекция точек PUT
+</span><span class="kw">pub type </span>PutEndpointsHashMap&lt;TMsg&gt; = std::collections::HashMap&lt;String, Box&lt;<span class="kw">dyn </span>PutEndpoint&lt;TMsg&gt;&gt;&gt;;
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use super</span>::{Config, ConfigCmpPlcData};
-    <span class="kw">use </span><span class="kw">crate</span>::message::{example_message::<span class="kw-2">*</span>, example_service::Service, <span class="kw-2">*</span>};
+    <span class="kw">use </span><span class="kw">super</span>::Config;
+    <span class="kw">use </span><span class="kw">crate</span>::message::example_message::<span class="kw-2">*</span>;
 
     <span class="attr">#[allow(clippy::no_effect)]
     #[test]
     </span><span class="kw">fn </span>stub() {
         Config::&lt;Custom&gt; {
-            this_service: Service::example_service,
-            client_service: Service::example_service,
             port: <span class="number">8000</span>,
-            fn_input: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-            fn_output: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-            cmp_plc: |<span class="kw">_</span>| ConfigCmpPlcData::NoData,
+            get_endpoints: <span class="macro">vec!</span>[],
+            put_endpoints: <span class="macro">vec!</span>[],
         };
     }
 
@@ -282,15 +130,9 @@
     #[test]
     </span><span class="kw">fn </span>fn_input_json() {
         Config::&lt;Custom&gt; {
-            this_service: Service::example_service,
-            client_service: Service::example_service,
             port: <span class="number">8000</span>,
-            fn_input: |msg: <span class="kw-2">&amp;</span>Message&lt;Custom&gt;| {
-                <span class="kw">let </span>text = msg.serialize()<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(text))
-            },
-            fn_output: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-            cmp_plc: |<span class="kw">_</span>| ConfigCmpPlcData::NoData,
+            get_endpoints: <span class="macro">vec!</span>[],
+            put_endpoints: <span class="macro">vec!</span>[],
         };
     }
 
@@ -298,15 +140,9 @@
     #[test]
     </span><span class="kw">fn </span>fn_output_json() {
         Config::&lt;Custom&gt; {
-            this_service: Service::example_service,
-            client_service: Service::example_service,
             port: <span class="number">8000</span>,
-            fn_input: |<span class="kw">_</span>| <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-            fn_output: |text: <span class="kw-2">&amp;</span>str| {
-                <span class="kw">let </span>msg = Message::deserialize(text)<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg))
-            },
-            cmp_plc: |<span class="kw">_</span>| ConfigCmpPlcData::NoData,
+            get_endpoints: <span class="macro">vec!</span>[],
+            put_endpoints: <span class="macro">vec!</span>[],
         };
     }
 }

@@ -21,41 +21,27 @@
 <a href="#20" id="20">20</a>
 <a href="#21" id="21">21</a>
 <a href="#22" id="22">22</a>
-<a href="#23" id="23">23</a>
-<a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a>
-<a href="#26" id="26">26</a>
-<a href="#27" id="27">27</a>
-<a href="#28" id="28">28</a>
-<a href="#29" id="29">29</a>
-<a href="#30" id="30">30</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#23" id="23">23</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
-<span class="doccomment">/// Расчет скорости передачи байт в секунду
-///
-/// На передачу одного байта приходится больше 8 бит, включая стартовый и стоповый биты.
-///
-/// TODO: добавить межбайтовое время
-</span><span class="kw">pub fn </span>bytes_per_second(
+<span class="doccomment">/// Расчет скорости передачи с учетом служебных битов
+</span><span class="kw">pub fn </span>data_rate(
     baudrate: <span class="kw-2">&amp;</span><span class="kw">super</span>::Baudrate,
     data_bits: <span class="kw-2">&amp;</span><span class="kw">super</span>::DataBits,
+    parity: <span class="kw-2">&amp;</span><span class="kw">super</span>::Parity,
     stop_bits: <span class="kw-2">&amp;</span><span class="kw">super</span>::StopBits,
 ) -&gt; f64 {
     <span class="kw">let </span>start_bits: f64 = <span class="number">1.0</span>;
     <span class="kw">let </span>data_bits: f64 = data_bits.clone().into();
+    <span class="kw">let </span>parity: f64 = parity.clone().into();
     <span class="kw">let </span>stop_bits: f64 = stop_bits.clone().into();
-    <span class="kw">let </span>bits_per_byte = start_bits + data_bits + stop_bits;
 
-    <span class="kw">let </span>bits_per_second: f64 = baudrate.clone().into();
+    <span class="kw">let </span>baudrate: f64 = baudrate.clone().into();
 
-    bits_per_second / bits_per_byte
+    baudrate * data_bits / (start_bits + data_bits + parity + stop_bits)
 }
 
 <span class="doccomment">/// Расчет времени передачи определенного количества байт
-</span><span class="kw">pub fn </span>calculate_transmission_time(
-    bytes_per_second: f64,
-    bytes: usize,
-    reserve: Duration,
-) -&gt; Duration {
-    Duration::from_secs_f64(bytes <span class="kw">as </span>f64 / bytes_per_second) + reserve
+</span><span class="kw">pub fn </span>calculate_transmission_time(data_rate: f64, bytes: usize, reserve: Duration) -&gt; Duration {
+    Duration::from_secs_f64(bytes <span class="kw">as </span>f64 * <span class="number">8.0 </span>/ data_rate) + reserve
 }
 </code></pre></div></section></main></body></html>

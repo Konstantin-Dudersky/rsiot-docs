@@ -190,7 +190,13 @@
 <a href="#189" id="189">189</a>
 <a href="#190" id="190">190</a>
 <a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a></pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a></pre></div><pre class="rust"><code><span class="doccomment">//! Компоненты
 
 </span><span class="attr">#[allow(dead_code)]
 #[allow(unused_imports)]
@@ -221,6 +227,10 @@
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[cfg(riscv32imc_esp_espidf)]
 </span><span class="kw">pub mod </span>cmp_esp_i2c_slave;
+
+<span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
+#[cfg(riscv32imc_esp_espidf)]
+</span><span class="kw">pub mod </span>cmp_esp_http_server;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
 #[cfg(riscv32imc_esp_espidf)]
@@ -279,10 +289,6 @@
 <span class="attr">#[cfg(feature = <span class="string">"cmp_http_server"</span>)]
 #[cfg(any(aarch64_unknown_linux_gnu, x8664_unknown_linux_gnu))]
 </span><span class="kw">pub mod </span>cmp_http_server;
-
-<span class="attr">#[cfg(feature = <span class="string">"cmp_esp"</span>)]
-#[cfg(riscv32imc_esp_espidf)]
-</span><span class="kw">pub mod </span>cmp_http_server_esp;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_influxdb"</span>)]
 #[cfg(any(aarch64_unknown_linux_gnu, x8664_unknown_linux_gnu))]
@@ -360,6 +366,12 @@
 #[allow(unused_variables)]
 #[allow(dead_code)]
 </span><span class="kw">pub mod </span>cmp_timescaledb;
+
+<span class="attr">#[cfg(any(
+    feature = <span class="string">"cmp_websocket_client"</span>,
+    feature = <span class="string">"cmp_websocket_client_wasm"
+</span>))]
+</span><span class="kw">pub mod </span>cmp_websocket_client_general;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_websocket_client"</span>)]
 #[cfg(any(aarch64_unknown_linux_gnu, x8664_unknown_linux_gnu))]

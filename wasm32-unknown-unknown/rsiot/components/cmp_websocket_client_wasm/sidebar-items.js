@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"struct":["Config"],"type":["Cmp"]};

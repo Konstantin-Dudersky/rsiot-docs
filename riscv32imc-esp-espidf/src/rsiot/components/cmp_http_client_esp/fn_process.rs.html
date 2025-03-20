@@ -253,7 +253,7 @@
     <span class="kw">let </span><span class="kw-2">mut </span>set = JoinSet::&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt;::new();
 
     <span class="comment">// Парсим url
-    </span><span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.connection_config.base_url);
+    </span><span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.base_url);
     <span class="kw">let </span>url = <span class="kw">match </span>url {
         <span class="prelude-val">Ok</span>(val) =&gt; val,
         <span class="prelude-val">Err</span>(err) =&gt; {

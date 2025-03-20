@@ -28,7 +28,9 @@
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
-<a href="#30" id="30">30</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span><span class="kw">crate</span>::message::{Message, MsgDataBound};
 
@@ -49,6 +51,8 @@
     </span><span class="kw">pub </span>generate_self_period: Duration,
 
     <span class="doccomment">/// Ищем сообщения со значением счетчика
+    ///
+    /// Заглушка: `|_| None`
     </span><span class="kw">pub </span>fn_find_partner_counter: FnFindPartnerCounter&lt;TMsg&gt;,
 
     <span class="doccomment">/// Функция для формирования сообщения о наличии связи. В функцию передается булевое значение,

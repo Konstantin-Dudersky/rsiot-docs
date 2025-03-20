@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Buffer","Config","Device"]};
+window.SIDEBAR_ITEMS = {"enum":["Error","I2cRequest","I2cResponse"],"struct":["Buffer","Config","Device"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_http_client/fn_process.rs`."><title>fn_process.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0 (9fc6b4312 2025-01-07)" data-channel="1.84.0" data-search-js="search-92e6798f.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/components/cmp_http_client/</div>fn_process.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/components/cmp_http_client/fn_process.rs`."><title>fn_process.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-46132b98.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.85.0 (4d91de4e4 2025-02-17)" data-channel="1.85.0" data-search-js="search-75f5ac3e.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/components/cmp_http_client/</div>fn_process.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
 <a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -195,7 +195,19 @@
 <a href="#194" id="194">194</a>
 <a href="#195" id="195">195</a>
 <a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>reqwest::{Client, Response, StatusCode};
 <span class="kw">use </span>tokio::{
@@ -206,7 +218,7 @@
 <span class="kw">use </span>url::Url;
 
 <span class="kw">use crate</span>::{
-    executor::{CmpInOut, ComponentError},
+    executor::{join_set_spawn, CmpInOut, ComponentError},
     message::{Message, MsgDataBound, ServiceBound},
 };
 
@@ -245,7 +257,7 @@
     TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Парсим url
-    </span><span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.connection_config.base_url);
+    </span><span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.base_url);
     <span class="kw">let </span>url = <span class="kw">match </span>url {
         <span class="prelude-val">Ok</span>(val) =&gt; val,
         <span class="prelude-val">Err</span>(err) =&gt; {
@@ -255,19 +267,21 @@
         }
     };
 
-    <span class="kw">let </span><span class="kw-2">mut </span>set = JoinSet::&lt;<span class="kw">super</span>::Result&lt;(), TMsg&gt;&gt;::new();
+    <span class="kw">let </span>client = Client::builder().timeout(config.timeout).build().unwrap();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>task_set = JoinSet::&lt;<span class="kw">super</span>::Result&lt;(), TMsg&gt;&gt;::new();
 
     <span class="comment">// запускаем периодические запросы
     </span><span class="kw">for </span>req <span class="kw">in </span>config.requests_periodic {
-        <span class="kw">let </span>future = task_periodic_request(in_out.clone(), req, url.clone());
-        set.spawn(future);
+        <span class="kw">let </span>task = task_periodic_request(in_out.clone(), req, url.clone(), client.clone());
+        join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task);
     }
     <span class="comment">// Запускаем задачи запросов на основе входного потока сообщений
     </span><span class="kw">for </span>item <span class="kw">in </span>config.requests_input {
-        <span class="kw">let </span>future = task_input_request(in_out.clone(), url.clone(), item);
-        set.spawn(future);
+        <span class="kw">let </span>task = task_input_request(in_out.clone(), url.clone(), item, client.clone());
+        join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task);
     }
-    <span class="kw">while let </span><span class="prelude-val">Some</span>(res) = set.join_next().<span class="kw">await </span>{
+    <span class="kw">while let </span><span class="prelude-val">Some</span>(res) = task_set.join_next().<span class="kw">await </span>{
         res<span class="question-mark">??
     </span>}
     <span class="prelude-val">Ok</span>(())
@@ -278,6 +292,7 @@
     in_out: CmpInOut&lt;TMsg, TService&gt;,
     config: config::RequestPeriodic&lt;TMsg&gt;,
     url: Url,
+    client: Client,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
@@ -291,6 +306,7 @@
             <span class="kw-2">&amp;</span>config.http_param,
             config.on_success,
             config.on_failure,
+            client.clone(),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">for </span>msg <span class="kw">in </span>msgs {
@@ -312,6 +328,7 @@
     <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage, TService&gt;,
     url: Url,
     config: config::RequestInput&lt;TMessage&gt;,
+    client: Client,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMessage&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
@@ -323,14 +340,19 @@
             <span class="prelude-val">Some</span>(val) =&gt; val,
             <span class="prelude-val">None </span>=&gt; <span class="kw">continue</span>,
         };
-        <span class="kw">let </span>msgs =
-            process_request_and_response(<span class="kw-2">&amp;</span>url, <span class="kw-2">&amp;</span>http_param, config.on_success, config.on_failure)
-                .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>msgs = process_request_and_response(
+            <span class="kw-2">&amp;</span>url,
+            <span class="kw-2">&amp;</span>http_param,
+            config.on_success,
+            config.on_failure,
+            client.clone(),
+        )
+        .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">for </span>msg <span class="kw">in </span>msgs {
             in_out.send_output(msg).<span class="kw">await</span><span class="question-mark">?</span>;
         }
     }
-    <span class="prelude-val">Ok</span>(())
+    <span class="prelude-val">Err</span>(<span class="kw">super</span>::Error::TaskEndInputRequest)
 }
 
 <span class="doccomment">/// Выполнение запроса и вызов коллбеков при ответе
@@ -339,8 +361,9 @@
     request_param: <span class="kw-2">&amp;</span>config::HttpParam,
     on_success: config::CbkOnSuccess&lt;TMsg&gt;,
     on_failure: config::CbkOnFailure&lt;TMsg&gt;,
+    client: Client,
 ) -&gt; <span class="kw">super</span>::Result&lt;Vec&lt;Message&lt;TMsg&gt;&gt;, TMsg&gt; {
-    <span class="kw">let </span>response = send_request(url.clone(), request_param).<span class="kw">await</span>;
+    <span class="kw">let </span>response = send_request(url.clone(), request_param, client).<span class="kw">await</span>;
     <span class="kw">let </span>response = <span class="kw">match </span>response {
         <span class="prelude-val">Ok</span>(val) =&gt; val,
         <span class="prelude-val">Err</span>(err) =&gt; <span class="kw">match </span>err {
@@ -370,6 +393,7 @@
 </span><span class="kw">async fn </span>send_request&lt;TMessage&gt;(
     url: Url,
     req: <span class="kw-2">&amp;</span>config::HttpParam,
+    client: Client,
 ) -&gt; <span class="kw">super</span>::Result&lt;Response, TMessage&gt; {
     <span class="kw">let </span>endpoint = <span class="kw">match </span>req {
         config::HttpParam::Get { endpoint } =&gt; endpoint,
@@ -380,7 +404,7 @@
         <span class="kw">let </span>err = err.to_string();
         Error::Configuration(err)
     })<span class="question-mark">?</span>;
-    <span class="kw">let </span>client = Client::new();
+
     <span class="kw">let </span>response = <span class="kw">match </span>req {
         config::HttpParam::Get { endpoint: <span class="kw">_ </span>} =&gt; client.get(url).send().<span class="kw">await</span><span class="question-mark">?</span>,
         config::HttpParam::Put { endpoint: <span class="kw">_</span>, body } =&gt; {

@@ -58,12 +58,11 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
-<a href="#60" id="60">60</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::MsgDataBound;
+<a href="#60" id="60">60</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
-<span class="kw">use super</span>::{
-    connection_config::ConnectionConfig, request_input::RequestInput,
-    request_periodic::RequestPeriodic,
-};
+<span class="kw">use </span><span class="kw">crate</span>::message::MsgDataBound;
+
+<span class="kw">use super</span>::{request_input::RequestInput, request_periodic::RequestPeriodic};
 
 <span class="doccomment">/// Параметры компонента http-client
 </span><span class="attr">#[derive(Clone, Debug)]
@@ -71,8 +70,10 @@
 <span class="kw">where
     </span>TMessage: MsgDataBound,
 {
-    <span class="doccomment">/// Параметры подключения
-    </span><span class="kw">pub </span>connection_config: ConnectionConfig,
+    <span class="doccomment">/// URL сервера
+    </span><span class="kw">pub </span>base_url: String,
+    <span class="doccomment">/// Таймаут запроса
+    </span><span class="kw">pub </span>timeout: Duration,
     <span class="doccomment">/// Запросы, которые формируются на основе входящих сообщений
     </span><span class="kw">pub </span>requests_input: Vec&lt;RequestInput&lt;TMessage&gt;&gt;,
     <span class="doccomment">/// Периодические запросы
@@ -90,9 +91,8 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>connect_with_http_server() {
         Config::&lt;Custom&gt; {
-            connection_config: ConnectionConfig {
-                base_url: <span class="string">"http://10.0.6.5:80"</span>.into(),
-            },
+            base_url: <span class="string">"http://10.0.6.5:80"</span>.into(),
+            timeout: Duration::from_secs(<span class="number">5</span>),
             requests_input: <span class="macro">vec!</span>[RequestInput {
                 fn_input: |msg| {
                     <span class="kw">let </span>param = HttpParam::Post {
