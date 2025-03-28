@@ -75,11 +75,7 @@
 <a href="#74" id="74">74</a>
 <a href="#75" id="75">75</a>
 <a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a>
-<a href="#81" id="81">81</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::{atomic::AtomicU8, Arc};
+<a href="#77" id="77">77</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::{atomic::AtomicU8, Arc};
 
 <span class="kw">use </span>futures::TryFutureExt;
 <span class="kw">use </span>tokio::{sync::mpsc, task::JoinSet};
@@ -87,20 +83,16 @@
 <span class="kw">use crate</span>::{
     components::shared_tasks,
     executor::{join_set_spawn, CmpInOut},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{tasks, Config};
 
 <span class="kw">const </span>BUFFER_SIZE: usize = <span class="number">100</span>;
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, msg_bus: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: <span class="lifetime">'static </span>+ MsgDataBound,
-    TService: <span class="lifetime">'static </span>+ ServiceBound,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt; = JoinSet::new();
 

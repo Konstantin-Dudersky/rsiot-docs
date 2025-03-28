@@ -16,26 +16,18 @@
 <a href="#15" id="15">15</a>
 <a href="#16" id="16">16</a>
 <a href="#17" id="17">17</a>
-<a href="#18" id="18">18</a>
-<a href="#19" id="19">19</a>
-<a href="#20" id="20">20</a>
-<a href="#21" id="21">21</a>
-<a href="#22" id="22">22</a></pre></div><pre class="rust"><code><span class="kw">use </span>axum::{extract, response::Html};
+<a href="#18" id="18">18</a></pre></div><pre class="rust"><code><span class="kw">use </span>axum::{extract, response::Html};
 
-<span class="kw">use crate</span>::{
-    components_config::http_server::handler_info,
-    message::{MsgDataBound, ServiceBound},
-};
+<span class="kw">use crate</span>::{components_config::http_server::handler_info, message::MsgDataBound};
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::shared_state::SharedState;
 
 <span class="doccomment">/// Маршрут для получения сообщений
-</span><span class="kw">pub async fn </span>root&lt;TMsg, TService&gt;(
-    extract::State(shared_state): extract::State&lt;SharedState&lt;TMsg, TService&gt;&gt;,
+</span><span class="kw">pub async fn </span>root&lt;TMsg&gt;(
+    extract::State(shared_state): extract::State&lt;SharedState&lt;TMsg&gt;&gt;,
 ) -&gt; Html&lt;String&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">let </span>get_endpoints = shared_state.get_endpoints.lock().<span class="kw">await</span>;
     <span class="kw">let </span>put_endpoints = shared_state.put_endpoints.lock().<span class="kw">await</span>;

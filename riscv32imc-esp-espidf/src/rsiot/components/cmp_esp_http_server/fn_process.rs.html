@@ -229,7 +229,13 @@
 <a href="#228" id="228">228</a>
 <a href="#229" id="229">229</a>
 <a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>embedded_svc::{
     http::{Headers, Method},
@@ -246,7 +252,7 @@
         create_get_endpoints_hashmap, create_put_endpoints_hashmap, handler_get, handler_put,
     },
     executor::{join_set_spawn, CmpInOut},
-    message::{system_messages, MsgData, MsgDataBound, ServiceBound},
+    message::{system_messages, MsgData, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{
@@ -262,13 +268,9 @@
     (<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"*"</span>),
 ];
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
-    config: Config&lt;TMsg&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(<span class="kw-2">mut </span>in_out: CmpInOut&lt;TMsg&gt;, config: Config&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>get_endpoints = create_get_endpoints_hashmap(<span class="kw-2">&amp;</span>config.get_endpoints);
     <span class="kw">let </span>get_endpoints_paths = get_endpoints
@@ -341,11 +343,22 @@
     }
 
     <span class="comment">// Запросы PUT
-    </span><span class="kw">for </span>path <span class="kw">in </span>put_endpoints_paths {
+    </span><span class="kw">for </span>path <span class="kw">in </span>put_endpoints_paths.clone() {
         <span class="kw">let </span>put_endpoints = put_endpoints.clone();
         <span class="kw">let </span>msg_bus = in_out.clone();
         server
             .fn_handler(<span class="kw-2">&amp;</span>path, Method::Put, <span class="kw">move </span>|request| {
+                route_put(request, put_endpoints.clone(), msg_bus.clone())
+            })
+            .map_err(<span class="kw">super</span>::Error::RegisterHandler)<span class="question-mark">?</span>;
+    }
+
+    <span class="comment">// Запросы POST
+    </span><span class="kw">for </span>path <span class="kw">in </span>put_endpoints_paths {
+        <span class="kw">let </span>put_endpoints = put_endpoints.clone();
+        <span class="kw">let </span>msg_bus = in_out.clone();
+        server
+            .fn_handler(<span class="kw-2">&amp;</span>path, Method::Post, <span class="kw">move </span>|request| {
                 route_put(request, put_endpoints.clone(), msg_bus.clone())
             })
             .map_err(<span class="kw">super</span>::Error::RegisterHandler)<span class="question-mark">?</span>;
@@ -396,14 +409,13 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">fn </span>route_put&lt;TMsg, TService&gt;(
+<span class="kw">fn </span>route_put&lt;TMsg&gt;(
     <span class="kw-2">mut </span>request: Request&lt;<span class="kw-2">&amp;mut </span>EspHttpConnection&gt;,
     put_endpoints: Arc&lt;Mutex&lt;PutEndpointsHashMap&lt;TMsg&gt;&gt;&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    msg_bus: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">let </span>path = <span class="kw-2">&amp;</span>request.uri().to_string();
     <span class="macro">trace!</span>(<span class="string">"Put request, path: {}"</span>, path);

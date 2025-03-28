@@ -43,7 +43,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>self_counter: u8 = <span class="number">0</span>;
 
         <span class="kw">loop </span>{
-            self_counter += <span class="number">1</span>;
+            self_counter = self_counter.wrapping_add(<span class="number">1</span>);
             <span class="kw">let </span>msg = (<span class="self">self</span>.fn_generate_self_counter)(self_counter);
             <span class="self">self</span>.output.send(msg).<span class="kw">await</span>.unwrap();
             sleep(<span class="self">self</span>.generate_self_period).<span class="kw">await

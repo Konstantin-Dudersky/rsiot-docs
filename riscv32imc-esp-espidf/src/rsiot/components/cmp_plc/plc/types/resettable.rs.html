@@ -36,17 +36,17 @@
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="doccomment">/// Структура данных, которая сбрасывает свое значение на значение по-умолчанию после одного чтения
-</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 </span><span class="kw">pub struct </span>Resettable&lt;T&gt;
 <span class="kw">where
-    </span>T: Clone + Debug + Default + Serialize,
+    </span>T: Clone + Debug + Default + PartialEq + Serialize,
 {
     value: T,
 }
 
 <span class="kw">impl</span>&lt;T&gt; Resettable&lt;T&gt;
 <span class="kw">where
-    </span>T: Clone + Debug + Default + Serialize,
+    </span>T: Clone + Debug + Default + PartialEq + Serialize,
 {
     <span class="doccomment">/// Создание новой структуры
     </span><span class="kw">pub fn </span>new(value: T) -&gt; <span class="self">Self </span>{

@@ -13,7 +13,7 @@
     components::cmp_leptos,
     executor::{ComponentExecutor, ComponentExecutorConfig},
     logging::configure_logging,
-    message::{example_message::<span class="kw-2">*</span>, example_service::Service},
+    message::example_message::<span class="kw-2">*</span>,
 };
 
 <span class="attr">#[test]
@@ -32,7 +32,7 @@
 
         <span class="comment">// cmp_leptos ------------------------------------------------------------------------------
         </span><span class="kw">let </span>config_leptos = cmp_leptos::Config {
-            body_component: || <span class="macro">view!</span> { &lt;App/&gt; },
+            body_component: || <span class="macro">view!</span> { &lt;App/&gt;}.into_any(),
             input_store: GlobalStore::default(),
             output_store: GlobalStore::default(),
             fn_input: |<span class="kw">_</span>, <span class="kw">_</span>| (),
@@ -42,7 +42,6 @@
         <span class="comment">// config_executor -------------------------------------------------------------------------
         </span><span class="kw">let </span>config_executor = ComponentExecutorConfig {
             buffer_size: <span class="number">100</span>,
-            service: Service::example_service,
             fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
             delay_publish: Duration::from_millis(<span class="number">100</span>),
         };
@@ -52,7 +51,7 @@
 
         <span class="kw">let </span>context = LocalSet::new();
         context.spawn_local(<span class="kw">async move </span>{
-            ComponentExecutor::&lt;Custom, Service&gt;::new(config_executor)
+            ComponentExecutor::&lt;Custom&gt;::new(config_executor)
                 .add_cmp(cmp_leptos::Cmp::new(config_leptos))
                 .wait_result()
                 .<span class="kw">await</span><span class="question-mark">?</span>;

@@ -242,27 +242,7 @@
 <a href="#241" id="241">241</a>
 <a href="#242" id="242">242</a>
 <a href="#243" id="243">243</a>
-<a href="#244" id="244">244</a>
-<a href="#245" id="245">245</a>
-<a href="#246" id="246">246</a>
-<a href="#247" id="247">247</a>
-<a href="#248" id="248">248</a>
-<a href="#249" id="249">249</a>
-<a href="#250" id="250">250</a>
-<a href="#251" id="251">251</a>
-<a href="#252" id="252">252</a>
-<a href="#253" id="253">253</a>
-<a href="#254" id="254">254</a>
-<a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
-<a href="#257" id="257">257</a>
-<a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
-<a href="#263" id="263">263</a>
-<a href="#264" id="264">264</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#244" id="244">244</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 <span class="kw">use </span>tokio::{
     sync::{broadcast, mpsc},
     task::JoinSet,
@@ -280,25 +260,18 @@
 <span class="kw">const </span>UPDATE_TTL_PERIOD: Duration = Duration::from_millis(<span class="number">200</span>);
 
 <span class="doccomment">/// Запуск коллекции компонентов в работу
-</span><span class="kw">pub struct </span>ComponentExecutor&lt;TMsg, TService&gt;
+</span><span class="kw">pub struct </span>ComponentExecutor&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     task_set: JoinSet&lt;<span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;&gt;,
-    cmp_in_out: CmpInOut&lt;TMsg, TService&gt;,
+    cmp_in_out: CmpInOut&lt;TMsg&gt;,
 }
 
 <span class="doccomment">/// Настройка исполнителя
-</span><span class="kw">pub struct </span>ComponentExecutorConfig&lt;TMsg, TService&gt;
-<span class="kw">where
-    </span>TService: ServiceBound,
-{
+</span><span class="kw">pub struct </span>ComponentExecutorConfig&lt;TMsg&gt; {
     <span class="doccomment">/// Размер буфера канала сообщения
     </span><span class="kw">pub </span>buffer_size: usize,
-
-    <span class="doccomment">/// Название сервиса
-    </span><span class="kw">pub </span>service: TService,
 
     <span class="doccomment">/// Функция фильтрации сообщений в зависимости от текущей авторизации
     ///
@@ -325,16 +298,12 @@
     </span><span class="kw">pub </span>delay_publish: Duration,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService&gt; ComponentExecutor&lt;TMsg, TService&gt;
+<span class="kw">impl</span>&lt;TMsg&gt; ComponentExecutor&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound,
 {
     <span class="doccomment">/// Создание коллекции компонентов
-    </span><span class="kw">pub fn </span>new(config: ComponentExecutorConfig&lt;TMsg, TService&gt;) -&gt; <span class="self">Self
-    </span><span class="kw">where
-        </span>TService: ServiceBound + <span class="lifetime">'static</span>,
-    {
+    </span><span class="kw">pub fn </span>new(config: ComponentExecutorConfig&lt;TMsg&gt;) -&gt; <span class="self">Self </span>{
         <span class="macro">info!</span>(<span class="string">"ComponentExecutor start creation"</span>);
         <span class="kw">let </span>id = MsgTrace::generate_uuid();
         <span class="kw">let </span>(component_input_send, component_input) =
@@ -349,7 +318,6 @@
             component_output_recv,
             component_input_send.clone(),
             cache.clone(),
-            config.service.clone(),
             id,
             config.delay_publish,
         );
@@ -363,11 +331,10 @@
             component_input,
             component_output,
             cache.clone(),
-            <span class="kw-2">&amp;</span>config.service.trace_name(),
+            <span class="string">"Trace name (maybe delete?)"</span>,
             id,
             AuthPermissions::default(),
             config.fn_auth,
-            config.service,
         );
 
         <span class="self">Self </span>{
@@ -378,10 +345,7 @@
 
     <span class="doccomment">/// Добавить компонент
     </span><span class="attr">#[cfg(not(feature = <span class="string">"single-thread"</span>))]
-    </span><span class="kw">pub fn </span>add_cmp(
-        <span class="kw-2">mut </span><span class="self">self</span>,
-        <span class="kw-2">mut </span>component: <span class="kw">impl </span>IComponent&lt;TMsg, TService&gt; + Send + <span class="lifetime">'static</span>,
-    ) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>add_cmp(<span class="kw-2">mut </span><span class="self">self</span>, <span class="kw-2">mut </span>component: <span class="kw">impl </span>IComponent&lt;TMsg&gt; + Send + <span class="lifetime">'static</span>) -&gt; <span class="self">Self </span>{
         component.set_interface(<span class="self">self</span>.cmp_in_out.clone());
 
         <span class="self">self</span>.task_set.spawn(<span class="kw">async move </span>{ component.spawn().<span class="kw">await </span>});
@@ -390,7 +354,7 @@
     </span>}
     <span class="doccomment">/// Добавить компонент (?Send)
     </span><span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
-    </span><span class="kw">pub fn </span>add_cmp(<span class="kw-2">mut </span><span class="self">self</span>, <span class="kw-2">mut </span>component: <span class="kw">impl </span>IComponent&lt;TMsg, TService&gt; + <span class="lifetime">'static</span>) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>add_cmp(<span class="kw-2">mut </span><span class="self">self</span>, <span class="kw-2">mut </span>component: <span class="kw">impl </span>IComponent&lt;TMsg&gt; + <span class="lifetime">'static</span>) -&gt; <span class="self">Self </span>{
         component.set_interface(<span class="self">self</span>.cmp_in_out.clone());
 
         <span class="self">self</span>.task_set
@@ -423,20 +387,17 @@
     }
 }
 
-<span class="kw">async fn </span>task_internal&lt;TMsg, TService&gt;(
+<span class="kw">async fn </span>task_internal&lt;TMsg&gt;(
     <span class="kw-2">mut </span>input: mpsc::Receiver&lt;Message&lt;TMsg&gt;&gt;,
     output: broadcast::Sender&lt;Message&lt;TMsg&gt;&gt;,
     cache: Cache&lt;TMsg&gt;,
-    service: TService,
     executor_id: Uuid,
     delay_publish: Duration,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="macro">debug!</span>(<span class="string">"Internal task of ComponentExecutor: starting"</span>);
-    <span class="kw">let </span>service_name = service.trace_name();
 
     <span class="comment">// Задержка, чтобы компоненты успели запуститься и подписаться на получение сообщений
     </span>sleep(delay_publish).<span class="kw">await</span>;
@@ -446,7 +407,6 @@
         </span><span class="macro">trace!</span>(<span class="string">"ComponentExecutor: new message: {:?}"</span>, msg);
         <span class="comment">// msg.add_trace_item(&amp;executor_id, &amp;format!("{}::internal_bus", service_name));
         </span>msg.add_trace_item(<span class="kw-2">&amp;</span>executor_id);
-        msg.set_service_origin(<span class="kw-2">&amp;</span>service_name);
         <span class="kw">let </span>msg = save_msg_in_cache(msg, <span class="kw-2">&amp;</span>cache).<span class="kw">await</span>;
         <span class="kw">let </span><span class="prelude-val">Some</span>(msg) = msg <span class="kw">else </span>{ <span class="kw">continue </span>};
         output.send(msg).map_err(|err| {

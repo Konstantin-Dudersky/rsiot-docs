@@ -41,7 +41,7 @@
         },
         components_config::http_server::PutEndpointConfig,
         executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::{example_service::Service, Message, MsgDataBound, MsgKey},
+        message::{Message, MsgDataBound, MsgKey},
     };
 
     <span class="attr">#[derive(Clone, Debug, Deserialize, MsgKey, PartialEq, Serialize)]
@@ -51,9 +51,7 @@
         CounterFromClient(u8),
     }
 
-    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {
-        <span class="kw">type </span>TService = Service;
-    }
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Data {}
 
     tracing_subscriber::fmt()
         .with_max_level(LevelFilter::INFO)
@@ -113,7 +111,6 @@
 
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">100</span>,
-        service: Service::example_service,
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
         delay_publish: Duration::from_millis(<span class="number">100</span>),
     };

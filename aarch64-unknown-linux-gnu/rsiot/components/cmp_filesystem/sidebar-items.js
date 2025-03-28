@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Config"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"enum":["CallFnOutputKind","Error"],"struct":["Config"],"trait":["BufferBound"],"type":["Cmp"]};

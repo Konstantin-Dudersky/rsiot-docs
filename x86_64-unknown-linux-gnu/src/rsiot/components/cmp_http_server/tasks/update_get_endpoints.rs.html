@@ -30,35 +30,25 @@
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
-<a href="#32" id="32">32</a>
-<a href="#33" id="33">33</a>
-<a href="#34" id="34">34</a>
-<a href="#35" id="35">35</a>
-<a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
+<a href="#32" id="32">32</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>tokio::sync::Mutex;
 
-<span class="kw">use crate</span>::{
-    executor::CmpInOut,
-    message::{MsgDataBound, ServiceBound},
-};
+<span class="kw">use crate</span>::{executor::CmpInOut, message::MsgDataBound};
 
 <span class="kw">use </span><span class="kw">super</span>::GetEndpointsHashMap;
 
-<span class="kw">pub struct </span>UpdateGetEndpoints&lt;TMsg, TService&gt;
+<span class="kw">pub struct </span>UpdateGetEndpoints&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
-    <span class="kw">pub </span>input: CmpInOut&lt;TMsg, TService&gt;,
+    <span class="kw">pub </span>input: CmpInOut&lt;TMsg&gt;,
     <span class="kw">pub </span>get_endpoints: Arc&lt;Mutex&lt;GetEndpointsHashMap&lt;TMsg&gt;&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService&gt; UpdateGetEndpoints&lt;TMsg, TService&gt;
+<span class="kw">impl</span>&lt;TMsg&gt; UpdateGetEndpoints&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = <span class="self">self</span>.input.recv_input().<span class="kw">await </span>{

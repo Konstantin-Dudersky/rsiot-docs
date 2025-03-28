@@ -108,8 +108,7 @@
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, sync::Arc};
+<a href="#110" id="110">110</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, sync::Arc};
 
 <span class="kw">use </span>esp_idf_svc::hal::{
     i2c::{I2c, I2cSlaveConfig, I2cSlaveDriver},
@@ -126,7 +125,7 @@
 <span class="kw">use crate</span>::{
     components::{cmp_esp_i2c_slave::tasks, shared_tasks},
     executor::{join_set_spawn, CmpInOut},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{BufferData, Config, Error};
@@ -134,9 +133,9 @@
 <span class="doccomment">/// Размер буферов приема и отправки
 </span><span class="kw">const </span>BUFFER_LEN: usize = <span class="number">128</span>;
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TI2c, TPeripheral, TI2cRequest, TI2cResponse, TBufferData, TService&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TI2c, TPeripheral, TI2cRequest, TI2cResponse, TBufferData&gt;(
     config: Config&lt;TMsg, TI2c, TPeripheral, TI2cRequest, TI2cResponse, TBufferData&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    msg_bus: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
@@ -145,7 +144,6 @@
     TI2cRequest: Debug + DeserializeOwned + <span class="lifetime">'static</span>,
     TI2cResponse: Debug + Serialize + <span class="lifetime">'static</span>,
     TBufferData: BufferData + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>i2c_idf_config = I2cSlaveConfig::new()
         .sda_enable_pullup(<span class="bool-val">false</span>)

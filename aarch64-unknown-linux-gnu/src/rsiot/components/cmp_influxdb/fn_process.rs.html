@@ -98,12 +98,7 @@
 <a href="#97" id="97">97</a>
 <a href="#98" id="98">98</a>
 <a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#100" id="100">100</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>reqwest::{Client, StatusCode};
 <span class="kw">use </span>tokio::time::sleep;
@@ -111,7 +106,7 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{
@@ -119,13 +114,12 @@
     error::Error,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
+    in_out: CmpInOut&lt;TMsg&gt;,
     config: Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Starting influxdb client, configuration: {:?}"</span>, config);
 
@@ -142,13 +136,9 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMsg, TService&gt;(
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg, TService&gt;,
-    config: Config&lt;TMsg&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">async fn </span>task_main&lt;TMsg&gt;(<span class="kw-2">mut </span>input: CmpInOut&lt;TMsg&gt;, config: Config&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>datapoints = (config.fn_input)(<span class="kw-2">&amp;</span>msg);

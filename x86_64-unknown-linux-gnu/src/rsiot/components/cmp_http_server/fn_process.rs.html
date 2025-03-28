@@ -99,8 +99,7 @@
 <a href="#98" id="98">98</a>
 <a href="#99" id="99">99</a>
 <a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
+<a href="#101" id="101">101</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>axum::routing;
 <span class="kw">use </span>tokio::{sync::Mutex, task::JoinSet};
@@ -114,19 +113,18 @@
 <span class="kw">use crate</span>::{
     components_config::http_server::{create_get_endpoints_hashmap, create_put_endpoints_hashmap},
     executor::{join_set_spawn, CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{config::Config, routes, shared_state::SharedState, tasks};
 
 <span class="doccomment">/// Компонент для получения и ввода сообщений через HTTP Server
-</span><span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+</span><span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
+    msg_bus: CmpInOut&lt;TMsg&gt;,
     config: Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Component started, configuration: {:?}"</span>, config);
 

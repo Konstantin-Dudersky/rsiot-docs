@@ -28,15 +28,14 @@
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
-<a href="#30" id="30">30</a>
-<a href="#31" id="31">31</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::{stream::SplitStream, StreamExt};
+<a href="#30" id="30">30</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::{stream::SplitStream, StreamExt};
 <span class="kw">use </span>gloo::net::websocket::{futures::WebSocket, Message};
 <span class="kw">use </span>tokio::sync::mpsc;
 <span class="kw">use </span>tracing::trace;
 
 <span class="kw">pub struct </span>Receive {
     <span class="kw">pub </span>websocket_read: SplitStream&lt;WebSocket&gt;,
-    <span class="kw">pub </span>output: mpsc::Sender&lt;String&gt;,
+    <span class="kw">pub </span>output: mpsc::Sender&lt;Vec&lt;u8&gt;&gt;,
 }
 
 <span class="kw">impl </span>Receive {
@@ -47,13 +46,12 @@
                 <span class="prelude-val">Ok</span>(text) =&gt; text,
                 <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">continue</span>,
             };
-            <span class="kw">let </span>text = <span class="kw">match </span>text {
-                Message::Text(value) =&gt; value,
-                Message::Bytes(<span class="kw">_</span>) =&gt; <span class="macro">todo!</span>(),
+            <span class="kw">let </span>bytes = <span class="kw">match </span>text {
+                Message::Text(value) =&gt; value.as_bytes().to_vec(),
+                Message::Bytes(bytes) =&gt; bytes,
             };
-
             <span class="self">self</span>.output
-                .send(text)
+                .send(bytes)
                 .<span class="kw">await
                 </span>.map_err(|<span class="kw">_</span>| <span class="kw">super</span>::Error::TokioSyncMpsc)<span class="question-mark">?</span>;
         }

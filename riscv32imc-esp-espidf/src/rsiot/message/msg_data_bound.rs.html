@@ -57,16 +57,11 @@
 <a href="#56" id="56">56</a>
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
-<a href="#59" id="59">59</a>
-<a href="#60" id="60">60</a>
-<a href="#61" id="61">61</a>
-<a href="#62" id="62">62</a>
-<a href="#63" id="63">63</a>
-<a href="#64" id="64">64</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Debug;
+<a href="#59" id="59">59</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Debug;
 
 <span class="kw">use </span>serde::{de::DeserializeOwned, Serialize};
 
-<span class="kw">use super</span>::{MsgKey, ServiceBound, TimeToLiveValue};
+<span class="kw">use super</span>::{MsgKey, TimeToLiveValue};
 
 <span class="doccomment">/// Ограничения на данные, которые могут содержать сообщения
 ///
@@ -80,20 +75,15 @@
 </span><span class="kw">pub trait </span>MsgDataBound:
     Clone + Debug + DeserializeOwned + MsgKey + PartialEq + Send + Serialize + Sync
 {
-    <span class="doccomment">/// Перечисление, содержащее названия всех сервисов
-    </span><span class="kw">type </span>TService: ServiceBound;
+    <span class="comment">// Перечисление, содержащее названия всех сервисов
+    // type TService: ServiceBound;
 
-    <span class="comment">// #[allow(clippy::type_complexity)]
-    // fn define_enabled_routes(&amp;self) -&gt; Vec&lt;(Option&lt;Self::TService&gt;, Option&lt;Self::TService&gt;)&gt; {
-    //     vec![(None, None)]
+    // Разрешенные маршруты сообщения
+    // fn define_enabled_routes(&amp;self) -&gt; MsgRoute&lt;Self::TService&gt; {
+    //     MsgRoute::default()
     // }
 
-    </span><span class="doccomment">/// Разрешенные маршруты сообщения
-    </span><span class="kw">fn </span>define_enabled_routes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MsgRoute&lt;<span class="self">Self</span>::TService&gt; {
-        MsgRoute::default()
-    }
-
-    <span class="doccomment">/// Задать ограничение времени жизни сообщения
+    </span><span class="doccomment">/// Задать ограничение времени жизни сообщения
     ///
     /// # Примеры
     ///

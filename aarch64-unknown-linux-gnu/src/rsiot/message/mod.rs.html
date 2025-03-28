@@ -38,10 +38,7 @@
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
-<a href="#40" id="40">40</a>
-<a href="#41" id="41">41</a>
-<a href="#42" id="42">42</a>
-<a href="#43" id="43">43</a></pre></div><pre class="rust"><code><span class="doccomment">//! Представление сообщений в системе.
+<a href="#40" id="40">40</a></pre></div><pre class="rust"><code><span class="doccomment">//! Представление сообщений в системе.
 //!
 //! Сообщения представлены типом перечисления (enum). Данные вложены в варианты перечисления.
 
@@ -49,7 +46,6 @@
 <span class="kw">mod </span>error;
 <span class="kw">pub mod </span>example_message;
 <span class="kw">mod </span>example_message_channel;
-<span class="kw">pub mod </span>example_service;
 <span class="kw">mod </span>message;
 <span class="kw">mod </span>message_channel;
 <span class="kw">mod </span>msg_data;
@@ -58,7 +54,6 @@
 <span class="kw">mod </span>msg_serde;
 <span class="kw">mod </span>msg_trace;
 <span class="kw">mod </span>phy_quantity;
-<span class="kw">mod </span>service;
 <span class="kw">pub mod </span>system_messages;
 <span class="kw">mod </span>time_to_live;
 <span class="kw">mod </span>timestamp;
@@ -78,7 +73,6 @@
 <span class="kw">pub use </span>msg_key::MsgKey;
 <span class="kw">pub use </span>msg_trace::MsgTrace;
 <span class="kw">pub use </span>phy_quantity::PhyQuantity;
-<span class="kw">pub use </span>service::ServiceBound;
 <span class="kw">pub use </span>strum::EnumString;
 <span class="kw">pub use </span>time_to_live::TimeToLiveValue;
 <span class="kw">pub use </span>timestamp::Timestamp;

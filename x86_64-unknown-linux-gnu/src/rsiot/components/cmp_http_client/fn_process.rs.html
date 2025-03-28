@@ -203,11 +203,7 @@
 <a href="#202" id="202">202</a>
 <a href="#203" id="203">203</a>
 <a href="#204" id="204">204</a>
-<a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
-<a href="#209" id="209">209</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#205" id="205">205</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>reqwest::{Client, Response, StatusCode};
 <span class="kw">use </span>tokio::{
@@ -219,18 +215,17 @@
 
 <span class="kw">use crate</span>::{
     executor::{join_set_spawn, CmpInOut, ComponentError},
-    message::{Message, MsgDataBound, ServiceBound},
+    message::{Message, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{config, Error};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
+    in_out: CmpInOut&lt;TMsg&gt;,
     config: config::Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Starting http-client, configuration: {:?}"</span>, config);
 
@@ -248,16 +243,15 @@
 }
 
 <span class="doccomment">/// Основная задача
-</span><span class="kw">async fn </span>task_main&lt;TMsg, TService&gt;(
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+</span><span class="kw">async fn </span>task_main&lt;TMsg&gt;(
+    in_out: CmpInOut&lt;TMsg&gt;,
     config: config::Config&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Парсим url
-    </span><span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.base_url);
+    </span><span class="kw">let </span>url = Url::parse(config.base_url);
     <span class="kw">let </span>url = <span class="kw">match </span>url {
         <span class="prelude-val">Ok</span>(val) =&gt; val,
         <span class="prelude-val">Err</span>(err) =&gt; {
@@ -288,15 +282,14 @@
 }
 
 <span class="doccomment">/// Задача обработки периодического запроса
-</span><span class="kw">async fn </span>task_periodic_request&lt;TMsg, TService&gt;(
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+</span><span class="kw">async fn </span>task_periodic_request&lt;TMsg&gt;(
+    in_out: CmpInOut&lt;TMsg&gt;,
     config: config::RequestPeriodic&lt;TMsg&gt;,
     url: Url,
     client: Client,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">loop </span>{
         <span class="kw">let </span>begin = Instant::now();
@@ -324,15 +317,14 @@
 }
 
 <span class="doccomment">/// Задача обработки запросов на основе входящего потока сообщений
-</span><span class="kw">async fn </span>task_input_request&lt;TMessage, TService&gt;(
-    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_input_request&lt;TMessage&gt;(
+    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage&gt;,
     url: Url,
     config: config::RequestInput&lt;TMessage&gt;,
     client: Client,
 ) -&gt; <span class="kw">super</span>::Result&lt;(), TMessage&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = in_out.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>http_param = (config.fn_input)(<span class="kw-2">&amp;</span>msg);

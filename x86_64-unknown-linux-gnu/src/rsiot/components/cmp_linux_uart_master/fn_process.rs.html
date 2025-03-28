@@ -52,28 +52,18 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
-<a href="#54" id="54">54</a>
-<a href="#55" id="55">55</a>
-<a href="#56" id="56">56</a>
-<a href="#57" id="57">57</a>
-<a href="#58" id="58">58</a>
-<a href="#59" id="59">59</a></pre></div><pre class="rust"><code><span class="kw">use </span>tokio::task::JoinSet;
+<a href="#54" id="54">54</a></pre></div><pre class="rust"><code><span class="kw">use </span>tokio::task::JoinSet;
 
 <span class="kw">use crate</span>::{
-    components::shared_tasks::fn_process_master::FnProcessMaster,
-    executor::CmpInOut,
-    message::{MsgDataBound, ServiceBound},
+    components::shared_tasks::fn_process_master::FnProcessMaster, executor::CmpInOut,
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{uart_comm::UartComm, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, msg_bus: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt; = JoinSet::new();
 

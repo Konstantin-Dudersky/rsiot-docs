@@ -189,12 +189,7 @@
 <a href="#188" id="188">188</a>
 <a href="#189" id="189">189</a>
 <a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{net::SocketAddr, sync::Arc, time::Instant};
+<a href="#191" id="191">191</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{net::SocketAddr, sync::Arc, time::Instant};
 
 <span class="kw">use </span>tokio::{
     sync::Mutex,
@@ -206,7 +201,7 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{
@@ -214,13 +209,12 @@
     error::Error,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">if </span>!config.enabled {
         <span class="kw">loop </span>{
@@ -243,13 +237,12 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMessage, TService&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">async fn </span>task_main&lt;TMessage&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>ctx = <span class="kw">match </span>config.connection_config {
         config::ClientType::Tcp(tcp_config) =&gt; {
@@ -283,14 +276,13 @@
 }
 
 <span class="doccomment">/// Задача обработки периодического запроса
-</span><span class="kw">async fn </span>task_periodic_request&lt;TMessage, TService&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_periodic_request&lt;TMessage&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     ctx: Arc&lt;Mutex&lt;Context&gt;&gt;,
     periodic_config: config::PeriodicConfig&lt;TMessage&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">loop </span>{
         <span class="kw">let </span>begin = Instant::now();
@@ -314,14 +306,13 @@
 }
 
 <span class="doccomment">/// Задача обработки запроса на основе входного потока сообщений
-</span><span class="kw">async fn </span>task_input_request&lt;TMessage, TService&gt;(
-    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_input_request&lt;TMessage&gt;(
+    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMessage&gt;,
     ctx: Arc&lt;Mutex&lt;Context&gt;&gt;,
     input_config: config::InputConfig&lt;TMessage&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = in_out.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>request = (input_config.fn_input)(<span class="kw-2">&amp;</span>msg);
@@ -362,8 +353,8 @@
 }
 
 <span class="doccomment">/// Обратываем ответ modbus
-</span><span class="kw">async fn </span>modbus_response&lt;TMessage, TService&gt;(
-    output: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>modbus_response&lt;TMessage&gt;(
+    output: CmpInOut&lt;TMessage&gt;,
     request: <span class="kw-2">&amp;</span>config::Request,
     response: <span class="kw-2">&amp;</span><span class="kw">super</span>::Result&lt;config::Response&gt;,
     fn_on_success: config::FnOnSuccess&lt;TMessage&gt;,
@@ -371,7 +362,6 @@
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="macro">trace!</span>(<span class="string">"Modbus response: {:?}"</span>, response);
     <span class="kw">let </span>msgs = <span class="kw">match </span>response {

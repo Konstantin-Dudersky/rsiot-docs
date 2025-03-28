@@ -77,9 +77,19 @@
 <a href="#76" id="76">76</a>
 <a href="#77" id="77">77</a>
 <a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a></pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация websocket-клиента
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a></pre></div><pre class="rust"><code><span class="doccomment">//! Конфигурация websocket-клиента
 
-</span><span class="kw">use crate</span>::{components_config::websocket_general::WebsocketMessage, message::Message};
+</span><span class="kw">use crate</span>::{
+    components_config::websocket_general::WebsocketMessage, message::Message,
+    serde_utils::SerdeAlgKind,
+};
 
 <span class="doccomment">/// Преобразование входящих сообщений в текст для отправки на сервер
 </span><span class="kw">pub type </span>FnClientToServer&lt;TMsg, TClientToServer&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;TClientToServer&gt;;
@@ -94,9 +104,12 @@
     </span>TServerToClient: WebsocketMessage,
     TClientToServer: WebsocketMessage,
 {
+    <span class="doccomment">/// Алгоритм сериализации / десериализации
+    </span><span class="kw">pub </span>serde_alg: SerdeAlgKind,
+
     <span class="doccomment">/// Адрес Websocket-сервера
     /// "ws://localhost:9001"
-    </span><span class="kw">pub </span>url: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+    </span><span class="kw">pub </span>url: String,
 
     <span class="doccomment">/// Преобразование входящих сообщений в текст для отправки на сервер
     </span><span class="kw">pub </span>fn_client_to_server: FnClientToServer&lt;TMsg, TClientToServer&gt;,
@@ -122,7 +135,8 @@
 {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            url: <span class="string">"ws://localhost:8000"</span>,
+            serde_alg: SerdeAlgKind::Json,
+            url: <span class="string">"ws://localhost:8000"</span>.into(),
             fn_client_to_server: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
             fn_server_to_client: |<span class="kw">_</span>| <span class="macro">vec!</span>[],
             fn_connection_state: |<span class="kw">_</span>| <span class="prelude-val">None</span>,

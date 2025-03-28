@@ -34,37 +34,29 @@
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
 <a href="#35" id="35">35</a>
-<a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a>
-<a href="#38" id="38">38</a>
-<a href="#39" id="39">39</a>
-<a href="#40" id="40">40</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
-<span class="kw">use </span>leptos::<span class="kw-2">*</span>;
+<a href="#36" id="36">36</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound, ServiceBound},
+    message::{AuthPermissions, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{fn_process::fn_process, Config, StoreBound};
 
 <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
 #[async_trait(<span class="question-mark">?</span>Send)]
-</span><span class="kw">impl</span>&lt;TMsg, TView, TIntoView, TService, TInputStore, TOutputStore&gt;
-    IComponentProcess&lt;Config&lt;TMsg, TView, TIntoView, TInputStore, TOutputStore&gt;, TMsg, TService&gt;
-    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TView, TIntoView, TInputStore, TOutputStore&gt;, TMsg, TService&gt;
+</span><span class="kw">impl</span>&lt;TMsg, TInputStore, TOutputStore&gt;
+    IComponentProcess&lt;Config&lt;TMsg, TInputStore, TOutputStore&gt;, TMsg&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TInputStore, TOutputStore&gt;, TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TView: Fn() -&gt; TIntoView + <span class="lifetime">'static</span>,
-    TIntoView: IntoView,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TInputStore: StoreBound + <span class="lifetime">'static</span>,
     TOutputStore: StoreBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        config: Config&lt;TMsg, TView, TIntoView, TInputStore, TOutputStore&gt;,
-        input: CmpInOut&lt;TMsg, TService&gt;,
+        config: Config&lt;TMsg, TInputStore, TOutputStore&gt;,
+        input: CmpInOut&lt;TMsg&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         fn_process(
             config,
@@ -76,6 +68,6 @@
 }
 
 <span class="doccomment">/// Компонент cmp_leptos
-</span><span class="kw">pub type </span>Cmp&lt;TMsg, TView, TIntoView, TService, TInputStore, TOutputStore&gt; =
-    Component&lt;Config&lt;TMsg, TView, TIntoView, TInputStore, TOutputStore&gt;, TMsg, TService&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMsg, TInputStore, TOutputStore&gt; =
+    Component&lt;Config&lt;TMsg, TInputStore, TOutputStore&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

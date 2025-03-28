@@ -135,16 +135,7 @@
 <a href="#134" id="134">134</a>
 <a href="#135" id="135">135</a>
 <a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a></pre></div><pre class="rust"><code><span class="doccomment">//! Запуск задач, общих для всех компонентов, выполняющих опрос устройств по шине
+<a href="#137" id="137">137</a></pre></div><pre class="rust"><code><span class="doccomment">//! Запуск задач, общих для всех компонентов, выполняющих опрос устройств по шине
 
 </span><span class="kw">use </span>futures::TryFutureExt;
 <span class="kw">use </span>tokio::{
@@ -155,28 +146,20 @@
 <span class="kw">use crate</span>::{
     components_config::master_device::{<span class="self">self</span>, AddressBound, DeviceTrait, RequestResponseBound},
     executor::{join_set_spawn, CmpInOut},
-    message::{Message, MsgDataBound, ServiceBound},
+    message::{Message, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{filter_identical_data, mpsc_to_msgbus, msgbus_to_broadcast};
 
 <span class="doccomment">/// Запуск задач, общих для всех компонентов, выполняющих опрос устройств по шине
-</span><span class="kw">pub struct </span>FnProcessMaster&lt;
-    <span class="lifetime">'a</span>,
-    TMsg,
-    TService,
-    TError,
-    TFieldbusRequest,
-    TFieldbusResponse,
-    TAddress,
-&gt; <span class="kw">where
+</span><span class="kw">pub struct </span>FnProcessMaster&lt;<span class="lifetime">'a</span>, TMsg, TError, TFieldbusRequest, TFieldbusResponse, TAddress&gt;
+<span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TError: Send + Sync + <span class="lifetime">'static</span>,
     TAddress: AddressBound,
 {
     <span class="doccomment">/// Шина сообщений
-    </span><span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    </span><span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg&gt;,
 
     <span class="doccomment">/// Ёмкость очередей сообщений между задачами
     </span><span class="kw">pub </span>buffer_size: usize,
@@ -200,11 +183,10 @@
     </span><span class="kw">pub </span>devices: Vec&lt;Box&lt;<span class="kw">dyn </span>DeviceTrait&lt;TMsg, TFieldbusRequest, TFieldbusResponse, TAddress&gt;&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService, TError, TFieldbusRequest, TFieldbusResponse, TAddress&gt;
-    FnProcessMaster&lt;<span class="lifetime">'_</span>, TMsg, TService, TError, TFieldbusRequest, TFieldbusResponse, TAddress&gt;
+<span class="kw">impl</span>&lt;TMsg, TError, TFieldbusRequest, TFieldbusResponse, TAddress&gt;
+    FnProcessMaster&lt;<span class="lifetime">'_</span>, TMsg, TError, TFieldbusRequest, TFieldbusResponse, TAddress&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TError: Send + Sync + <span class="lifetime">'static</span>,
     TFieldbusRequest: RequestResponseBound&lt;TAddress&gt; + <span class="lifetime">'static</span>,
     TFieldbusResponse: RequestResponseBound&lt;TAddress&gt; + <span class="lifetime">'static</span>,

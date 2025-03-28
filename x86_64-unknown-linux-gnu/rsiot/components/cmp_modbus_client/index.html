@@ -47,7 +47,7 @@ GitHub</a></p>
             cmp_modbus_client::{<span class="self">self</span>, <span class="kw-2">*</span>},
         },
         executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::{example_service::Service, Message, MsgDataBound, MsgKey},
+        message::{Message, MsgDataBound, MsgKey},
     };
 
     <span class="attr">#[derive(Clone, Debug, Deserialize, MsgKey, PartialEq, Serialize)]
@@ -56,9 +56,7 @@ GitHub</a></p>
         ValueRead(f64),
     }
 
-    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Messages {
-        <span class="kw">type </span>TService = Service;
-    }
+    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Messages {}
 
     <span class="comment">// логгирование
     </span>fmt().init();
@@ -95,7 +93,6 @@ GitHub</a></p>
 
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">100</span>,
-        service: Service::example_service,
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
         delay_publish: Duration::from_millis(<span class="number">100</span>),
     };

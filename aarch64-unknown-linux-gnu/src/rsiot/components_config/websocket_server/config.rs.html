@@ -23,7 +23,10 @@
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
 <a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::Message;
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{message::Message, serde_utils::SerdeAlgKind};
 
 <span class="kw">use </span><span class="kw">super</span>::WebsocketMessage;
 
@@ -34,14 +37,17 @@
     </span>TServerToClient: WebsocketMessage,
     TClientToServer: WebsocketMessage,
 {
+    <span class="doccomment">/// Алгоритм сериализации и десериализации сообщений
+    </span><span class="kw">pub </span>serde_alg: SerdeAlgKind,
+
     <span class="doccomment">/// Порт, через который доступен сервер
     </span><span class="kw">pub </span>port: u16,
 
     <span class="doccomment">/// Функция преобразования входящих сообщений в перечисление, пересылаемое по вебсокету
-    </span><span class="kw">pub </span>fn_input: FnInput&lt;TMsg, TServerToClient&gt;,
+    </span><span class="kw">pub </span>fn_server_to_client: FnInput&lt;TMsg, TServerToClient&gt;,
 
     <span class="doccomment">/// Функция перечисления, пересылаемых по вебсокету, в исходящий поток сообщений
-    </span><span class="kw">pub </span>fn_output: FnOutput&lt;TMsg, TClientToServer&gt;,
+    </span><span class="kw">pub </span>fn_client_to_server: FnOutput&lt;TMsg, TClientToServer&gt;,
 }
 
 <span class="doccomment">/// Функция преобразования входящих сообщений в перечисление, пересылаемое по вебсокету

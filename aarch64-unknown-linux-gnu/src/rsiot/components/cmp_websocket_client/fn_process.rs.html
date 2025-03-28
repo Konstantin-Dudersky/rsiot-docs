@@ -115,44 +115,7 @@
 <a href="#114" id="114">114</a>
 <a href="#115" id="115">115</a>
 <a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
-<a href="#124" id="124">124</a>
-<a href="#125" id="125">125</a>
-<a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::StreamExt;
+<a href="#117" id="117">117</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::StreamExt;
 <span class="kw">use </span>tokio::{
     sync::mpsc,
     task::JoinSet,
@@ -163,25 +126,30 @@
 <span class="kw">use </span>url::Url;
 
 <span class="kw">use crate</span>::{
-    components::cmp_websocket_client_general::{ConnectionState, WebsocketClientGeneralTasks},
     components_config::websocket_general::WebsocketMessage,
     executor::{join_set_spawn, CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
+    serde_utils::SerdeAlg,
 };
 
-<span class="kw">use super</span>::{config::Config, tasks, Error};
+<span class="kw">use super</span>::{
+    cmp_websocket_client_general::{ConnectionState, WebsocketClientGeneralTasks},
+    config::Config,
+    tasks, Error,
+};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService, TServerToClient, TClientToServer&gt;(
-    input: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage, TServerToClient, TClientToServer&gt;(
+    input: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TServerToClient, TClientToServer&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TServerToClient: <span class="lifetime">'static </span>+ WebsocketMessage,
     TClientToServer: <span class="lifetime">'static </span>+ WebsocketMessage,
 {
     <span class="macro">info!</span>(<span class="string">"cmp_websocket_client starting"</span>);
+
+    <span class="kw">let </span>serde_alg = SerdeAlg::new(config.serde_alg);
 
     <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt; = JoinSet::new();
     <span class="kw">let </span>(ch_tx_connection_state, ch_rx_connection_state) = mpsc::channel(<span class="number">1000</span>);
@@ -197,6 +165,7 @@
             input.clone(),
             config.clone(),
             ch_tx_connection_state.clone(),
+            serde_alg,
         )
         .<span class="kw">await</span>;
         <span class="kw">match </span>res {
@@ -210,18 +179,18 @@
 }
 
 <span class="doccomment">/// Подключаемся к серверу и запускаем потоки получения и отправки
-</span><span class="kw">async fn </span>task_connect&lt;TMessage, TService, TServerToClient, TClientToServer&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_connect&lt;TMessage, TServerToClient, TClientToServer&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TServerToClient, TClientToServer&gt;,
     ch_tx_connection_state: mpsc::Sender&lt;bool&gt;,
+    serde_alg: SerdeAlg,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TServerToClient: <span class="lifetime">'static </span>+ WebsocketMessage,
     TClientToServer: <span class="lifetime">'static </span>+ WebsocketMessage,
 {
-    <span class="kw">let </span>url = Url::parse(config.url)<span class="question-mark">?</span>;
+    <span class="kw">let </span>url = Url::parse(<span class="kw-2">&amp;</span>config.url)<span class="question-mark">?</span>;
 
     <span class="kw">let </span>(ws_stream, <span class="kw">_</span>) = connect_async(url)
         .<span class="kw">await
@@ -239,6 +208,7 @@
         fn_client_to_server: config.fn_client_to_server,
         fn_server_to_client: config.fn_server_to_client,
         ch_tx_connection_state: ch_tx_connection_state.clone(),
+        serde_alg,
     };
     <span class="kw">let </span>(ch_rx_input_to_send, ch_tx_receive_to_output) = ws_general.spawn();
 
@@ -262,48 +232,4 @@
     }
     <span class="prelude-val">Ok</span>(())
 }
-
-<span class="comment">// /// Задача отправки данных на сервер Websocket
-// async fn task_send&lt;TMessage, TService&gt;(
-//     mut input: CmpInOut&lt;TMessage, TService&gt;,
-//     mut write: SplitSink&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;, TungsteniteMessage&gt;,
-//     fn_send: fn(&amp;Message&lt;TMessage&gt;) -&gt; anyhow::Result&lt;Option&lt;String&gt;&gt;,
-// ) -&gt; Result&lt;(), Error&lt;TMessage&gt;&gt;
-// where
-//     TMessage: MsgDataBound,
-//     TService: ServiceBound,
-// {
-//     while let Ok(msg) = input.recv_input().await {
-//         let text = (fn_send)(&amp;msg).map_err(Error::FnInput)?;
-//         if let Some(text) = text {
-//             let text = TungsteniteMessage::Text(text);
-//             write.send(text).await?;
-//         }
-//     }
-//     Ok(())
-// }
-
-// /// Задача приема данных с сервера Websocket
-// async fn task_recv&lt;TMessage, TService&gt;(
-//     output: CmpInOut&lt;TMessage, TService&gt;,
-//     mut read: SplitStream&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;&gt;,
-//     fn_recv: FnOutput&lt;TMessage&gt;,
-// ) -&gt; Result&lt;(), Error&lt;TMessage&gt;&gt;
-// where
-//     TMessage: MsgDataBound,
-//     TService: ServiceBound,
-// {
-//     while let Some(msg) = read.next().await {
-//         let data = msg?.into_text()?;
-//         let msgs = (fn_recv)(&amp;data).map_err(|err| Error::FnOutput(err))?;
-//         let msgs = match msgs {
-//             Some(msgs) =&gt; msgs,
-//             None =&gt; continue,
-//         };
-//         for msg in msgs {
-//             output.send_output(msg).await.map_err(Error::CmpOutput)?;
-//         }
-//     }
-//     Ok(())
-// }
-</span></code></pre></div></section></main></body></html>
+</code></pre></div></section></main></body></html>

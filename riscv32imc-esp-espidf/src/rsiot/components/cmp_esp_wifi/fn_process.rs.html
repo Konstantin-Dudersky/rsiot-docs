@@ -221,17 +221,7 @@
 <a href="#220" id="220">220</a>
 <a href="#221" id="221">221</a>
 <a href="#222" id="222">222</a>
-<a href="#223" id="223">223</a>
-<a href="#224" id="224">224</a>
-<a href="#225" id="225">225</a>
-<a href="#226" id="226">226</a>
-<a href="#227" id="227">227</a>
-<a href="#228" id="228">228</a>
-<a href="#229" id="229">229</a>
-<a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
-<a href="#233" id="233">233</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#223" id="223">223</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>embedded_svc::wifi::Wifi;
 <span class="kw">use </span>esp_idf_svc::hal::sys::EspError;
@@ -244,18 +234,14 @@
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
-    message::{system_messages, Message, MsgData, MsgDataBound, ServiceBound},
+    message::{system_messages, Message, MsgData, MsgDataBound},
 };
 
 <span class="kw">use </span><span class="kw">super</span>::Config;
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">let </span>wifi_config = prepare_wifi_config(<span class="kw-2">&amp;</span>config);
 
@@ -378,14 +364,10 @@
     }
 }
 
-<span class="kw">async fn </span>state_connect&lt;T, TMsg, TService&gt;(
-    wifi: <span class="kw-2">&amp;mut </span>AsyncWifi&lt;T&gt;,
-    in_out: <span class="kw-2">&amp;</span>CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; ConnectionState
+<span class="kw">async fn </span>state_connect&lt;T, TMsg&gt;(wifi: <span class="kw-2">&amp;mut </span>AsyncWifi&lt;T&gt;, in_out: <span class="kw-2">&amp;</span>CmpInOut&lt;TMsg&gt;) -&gt; ConnectionState
 <span class="kw">where
     </span>T: Wifi&lt;Error = EspError&gt; + NonBlocking + NetifStatus,
     TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="macro">info!</span>(<span class="string">"Wifi state: connect"</span>);
     <span class="kw">let </span>res = wifi.connect().<span class="kw">await</span>;
@@ -427,10 +409,9 @@
     ConnectionState::Connect
 }
 
-<span class="kw">async fn </span>state_onlyap&lt;TMsg, TService&gt;(in_out: <span class="kw-2">&amp;</span>CmpInOut&lt;TMsg, TService&gt;) -&gt; ConnectionState
+<span class="kw">async fn </span>state_onlyap&lt;TMsg&gt;(in_out: <span class="kw-2">&amp;</span>CmpInOut&lt;TMsg&gt;) -&gt; ConnectionState
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="macro">info!</span>(<span class="string">"Wifi state: only AP"</span>);
     wifi_connected(in_out).<span class="kw">await</span>.unwrap();
@@ -453,10 +434,9 @@
     </span>OnlyAP,
 }
 
-<span class="kw">async fn </span>wifi_connected&lt;TMsg, TService&gt;(in_out: <span class="kw-2">&amp;</span>CmpInOut&lt;TMsg, TService&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">async fn </span>wifi_connected&lt;TMsg&gt;(in_out: <span class="kw-2">&amp;</span>CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="comment">// Рассылаем сообщение - wifi подключен
     </span><span class="kw">let </span>msg = Message::new(MsgData::System(system_messages::System::EspWifiConnected));

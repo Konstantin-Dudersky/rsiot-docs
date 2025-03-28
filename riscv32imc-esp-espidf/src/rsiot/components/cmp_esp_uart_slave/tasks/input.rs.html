@@ -23,32 +23,22 @@
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
 <a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a>
-<a href="#26" id="26">26</a>
-<a href="#27" id="27">27</a>
-<a href="#28" id="28">28</a>
-<a href="#29" id="29">29</a>
-<a href="#30" id="30">30</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
-    executor::CmpInOut,
-    message::{MsgDataBound, ServiceBound},
-};
+<a href="#25" id="25">25</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{executor::CmpInOut, message::MsgDataBound};
 
 <span class="kw">use super</span>::{<span class="kw">super</span>::config::TFnInput, Buffer};
 
-<span class="kw">pub struct </span>Input&lt;TMsg, TService, TBufferData&gt;
+<span class="kw">pub struct </span>Input&lt;TMsg, TBufferData&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub </span>buffer_data: Buffer&lt;TBufferData&gt;,
-    <span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    <span class="kw">pub </span>msg_bus: CmpInOut&lt;TMsg&gt;,
     <span class="kw">pub </span>fn_input: TFnInput&lt;TMsg, TBufferData&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService, TBufferData&gt; Input&lt;TMsg, TService, TBufferData&gt;
+<span class="kw">impl</span>&lt;TMsg, TBufferData&gt; Input&lt;TMsg, TBufferData&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = <span class="self">self</span>.msg_bus.recv_input().<span class="kw">await </span>{

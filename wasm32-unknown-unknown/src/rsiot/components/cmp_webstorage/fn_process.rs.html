@@ -66,11 +66,7 @@
 <a href="#65" id="65">65</a>
 <a href="#66" id="66">66</a>
 <a href="#67" id="67">67</a>
-<a href="#68" id="68">68</a>
-<a href="#69" id="69">69</a>
-<a href="#70" id="70">70</a>
-<a href="#71" id="71">71</a>
-<a href="#72" id="72">72</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::TryFutureExt;
+<a href="#68" id="68">68</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::TryFutureExt;
 <span class="kw">use </span>tokio::{sync::mpsc::channel, task::JoinSet};
 
 <span class="kw">use crate</span>::{
@@ -81,13 +77,9 @@
 
 <span class="kw">use super</span>::{tasks, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, msg_bus: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>task_set: JoinSet&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt; = JoinSet::new();
 

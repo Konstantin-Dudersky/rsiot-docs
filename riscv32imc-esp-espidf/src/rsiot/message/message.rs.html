@@ -124,59 +124,14 @@
 <a href="#123" id="123">123</a>
 <a href="#124" id="124">124</a>
 <a href="#125" id="125">125</a>
-<a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a></pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::module_inception)]
+<a href="#126" id="126">126</a></pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::module_inception)]
 
 </span><span class="kw">use </span>std::{fmt::Debug, time::Duration};
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>uuid::Uuid;
 
-<span class="kw">use super</span>::{MsgData, MsgDataBound, MsgRoute, MsgTrace, TimeToLiveValue, Timestamp};
+<span class="kw">use super</span>::{MsgData, MsgDataBound, MsgTrace, TimeToLiveValue, Timestamp};
 
 <span class="doccomment">/// Сообщение
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -191,11 +146,6 @@
     </span><span class="kw">pub </span>trace: MsgTrace,
     <span class="doccomment">/// Время жизни сообщения
     </span>ttl: TimeToLiveValue,
-
-    <span class="doccomment">/// Сервис, в котором было созданно данное сообщение.
-    ///
-    /// Устанавливается в исполнителе.
-    </span>service_origin: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
 <span class="kw">impl</span>&lt;TCustom&gt; Message&lt;TCustom&gt;
@@ -214,7 +164,6 @@
             ts: Default::default(),
             trace: MsgTrace::default(),
             ttl,
-            service_origin: <span class="prelude-val">None</span>,
         }
     }
 
@@ -231,7 +180,6 @@
             ts: Default::default(),
             trace: MsgTrace::default(),
             ttl,
-            service_origin: <span class="prelude-val">None</span>,
         }
     }
 
@@ -280,64 +228,26 @@
         }
     }
 
-    <span class="doccomment">/// Возращает название сервиса, в котором было создано данное сообщение.
-    /// Паникует, если название сервиса еще не установлено
-    </span><span class="kw">pub fn </span>service_origin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.service_origin {
-            <span class="prelude-val">Some</span>(service_origin) =&gt; service_origin.clone(),
-            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"service_origin not set"</span>),
-        }
-    }
-
-    <span class="doccomment">/// Устанавливает название сервиса, в котором было создано данное сообщение.
-    /// Если название уже установлено, то пропускаем
-    </span><span class="kw">pub fn </span>set_service_origin(<span class="kw-2">&amp;mut </span><span class="self">self</span>, service: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">match </span><span class="self">self</span>.service_origin {
-            <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; (),
-            <span class="prelude-val">None </span>=&gt; <span class="self">self</span>.service_origin = <span class="prelude-val">Some</span>(service.to_string()),
-        }
-    }
-
-    <span class="doccomment">/// Разрешен ли марштур данного сообщения
-    </span><span class="comment">// pub fn is_route_enabled(&amp;self, src: &amp;TCustom::TService, dst: &amp;TCustom::TService) -&gt; bool {
-    //     let enabled_routes = match &amp;self.data {
+    <span class="comment">// Разрешен ли марштур данного сообщения
+    // pub fn is_route_enabled(&amp;self, src: &amp;TCustom::TService, dst: &amp;TCustom::TService) -&gt; bool {
+    //     let route = match &amp;self.data {
     //         MsgData::System(data) =&gt; return data.define_enabled_routes(),
     //         MsgData::Custom(data) =&gt; data.define_enabled_routes(),
     //     };
-    //     for (src_enabled, dst_enabled) in enabled_routes {
-    //         if let Some(src_enabled) = src_enabled {
-    //             if *src != src_enabled {
-    //                 continue;
+    //     match route {
+    //         MsgRoute::SrcToAny(route_src) =&gt; *src == route_src,
+    //         MsgRoute::SrcToDst(route_src, route_dst) =&gt; *src == route_src &amp;&amp; *dst == route_dst,
+    //         MsgRoute::AnyToAny =&gt; true,
+    //         MsgRoute::None =&gt; false,
+    //         MsgRoute::SrcToDstSeveral(routes) =&gt; {
+    //             for (route_src, route_dst) in routes {
+    //                 if *src == route_src &amp;&amp; *dst == route_dst {
+    //                     return true;
+    //                 }
     //             }
+    //             false
     //         }
-    //         if let Some(dst_enabled) = dst_enabled {
-    //             if *dst != dst_enabled {
-    //                 continue;
-    //             }
-    //         }
-    //         return true;
     //     }
-    //     false
     // }
-    </span><span class="kw">pub fn </span>is_route_enabled(<span class="kw-2">&amp;</span><span class="self">self</span>, src: <span class="kw-2">&amp;</span>TCustom::TService, dst: <span class="kw-2">&amp;</span>TCustom::TService) -&gt; bool {
-        <span class="kw">let </span>route = <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.data {
-            MsgData::System(data) =&gt; <span class="kw">return </span>data.define_enabled_routes(),
-            MsgData::Custom(data) =&gt; data.define_enabled_routes(),
-        };
-        <span class="kw">match </span>route {
-            MsgRoute::SrcToAny(route_src) =&gt; <span class="kw-2">*</span>src == route_src,
-            MsgRoute::SrcToDst(route_src, route_dst) =&gt; <span class="kw-2">*</span>src == route_src &amp;&amp; <span class="kw-2">*</span>dst == route_dst,
-            MsgRoute::AnyToAny =&gt; <span class="bool-val">true</span>,
-            MsgRoute::None =&gt; <span class="bool-val">false</span>,
-            MsgRoute::SrcToDstSeveral(routes) =&gt; {
-                <span class="kw">for </span>(route_src, route_dst) <span class="kw">in </span>routes {
-                    <span class="kw">if </span><span class="kw-2">*</span>src == route_src &amp;&amp; <span class="kw-2">*</span>dst == route_dst {
-                        <span class="kw">return </span><span class="bool-val">true</span>;
-                    }
-                }
-                <span class="bool-val">false
-            </span>}
-        }
-    }
-}
+</span>}
 </code></pre></div></section></main></body></html>

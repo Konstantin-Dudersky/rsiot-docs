@@ -81,15 +81,7 @@
 <a href="#80" id="80">80</a>
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#83" id="83">83</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>esp_idf_svc::mqtt::client::{EspAsyncMqttClient, MqttClientConfiguration};
 <span class="kw">use </span>tokio::{task::JoinSet, time::sleep};
@@ -97,18 +89,14 @@
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
-    message::{system_messages, MsgData, MsgDataBound, ServiceBound},
+    message::{system_messages, MsgData, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{tasks, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Необходимо подождать, пока поднимется Wi-Fi
     </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = in_out.recv_input().<span class="kw">await </span>{
@@ -121,13 +109,9 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">async fn </span>main_loop&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">async fn </span>main_loop&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">loop </span>{
         <span class="macro">info!</span>(<span class="string">"Starting MQTT"</span>);

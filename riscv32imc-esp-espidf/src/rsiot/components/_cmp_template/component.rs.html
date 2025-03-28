@@ -22,26 +22,22 @@
 <a href="#21" id="21">21</a>
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
-<a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a>
-<a href="#26" id="26">26</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
+<a href="#24" id="24">24</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, CmpResult, Component, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound, ServiceBound},
+    message::{AuthPermissions, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{config::Config, fn_process::fn_process};
 
 <span class="attr">#[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
 #[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
-</span><span class="kw">impl</span>&lt;TMsg, TService&gt; IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg, TService&gt;
-    <span class="kw">for </span>Component&lt;Config&lt;TMsg&gt;, TMsg, TService&gt;
+</span><span class="kw">impl</span>&lt;TMsg&gt; IComponentProcess&lt;Config&lt;TMsg&gt;, TMsg&gt; <span class="kw">for </span>Component&lt;Config&lt;TMsg&gt;, TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound,
 {
-    <span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: Config&lt;TMsg&gt;, msg_bus: CmpInOut&lt;TMsg, TService&gt;) -&gt; CmpResult {
+    <span class="kw">async fn </span>process(<span class="kw-2">&amp;</span><span class="self">self</span>, config: Config&lt;TMsg&gt;, msg_bus: CmpInOut&lt;TMsg&gt;) -&gt; CmpResult {
         <span class="kw">let </span>in_out = msg_bus.clone_with_new_id(<span class="string">"CMP_TEMPLATE"</span>, AuthPermissions::FullAccess);
         fn_process(config, in_out).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -49,5 +45,5 @@
 }
 
 <span class="doccomment">/// Компонент CMP_TEMPLATE
-</span><span class="kw">pub type </span>Cmp&lt;TMsg, TService&gt; = Component&lt;Config&lt;TMsg&gt;, TMsg, TService&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;Config&lt;TMsg&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

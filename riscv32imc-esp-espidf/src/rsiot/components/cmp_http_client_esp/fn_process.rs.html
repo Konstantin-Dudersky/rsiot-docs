@@ -191,13 +191,7 @@
 <a href="#190" id="190">190</a>
 <a href="#191" id="191">191</a>
 <a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#193" id="193">193</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>embedded_svc::http::{client::Client <span class="kw">as </span>HttpClient, Method};
 <span class="kw">use </span>esp_idf_svc::http::client::EspHttpConnection;
@@ -210,18 +204,17 @@
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
-    message::{Message, MsgDataBound, ServiceBound},
+    message::{Message, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{config, Error};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
     config: config::Config&lt;TMsg&gt;,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+    in_out: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Необходимо подождать, пока поднимется Wi-Fi
     </span>sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
@@ -242,13 +235,9 @@
 }
 
 <span class="doccomment">/// Основная задача
-</span><span class="kw">async fn </span>task_main&lt;TMsg, TService&gt;(
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
-    config: config::Config&lt;TMsg&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+</span><span class="kw">async fn </span>task_main&lt;TMsg&gt;(in_out: CmpInOut&lt;TMsg&gt;, config: config::Config&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>set = JoinSet::&lt;<span class="kw">super</span>::Result&lt;()&gt;&gt;::new();
 
@@ -284,14 +273,13 @@
 }
 
 <span class="doccomment">/// Задача обработки периодического запроса
-</span><span class="kw">async fn </span>task_periodic_request&lt;TMsg, TService&gt;(
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+</span><span class="kw">async fn </span>task_periodic_request&lt;TMsg&gt;(
+    in_out: CmpInOut&lt;TMsg&gt;,
     config: config::RequestPeriodic&lt;TMsg&gt;,
     url: Url,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">loop </span>{
         <span class="kw">let </span>begin = Instant::now();

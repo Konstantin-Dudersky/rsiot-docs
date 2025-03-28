@@ -140,15 +140,7 @@
 <a href="#139" id="139">139</a>
 <a href="#140" id="140">140</a>
 <a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#142" id="142">142</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>tokio::time::sleep;
 <span class="kw">use </span>tracing::{info, warn};
@@ -164,13 +156,9 @@
 
 <span class="kw">use super</span>::{token_payload::TokenPayload, Config, ConfigStore, ConfigStoreLocalItem, Error};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound,
 {
     <span class="kw">loop </span>{
         <span class="kw">let </span>result = task_main(config.clone(), in_out.clone()).<span class="kw">await</span>;
@@ -180,13 +168,9 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMsg, TService&gt;(
-    config: Config,
-    <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">async fn </span>task_main&lt;TMsg&gt;(config: Config, <span class="kw-2">mut </span>in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = in_out.recv_input().<span class="kw">await </span>{
         <span class="kw">let </span>msg_response = <span class="kw">match </span>msg.data {

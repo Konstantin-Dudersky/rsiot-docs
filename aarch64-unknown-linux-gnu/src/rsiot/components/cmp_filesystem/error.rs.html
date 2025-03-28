@@ -53,8 +53,8 @@
     <span class="attr">#[error(<span class="string">"TokioTaskJoin: {0}"</span>)]
     </span>TokioTaskJoin(<span class="attr">#[from] </span>tokio::task::JoinError),
 
-    <span class="attr">#[error(<span class="string">"WriteFileError: {0}"</span>)]
-    </span>WriteFileError(std::io::Error),
+    <span class="attr">#[error(<span class="string">"WriteFileError: {0}; filename: {1}"</span>)]
+    </span>WriteFileError(std::io::Error, String),
 
     <span class="attr">#[error(<span class="string">"ReadFileError: {0}"</span>)]
     </span>ReadFileError(std::io::Error),
@@ -62,11 +62,11 @@
     <span class="attr">#[error(<span class="string">"ReadDirEntryError: {0}"</span>)]
     </span>ReadDirEntryError(std::io::Error),
 
-    <span class="attr">#[error(<span class="string">"CreateDirError: {0}"</span>)]
-    </span>CreateDirError(std::io::Error),
+    <span class="attr">#[error(<span class="string">"TokioMpscSend"</span>)]
+    </span>TokioMpscSend,
 
-    <span class="attr">#[error(<span class="string">"ReadDirError: {0}"</span>)]
-    </span>ReadDirError(std::io::Error),
+    <span class="attr">#[error(transparent)]
+    </span>Serde(<span class="attr">#[from] </span><span class="kw">crate</span>::serde_utils::Error),
 }
 
 <span class="kw">impl </span>From&lt;Error&gt; <span class="kw">for </span>ComponentError {

@@ -160,8 +160,7 @@
 <a href="#159" id="159">159</a>
 <a href="#160" id="160">160</a>
 <a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
+<a href="#162" id="162">162</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>esp_idf_svc::hal::{i2c, units::FromValueType};
 <span class="kw">use </span>esp_idf_svc::hal::{
@@ -173,20 +172,19 @@
 <span class="kw">use crate</span>::{
     drivers_i2c,
     executor::{join_set_spawn, CmpInOut},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{rsiot_i2c_driver::RsiotI2cDriver, Config, ConfigBaudrate};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TI2c, TPeripheral, TService&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TI2c, TPeripheral&gt;(
     config: Config&lt;TMsg, TI2c, TPeripheral&gt;,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
+    in_out: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
     TI2c: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
     TPeripheral: I2c,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Настраиваем I2C
     </span><span class="kw">let </span>baudrate = <span class="kw">match </span>config.baudrate {

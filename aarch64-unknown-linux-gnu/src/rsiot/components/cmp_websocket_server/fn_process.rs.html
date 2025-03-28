@@ -212,56 +212,43 @@
 <a href="#211" id="211">211</a>
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
-<a href="#214" id="214">214</a>
-<a href="#215" id="215">215</a>
-<a href="#216" id="216">216</a>
-<a href="#217" id="217">217</a>
-<a href="#218" id="218">218</a>
-<a href="#219" id="219">219</a>
-<a href="#220" id="220">220</a>
-<a href="#221" id="221">221</a></pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для подключения через websocket server.
+<a href="#214" id="214">214</a></pre></div><pre class="rust"><code><span class="doccomment">//! Компонент для подключения через websocket server.
 //!
 //! Перенаправляет поток входящих сообщений подключенным вебсокет-клиентам
 //!
 
 </span><span class="kw">use </span>std::{collections::HashMap, net::SocketAddr, sync::Arc};
 
+<span class="kw">use </span>futures::StreamExt;
 <span class="kw">use </span>futures::TryFutureExt;
-<span class="kw">use </span>futures::{
-    stream::{SplitSink, SplitStream},
-    SinkExt, StreamExt,
-};
 <span class="kw">use </span>tokio::{
     net::{TcpListener, TcpStream},
-    spawn,
     sync::{broadcast, mpsc, Mutex},
     task::JoinSet,
     time::{sleep, Duration},
 };
 <span class="kw">use </span>tokio_tungstenite::accept_async;
-<span class="kw">use </span>tokio_util::sync::CancellationToken;
 <span class="kw">use </span>tracing::{error, info, warn};
 
+<span class="kw">use </span><span class="kw">crate</span>::serde_utils::SerdeAlg;
 <span class="kw">use crate</span>::{
     components::shared_tasks,
     executor::{join_set_spawn, CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{
-    async_task_utils::cancellable_task,
     config::{Config, WebsocketMessage},
     errors::Error,
     tasks, ServerToClientCache,
 };
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService, TServerToClient, TClientToServer&gt;(
-    input: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage, TServerToClient, TClientToServer&gt;(
+    input: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TServerToClient, TClientToServer&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TServerToClient: <span class="lifetime">'static </span>+ WebsocketMessage,
     TClientToServer: <span class="lifetime">'static </span>+ WebsocketMessage,
 {
@@ -270,10 +257,8 @@
         config
     );
 
-    <span class="kw">let </span>cancel = CancellationToken::new();
-
     <span class="kw">loop </span>{
-        <span class="kw">let </span>result = task_main(input.clone(), config.clone(), cancel.clone()).<span class="kw">await</span>;
+        <span class="kw">let </span>result = task_main(input.clone(), config.clone()).<span class="kw">await</span>;
         <span class="kw">match </span>result {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
             <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">error!</span>(<span class="string">"{:?}"</span>, err),
@@ -283,14 +268,12 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMessage, TService, TServerToClient, TClientToServer&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">async fn </span>task_main&lt;TMessage, TServerToClient, TClientToServer&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TServerToClient, TClientToServer&gt;,
-    cancel: CancellationToken,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TServerToClient: <span class="lifetime">'static </span>+ WebsocketMessage,
     TClientToServer: <span class="lifetime">'static </span>+ WebsocketMessage,
 {
@@ -299,6 +282,8 @@
     <span class="kw">let </span>listener = create_tcp_listener(addr).<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="kw">let </span>cache = Arc::new(Mutex::new(HashMap::new()));
+
+    <span class="kw">let </span>serde_alg = SerdeAlg::new(config.serde_alg);
 
     <span class="kw">let </span>(ch_tx_msgbus_to_mpsc, ch_rx_msgbus_to_mpsc) = mpsc::channel(<span class="number">1000</span>);
     <span class="kw">let </span>(ch_tx_input_to_clients, ch_rx_input_to_clients) = broadcast::channel(<span class="number">1000</span>);
@@ -321,7 +306,7 @@
     </span><span class="kw">let </span>task = tasks::Input {
         input: ch_rx_msgbus_to_mpsc,
         output: ch_tx_input_to_clients,
-        fn_input: config.fn_input,
+        fn_input: config.fn_server_to_client,
         cache: cache.clone(),
     };
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
@@ -330,7 +315,7 @@
     </span><span class="kw">let </span>task = tasks::Output {
         input: ch_rx_clients_to_output,
         output: ch_tx_mpsc_to_msgbus,
-        fn_output: config.fn_output,
+        fn_output: config.fn_client_to_server,
     };
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
 
@@ -353,6 +338,7 @@
             ch_tx_clients_to_output,
             cache.clone(),
             stream_and_addr,
+            serde_alg,
         );
         join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task);
     }
@@ -365,13 +351,15 @@
     output: mpsc::Sender&lt;TClientToServer&gt;,
     cache: ServerToClientCache&lt;TServerToClient&gt;,
     stream_and_addr: (TcpStream, SocketAddr),
+    serde_alg: SerdeAlg,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TServerToClient: <span class="lifetime">'static </span>+ WebsocketMessage,
     TClientToServer: <span class="lifetime">'static </span>+ WebsocketMessage,
 {
     <span class="kw">let </span>addr = stream_and_addr.<span class="number">1</span>;
-    <span class="kw">let </span>result = _handle_ws_connection(input, output, cache.clone(), stream_and_addr).<span class="kw">await</span>;
+    <span class="kw">let </span>result =
+        _handle_ws_connection(input, output, cache.clone(), stream_and_addr, serde_alg).<span class="kw">await</span>;
     <span class="kw">match </span>result {
         <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
         <span class="prelude-val">Err</span>(err) =&gt; {
@@ -388,6 +376,7 @@
     output: mpsc::Sender&lt;TClientToServer&gt;,
     cache: ServerToClientCache&lt;TServerToClient&gt;,
     stream_and_addr: (TcpStream, SocketAddr),
+    serde_alg: SerdeAlg,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TServerToClient: <span class="lifetime">'static </span>+ WebsocketMessage,
@@ -405,6 +394,7 @@
         input: input.resubscribe(),
         websocket_write,
         cache: cache.clone(),
+        serde_alg,
     };
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
 
@@ -412,6 +402,7 @@
     </span><span class="kw">let </span>task = tasks::RcvFromClient {
         output: output.clone(),
         websocket_read,
+        serde_alg,
     };
     join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
 
@@ -431,12 +422,7 @@
 
 <span class="kw">async fn </span>create_tcp_listener(addr: String) -&gt; <span class="kw">super</span>::Result&lt;TcpListener&gt; {
     <span class="kw">let </span>listener = TcpListener::bind(<span class="kw-2">&amp;</span>addr).<span class="kw">await</span>;
-    <span class="kw">let </span>listener = <span class="kw">match </span>listener {
-        <span class="prelude-val">Ok</span>(value) =&gt; value,
-        <span class="prelude-val">Err</span>(error) =&gt; {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::BindToPort(error));
-        }
-    };
+    <span class="kw">let </span>listener = listener.map_err(Error::BindToPort)<span class="question-mark">?</span>;
     <span class="macro">info!</span>(<span class="string">"Listening on: {}"</span>, addr);
     <span class="prelude-val">Ok</span>(listener)
 }

@@ -90,12 +90,7 @@
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-<a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
+<a href="#92" id="92">92</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>surrealdb::{engine::remote::ws::Ws, opt::auth::Root, Surreal};
 <span class="kw">use </span>tokio::{sync::Mutex, task::JoinSet, time::sleep};
@@ -103,18 +98,17 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{tasks, Config, DbClient};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    input: CmpInOut&lt;TMsg, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(
+    input: CmpInOut&lt;TMsg&gt;,
     config: Config&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Starting Surrealdb"</span>);
     <span class="kw">loop </span>{
@@ -128,13 +122,9 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMsg, TService&gt;(
-    input: CmpInOut&lt;TMsg, TService&gt;,
-    config: <span class="kw-2">&amp;</span>Config&lt;TMsg&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">async fn </span>task_main&lt;TMsg&gt;(input: CmpInOut&lt;TMsg&gt;, config: <span class="kw-2">&amp;</span>Config&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>db = connect(config).<span class="kw">await</span><span class="question-mark">?</span>;
     init_script(config, db.clone()).<span class="kw">await</span><span class="question-mark">?</span>;

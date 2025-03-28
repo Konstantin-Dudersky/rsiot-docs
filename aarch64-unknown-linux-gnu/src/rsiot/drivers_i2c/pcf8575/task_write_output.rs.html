@@ -52,15 +52,13 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
-<a href="#54" id="54">54</a>
-<a href="#55" id="55">55</a>
-<a href="#56" id="56">56</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
+<a href="#54" id="54">54</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>tokio::sync::Mutex;
 
 <span class="kw">use crate</span>::{
     executor::CmpInOut,
-    message::{Message, MsgDataBound, ServiceBound},
+    message::{Message, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{
@@ -69,13 +67,12 @@
 };
 
 <span class="doccomment">/// Обработка и запись выходов
-</span><span class="kw">pub struct </span>TaskWriteOutput&lt;TMsg, TService, Driver&gt;
+</span><span class="kw">pub struct </span>TaskWriteOutput&lt;TMsg, Driver&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
     Driver: RsiotI2cDriverBase,
 {
-    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
+    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
     <span class="kw">pub </span>fn_input: <span class="kw">fn</span>(Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt;,
     <span class="kw">pub </span>state: State,
     <span class="kw">pub </span>driver: Arc&lt;Mutex&lt;Driver&gt;&gt;,
@@ -83,11 +80,10 @@
     <span class="kw">pub </span>pin: usize,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService, Driver&gt; TaskWriteOutput&lt;TMsg, TService, Driver&gt;
+<span class="kw">impl</span>&lt;TMsg, Driver&gt; TaskWriteOutput&lt;TMsg, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
         <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = <span class="self">self</span>.in_out.recv_input().<span class="kw">await </span>{

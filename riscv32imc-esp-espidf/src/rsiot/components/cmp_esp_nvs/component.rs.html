@@ -50,13 +50,12 @@
 <a href="#49" id="49">49</a>
 <a href="#50" id="50">50</a>
 <a href="#51" id="51">51</a>
-<a href="#52" id="52">52</a>
-<a href="#53" id="53">53</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
+<a href="#52" id="52">52</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>serde::{de::DeserializeOwned, Serialize};
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound, ServiceBound},
+    message::{AuthPermissions, MsgDataBound},
 };
 
 <span class="kw">use </span><span class="kw">super</span>::config::Config;
@@ -83,17 +82,16 @@
 
 <span class="attr">#[cfg(feature = <span class="string">"single-thread"</span>)]
 #[async_trait(<span class="question-mark">?</span>Send)]
-</span><span class="kw">impl</span>&lt;TMsg, TService, TStorageData&gt; IComponentProcess&lt;Config&lt;TMsg, TStorageData&gt;, TMsg, TService&gt;
-    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TStorageData&gt;, TMsg, TService&gt;
+</span><span class="kw">impl</span>&lt;TMsg, TStorageData&gt; IComponentProcess&lt;Config&lt;TMsg, TStorageData&gt;, TMsg&gt;
+    <span class="kw">for </span>Component&lt;Config&lt;TMsg, TStorageData&gt;, TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TStorageData: std::fmt::Debug + Default + DeserializeOwned + PartialEq + Serialize + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         config: Config&lt;TMsg, TStorageData&gt;,
-        in_out: CmpInOut&lt;TMsg, TService&gt;,
+        in_out: CmpInOut&lt;TMsg&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         <span class="kw">let </span>in_out = in_out.clone_with_new_id(<span class="string">"cmp_storage_esp"</span>, AuthPermissions::FullAccess);
         fn_process(in_out, config)
@@ -103,5 +101,5 @@
 }
 
 <span class="doccomment">/// Компонент cmp_storage_esp
-</span><span class="kw">pub type </span>Cmp&lt;TMsg, TService, TStorageData&gt; = Component&lt;Config&lt;TMsg, TStorageData&gt;, TMsg, TService&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMsg, TStorageData&gt; = Component&lt;Config&lt;TMsg, TStorageData&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>

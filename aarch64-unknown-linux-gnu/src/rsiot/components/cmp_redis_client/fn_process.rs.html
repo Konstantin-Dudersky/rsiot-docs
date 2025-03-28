@@ -162,12 +162,7 @@
 <a href="#161" id="161">161</a>
 <a href="#162" id="162">162</a>
 <a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::StreamExt;
+<a href="#164" id="164">164</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::StreamExt;
 <span class="kw">use </span>redis::{
     aio::{MultiplexedConnection, PubSub},
     AsyncCommands,
@@ -180,20 +175,19 @@
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{IMessageChannel, MsgDataBound, ServiceBound},
+    message::{IMessageChannel, MsgDataBound},
 };
 
 <span class="kw">use super</span>::{config::Config, error::Error};
 
 <span class="kw">type </span><span class="prelude-ty">Result</span> = std::result::Result&lt;(), Error&gt;;
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage, TMessageChannel, TService&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage, TMessageChannel&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TMessageChannel&gt;,
 ) -&gt; std::result::Result&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TMessageChannel: IMessageChannel + <span class="lifetime">'static</span>,
 {
     <span class="macro">info!</span>(<span class="string">"Initialization. Config: {:?}"</span>, config,);
@@ -210,13 +204,12 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMessage, TMessageChannel, TService&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">async fn </span>task_main&lt;TMessage, TMessageChannel&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TMessageChannel&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>
 <span class="kw">where
     </span>TMessage: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TMessageChannel: IMessageChannel + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>client = redis::Client::open(config.url.to_string())<span class="question-mark">?</span>;
@@ -242,14 +235,13 @@
 }
 
 <span class="doccomment">/// Задача публикации в канале Pub/Sub, и сохранение в кеше.
-</span><span class="kw">async fn </span>task_publication&lt;TMessage, TMessageChannel, TService&gt;(
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_publication&lt;TMessage, TMessageChannel&gt;(
+    <span class="kw-2">mut </span>input: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TMessageChannel&gt;,
     <span class="kw-2">mut </span>redis_connection: MultiplexedConnection,
 ) -&gt; <span class="prelude-ty">Result</span>
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
     TMessageChannel: IMessageChannel,
 {
     <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
@@ -270,14 +262,13 @@
 }
 
 <span class="doccomment">/// Подписка на канал Pub/Sub
-</span><span class="kw">async fn </span>task_subscription&lt;TMessage, TMessageChannel, TService&gt;(
-    output: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_subscription&lt;TMessage, TMessageChannel&gt;(
+    output: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TMessageChannel&gt;,
     <span class="kw-2">mut </span>pubsub: PubSub,
 ) -&gt; <span class="prelude-ty">Result</span>
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
     TMessageChannel: IMessageChannel,
 {
     <span class="macro">info!</span>(<span class="string">"Start redis subscription"</span>);
@@ -301,14 +292,13 @@
 }
 
 <span class="doccomment">/// Чтение данных из хеша
-</span><span class="kw">async fn </span>task_read_hash&lt;TMessage, TMessageChannel, TService&gt;(
-    in_out: CmpInOut&lt;TMessage, TService&gt;,
+</span><span class="kw">async fn </span>task_read_hash&lt;TMessage, TMessageChannel&gt;(
+    in_out: CmpInOut&lt;TMessage&gt;,
     config: Config&lt;TMessage, TMessageChannel&gt;,
     <span class="kw-2">mut </span>redis_connection: MultiplexedConnection,
 ) -&gt; <span class="prelude-ty">Result</span>
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
     TMessageChannel: IMessageChannel,
 {
     <span class="macro">info!</span>(<span class="string">"Start reading redis hash"</span>);

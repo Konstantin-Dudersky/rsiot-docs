@@ -112,8 +112,7 @@
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
+<a href="#114" id="114">114</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>esp_idf_svc::hal::{
     gpio,
@@ -130,18 +129,17 @@
 <span class="kw">use crate</span>::{
     components::shared_tasks::{filter_identical_data, mpsc_to_msgbus},
     executor::{join_set_spawn, CmpInOut},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{tasks, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService, TUart, TPeripheral, TBufferData&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TUart, TPeripheral, TBufferData&gt;(
     config: Config&lt;TMsg, TUart, TPeripheral, TBufferData&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    msg_bus: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: <span class="lifetime">'static </span>+ MsgDataBound,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TUart: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
     TPeripheral: Uart,
     TBufferData: <span class="lifetime">'static</span>,

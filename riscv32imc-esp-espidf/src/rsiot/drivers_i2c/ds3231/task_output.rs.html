@@ -85,9 +85,7 @@
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
+<a href="#87" id="87">87</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>tokio::{sync::Mutex, time::sleep};
 <span class="kw">use </span>tracing::debug;
@@ -95,7 +93,7 @@
 <span class="kw">use crate</span>::{
     drivers_i2c::{I2cSlaveAddress, RsiotI2cDriverBase},
     executor::CmpInOut,
-    message::{Message, MsgDataBound, ServiceBound},
+    message::{Message, MsgDataBound},
 };
 
 <span class="kw">use </span><span class="kw">super</span>::data_models;
@@ -116,24 +114,22 @@
     </span><span class="kw">pub </span>second: u8,
 }
 <span class="doccomment">/// Задача чтения данных с модуля
-</span><span class="kw">pub struct </span>TaskOutput&lt;TMsg, TService, Driver&gt;
+</span><span class="kw">pub struct </span>TaskOutput&lt;TMsg, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub </span>address: I2cSlaveAddress,
     <span class="kw">pub </span>period: Duration,
     <span class="kw">pub </span>driver: Arc&lt;Mutex&lt;Driver&gt;&gt;,
     <span class="kw">pub </span>fn_output: <span class="kw">fn</span>(OutputData) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;Message&lt;TMsg&gt;&gt;&gt;,
-    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
+    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService, Driver&gt; TaskOutput&lt;TMsg, TService, Driver&gt;
+<span class="kw">impl</span>&lt;TMsg, Driver&gt; TaskOutput&lt;TMsg, Driver&gt;
 <span class="kw">where
     </span>Driver: RsiotI2cDriverBase,
     TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
         <span class="kw">loop </span>{

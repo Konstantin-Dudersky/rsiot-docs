@@ -174,8 +174,7 @@
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::{
+<a href="#176" id="176">176</a></pre></div><pre class="rust"><code><span class="kw">use </span>esp_idf_svc::hal::{
     gpio::AnyIOPin,
     peripheral::Peripheral,
     spi::{config, Operation, Spi, SpiAnyPins, SpiDeviceDriver, SpiDriver, SpiDriverConfig},
@@ -192,18 +191,17 @@
     components::shared_tasks::fn_process_master::FnProcessMaster,
     components_config::spi_master,
     executor::{join_set_spawn, CmpInOut},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{config::ConfigDevicesCommSettings, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService, TSpi, TPeripheral&gt;(
+<span class="kw">pub async fn </span>fn_process&lt;TMsg, TSpi, TPeripheral&gt;(
     config: Config&lt;TMsg, TSpi, TPeripheral&gt;,
-    msg_bus: CmpInOut&lt;TMsg, TService&gt;,
+    msg_bus: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TSpi: Peripheral&lt;P = TPeripheral&gt; + <span class="lifetime">'static</span>,
     TPeripheral: Spi + SpiAnyPins + <span class="lifetime">'static</span>,
 {

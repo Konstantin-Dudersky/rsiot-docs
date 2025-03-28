@@ -103,9 +103,7 @@
 <a href="#102" id="102">102</a>
 <a href="#103" id="103">103</a>
 <a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a></pre></div><pre class="rust"><code><span class="doccomment">//! Восстановление сохраненного состояния области `static` ПЛК.
+<a href="#105" id="105">105</a></pre></div><pre class="rust"><code><span class="doccomment">//! Восстановление сохраненного состояния области `static` ПЛК.
 //!
 //! По сравнению с другими задачами, при выполнении этой задачи выполнение ПЛК приостанавливается,
 //! пока не закончится выполнение данной функции
@@ -118,7 +116,7 @@
 
 <span class="kw">use crate</span>::{
     executor::{join_set_spawn, sleep, CmpInOut},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::{
@@ -126,24 +124,22 @@
     plc::{FunctionBlockBase, IFunctionBlock},
 };
 
-<span class="kw">pub struct </span>Retention&lt;TMsg, TService, I, Q, S&gt;
+<span class="kw">pub struct </span>Retention&lt;TMsg, I, Q, S&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
     I: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     Q: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     S: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     FunctionBlockBase&lt;I, Q, S&gt;: IFunctionBlock&lt;I, Q, S&gt;,
 {
-    <span class="kw">pub </span>cmp_in_out: CmpInOut&lt;TMsg, TService&gt;,
+    <span class="kw">pub </span>cmp_in_out: CmpInOut&lt;TMsg&gt;,
     <span class="kw">pub </span>config_retention: <span class="prelude-ty">Option</span>&lt;ConfigRetention&lt;TMsg, I, Q, S&gt;&gt;,
     <span class="kw">pub </span>fb_main: FunctionBlockBase&lt;I, Q, S&gt;,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService, I, Q, S&gt; Retention&lt;TMsg, TService, I, Q, S&gt;
+<span class="kw">impl</span>&lt;TMsg, I, Q, S&gt; Retention&lt;TMsg, I, Q, S&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     I: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     Q: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,
     S: Clone + Default + Send + Serialize + <span class="lifetime">'static </span>+ Sync,

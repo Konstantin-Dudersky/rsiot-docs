@@ -69,34 +69,20 @@
 <a href="#68" id="68">68</a>
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
-<a href="#71" id="71">71</a>
-<a href="#72" id="72">72</a>
-<a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
-<a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#71" id="71">71</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>rumqttc::mqttbytes::QoS;
 <span class="kw">use </span>rumqttc::{AsyncClient, MqttOptions};
 <span class="kw">use </span>tokio::{task::JoinSet, time::sleep};
 <span class="kw">use </span>tracing::{error, info};
 
-<span class="kw">use </span><span class="kw">crate</span>::message::ServiceBound;
 <span class="kw">use crate</span>::{executor::CmpInOut, message::MsgDataBound};
 
 <span class="kw">use super</span>::{tasks, Config};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">pub async fn </span>fn_process&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">loop </span>{
         <span class="macro">info!</span>(<span class="string">"Starting"</span>);
@@ -112,13 +98,9 @@
     }
 }
 
-<span class="kw">async fn </span>main&lt;TMsg, TService&gt;(
-    config: Config&lt;TMsg&gt;,
-    in_out: CmpInOut&lt;TMsg, TService&gt;,
-) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
+<span class="kw">async fn </span>main&lt;TMsg&gt;(config: Config&lt;TMsg&gt;, in_out: CmpInOut&lt;TMsg&gt;) -&gt; <span class="kw">super</span>::Result&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>mqttoptions = MqttOptions::new(config.client_id, config.host, config.port);
     mqttoptions.set_keep_alive(Duration::from_secs(<span class="number">50000</span>)); <span class="comment">// TODO - прерывает обмен

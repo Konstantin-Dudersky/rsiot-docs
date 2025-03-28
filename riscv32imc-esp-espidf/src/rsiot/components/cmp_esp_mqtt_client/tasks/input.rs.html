@@ -53,9 +53,7 @@
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
 <a href="#54" id="54">54</a>
-<a href="#55" id="55">55</a>
-<a href="#56" id="56">56</a>
-<a href="#57" id="57">57</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+<a href="#55" id="55">55</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span>esp_idf_svc::mqtt::client::{EspAsyncMqttClient, QoS};
 <span class="kw">use </span>tokio::time::sleep;
@@ -65,23 +63,21 @@
     components::shared_mqtt_client::{create_payload_for_message, create_topic_for_message},
     components_config::mqtt_client::ConfigFnInput,
     executor::CmpInOut,
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
-<span class="kw">pub struct </span>Input&lt;TMsg, TService&gt;
+<span class="kw">pub struct </span>Input&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
-    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg, TService&gt;,
+    <span class="kw">pub </span>in_out: CmpInOut&lt;TMsg&gt;,
     <span class="kw">pub </span>config_fn_input: ConfigFnInput&lt;TMsg&gt;,
     <span class="kw">pub </span>client: EspAsyncMqttClient,
 }
 
-<span class="kw">impl</span>&lt;TMsg, TService&gt; Input&lt;TMsg, TService&gt;
+<span class="kw">impl</span>&lt;TMsg&gt; Input&lt;TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">let </span>topic = <span class="string">"rsiot/#"</span>;

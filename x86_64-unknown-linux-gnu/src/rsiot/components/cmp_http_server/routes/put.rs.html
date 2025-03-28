@@ -29,8 +29,7 @@
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
-<a href="#31" id="31">31</a>
-<a href="#32" id="32">32</a></pre></div><pre class="rust"><code><span class="kw">use </span>axum::extract;
+<a href="#31" id="31">31</a></pre></div><pre class="rust"><code><span class="kw">use </span>axum::extract;
 <span class="kw">use </span>axum::http::Uri;
 
 <span class="kw">use crate</span>::{components_config::http_server::handler_put, message::<span class="kw-2">*</span>};
@@ -38,14 +37,13 @@
 <span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::shared_state::SharedState;
 
 <span class="doccomment">/// Маршрут для ввода данных от клиента
-</span><span class="kw">pub async fn </span>put&lt;TMsg, TService&gt;(
+</span><span class="kw">pub async fn </span>put&lt;TMsg&gt;(
     uri: Uri,
-    extract::State(shared_state): extract::State&lt;SharedState&lt;TMsg, TService&gt;&gt;,
+    extract::State(shared_state): extract::State&lt;SharedState&lt;TMsg&gt;&gt;,
     body: String,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="kw">super</span>::Error&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">let </span>path = uri.path();
     <span class="kw">let </span>msg = {

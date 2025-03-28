@@ -61,67 +61,89 @@
 <a href="#60" id="60">60</a>
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
-<a href="#63" id="63">63</a></pre></div><pre class="rust"><code><span class="kw">use </span>slint::ComponentHandle;
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>futures::TryFutureExt;
+<span class="kw">use </span>slint::ComponentHandle;
 <span class="kw">use </span>tokio::{sync::mpsc, task::JoinSet};
 
 <span class="kw">use crate</span>::{
-    executor::CmpInOut,
-    message::{MsgDataBound, ServiceBound},
+    components::shared_tasks,
+    executor::{join_set_spawn, CmpInOut},
+    message::MsgDataBound,
 };
 
-<span class="kw">use super</span>::{Config, <span class="prelude-ty">Result</span>};
+<span class="kw">use super</span>::{tasks, Config, Error, <span class="prelude-ty">Result</span>};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMainWindow, TMsg, TService&gt;(
-    config: Config&lt;TMainWindow, TMsg&gt;,
-    input: CmpInOut&lt;TMsg, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMainWindow, TMsg&gt;(
+    config: Config&lt;TMsg, TMainWindow&gt;,
+    msg_bus: CmpInOut&lt;TMsg&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
     TMainWindow: ComponentHandle + <span class="lifetime">'static</span>,
 {
+    <span class="kw">let </span>(ch_tx_msgbus_to_input, ch_rx_msgbus_to_input) = mpsc::channel(<span class="number">1000</span>);
+    <span class="kw">let </span>(ch_tx_output_to_filter, ch_rx_output_to_filter) = mpsc::channel(<span class="number">1000</span>);
+    <span class="kw">let </span>(ch_tx_filter_to_msgbus, ch_rx_filter_to_msgbus) = mpsc::channel(<span class="number">1000</span>);
+
     <span class="kw">let </span><span class="kw-2">mut </span>task_set = JoinSet::new();
-    task_set.spawn(fn_input(config.clone(), input.clone()));
-    task_set.spawn(fn_output(config.clone(), input));
+
+    <span class="comment">// Перенаправление входящих сообщений
+    </span><span class="kw">let </span>task = shared_tasks::msgbus_to_mpsc::MsgBusToMpsc {
+        msg_bus: msg_bus.clone(),
+        output: ch_tx_msgbus_to_input,
+    };
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn().map_err(Error::TaskMsgBusToMpsc));
+
+    <span class="comment">// Обработка входящих сообщений и изменение данных в приложении Slint
+    </span><span class="kw">let </span>task = tasks::Input {
+        input: ch_rx_msgbus_to_input,
+        slint_window: config.slint_window.clone(),
+        fn_input: config.fn_input,
+    };
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
+
+    <span class="comment">// Создание сообщений на основе взаимодествия с приложением Slint
+    </span><span class="kw">let </span>task = tasks::Output {
+        output: ch_tx_output_to_filter,
+        slint_window: config.slint_window.clone(),
+        fn_output: config.fn_output,
+    };
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn());
+
+    <span class="comment">// Фильтрация сообещений
+    </span><span class="kw">let </span>task = shared_tasks::filter_send_periodically::FilterSendPeriodically {
+        input: ch_rx_output_to_filter,
+        output: ch_tx_filter_to_msgbus,
+        period: Duration::from_millis(<span class="number">100</span>),
+    };
+    join_set_spawn(
+        <span class="kw-2">&amp;mut </span>task_set,
+        task.spawn().map_err(Error::TaskFilterSendPeriodically),
+    );
+
+    <span class="comment">// Передача сообщений в шину сообщений
+    </span><span class="kw">let </span>task = shared_tasks::mpsc_to_msgbus::MpscToMsgBus {
+        input: ch_rx_filter_to_msgbus,
+        msg_bus: msg_bus.clone(),
+    };
+    join_set_spawn(<span class="kw-2">&amp;mut </span>task_set, task.spawn().map_err(Error::TaskMpscToMsgBus));
 
     <span class="kw">while let </span><span class="prelude-val">Some</span>(res) = task_set.join_next().<span class="kw">await </span>{
-        res.unwrap();
+        res<span class="question-mark">??</span>;
     }
-
     <span class="prelude-val">Ok</span>(())
-}
-
-<span class="kw">async fn </span>fn_input&lt;TMainWindow, TMsg, TService&gt;(
-    config: Config&lt;TMainWindow, TMsg&gt;,
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMsg, TService&gt;,
-) <span class="kw">where
-    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
-    TMainWindow: ComponentHandle,
-{
-    <span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = input.recv_input().<span class="kw">await </span>{
-        <span class="kw">let </span>lock = config.instance.lock().<span class="kw">await</span>;
-        (config.fn_input)(msg, lock);
-    }
-}
-
-<span class="kw">async fn </span>fn_output&lt;TMainWindow, TMsg, TService&gt;(
-    config: Config&lt;TMainWindow, TMsg&gt;,
-    input: CmpInOut&lt;TMsg, TService&gt;,
-) <span class="kw">where
-    </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
-    TMainWindow: ComponentHandle,
-{
-    <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = mpsc::channel(<span class="number">100</span>);
-
-    {
-        <span class="kw">let </span>lock = config.instance.lock().<span class="kw">await</span>;
-        (config.fn_output)(lock, tx);
-    }
-
-    <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = rx.recv().<span class="kw">await </span>{
-        input.send_output(msg).<span class="kw">await</span>.unwrap();
-    }
 }
 </code></pre></div></section></main></body></html>

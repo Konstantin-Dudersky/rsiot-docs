@@ -74,27 +74,24 @@
 <a href="#73" id="73">73</a>
 <a href="#74" id="74">74</a>
 <a href="#75" id="75">75</a>
-<a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a></pre></div><pre class="rust"><code><span class="kw">use </span>sqlx::{postgres::PgPoolOptions, query, Pool, Postgres};
+<a href="#76" id="76">76</a></pre></div><pre class="rust"><code><span class="kw">use </span>sqlx::{postgres::PgPoolOptions, query, Pool, Postgres};
 <span class="kw">use </span>tokio::time::{sleep, Duration};
 <span class="kw">use </span>tracing::{error, info, trace};
 <span class="kw">use </span>url::Url;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, ComponentError},
-    message::{MsgDataBound, ServiceBound},
+    message::MsgDataBound,
 };
 
 <span class="kw">use super</span>::{config::Config, error::Error, model::Row};
 
-<span class="kw">pub async fn </span>fn_process&lt;TMessage, TService&gt;(
-    <span class="kw-2">mut </span>input: CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">pub async fn </span>fn_process&lt;TMessage&gt;(
+    <span class="kw-2">mut </span>input: CmpInOut&lt;TMessage&gt;,
     config: Config,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="macro">info!</span>(<span class="string">"Start timescaledb-storing"</span>);
 
@@ -109,13 +106,12 @@
     }
 }
 
-<span class="kw">async fn </span>task_main&lt;TMessage, TService&gt;(
-    input: <span class="kw-2">&amp;mut </span>CmpInOut&lt;TMessage, TService&gt;,
+<span class="kw">async fn </span>task_main&lt;TMessage&gt;(
+    input: <span class="kw-2">&amp;mut </span>CmpInOut&lt;TMessage&gt;,
     connection_string: <span class="kw-2">&amp;</span>Url,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;
 <span class="kw">where
     </span>TMessage: MsgDataBound,
-    TService: ServiceBound,
 {
     <span class="kw">let </span>pool = PgPoolOptions::new()
         .max_connections(<span class="number">5</span>)

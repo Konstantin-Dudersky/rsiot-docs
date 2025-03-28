@@ -34,9 +34,7 @@
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
 <a href="#35" id="35">35</a>
-<a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a>
-<a href="#38" id="38">38</a></pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
+<a href="#36" id="36">36</a></pre></div><pre class="rust"><code><span class="kw">use </span>leptos::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>reactive_stores::Store;
 <span class="kw">use </span>tokio::sync::mpsc;
 
@@ -45,11 +43,9 @@
 <span class="kw">use </span><span class="kw">super</span>::StoreBound;
 
 <span class="doccomment">/// Конфигурация компонента cmp_leptos
-</span><span class="kw">pub struct </span>Config&lt;TMsg, TView, TIntoView, TInputStore, TOutputStore&gt;
+</span><span class="kw">pub struct </span>Config&lt;TMsg, TInputStore, TOutputStore&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound,
-    TView: Fn() -&gt; TIntoView,
-    TIntoView: IntoView,
     TInputStore: StoreBound,
     TOutputStore: StoreBound,
 {
@@ -60,7 +56,7 @@
     /// ```rust
     /// body_component: || view! { &lt;App/&gt; }
     /// ```
-    </span><span class="kw">pub </span>body_component: TView,
+    </span><span class="kw">pub </span>body_component: <span class="kw">fn</span>() -&gt; AnyView,
 
     <span class="doccomment">/// Значения по-умолчанию глобального хранилища входных данных
     </span><span class="kw">pub </span>input_store: TInputStore,

@@ -33,21 +33,17 @@
 <a href="#32" id="32">32</a>
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
-<a href="#35" id="35">35</a>
-<a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a></pre></div><pre class="rust"><code><span class="comment">// Рассмотреть возможность замены на бинарный протокол
-
-</span><span class="kw">use </span>futures::{stream::SplitStream, StreamExt};
-<span class="kw">use </span>serde_json::from_str;
+<a href="#35" id="35">35</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::{stream::SplitStream, StreamExt};
 <span class="kw">use </span>tokio::{net::TcpStream, sync::mpsc};
 <span class="kw">use </span>tokio_tungstenite::WebSocketStream;
 <span class="kw">use </span>tracing::{debug, trace};
 
-<span class="kw">use </span><span class="kw">crate</span>::components_config::websocket_server::WebsocketMessage;
+<span class="kw">use crate</span>::{components_config::websocket_server::WebsocketMessage, serde_utils::SerdeAlg};
 
 <span class="kw">pub struct </span>RcvFromClient&lt;TClientToServer&gt; {
     <span class="kw">pub </span>output: mpsc::Sender&lt;TClientToServer&gt;,
     <span class="kw">pub </span>websocket_read: SplitStream&lt;WebSocketStream&lt;TcpStream&gt;&gt;,
+    <span class="kw">pub </span>serde_alg: SerdeAlg,
 }
 
 <span class="kw">impl</span>&lt;TClientToServer&gt; RcvFromClient&lt;TClientToServer&gt;
@@ -56,12 +52,12 @@
 {
     <span class="kw">pub async fn </span>spawn(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">super</span>::Result&lt;()&gt; {
         <span class="kw">while let </span><span class="prelude-val">Some</span>(data) = <span class="self">self</span>.websocket_read.next().<span class="kw">await </span>{
-            <span class="kw">let </span>data = data<span class="question-mark">?</span>.into_text()<span class="question-mark">?</span>;
+            <span class="kw">let </span>data = data<span class="question-mark">?</span>.into_data();
             <span class="kw">if </span>data.is_empty() {
                 <span class="kw">break</span>;
             }
 
-            <span class="kw">let </span>c2s: TClientToServer = from_str(<span class="kw-2">&amp;</span>data)<span class="question-mark">?</span>;
+            <span class="kw">let </span>c2s: TClientToServer = <span class="self">self</span>.serde_alg.deserialize(<span class="kw-2">&amp;</span>data)<span class="question-mark">?</span>;
             <span class="macro">trace!</span>(<span class="string">"New message from websocket client: {:?}"</span>, c2s);
             <span class="self">self</span>.output
                 .send(c2s)

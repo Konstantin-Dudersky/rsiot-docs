@@ -22,14 +22,13 @@
 <a href="#21" id="21">21</a>
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
-<a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::{stream::SplitStream, StreamExt};
+<a href="#24" id="24">24</a></pre></div><pre class="rust"><code><span class="kw">use </span>futures::{stream::SplitStream, StreamExt};
 <span class="kw">use </span>tokio::{net::TcpStream, sync::mpsc};
 <span class="kw">use </span>tokio_tungstenite::{MaybeTlsStream, WebSocketStream};
 
 <span class="kw">pub struct </span>Receive {
     <span class="kw">pub </span>websocket_read: SplitStream&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;&gt;,
-    <span class="kw">pub </span>output: mpsc::Sender&lt;String&gt;,
+    <span class="kw">pub </span>output: mpsc::Sender&lt;Vec&lt;u8&gt;&gt;,
 }
 
 <span class="kw">impl </span>Receive {
@@ -37,8 +36,7 @@
         <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = <span class="self">self</span>.websocket_read.next().<span class="kw">await </span>{
             <span class="kw">let </span>data = msg
                 .map_err(|e| <span class="kw">super</span>::Error::TaskReceive(e.to_string()))<span class="question-mark">?
-                </span>.into_text()
-                .map_err(|e| <span class="kw">super</span>::Error::TaskReceive(e.to_string()))<span class="question-mark">?</span>;
+                </span>.into_data();
 
             <span class="self">self</span>.output
                 .send(data)

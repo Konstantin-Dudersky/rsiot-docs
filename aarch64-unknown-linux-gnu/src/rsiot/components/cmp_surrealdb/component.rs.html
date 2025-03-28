@@ -29,29 +29,25 @@
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
-<a href="#31" id="31">31</a>
-<a href="#32" id="32">32</a>
-<a href="#33" id="33">33</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
+<a href="#31" id="31">31</a></pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
 
 <span class="kw">use crate</span>::{
     executor::{CmpInOut, Component, ComponentError, IComponentProcess},
-    message::{AuthPermissions, MsgDataBound, ServiceBound},
+    message::{AuthPermissions, MsgDataBound},
 };
 
 <span class="kw">use </span><span class="kw">super</span>::fn_process::fn_process;
 
 <span class="attr">#[cfg_attr(feature = <span class="string">"single-thread"</span>, async_trait(<span class="question-mark">?</span>Send))]
 #[cfg_attr(not(feature = <span class="string">"single-thread"</span>), async_trait)]
-</span><span class="kw">impl</span>&lt;TMsg, TService&gt; IComponentProcess&lt;<span class="kw">super</span>::Config&lt;TMsg&gt;, TMsg, TService&gt;
-    <span class="kw">for </span>Component&lt;<span class="kw">super</span>::Config&lt;TMsg&gt;, TMsg, TService&gt;
+</span><span class="kw">impl</span>&lt;TMsg&gt; IComponentProcess&lt;<span class="kw">super</span>::Config&lt;TMsg&gt;, TMsg&gt; <span class="kw">for </span>Component&lt;<span class="kw">super</span>::Config&lt;TMsg&gt;, TMsg&gt;
 <span class="kw">where
     </span>TMsg: MsgDataBound + <span class="lifetime">'static</span>,
-    TService: ServiceBound + <span class="lifetime">'static</span>,
 {
     <span class="kw">async fn </span>process(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         config: <span class="kw">super</span>::Config&lt;TMsg&gt;,
-        input: CmpInOut&lt;TMsg, TService&gt;,
+        input: CmpInOut&lt;TMsg&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ComponentError&gt; {
         fn_process(
             input.clone_with_new_id(<span class="string">"cmp_surrealdb"</span>, AuthPermissions::FullAccess),
@@ -63,5 +59,5 @@
 }
 
 <span class="doccomment">/// Компонент cmp_surrealdb
-</span><span class="kw">pub type </span>Cmp&lt;TMsg, TService&gt; = Component&lt;<span class="kw">super</span>::Config&lt;TMsg&gt;, TMsg, TService&gt;;
+</span><span class="kw">pub type </span>Cmp&lt;TMsg&gt; = Component&lt;<span class="kw">super</span>::Config&lt;TMsg&gt;, TMsg&gt;;
 </code></pre></div></section></main></body></html>
