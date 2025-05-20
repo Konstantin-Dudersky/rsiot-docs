@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Operation"],"struct":["FieldbusRequest","FieldbusResponse"]};
+window.SIDEBAR_ITEMS = {"enum":["ConfigDeviceSpiMode","Operation"],"struct":["FieldbusRequest","FieldbusResponse"]};

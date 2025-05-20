@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["aarch64_linux_android","aarch64_unknown_linux_gnu","armv7_linux_androideabi","i686_linux_android","riscv32imc_esp_espidf","wasm32_unknown_unknown","x8664_linux_android","x8664_unknown_linux_gnu"]};
+window.SIDEBAR_ITEMS = {"mod":["aarch64_linux_android","aarch64_unknown_linux_gnu","armv7_linux_androideabi","armv7_unknown_linux_gnueabihf","i686_linux_android","riscv32imc_esp_espidf","wasm32_unknown_unknown","x8664_linux_android","x8664_unknown_linux_gnu"]};
