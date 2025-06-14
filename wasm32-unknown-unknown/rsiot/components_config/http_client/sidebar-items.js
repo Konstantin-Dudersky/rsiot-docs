@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["HttpParam"],"struct":["Config","RequestInput","RequestPeriodic"],"type":["CbkOnFailure","CbkOnSuccess"]};
+window.SIDEBAR_ITEMS = {"enum":["RequestKind"],"struct":["Config","RequestInputConfig","RequestPeriodicConfig"],"trait":["RequestInput","RequestPeriodic"]};

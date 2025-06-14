@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Baudrate","DataBits","Parity","StopBits"],"fn":["calculate_transmission_time","data_rate"],"struct":["UartRequest","UartResponse"]};
+window.SIDEBAR_ITEMS = {"enum":["Baudrate","DataBits","Parity","StopBits"],"fn":["calculate_transmission_time","data_rate"],"mod":["protocol"],"struct":["FieldbusRequest","FieldbusResponse"]};

@@ -6,10 +6,10 @@
 <a href=#6 id=6 data-nosnippet>6</a>};
 <a href=#7 id=7 data-nosnippet>7</a>
 <a href=#8 id=8 data-nosnippet>8</a><span class="doccomment">/// Преобразование входящих сообщений в текст для отправки на сервер
-<a href=#9 id=9 data-nosnippet>9</a></span><span class="kw">pub type </span>FnClientToServer&lt;TMsg, TClientToServer&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>Message&lt;TMsg&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;TClientToServer&gt;;
+<a href=#9 id=9 data-nosnippet>9</a></span><span class="kw">pub type </span>FnClientToServer&lt;TMsg, TClientToServer&gt; = <span class="kw">fn</span>(<span class="kw-2">&amp;</span>TMsg) -&gt; <span class="prelude-ty">Option</span>&lt;TClientToServer&gt;;
 <a href=#10 id=10 data-nosnippet>10</a>
 <a href=#11 id=11 data-nosnippet>11</a><span class="doccomment">/// Преобразование полученного от сервера текста в исходящие сообщения
-<a href=#12 id=12 data-nosnippet>12</a></span><span class="kw">pub type </span>FnServerToClient&lt;TMsg, TServerToClient&gt; = <span class="kw">fn</span>(TServerToClient) -&gt; Vec&lt;Message&lt;TMsg&gt;&gt;;
+<a href=#12 id=12 data-nosnippet>12</a></span><span class="kw">pub type </span>FnServerToClient&lt;TMsg, TServerToClient&gt; = <span class="kw">fn</span>(TServerToClient) -&gt; Vec&lt;TMsg&gt;;
 <a href=#13 id=13 data-nosnippet>13</a>
 <a href=#14 id=14 data-nosnippet>14</a><span class="doccomment">/// Настройки Websocket-клиента
 <a href=#15 id=15 data-nosnippet>15</a></span><span class="attr">#[derive(Clone, Debug)]

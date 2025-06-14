@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Algs","Error"],"struct":["Config"],"trait":["IntMsgBound"],"type":["Cmp"]};

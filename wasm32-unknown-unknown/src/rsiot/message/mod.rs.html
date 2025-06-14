@@ -1,81 +1,35 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/message/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-46132b98.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.85.0 (4d91de4e4 2025-02-17)" data-channel="1.85.0" data-search-js="search-75f5ac3e.js" data-settings-js="settings-0f613d39.js" ><script src="../../../static.files/storage-59e33391.js"></script><script defer src="../../../static.files/src-script-56102188.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/message/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
-<a href="#1" id="1">1</a>
-<a href="#2" id="2">2</a>
-<a href="#3" id="3">3</a>
-<a href="#4" id="4">4</a>
-<a href="#5" id="5">5</a>
-<a href="#6" id="6">6</a>
-<a href="#7" id="7">7</a>
-<a href="#8" id="8">8</a>
-<a href="#9" id="9">9</a>
-<a href="#10" id="10">10</a>
-<a href="#11" id="11">11</a>
-<a href="#12" id="12">12</a>
-<a href="#13" id="13">13</a>
-<a href="#14" id="14">14</a>
-<a href="#15" id="15">15</a>
-<a href="#16" id="16">16</a>
-<a href="#17" id="17">17</a>
-<a href="#18" id="18">18</a>
-<a href="#19" id="19">19</a>
-<a href="#20" id="20">20</a>
-<a href="#21" id="21">21</a>
-<a href="#22" id="22">22</a>
-<a href="#23" id="23">23</a>
-<a href="#24" id="24">24</a>
-<a href="#25" id="25">25</a>
-<a href="#26" id="26">26</a>
-<a href="#27" id="27">27</a>
-<a href="#28" id="28">28</a>
-<a href="#29" id="29">29</a>
-<a href="#30" id="30">30</a>
-<a href="#31" id="31">31</a>
-<a href="#32" id="32">32</a>
-<a href="#33" id="33">33</a>
-<a href="#34" id="34">34</a>
-<a href="#35" id="35">35</a>
-<a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a>
-<a href="#38" id="38">38</a>
-<a href="#39" id="39">39</a>
-<a href="#40" id="40">40</a></pre></div><pre class="rust"><code><span class="doccomment">//! Представление сообщений в системе.
-//!
-//! Сообщения представлены типом перечисления (enum). Данные вложены в варианты перечисления.
-
-</span><span class="kw">mod </span>auth_roles;
-<span class="kw">mod </span>error;
-<span class="kw">pub mod </span>example_message;
-<span class="kw">mod </span>example_message_channel;
-<span class="kw">mod </span>message;
-<span class="kw">mod </span>message_channel;
-<span class="kw">mod </span>msg_data;
-<span class="kw">mod </span>msg_data_bound;
-<span class="kw">mod </span>msg_key;
-<span class="kw">mod </span>msg_serde;
-<span class="kw">mod </span>msg_trace;
-<span class="kw">mod </span>phy_quantity;
-<span class="kw">pub mod </span>system_messages;
-<span class="kw">mod </span>time_to_live;
-<span class="kw">mod </span>timestamp;
-
-<span class="doccomment">/// Пока эти модули не нужны, в будущем скорее всего можно удалить
-</span><span class="kw">pub mod </span>eav;
-<span class="attr">#[allow(unused_imports)]
-</span><span class="kw">mod </span>eav_helpers;
-
-<span class="kw">pub use </span>auth_roles::AuthPermissions;
-<span class="kw">pub use </span>error::Error;
-<span class="kw">pub use </span>example_message_channel::ExampleMessageChannel;
-<span class="kw">pub use </span>message::Message;
-<span class="kw">pub use </span>message_channel::IMessageChannel;
-<span class="kw">pub use </span>msg_data::MsgData;
-<span class="kw">pub use </span>msg_data_bound::{MsgDataBound, MsgRoute};
-<span class="kw">pub use </span>msg_key::MsgKey;
-<span class="kw">pub use </span>msg_trace::MsgTrace;
-<span class="kw">pub use </span>phy_quantity::PhyQuantity;
-<span class="kw">pub use </span>strum::EnumString;
-<span class="kw">pub use </span>time_to_live::TimeToLiveValue;
-<span class="kw">pub use </span>timestamp::Timestamp;
-
-<span class="kw">pub use </span>serde::{Deserialize, Serialize};
-</code></pre></div></section></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/message/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0 (17067e9ac 2025-05-09)" data-channel="1.87.0" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../static.files/storage-82c7156e.js"></script><script defer src="../../../static.files/src-script-63605ae7.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-fb8c74a8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rsiot/message/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-2"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! Представление сообщений в системе.
+<a href=#2 id=2 data-nosnippet>2</a>//!
+<a href=#3 id=3 data-nosnippet>3</a>//! Сообщения представлены типом перечисления (enum). Данные вложены в варианты перечисления.
+<a href=#4 id=4 data-nosnippet>4</a>
+<a href=#5 id=5 data-nosnippet>5</a></span><span class="kw">mod </span>auth_roles;
+<a href=#6 id=6 data-nosnippet>6</a><span class="kw">mod </span>error;
+<a href=#7 id=7 data-nosnippet>7</a><span class="kw">pub mod </span>example_message;
+<a href=#8 id=8 data-nosnippet>8</a><span class="kw">mod </span>example_message_channel;
+<a href=#9 id=9 data-nosnippet>9</a><span class="kw">mod </span>message;
+<a href=#10 id=10 data-nosnippet>10</a><span class="kw">mod </span>message_channel;
+<a href=#11 id=11 data-nosnippet>11</a><span class="kw">mod </span>msg_data;
+<a href=#12 id=12 data-nosnippet>12</a><span class="kw">mod </span>msg_data_bound;
+<a href=#13 id=13 data-nosnippet>13</a><span class="kw">mod </span>msg_key;
+<a href=#14 id=14 data-nosnippet>14</a><span class="kw">mod </span>msg_serde;
+<a href=#15 id=15 data-nosnippet>15</a><span class="kw">mod </span>msg_trace;
+<a href=#16 id=16 data-nosnippet>16</a><span class="kw">mod </span>phy_quantity;
+<a href=#17 id=17 data-nosnippet>17</a><span class="kw">pub mod </span>system_messages;
+<a href=#18 id=18 data-nosnippet>18</a><span class="kw">mod </span>time_to_live;
+<a href=#19 id=19 data-nosnippet>19</a><span class="kw">mod </span>timestamp;
+<a href=#20 id=20 data-nosnippet>20</a>
+<a href=#21 id=21 data-nosnippet>21</a><span class="kw">pub use </span>auth_roles::AuthPermissions;
+<a href=#22 id=22 data-nosnippet>22</a><span class="kw">pub use </span>error::Error;
+<a href=#23 id=23 data-nosnippet>23</a><span class="kw">pub use </span>example_message_channel::ExampleMessageChannel;
+<a href=#24 id=24 data-nosnippet>24</a><span class="kw">pub use </span>message::Message;
+<a href=#25 id=25 data-nosnippet>25</a><span class="kw">pub use </span>message_channel::IMessageChannel;
+<a href=#26 id=26 data-nosnippet>26</a><span class="kw">pub use </span>msg_data::MsgData;
+<a href=#27 id=27 data-nosnippet>27</a><span class="kw">pub use </span>msg_data_bound::{MsgDataBound, MsgRoute};
+<a href=#28 id=28 data-nosnippet>28</a><span class="kw">pub use </span>msg_key::MsgKey;
+<a href=#29 id=29 data-nosnippet>29</a><span class="kw">pub use </span>msg_trace::MsgTrace;
+<a href=#30 id=30 data-nosnippet>30</a><span class="kw">pub use </span>phy_quantity::PhyQuantity;
+<a href=#31 id=31 data-nosnippet>31</a><span class="kw">pub use </span>strum::EnumString;
+<a href=#32 id=32 data-nosnippet>32</a><span class="kw">pub use </span>time_to_live::TimeToLiveValue;
+<a href=#33 id=33 data-nosnippet>33</a><span class="kw">pub use </span>timestamp::Timestamp;
+<a href=#34 id=34 data-nosnippet>34</a>
+<a href=#35 id=35 data-nosnippet>35</a><span class="kw">pub use </span>serde::{Deserialize, Serialize};</code></pre></div></section></main></body></html>

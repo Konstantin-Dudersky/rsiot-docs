@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["SvgDynamic"],"struct":["SvgInput","SvgOutput"]};
+window.SIDEBAR_ITEMS = {"enum":["Error"],"fn":["SvgDynamic"],"struct":["SvgInput","SvgOutput"]};
