@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["rsiot",[["impl&lt;'a, R: Row&gt; FromRow&lt;'a, R&gt; for <a class=\"struct\" href=\"rsiot/components/cmp_timescaledb/struct.Row.html\" title=\"struct rsiot::components::cmp_timescaledb::Row\">Row</a><div class=\"where\">where\n    &amp;'a <a class=\"primitive\" href=\"https://doc.rust-lang.org/1.88.0/std/primitive.str.html\">str</a>: ColumnIndex&lt;R&gt;,\n    OffsetDateTime: Decode&lt;'a, R::Database&gt; + Type&lt;R::Database&gt;,\n    <a class=\"struct\" href=\"https://doc.rust-lang.org/1.88.0/alloc/string/struct.String.html\" title=\"struct alloc::string::String\">String</a>: Decode&lt;'a, R::Database&gt; + Type&lt;R::Database&gt;,\n    <a class=\"primitive\" href=\"https://doc.rust-lang.org/1.88.0/std/primitive.f64.html\">f64</a>: Decode&lt;'a, R::Database&gt; + Type&lt;R::Database&gt;,\n    <a class=\"enum\" href=\"rsiot/components/cmp_timescaledb/enum.AggType.html\" title=\"enum rsiot::components::cmp_timescaledb::AggType\">AggType</a>: Decode&lt;'a, R::Database&gt; + Type&lt;R::Database&gt;,\n    <a class=\"enum\" href=\"https://doc.rust-lang.org/1.88.0/core/option/enum.Option.html\" title=\"enum core::option::Option\">Option</a>&lt;OffsetDateTime&gt;: Decode&lt;'a, R::Database&gt; + Type&lt;R::Database&gt;,\n    <a class=\"struct\" href=\"https://doc.rust-lang.org/1.88.0/alloc/vec/struct.Vec.html\" title=\"struct alloc::vec::Vec\">Vec</a>&lt;<a class=\"enum\" href=\"rsiot/components/cmp_timescaledb/enum.AggType.html\" title=\"enum rsiot::components::cmp_timescaledb::AggType\">AggType</a>&gt;: Decode&lt;'a, R::Database&gt; + Type&lt;R::Database&gt;,</div>"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[1595]}

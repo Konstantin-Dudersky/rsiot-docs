@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="TimescaleDB"><title>rsiot::doc::external_services::timescaledb - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0 (17067e9ac 2025-05-09)" data-channel="1.87.0" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../../static.files/storage-82c7156e.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../../static.files/main-fb8c74a8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../../rsiot/index.html">rsiot</a><span class="version">0.0.83</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module timescaledb</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#docker" title="docker">docker</a></li><li><a href="#postgresqlconf" title="`postgresql.conf`"><code>postgresql.conf</code></a></li><li><a href="#pg_hbaconf" title="`pg_hba.conf`"><code>pg_hba.conf</code></a></li><li><a href="#initsql" title="`init.sql`"><code>init.sql</code></a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>doc::<wbr>external_<wbr>services</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../../index.html">rsiot</a>::<wbr><a href="../../index.html">doc</a>::<wbr><a href="../index.html">external_services</a></div><h1>Module <span>timescaledb</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../../src/rsiot/doc/external_services/timescaledb/mod.rs.html#1-25">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>TimescaleDB</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="TimescaleDB"><title>rsiot::doc::external_services::timescaledb - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0 (6b00bc388 2025-06-23)" data-channel="1.88.0" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../../../static.files/storage-4e99c027.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../../rsiot/index.html">rsiot</a><span class="version">0.0.83</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module timescaledb</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#docker" title="docker">docker</a></li><li><a href="#postgresqlconf" title="`postgresql.conf`"><code>postgresql.conf</code></a></li><li><a href="#pg_hbaconf" title="`pg_hba.conf`"><code>pg_hba.conf</code></a></li><li><a href="#initsql" title="`init.sql`"><code>init.sql</code></a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>doc::<wbr>external_<wbr>services</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../../index.html">rsiot</a>::<wbr><a href="../../index.html">doc</a>::<wbr><a href="../index.html">external_services</a></div><h1>Module <span>timescaledb</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../../src/rsiot/doc/external_services/timescaledb/mod.rs.html#1-25">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>TimescaleDB</p>
 <h3 id="docker"><a class="doc-anchor" href="#docker">§</a>docker</h3><div class="example-wrap"><pre class="language-yml"><code>services:
   timescaledb:
     command: postgres
@@ -33,7 +33,8 @@
 networks:
   network_internal:</code></pre></div><h3 id="postgresqlconf"><a class="doc-anchor" href="#postgresqlconf">§</a><code>postgresql.conf</code></h3>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code>listen_addresses = <span class="string">'*'
-</span>max_locks_per_transaction = <span class="number">10000</span></code></pre></div>
+</span>max_locks_per_transaction = <span class="number">10000
+</span>shared_preload_libraries = <span class="string">'timescaledb'</span></code></pre></div>
 <h3 id="pg_hbaconf"><a class="doc-anchor" href="#pg_hbaconf">§</a><code>pg_hba.conf</code></h3>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code>local all all trust
 host all all <span class="number">0.0</span>.<span class="number">0.0</span>/<span class="number">0 </span>trust</code></pre></div>
@@ -44,36 +45,37 @@ CREATE DATABASE db_data;
 CREATE EXTENSION IF NOT EXISTS timescaledb;
 
 -- enum agg_type
-CREATE TYPE agg_type AS ENUM (
-    &#39;curr&#39;,
-    &#39;first&#39;,
-    &#39;inc&#39;,
-    &#39;sum&#39;,
-    &#39;mean&#39;,
-    &#39;min&#39;,
-    &#39;max&#39;
+CREATE TYPE AggType AS ENUM (
+    &#39;Curr&#39;,
+    &#39;First&#39;,
+    &#39;Inc&#39;,
+    &#39;Sum&#39;,
+    &#39;Mean&#39;,
+    &#39;Min&#39;,
+    &#39;Max&#39;,
+    &#39;Count&#39;
 );
 
 -- table raw
 CREATE TABLE raw (
-    ts          TIMESTAMPTZ         NOT NULL,
+    time        TIMESTAMPTZ         NOT NULL,
     entity      TEXT                NOT NULL,
     attr        TEXT                NOT NULL,
     value       DOUBLE PRECISION    NULL,
-    agg         AGG_TYPE            NOT NULL,
+    agg         AggType             NOT NULL,
     aggts       TIMESTAMPTZ         NULL,
-    aggnext     AGG_TYPE[]          NULL,
-    UNIQUE (ts, entity, attr, agg)
+    aggnext     AggType[]           NULL,
+    UNIQUE (time, entity, attr, agg)
 );
 SELECT create_hypertable(
-    &#39;raw&#39;, &#39;ts&#39;,
+    &#39;raw&#39;, &#39;time&#39;,
     chunk_time_interval =&gt; INTERVAL &#39;24 hours&#39;
 );
 ALTER TABLE raw SET (
-    timescaledb.compress, 
+    timescaledb.compress,
     timescaledb.compress_segmentby=&#39;entity, attr, agg&#39;
 );
-SELECT add_compression_policy(&#39;raw&#39;, INTERVAL &#39;100000 hours&#39;);
+SELECT add_compression_policy(&#39;raw&#39;, INTERVAL &#39;24 hours&#39;);
 
 -- agg_30min
 CREATE TABLE agg_30min (LIKE raw);

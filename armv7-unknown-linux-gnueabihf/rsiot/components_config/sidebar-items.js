@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["http_client","http_general","master_device","spi_master","uart_general","websocket_general"]};
+window.SIDEBAR_ITEMS = {"mod":["http_client","http_general","i2c_master","master_device","spi_master","uart_general","websocket_general"]};
