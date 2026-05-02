@@ -3,23 +3,34 @@
 <a href=#3 id=3 data-nosnippet>3</a>//! # Структура
 <a href=#4 id=4 data-nosnippet>4</a>//!
 <a href=#5 id=5 data-nosnippet>5</a></span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"../../../doc/images/component_structure/cmp_inject_periodic.svg"</span>)]
-<a href=#6 id=6 data-nosnippet>6</a></span><span class="comment">// #![cfg_attr(feature = "rustdoc",
-<a href=#7 id=7 data-nosnippet>7</a>// cfg_attr(all(),
-<a href=#8 id=8 data-nosnippet>8</a>// doc = ::embed_doc_image::embed_image!("myimagelabel", "doc/images/component_structure/cmp_inject_periodic.png")))]
-<a href=#9 id=9 data-nosnippet>9</a>// #![cfg_attr(
-<a href=#10 id=10 data-nosnippet>10</a>//     not(feature = "rustdoc"),
-<a href=#11 id=11 data-nosnippet>11</a>//     doc = "**Doc images not enabled**. Compile with feature `doc-images` and Rust version &gt;= 1.54 \
-<a href=#12 id=12 data-nosnippet>12</a>//            to enable."
-<a href=#13 id=13 data-nosnippet>13</a>// )]
-<a href=#14 id=14 data-nosnippet>14</a>
-<a href=#15 id=15 data-nosnippet>15</a></span><span class="kw">mod </span>component;
-<a href=#16 id=16 data-nosnippet>16</a><span class="kw">mod </span>config;
-<a href=#17 id=17 data-nosnippet>17</a><span class="kw">mod </span>error;
-<a href=#18 id=18 data-nosnippet>18</a><span class="kw">mod </span>fn_process;
-<a href=#19 id=19 data-nosnippet>19</a>
-<a href=#20 id=20 data-nosnippet>20</a><span class="kw">pub use </span>{
-<a href=#21 id=21 data-nosnippet>21</a>    component::{COMPONENT_NAME, Cmp},
-<a href=#22 id=22 data-nosnippet>22</a>    config::Config,
-<a href=#23 id=23 data-nosnippet>23</a>    error::Error,
-<a href=#24 id=24 data-nosnippet>24</a>};
+<a href=#6 id=6 data-nosnippet>6</a></span><span class="doccomment">//!
+<a href=#7 id=7 data-nosnippet>7</a>//! Компонент состоит из одной задачи InjectPeriodic. С периодом [Config::period] на основе функции
+<a href=#8 id=8 data-nosnippet>8</a>//! [Config::fn_periodic] формируются исходящие сообщения и передаются в шину MsgBus.
+<a href=#9 id=9 data-nosnippet>9</a>//!
+<a href=#10 id=10 data-nosnippet>10</a>//! # Конфигурация
+<a href=#11 id=11 data-nosnippet>11</a>//!
+<a href=#12 id=12 data-nosnippet>12</a>//! Конфигурация задаётся структурой [Config].
+<a href=#13 id=13 data-nosnippet>13</a>//!
+<a href=#14 id=14 data-nosnippet>14</a>//! # Примеры
+<a href=#15 id=15 data-nosnippet>15</a>//!
+<a href=#16 id=16 data-nosnippet>16</a>//! ## Пример 1
+<a href=#17 id=17 data-nosnippet>17</a>//!
+<a href=#18 id=18 data-nosnippet>18</a>//! Счётчик увеличивается каждые 100 миллисекунд и отправляется в шину MsgBus.
+<a href=#19 id=19 data-nosnippet>19</a>//!
+<a href=#20 id=20 data-nosnippet>20</a>//! Содержимое файла `config_inject_periodic/mod.rs`:
+<a href=#21 id=21 data-nosnippet>21</a>//!
+<a href=#22 id=22 data-nosnippet>22</a>//! ```rust
+<a href=#23 id=23 data-nosnippet>23</a></span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"../../../examples/cmp_inject_periodic/config_inject_periodic.rs"</span>)]
+<a href=#24 id=24 data-nosnippet>24</a></span><span class="doccomment">//! ```
+<a href=#25 id=25 data-nosnippet>25</a>
+<a href=#26 id=26 data-nosnippet>26</a></span><span class="kw">mod </span>component;
+<a href=#27 id=27 data-nosnippet>27</a><span class="kw">mod </span>config;
+<a href=#28 id=28 data-nosnippet>28</a><span class="kw">mod </span>error;
+<a href=#29 id=29 data-nosnippet>29</a><span class="kw">mod </span>fn_process;
+<a href=#30 id=30 data-nosnippet>30</a>
+<a href=#31 id=31 data-nosnippet>31</a><span class="kw">pub use </span>{
+<a href=#32 id=32 data-nosnippet>32</a>    component::{COMPONENT_NAME, Cmp},
+<a href=#33 id=33 data-nosnippet>33</a>    config::Config,
+<a href=#34 id=34 data-nosnippet>34</a>    error::Error,
+<a href=#35 id=35 data-nosnippet>35</a>};
 </code></pre></div></section></main></body></html>
