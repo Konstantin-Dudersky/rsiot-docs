@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ComponentError"],"fn":["join_set_spawn","sleep"],"struct":["Cache","CmpInOut","Component","ComponentExecutor","ComponentExecutorConfig"],"trait":["CheckCapacity","IComponentProcess"],"type":["CmpResult"]};
+window.SIDEBAR_ITEMS = {"enum":["ComponentError"],"fn":["join_set_spawn","join_set_spawn_blocking","sleep"],"struct":["Cache","Component","ComponentExecutor","ComponentExecutorConfig","Instant","MsgBusInput","MsgBusLinker","MsgBusOutput","TokioRuntimeMetrics"],"trait":["CheckCapacity","IComponentProcess"],"type":["CmpResult"]};

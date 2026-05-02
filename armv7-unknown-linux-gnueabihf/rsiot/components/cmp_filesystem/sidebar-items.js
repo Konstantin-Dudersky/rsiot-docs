@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CallFnOutputKind","Error"],"struct":["Config"],"trait":["BufferBound"],"type":["Cmp"]};

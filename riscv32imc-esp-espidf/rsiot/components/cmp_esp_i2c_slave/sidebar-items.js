@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Config"],"trait":["BufferData"],"type":["Cmp","FnI2cComm","FnInput","FnOutput"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["Error"],"struct":["Config"],"trait":["BufferData"],"type":["Cmp","FnI2cComm","FnInput","FnOutput"]};

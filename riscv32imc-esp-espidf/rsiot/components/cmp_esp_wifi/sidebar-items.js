@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ConfigAuthMethod","Error"],"struct":["Config","ConfigAccessPoint","ConfigClient"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["ConfigAuthMethod","Error"],"struct":["Config","ConfigAccessPoint","ConfigClient"],"type":["Cmp"]};

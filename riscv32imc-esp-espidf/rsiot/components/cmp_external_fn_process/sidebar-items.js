@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Config"],"type":["Cmp","LocalBoxFuture"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"struct":["Config"],"type":["Cmp","LocalBoxFuture"]};

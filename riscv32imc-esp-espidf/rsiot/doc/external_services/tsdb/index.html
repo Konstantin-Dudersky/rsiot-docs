@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="TimescaleDB"><title>rsiot::doc::external_services::tsdb - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.0-nightly (67bcaa9c4 2026-05-01)" data-channel="nightly" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../../static.files/main-aa4d37ac.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module tsdb</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../../rsiot/index.html">rsiot</a><span class="version">0.0.86</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module tsdb</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#docker" title="docker">docker</a></li><li><a href="#postgresqlconf" title="`postgresql.conf`"><code>postgresql.conf</code></a></li><li><a href="#pg_hbaconf" title="`pg_hba.conf`"><code>pg_hba.conf</code></a></li><li><a href="#initsql" title="`init.sql`"><code>init.sql</code></a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>doc::<wbr>external_<wbr>services</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../../index.html">rsiot</a>::<wbr><a href="../../index.html">doc</a>::<wbr><a href="../index.html">external_services</a></div><h1>Module <span>tsdb</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../../src/rsiot/doc/external_services/tsdb/mod.rs.html#1-25">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>TimescaleDB</p>
+<h3 id="docker"><a class="doc-anchor" href="#docker">§</a>docker</h3><div class="example-wrap"><pre class="language-yml"><code>services:
+  service_timescaledb:
+    command: postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf
+    container_name: service_timescaledb
+    healthcheck:
+      test: pg_isready -d db_data
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    hostname: service_timescaledb
+    image: timescale/timescaledb:2.23.0-pg18 # https://hub.docker.com/r/timescale/timescaledb/tags
+    networks:
+      - network_internal
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - &quot;5432:5432&quot;
+    profiles:
+      - dev
+      - target
+    user: postgres
+    volumes:
+      - ./timescaledb/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./timescaledb/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./timescaledb/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - timescaledb_volume:/var/lib/postgresql/data
+
+networks:
+  network_internal:
+
+volumes:
+  timescaledb_volume:
+    name: timescaledb_volume</code></pre></div><h3 id="postgresqlconf"><a class="doc-anchor" href="#postgresqlconf">§</a><code>postgresql.conf</code></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>listen_addresses = <span class="string">'*'
+</span>shared_preload_libraries = <span class="string">'timescaledb'
+
+</span>max_connections = <span class="number">200
+
+</span>max_wal_size = <span class="number">2GB
+
+</span>timescaledb.max_background_workers = <span class="number">100
+
+</span>max_worker_processes = <span class="number">116
+
+</span>max_parallel_workers = <span class="number">16
+
+</span>log_min_error_statement = PANIC</code></pre></div><h3 id="pg_hbaconf"><a class="doc-anchor" href="#pg_hbaconf">§</a><code>pg_hba.conf</code></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>local all all trust
+host all all <span class="number">0.0</span>.<span class="number">0.0</span>/<span class="number">0 </span>trust</code></pre></div><h3 id="initsql"><a class="doc-anchor" href="#initsql">§</a><code>init.sql</code></h3><div class="example-wrap"><pre class="language-sql"><code>CREATE DATABASE db_data;
+
+\c db_data
+CREATE EXTENSION IF NOT EXISTS timescaledb;
+
+-- -- table raw
+-- CREATE TABLE raw (
+--     time        TIMESTAMPTZ         NOT NULL,
+--     prj         TEXT                NOT NULL,
+--     hst         TEXT                NOT NULL,
+--     svc         TEXT                NOT NULL,
+--     cmp         TEXT                NOT NULL,
+--     key         TEXT                NOT NULL,
+--     value       DOUBLE PRECISION    NULL,
+--     UNIQUE (time, prj, hst, svc, cmp, key)
+-- ) WITH (
+--    tsdb.hypertable,
+--    tsdb.partition_column = &#39;time&#39;,
+--    tsdb.chunk_interval = &#39;PT1M&#39;,
+--    tsdb.segmentby = &#39;prj, hst, svc, cmp, key&#39;,
+--    tsdb.orderby = &#39;time ASC&#39;
+-- );
+
+-- CALL remove_columnstore_policy(&#39;raw&#39;);
+-- CALL add_columnstore_policy(&#39;raw&#39;, after =&gt; INTERVAL &#39;PT10M&#39;);</code></pre></div></div></details></section></div></main></body></html>

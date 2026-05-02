@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CanFilter","CanFrame","CanId","CanSettingsBitrate","CanSettingsDbitrate"],"struct":["CanIdHelper","CanSettings"],"trait":["BufferBound"]};

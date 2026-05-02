@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ContentType"],"fn":["handler_info"],"struct":["Config","GetEndpointConfig","GetEndpointsCollection","PutEndpointConfig","PutEndpointsCollection"],"trait":["GetEndpoint","PutEndpoint"]};

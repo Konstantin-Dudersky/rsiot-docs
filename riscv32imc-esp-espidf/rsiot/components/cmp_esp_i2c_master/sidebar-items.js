@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ConfigBaudrate","Error"],"struct":["Config"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["ConfigBaudrate","Error"],"struct":["Config"],"type":["Cmp"]};

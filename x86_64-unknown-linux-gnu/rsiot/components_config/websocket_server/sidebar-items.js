@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Config"],"type":["FnInput","FnOutput"]};
+window.SIDEBAR_ITEMS = {"struct":["Config","WsData"],"type":["FnInput","FnOutput"]};

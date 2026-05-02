@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Algs","Error"],"struct":["Config"],"trait":["IntMsgBound"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["Algs","EmaKind","Error","Gamma"],"mod":["downsampling","statistic"],"struct":["Config","ConfigBranch"],"type":["Cmp"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["conversion"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"mod":["conversion"],"type":["Cmp"]};

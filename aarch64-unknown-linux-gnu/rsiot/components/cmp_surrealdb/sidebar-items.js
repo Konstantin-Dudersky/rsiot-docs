@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Config","RequestInputConfig","RequestStartConfig"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["ConfigConnection","Error"],"struct":["Config","RequestInputConfig","RequestStartConfig"],"type":["Cmp"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error","FunctionCode"],"struct":["RTURequest","RTUResponse"]};

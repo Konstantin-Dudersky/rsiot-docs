@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["ConfigTableFieldType","Error"],"fn":["row_with_ts","row_without_ts"],"mod":["helpers"],"struct":["Config","ConfigTable","ConfigTableField","QueryStat"],"type":["Cmp"]};

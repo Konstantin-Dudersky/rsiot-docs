@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["ConfigAction","Error"],"struct":["Config"],"type":["Cmp"]};

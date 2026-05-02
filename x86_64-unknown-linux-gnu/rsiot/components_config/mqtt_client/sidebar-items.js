@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ConfigPublish","ConfigSubscribe"],"struct":["Config","MqttMsg","MqttMsgGen"],"type":["FnPublish","FnSubscribe"]};
+window.SIDEBAR_ITEMS = {"enum":["ConfigPublish","ConfigSubscribe","MqttMsgRecv","MqttMsgSend"],"struct":["Config","MqttMsgGen"],"type":["FnPublish","FnSubscribe"]};

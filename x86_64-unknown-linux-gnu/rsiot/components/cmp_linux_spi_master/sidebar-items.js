@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error","LinuxDevice"],"struct":["Config","ConfigDevicesCommSettings"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["Error","LinuxDevice"],"struct":["Config","ConfigDevicesCommSettings"],"type":["Cmp"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Resettable"],"type":["TimeDuration","TimeInstant"]};
+window.SIDEBAR_ITEMS = {"struct":["Resettable"],"type":["TimeDuration"]};

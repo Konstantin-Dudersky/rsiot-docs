@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["DS3231","InputData","OutputData"]};

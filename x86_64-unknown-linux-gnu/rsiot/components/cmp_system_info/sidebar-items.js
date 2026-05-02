@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Config","SystemInfo","SystemInfoDisk","SystemInfoMemory","SystemInfoNetwork"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["Error"],"struct":["Config","SystemInfo","SystemInfoDisk","SystemInfoMemory","SystemInfoNetwork"],"type":["Cmp"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Опрос устройств Modbus, используя библиотеку tokio-modbus"><title>rsiot::components::cmp_modbus_client - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0 (6b00bc388 2025-06-23)" data-channel="1.88.0" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.83</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_<wbr>modbus_<wbr>client</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#Тестирование" title="Тестирование">Тестирование</a></li><li><a href="#Пример" title="Пример">Пример</a></li></ul><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_modbus_client</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_modbus_client/mod.rs.html#1-41">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Опрос устройств Modbus, используя библиотеку
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Опрос устройств Modbus, используя библиотеку tokio-modbus"><title>rsiot::components::cmp_modbus_client - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0 (59807616e 2026-04-14)" data-channel="1.95.0" data-search-js="search-63369b7b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_modbus_client</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.86</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_<wbr>modbus_<wbr>client</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#Тестирование" title="Тестирование">Тестирование</a></li><li><a href="#Пример" title="Пример">Пример</a></li></ul><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_<wbr>modbus_<wbr>client</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_modbus_client/mod.rs.html#1-38">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Опрос устройств Modbus, используя библиотеку
 <a href="https://crates.io/crates/tokio-modbus">tokio-modbus</a></p>
 <p>Ссылки:</p>
 <ul>
@@ -25,103 +25,42 @@ GitHub</a></p>
 //! - раз в 2 секунды на сервер в регистр 0 записывается значение счетчика (`input_config`)
 //! - раз в 2 секунды считывается значение регистра 0 (`periodic_config`) и отправляется в логгер
 //!
-//! Запуск:
-//!
-//! ```bash
-//! cargo run -p rsiot --example cmp_modbus_client_simulator --features "cmp_modbus_client"
-//! ```
 
 </span><span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
+</span><span class="kw">mod </span>config_inject_periodic;
+<span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
+</span><span class="kw">mod </span>config_logger;
+<span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
+</span><span class="kw">mod </span>config_modbus_client;
+<span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
+</span><span class="kw">mod </span>message;
+
+<span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
 #[tokio::main]
 </span><span class="kw">async fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
-    <span class="kw">use </span>std::net::{IpAddr, Ipv4Addr};
-
-    <span class="kw">use </span>serde::{Deserialize, Serialize};
     <span class="kw">use </span>tokio::time::Duration;
-    <span class="kw">use </span>tracing::Level;
     <span class="kw">use </span>tracing_subscriber::fmt;
 
-    <span class="kw">use </span>rsiot::{
-        components::{
-            cmp_inject_periodic, cmp_logger,
-            cmp_modbus_client::{<span class="self">self</span>, <span class="kw-2">*</span>},
-        },
-        executor::{ComponentExecutor, ComponentExecutorConfig},
-        message::{Message, MsgDataBound, MsgKey},
-    };
-
-    <span class="attr">#[derive(Clone, Debug, Deserialize, MsgKey, PartialEq, Serialize)]
-    </span><span class="kw">pub enum </span>Messages {
-        ValueWrite(f64),
-        ValueRead(f64),
-    }
-
-    <span class="kw">impl </span>MsgDataBound <span class="kw">for </span>Messages {}
+    <span class="kw">use </span>rsiot::executor::{ComponentExecutor, ComponentExecutorConfig};
 
     <span class="comment">// логгирование
     </span>fmt().init();
-
-    <span class="comment">// Конфигурация modbus клиента
-    </span><span class="kw">let </span>modbus_client_config = Config {
-        enabled: <span class="bool-val">true</span>,
-        unit_id: <span class="number">1</span>,
-        input_config: <span class="macro">vec!</span>[InputConfig {
-            fn_input: |msg| <span class="kw">match </span>msg.get_custom_data()<span class="question-mark">? </span>{
-                Messages::ValueWrite(val) =&gt; <span class="prelude-val">Some</span>(Request::WriteSingleRegister(<span class="number">0</span>, val <span class="kw">as </span>u16)),
-                Messages::ValueRead(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-            },
-            fn_on_success: |_data| <span class="macro">vec!</span>[],
-            fn_on_failure: Vec::new,
-        }],
-        periodic_config: <span class="macro">vec!</span>[PeriodicConfig {
-            period: Duration::from_secs(<span class="number">2</span>),
-            request: Request::ReadHoldingRegisters(<span class="number">0</span>, <span class="number">1</span>),
-            fn_on_success: |data| {
-                <span class="kw">let </span><span class="kw-2">mut </span>msgs = <span class="macro">vec!</span>[];
-                <span class="kw">if let </span>Response::WordVector(data) = data {
-                    msgs.push(Message::new_custom(Messages::ValueRead(data[<span class="number">0</span>] <span class="kw">as </span>f64)));
-                }
-                msgs
-            },
-            fn_on_failure: Vec::new,
-        }],
-        connection_config: ClientType::Tcp(TcpClientType {
-            host: IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)),
-            port: <span class="number">5020</span>,
-        }),
-    };
 
     <span class="kw">let </span>executor_config = ComponentExecutorConfig {
         buffer_size: <span class="number">100</span>,
         fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
         delay_publish: Duration::from_millis(<span class="number">100</span>),
+        fn_tokio_metrics: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
     };
 
-    <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0.0</span>;
     ComponentExecutor::new(executor_config)
-        <span class="comment">// Периодическое генерирование сообщения для записи счетчика на сервер
-        </span>.add_cmp(cmp_inject_periodic::Cmp::new(cmp_inject_periodic::Config {
-            period: Duration::from_secs(<span class="number">2</span>),
-            fn_periodic: <span class="kw">move </span>|| {
-                <span class="kw">let </span>msg = Message::new_custom(Messages::ValueWrite(counter));
-                counter += <span class="number">1.0</span>;
-                <span class="macro">vec!</span>[msg]
-            },
-        }))
-        <span class="comment">// Клиент modbus
-        </span>.add_cmp(cmp_modbus_client::Cmp::new(modbus_client_config))
-        <span class="comment">// Вывод сообщений в лог
-        </span>.add_cmp(cmp_logger::Cmp::new(cmp_logger::Config {
-            level: Level::INFO,
-            fn_input: |msg| <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg.serialize()<span class="question-mark">?</span>)),
-        }))
+        .add_cmp(config_inject_periodic::cmp())
+        .add_cmp(config_modbus_client::cmp())
+        .add_cmp(config_logger::cmp())
         .wait_result()
         .<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
 <span class="attr">#[cfg(not(feature = <span class="string">"cmp_modbus_client"</span>))]
-</span><span class="kw">fn </span>main() {}</code></pre></div>
-<p>TODO - рестарт не работает
-TODO - переделать с использованием fn_master_process</p>
-</div></details><h2 id="reexports" class="section-header">Re-exports<a href="#reexports" class="anchor">§</a></h2><dl class="item-table reexports"><dt><code>pub use crate::components_config::<a class="mod" href="../../components_config/modbus_client/index.html" title="mod rsiot::components_config::modbus_client">modbus_client</a>::*;</code></dt></dl><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="conversion/index.html" title="mod rsiot::components::cmp_modbus_client::conversion">conversion</a></dt><dd>Модуль для конвертации числовых данных в регистры и наоборот.</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_modbus_client::Cmp">Cmp</a></dt><dd>Обмен данными с устройством, поддерживающим Modbus TCP сервер.</dd></dl></section></div></main></body></html>
+</span><span class="kw">fn </span>main() {}</code></pre></div></div></details><h2 id="reexports" class="section-header">Re-exports<a href="#reexports" class="anchor">§</a></h2><dl class="item-table reexports"><dt><code>pub use crate::components_config::<a class="mod" href="../../components_config/modbus_client/index.html" title="mod rsiot::components_config::modbus_client">modbus_client</a>::*;</code></dt></dl><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="conversion/index.html" title="mod rsiot::components::cmp_modbus_client::conversion">conversion</a></dt><dd>Модуль для конвертации числовых данных в регистры и наоборот.</dd></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.COMPONENT_NAME.html" title="constant rsiot::components::cmp_modbus_client::COMPONENT_NAME">COMPONENT_<wbr>NAME</a></dt><dd>Обмен данными с устройством, поддерживающим Modbus TCP сервер.</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_modbus_client::Cmp">Cmp</a></dt><dd>Обмен данными с устройством, поддерживающим Modbus TCP сервер.</dd></dl></section></div></main></body></html>
