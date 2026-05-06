@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["change_mpsc_msg","filter_identical_data","filter_send_periodically","fn_process_master","mpsc_to_broadcast","mpsc_to_msgbus","msgbus_to_broadcast","msgbus_to_mpsc","msgbus_to_mpsc_unbounded"]};
+window.SIDEBAR_ITEMS = {"mod":["change_mpsc_msg","fieldbus_execution","filter_identical_data","filter_send_periodically","mpsc_to_broadcast","mpsc_to_msgbus","msgbus_to_broadcast","msgbus_to_mpsc","msgbus_to_mpsc_unbounded"]};
