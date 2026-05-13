@@ -3,28 +3,38 @@
 <a href=#3 id=3 data-nosnippet>3</a></span><span class="attr">#[derive(Clone, Copy, Debug, Default, PartialEq)]
 <a href=#4 id=4 data-nosnippet>4</a></span><span class="kw">pub enum </span>SerdeAlgKind {
 <a href=#5 id=5 data-nosnippet>5</a>    <span class="doccomment">/// CBOR
-<a href=#6 id=6 data-nosnippet>6</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_cbor"</span>)]
-<a href=#7 id=7 data-nosnippet>7</a>    </span>Cbor,
-<a href=#8 id=8 data-nosnippet>8</a>
-<a href=#9 id=9 data-nosnippet>9</a>    <span class="doccomment">/// JSON
-<a href=#10 id=10 data-nosnippet>10</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_json"</span>)]
-<a href=#11 id=11 data-nosnippet>11</a>    </span>Json,
-<a href=#12 id=12 data-nosnippet>12</a>
-<a href=#13 id=13 data-nosnippet>13</a>    <span class="doccomment">/// MessagePack
-<a href=#14 id=14 data-nosnippet>14</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_messagepack"</span>)]
-<a href=#15 id=15 data-nosnippet>15</a>    </span>MessagePack,
+<a href=#6 id=6 data-nosnippet>6</a>    ///
+<a href=#7 id=7 data-nosnippet>7</a>    /// Необходимо активировать feature `serde_cbor`
+<a href=#8 id=8 data-nosnippet>8</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_cbor"</span>)]
+<a href=#9 id=9 data-nosnippet>9</a>    </span>Cbor,
+<a href=#10 id=10 data-nosnippet>10</a>
+<a href=#11 id=11 data-nosnippet>11</a>    <span class="doccomment">/// JSON
+<a href=#12 id=12 data-nosnippet>12</a>    ///
+<a href=#13 id=13 data-nosnippet>13</a>    /// Необходимо активировать feature `serde_json`
+<a href=#14 id=14 data-nosnippet>14</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_json"</span>)]
+<a href=#15 id=15 data-nosnippet>15</a>    </span>Json,
 <a href=#16 id=16 data-nosnippet>16</a>
-<a href=#17 id=17 data-nosnippet>17</a>    <span class="doccomment">/// Postcard
-<a href=#18 id=18 data-nosnippet>18</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_postcard"</span>)]
-<a href=#19 id=19 data-nosnippet>19</a>    </span>Postcard,
-<a href=#20 id=20 data-nosnippet>20</a>
-<a href=#21 id=21 data-nosnippet>21</a>    <span class="doccomment">/// TOML
-<a href=#22 id=22 data-nosnippet>22</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_toml"</span>)]
-<a href=#23 id=23 data-nosnippet>23</a>    </span>Toml,
-<a href=#24 id=24 data-nosnippet>24</a>
-<a href=#25 id=25 data-nosnippet>25</a>    <span class="doccomment">/// Алгоритм не задан
-<a href=#26 id=26 data-nosnippet>26</a>    </span><span class="attr">#[default]
-<a href=#27 id=27 data-nosnippet>27</a>    </span>Unspecified,
-<a href=#28 id=28 data-nosnippet>28</a>}
-<a href=#29 id=29 data-nosnippet>29</a><span class="comment">// ANCHOR: SerdeAlgKind
+<a href=#17 id=17 data-nosnippet>17</a>    <span class="doccomment">/// MessagePack
+<a href=#18 id=18 data-nosnippet>18</a>    ///
+<a href=#19 id=19 data-nosnippet>19</a>    /// Необходимо активировать feature `serde_messagepack`
+<a href=#20 id=20 data-nosnippet>20</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_messagepack"</span>)]
+<a href=#21 id=21 data-nosnippet>21</a>    </span>MessagePack,
+<a href=#22 id=22 data-nosnippet>22</a>
+<a href=#23 id=23 data-nosnippet>23</a>    <span class="doccomment">/// Postcard
+<a href=#24 id=24 data-nosnippet>24</a>    ///
+<a href=#25 id=25 data-nosnippet>25</a>    /// Необходимо активировать feature `serde_postcard`
+<a href=#26 id=26 data-nosnippet>26</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_postcard"</span>)]
+<a href=#27 id=27 data-nosnippet>27</a>    </span>Postcard,
+<a href=#28 id=28 data-nosnippet>28</a>
+<a href=#29 id=29 data-nosnippet>29</a>    <span class="doccomment">/// TOML
+<a href=#30 id=30 data-nosnippet>30</a>    ///
+<a href=#31 id=31 data-nosnippet>31</a>    /// Необходимо активировать feature `serde_toml`
+<a href=#32 id=32 data-nosnippet>32</a>    </span><span class="attr">#[cfg(feature = <span class="string">"serde_toml"</span>)]
+<a href=#33 id=33 data-nosnippet>33</a>    </span>Toml,
+<a href=#34 id=34 data-nosnippet>34</a>
+<a href=#35 id=35 data-nosnippet>35</a>    <span class="doccomment">/// Алгоритм не задан
+<a href=#36 id=36 data-nosnippet>36</a>    </span><span class="attr">#[default]
+<a href=#37 id=37 data-nosnippet>37</a>    </span>Unspecified,
+<a href=#38 id=38 data-nosnippet>38</a>}
+<a href=#39 id=39 data-nosnippet>39</a><span class="comment">// ANCHOR: SerdeAlgKind
 </span></code></pre></div></section></main></body></html>
