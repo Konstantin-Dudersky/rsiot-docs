@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["emqx","go2rtc","grafana","influxdb_v2","loki","nanomq","pgadmin","portainer","redis","rust","sentryshot","surrealdb","systemd","tsdb"]};
+window.SIDEBAR_ITEMS = {"mod":["emqx","go2rtc","grafana","influxdb_v2","loki","nanomq","ntp","pgadmin","portainer","redis","rust","sentryshot","surrealdb","systemd","tsdb"]};

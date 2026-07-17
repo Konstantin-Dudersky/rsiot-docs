@@ -31,7 +31,7 @@
 <a href=#31 id=31 data-nosnippet>31</a>
 <a href=#32 id=32 data-nosnippet>32</a>    <span class="kw">let </span>tables_setup: Vec&lt;ConfigTableForSetup&gt; = config.tables.iter().map(|t| t.into()).collect();
 <a href=#33 id=33 data-nosnippet>33</a>    <span class="kw">let </span>task = tasks::SetupDatabase {
-<a href=#34 id=34 data-nosnippet>34</a>        connection_string: config.connection_string.clone(),
+<a href=#34 id=34 data-nosnippet>34</a>        connection_string: config.connection_string.connection_string(),
 <a href=#35 id=35 data-nosnippet>35</a>        reconnect_interval: Duration::from_millis(<span class="number">1_000</span>),
 <a href=#36 id=36 data-nosnippet>36</a>        tables: tables_setup,
 <a href=#37 id=37 data-nosnippet>37</a>        db_pool_mutex: db_pool_mutex.clone(),

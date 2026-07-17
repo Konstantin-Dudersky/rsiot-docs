@@ -1,60 +1,68 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент сохранения данных в БД TimescaleDB."><title>rsiot::components::cmp_tsdb_writer - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0 (59807616e 2026-04-14)" data-channel="1.95.0" data-search-js="search-63369b7b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_tsdb_writer</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.87</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_<wbr>tsdb_<wbr>writer</a></h2><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#functions" title="Functions">Functions</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_<wbr>tsdb_<wbr>writer</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_tsdb_writer/mod.rs.html#1-25">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент сохранения данных в БД TimescaleDB.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент сохранения данных в БД TimescaleDB."><title>rsiot::components::cmp_tsdb_writer - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0 (59807616e 2026-04-14)" data-channel="1.95.0" data-search-js="search-63369b7b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_tsdb_writer</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.87</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_<wbr>tsdb_<wbr>writer</a></h2><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#functions" title="Functions">Functions</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_<wbr>tsdb_<wbr>writer</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_tsdb_writer/mod.rs.html#1-28">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент сохранения данных в БД TimescaleDB.</p>
 <p>Для сохранения используется библиотека <a href="https://crates.io/crates/sqlx">sqlx</a></p>
-<p>Пример создания компонента:
-use std::time::Duration;</p>
-<p>use rand::prelude::<em>;
-use rsiot::components::cmp_tsdb_writer::</em>;
-use tracing::info;</p>
-<p>use super::message::*;</p>
-<p>pub fn cmp(<em>rows_in_cycle: u32, instance_number: String) -&gt; Cmp<Msg> {
-let hst = format!(“hst_test</em>{}”, instance_number);</p>
+<p>Пример создания компонента:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="comment">// Таблица
-</span><span class="kw">let </span>fields = (<span class="number">0</span>..<span class="number">10</span>)
-    .map(|cn| ConfigTableField {
-        field_name: <span class="macro">format!</span>(<span class="string">"counter_{:02}"</span>, cn),
-        data_type: ConfigTableFieldType::NumericDoublePrecision,
-    })
-    .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
 
-<span class="kw">let </span>table = ConfigTable {
-    prj: <span class="string">"prj_test"</span>.into(),
-    hst,
-    svc: <span class="string">"svc_test"</span>.into(),
-    cmp: <span class="string">"cmp_inject_periodic"</span>.into(),
-    tag: <span class="string">"tag_test"</span>.into(),
-    delete_before_write: <span class="bool-val">true</span>,
-    chunk_interval: Duration::from_hours(<span class="number">1</span>),
-    compress_interval: Duration::from_hours(<span class="number">1</span>),
-    retention_interval: <span class="prelude-val">Some</span>(Duration::from_hours(<span class="number">24</span>)),
-    fields,
-    fn_input: |msg| {
-        <span class="kw">let </span><span class="kw-2">mut </span>rng = rand::rng();
+<span class="kw">use </span>rand::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>rsiot::components::cmp_tsdb_writer::<span class="kw-2">*</span>;
+<span class="kw">use </span>tracing::info;
 
-        <span class="kw">let </span>rows = <span class="kw">match </span>msg {
-            Msg::Counter(<span class="kw">_</span>) =&gt; {
-                <span class="kw">let </span>values = (<span class="number">0</span>..<span class="number">10</span>)
-                    .map(|<span class="kw">_</span>| {
-                        <span class="kw">let </span>value: f64 = rng.random();
-                        <span class="macro">format!</span>(<span class="string">"{}"</span>, value)
-                    })
-                    .collect::&lt;Vec&lt;String&gt;&gt;();
-                row_without_ts(<span class="kw-2">&amp;</span>values).unwrap()
-            }
-        };
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(rows))
-    },
-};
+<span class="kw">use </span><span class="kw">super</span>::message::<span class="kw-2">*</span>;
 
-<span class="kw">let </span>config = Config {
-    connection_string: <span class="string">"postgres://postgres:postgres@localhost:5432/db_data"</span>.into(),
-    max_connections: <span class="number">10</span>,
-    tables: <span class="macro">vec!</span>[table],
-    save_by_row_count: <span class="number">20_000</span>,
-    save_by_period: Duration::from_secs(<span class="number">2</span>),
-    fn_query_stat: |qs| <span class="macro">info!</span>(<span class="string">"{}"</span>, qs.to_string()),
-};
+<span class="kw">pub fn </span>cmp(_rows_in_cycle: u32, instance_number: String) -&gt; Cmp&lt;Msg&gt; {
+    <span class="kw">let </span>hst = <span class="macro">format!</span>(<span class="string">"hst_test_{}"</span>, instance_number);
 
-Cmp::new(config)</code></pre></div>
-<p>}</p>
-</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="helpers/index.html" title="mod rsiot::components::cmp_tsdb_writer::helpers">helpers</a></dt><dd>Настройки для типовых применений</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_tsdb_writer::Config">Config</a></dt><dd>Конфигурация компонента cmp_timescaledb</dd><dt><a class="struct" href="struct.ConfigTable.html" title="struct rsiot::components::cmp_tsdb_writer::ConfigTable">Config<wbr>Table</a></dt><dd>Конфигурация таблицы для сохранения данных в БД</dd><dt><a class="struct" href="struct.ConfigTableField.html" title="struct rsiot::components::cmp_tsdb_writer::ConfigTableField">Config<wbr>Table<wbr>Field</a></dt><dd>Конфигурация поля таблицы</dd><dt><a class="struct" href="struct.QueryStat.html" title="struct rsiot::components::cmp_tsdb_writer::QueryStat">Query<wbr>Stat</a></dt><dd>Статистика выполнения SQL-запроса</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.ConfigTableFieldType.html" title="enum rsiot::components::cmp_tsdb_writer::ConfigTableFieldType">Config<wbr>Table<wbr>Field<wbr>Type</a></dt><dd>Тип поля таблицы</dd><dt><a class="enum" href="enum.Error.html" title="enum rsiot::components::cmp_tsdb_writer::Error">Error</a></dt></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.COMPONENT_NAME.html" title="constant rsiot::components::cmp_tsdb_writer::COMPONENT_NAME">COMPONENT_<wbr>NAME</a></dt><dd>Название компонента</dd></dl><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.row_with_ts.html" title="fn rsiot::components::cmp_tsdb_writer::row_with_ts">row_<wbr>with_<wbr>ts</a></dt><dd>Создает строку для записи в БД.</dd><dt><a class="fn" href="fn.row_without_ts.html" title="fn rsiot::components::cmp_tsdb_writer::row_without_ts">row_<wbr>without_<wbr>ts</a></dt><dd>Создает строку для записи в БД. Время берется из локального времени.</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_tsdb_writer::Cmp">Cmp</a></dt><dd>Компонент cmp_tsdb_writer</dd></dl></section></div></main></body></html>
+    <span class="comment">// Таблица
+    </span><span class="kw">let </span>fields = (<span class="number">0</span>..<span class="number">10</span>)
+        .map(|cn| ConfigTableField {
+            field_name: <span class="macro">format!</span>(<span class="string">"counter_{:02}"</span>, cn),
+            data_type: ConfigTableFieldType::NumericDoublePrecision,
+        })
+        .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+
+    <span class="kw">let </span>table = ConfigTable {
+        cmp: <span class="string">"cmp_inject_periodic"</span>.into(),
+        tag: <span class="string">"tag_test"</span>.into(),
+        delete_before_write: <span class="bool-val">true</span>,
+        chunk_interval: Duration::from_hours(<span class="number">1</span>),
+        compress_interval: Duration::from_hours(<span class="number">1</span>),
+        retention_interval: <span class="prelude-val">Some</span>(Duration::from_hours(<span class="number">24</span>)),
+        fields,
+        fn_input: |msg| {
+            <span class="kw">let </span><span class="kw-2">mut </span>rng = rand::rng();
+
+            <span class="kw">let </span>rows = <span class="kw">match </span>msg {
+                Msg::Counter(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">let </span>values = (<span class="number">0</span>..<span class="number">10</span>)
+                        .map(|<span class="kw">_</span>| {
+                            <span class="kw">let </span>value: f64 = rng.random();
+                            <span class="macro">format!</span>(<span class="string">"{}"</span>, value)
+                        })
+                        .collect::&lt;Vec&lt;String&gt;&gt;();
+                    row_without_ts(<span class="kw-2">&amp;</span>values).unwrap()
+                }
+            };
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(rows))
+        },
+    };
+
+    <span class="kw">let </span>config = Config {
+        connection_string: ConfigConnectionString {
+            user: <span class="string">"postgres"</span>.into(),
+            password: <span class="string">"postgres"</span>.into(),
+            database_host: <span class="string">"localhost"</span>.into(),
+            port: <span class="number">5432</span>,
+            prj: <span class="string">"prj_test"</span>.into(),
+            hst: hst.clone(),
+            svc: <span class="string">"svc_test"</span>.into(),
+        },
+        max_connections: <span class="number">10</span>,
+        tables: <span class="macro">vec!</span>[table],
+        save_by_row_count: <span class="number">20_000</span>,
+        save_by_period: Duration::from_secs(<span class="number">2</span>),
+        fn_query_stat: |qs| <span class="macro">info!</span>(<span class="string">"{}"</span>, qs.to_string()),
+    };
+
+    Cmp::new(config)
+}</code></pre></div></div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="helpers/index.html" title="mod rsiot::components::cmp_tsdb_writer::helpers">helpers</a></dt><dd>Настройки для типовых применений</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_tsdb_writer::Config">Config</a></dt><dd>Конфигурация компонента cmp_timescaledb</dd><dt><a class="struct" href="struct.ConfigConnectionString.html" title="struct rsiot::components::cmp_tsdb_writer::ConfigConnectionString">Config<wbr>Connection<wbr>String</a></dt><dd>Строка подключения к БД</dd><dt><a class="struct" href="struct.ConfigTable.html" title="struct rsiot::components::cmp_tsdb_writer::ConfigTable">Config<wbr>Table</a></dt><dd>Конфигурация таблицы для сохранения данных в БД</dd><dt><a class="struct" href="struct.ConfigTableField.html" title="struct rsiot::components::cmp_tsdb_writer::ConfigTableField">Config<wbr>Table<wbr>Field</a></dt><dd>Конфигурация поля таблицы</dd><dt><a class="struct" href="struct.QueryStat.html" title="struct rsiot::components::cmp_tsdb_writer::QueryStat">Query<wbr>Stat</a></dt><dd>Статистика выполнения SQL-запроса</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.ConfigTableFieldType.html" title="enum rsiot::components::cmp_tsdb_writer::ConfigTableFieldType">Config<wbr>Table<wbr>Field<wbr>Type</a></dt><dd>Тип поля таблицы</dd><dt><a class="enum" href="enum.Error.html" title="enum rsiot::components::cmp_tsdb_writer::Error">Error</a></dt></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.COMPONENT_NAME.html" title="constant rsiot::components::cmp_tsdb_writer::COMPONENT_NAME">COMPONENT_<wbr>NAME</a></dt><dd>Название компонента</dd></dl><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.row_with_ts.html" title="fn rsiot::components::cmp_tsdb_writer::row_with_ts">row_<wbr>with_<wbr>ts</a></dt><dd>Создает строку для записи в БД.</dd><dt><a class="fn" href="fn.row_without_ts.html" title="fn rsiot::components::cmp_tsdb_writer::row_without_ts">row_<wbr>without_<wbr>ts</a></dt><dd>Создает строку для записи в БД. Время берется из локального времени.</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_tsdb_writer::Cmp">Cmp</a></dt><dd>Компонент cmp_tsdb_writer</dd></dl></section></div></main></body></html>

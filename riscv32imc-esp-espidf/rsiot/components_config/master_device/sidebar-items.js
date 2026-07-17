@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error","ResponseResult"],"struct":["ConfigPeriodicRequest","DeviceBase","DeviceState"],"trait":["BufferBound","DeviceTrait"],"type":["Result"]};
+window.SIDEBAR_ITEMS = {"enum":["Error","ResponseResult"],"struct":["ConfigDeviceStateOutput","ConfigPeriodicRequest","DeviceBase","DeviceState"],"trait":["BufferBound","DeviceTrait"],"type":["Result"]};

@@ -1,18 +1,149 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Исполнение логики работы в стиле ПЛК."><title>rsiot::components::cmp_plc - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.0-nightly (7af3402cd 2026-04-16)" data-channel="nightly" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_plc</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.87</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_plc</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#Структурные-единицы" title="Структурные единицы">Структурные единицы</a><ul><li><a href="#Организационные-блоки-ob" title="Организационные блоки (OB)">Организационные блоки (OB)</a></li><li><a href="#Функциональные-блоки-fb" title="Функциональные блоки (FB)">Функциональные блоки (FB)</a></li></ul></li></ul><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_plc</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_plc/mod.rs.html#1-40">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Исполнение логики работы в стиле ПЛК.</p>
-<h3 id="Структурные-единицы"><a class="doc-anchor" href="#Структурные-единицы">§</a>Структурные единицы</h3>
-<ul>
-<li>Функциональные блоки (FB)</li>
-</ul>
-<h4 id="Организационные-блоки-ob"><a class="doc-anchor" href="#Организационные-блоки-ob">§</a>Организационные блоки (OB)</h4>
-<p>Верхнеуровневые элементы. Выполнены в виде задач tokio. Параллельно можно запускать несколько
-OB. Поскольку задачи выполняются в разных потоках, нет необходимости вытеснять OB по приоритетам</p>
-<ul>
-<li>они выполняются параллельно.</li>
-</ul>
-<p>plc-rs не заботится, откуда данные приходят и куда отправляются. Входные данные поступают из
-брокера сообщений и передаются по каналу в OB. Выходные данные также отправляются в брокер
-сообщений. Коммуникации с устройствами также программируются во внешних крейтах.</p>
-<h4 id="Функциональные-блоки-fb"><a class="doc-anchor" href="#Функциональные-блоки-fb">§</a>Функциональные блоки (FB)</h4>
-<p>Базовые компоненты для построения программы. Сохраняют состояние между вызовами.</p>
-<p>См. <a href="https://docs.rs/rsiot-plc/latest/">документацию</a></p>
-</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="plc/index.html" title="mod rsiot::components::cmp_plc::plc">plc</a></dt><dd>Модули, связанные с работой plc</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_plc::Config">Config</a></dt><dd>Конфигурация компонента ПЛК</dd><dt><a class="struct" href="struct.ConfigRetention.html" title="struct rsiot::components::cmp_plc::ConfigRetention">Config<wbr>Retention</a></dt><dd>Настройка сохранения и восстановления области Static</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.Error.html" title="enum rsiot::components::cmp_plc::Error">Error</a></dt><dd>Ошибки cmp_plc</dd></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.COMPONENT_NAME.html" title="constant rsiot::components::cmp_plc::COMPONENT_NAME">COMPONENT_<wbr>NAME</a></dt><dd>Название компонента</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_plc::Cmp">Cmp</a></dt><dd>Компонент cmp_plc</dd></dl></section></div></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Исполнение логики работы в стиле ПЛК."><title>rsiot::components::cmp_plc - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.0-nightly (7af3402cd 2026-04-16)" data-channel="nightly" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_plc</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.87</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_plc</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#Примеры" title="Примеры">Примеры</a><ul><li><a href="#Создание-базового-проекта" title="Создание базового проекта">Создание базового проекта</a></li></ul></li></ul><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_plc</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_plc/mod.rs.html#1-72">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Исполнение логики работы в стиле ПЛК.</p>
+<h2 id="Примеры"><a class="doc-anchor" href="#Примеры">§</a>Примеры</h2><h3 id="Создание-базового-проекта"><a class="doc-anchor" href="#Создание-базового-проекта">§</a>Создание базового проекта</h3><h4 id="cfg_plcmodrs"><a class="doc-anchor" href="#cfg_plcmodrs">§</a><code>cfg_plc/mod.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">mod </span>fn_cycle_init;
+<span class="kw">mod </span>fn_input;
+<span class="kw">mod </span>fn_output;
+<span class="kw">mod </span>logic;
+<span class="kw">mod </span>retention;
+
+<span class="kw">pub use </span>logic::fb_main;
+
+<span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span><span class="kw">super</span>::msg::<span class="kw-2">*</span>;
+
+<span class="kw">use </span>rsiot::components::cmp_plc::<span class="kw-2">*</span>;
+
+<span class="kw">pub fn </span>cmp() -&gt; Cmp&lt;Msg, fb_main::I, fb_main::Q, fb_main::S&gt; {
+    <span class="kw">let </span>config = Config {
+        fn_cycle_init: fn_cycle_init::fn_cycle_init,
+        fn_input: fn_input::fn_input,
+        fn_output: fn_output::fn_output,
+        fb_main: fb_main::FB::new(),
+        period: Duration::from_millis(<span class="number">100</span>),
+        retention: <span class="prelude-val">Some</span>(retention::retention()),
+    };
+
+    Cmp::new(config)
+}</code></pre></div><h4 id="cfg_plcfn_cycle_initrs"><a class="doc-anchor" href="#cfg_plcfn_cycle_initrs">§</a><code>cfg_plc/fn_cycle_init.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span><span class="kw">super</span>::logic::fb_main;
+
+<span class="kw">pub fn </span>fn_cycle_init(_input: <span class="kw-2">&amp;mut </span>fb_main::I) {}</code></pre></div><h4 id="cfg_plcfn_inputrs"><a class="doc-anchor" href="#cfg_plcfn_inputrs">§</a><code>cfg_plc/fn_input.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rsiot::components::cmp_plc::plc::types::Resettable;
+
+<span class="kw">use </span><span class="kw">crate</span>::msg::<span class="kw-2">*</span>;
+
+<span class="kw">use </span><span class="kw">super</span>::logic::fb_main;
+
+<span class="kw">pub fn </span>fn_input(input: <span class="kw-2">&amp;mut </span>fb_main::I, msg: <span class="kw-2">&amp;</span>Msg) {
+    <span class="kw">match </span>msg {
+        Msg::Filesystem(<span class="kw">_</span>) =&gt; (),
+        Msg::Plc(<span class="kw">_</span>) =&gt; (),
+        Msg::MsgInjectPeriodic(msg) =&gt; <span class="kw">match </span>msg {
+            MsgInjectPeriodic::Counter(v) =&gt; {
+                input.counter = <span class="kw-2">*</span>v;
+                input.resettabe_bit = Resettable::new(<span class="bool-val">true</span>);
+            }
+        },
+    }
+}</code></pre></div><h4 id="cfg_plcfn_outputrs"><a class="doc-anchor" href="#cfg_plcfn_outputrs">§</a><code>cfg_plc/fn_output.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span><span class="kw">crate</span>::msg::<span class="kw-2">*</span>;
+
+<span class="kw">use </span><span class="kw">super</span>::logic::fb_main;
+
+<span class="attr">#[allow(clippy::map_identity)]
+</span><span class="kw">pub fn </span>fn_output(output: <span class="kw-2">&amp;</span>fb_main::Q) -&gt; Vec&lt;Msg&gt; {
+    <span class="macro">vec!</span>[Msg::Plc(Plc::Output(output.clone()))]
+}</code></pre></div><h4 id="cfg_plcretentionrs"><a class="doc-anchor" href="#cfg_plcretentionrs">§</a><code>cfg_plc/retention.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>rsiot::{components::cmp_plc::<span class="kw-2">*</span>, message::Message};
+
+<span class="kw">use </span><span class="kw">crate</span>::msg::<span class="kw-2">*</span>;
+
+<span class="kw">use </span><span class="kw">super</span>::logic::fb_main;
+
+<span class="kw">pub fn </span>retention() -&gt; ConfigRetention&lt;Msg, fb_main::I, fb_main::Q, fb_main::S&gt; {
+    ConfigRetention {
+        save_period: Duration::from_secs(<span class="number">5</span>),
+        fn_export: |input, output, stat| {
+            <span class="kw">let </span>msg_input = Message::new_custom(Msg::Plc(Plc::Input(input.clone())));
+            <span class="kw">let </span>msg_output = Message::new_custom(Msg::Plc(Plc::Output(output.clone())));
+            <span class="kw">let </span>msg_static = Message::new_custom(Msg::Plc(Plc::Static(stat.clone())));
+
+            <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[msg_input, msg_output, msg_static])
+        },
+        fn_import_static: |msg| {
+            <span class="kw">let </span>msg = msg.get_custom_data();
+            <span class="kw">let </span><span class="prelude-val">Some</span>(msg) = msg <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) };
+            <span class="kw">match </span>msg {
+                Msg::Filesystem(Filesystem::MemoryStatic(stat)) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(stat)),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+            }
+        },
+        restore_timeout: Duration::from_secs(<span class="number">2</span>),
+    }
+}</code></pre></div><h4 id="cfg_plclogicmodrs"><a class="doc-anchor" href="#cfg_plclogicmodrs">§</a><code>cfg_plc/logic/mod.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">pub mod </span>fb_main;
+<span class="kw">mod </span>fb_simple;</code></pre></div><h4 id="cfg_plclogicfb_mainrs"><a class="doc-anchor" href="#cfg_plclogicfb_mainrs">§</a><code>cfg_plc/logic/fb_main.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rsiot::components::cmp_plc::plc::{
+    FbSystemData, FunctionBlockBase, IFunctionBlock, types::Resettable,
+};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+
+<span class="kw">pub type </span>FB = FunctionBlockBase&lt;I, Q, S&gt;;
+
+<span class="kw">impl </span>IFunctionBlock&lt;I, Q, S&gt; <span class="kw">for </span>FunctionBlockBase&lt;I, Q, S&gt; {
+    <span class="kw">fn </span>logic(input: <span class="kw-2">&amp;mut </span>I, stat: <span class="kw-2">&amp;mut </span>S, system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
+        logic(input, stat, system_data)
+    }
+}
+
+<span class="doccomment">/// Input ------------------------------------------------------------------------------------------
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+</span><span class="kw">pub struct </span>I {
+    <span class="kw">pub </span>counter: u32,
+    <span class="kw">pub </span>resettabe_bit: Resettable&lt;bool&gt;,
+}
+
+<span class="doccomment">/// Output -----------------------------------------------------------------------------------------
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+</span><span class="kw">pub struct </span>Q {}
+
+<span class="doccomment">/// Static -----------------------------------------------------------------------------------------
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+</span><span class="kw">pub struct </span>S {
+    <span class="kw">pub </span>fb_simple: <span class="kw">super</span>::fb_simple::FB,
+}
+
+<span class="doccomment">/// Логика -----------------------------------------------------------------------------------------
+</span><span class="kw">pub fn </span>logic(_input: <span class="kw-2">&amp;mut </span>I, _stat: <span class="kw-2">&amp;mut </span>S, _system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
+    Q {}
+}</code></pre></div><h4 id="cfg_plclogicfb_simplers"><a class="doc-anchor" href="#cfg_plclogicfb_simplers">§</a><code>cfg_plc/logic/fb_simple.rs</code></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rsiot::components::cmp_plc::plc::{FbSystemData, FunctionBlockBase, IFunctionBlock};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+
+<span class="kw">pub type </span>FB = FunctionBlockBase&lt;I, Q, S&gt;;
+
+<span class="kw">impl </span>IFunctionBlock&lt;I, Q, S&gt; <span class="kw">for </span>FunctionBlockBase&lt;I, Q, S&gt; {
+    <span class="kw">fn </span>logic(input: <span class="kw-2">&amp;mut </span>I, stat: <span class="kw-2">&amp;mut </span>S, system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
+        logic(input, stat, system_data)
+    }
+}
+
+<span class="doccomment">/// Input ------------------------------------------------------------------------------------------
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+</span><span class="kw">pub struct </span>I {}
+
+<span class="doccomment">/// Output -----------------------------------------------------------------------------------------
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+</span><span class="kw">pub struct </span>Q {}
+
+<span class="doccomment">/// Static -----------------------------------------------------------------------------------------
+</span><span class="attr">#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+</span><span class="kw">pub struct </span>S {}
+
+<span class="doccomment">/// Логика -----------------------------------------------------------------------------------------
+</span><span class="kw">fn </span>logic(_input: <span class="kw-2">&amp;mut </span>I, _stat: <span class="kw-2">&amp;mut </span>S, _system_data: <span class="kw-2">&amp;</span>FbSystemData) -&gt; Q {
+    Q {}
+}</code></pre></div></div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="plc/index.html" title="mod rsiot::components::cmp_plc::plc">plc</a></dt><dd>Модули, связанные с работой plc</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Config.html" title="struct rsiot::components::cmp_plc::Config">Config</a></dt><dd>Конфигурация компонента ПЛК</dd><dt><a class="struct" href="struct.ConfigRetention.html" title="struct rsiot::components::cmp_plc::ConfigRetention">Config<wbr>Retention</a></dt><dd>Настройка сохранения и восстановления области Static</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.Error.html" title="enum rsiot::components::cmp_plc::Error">Error</a></dt><dd>Ошибки cmp_plc</dd></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.COMPONENT_NAME.html" title="constant rsiot::components::cmp_plc::COMPONENT_NAME">COMPONENT_<wbr>NAME</a></dt><dd>Название компонента</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Cmp.html" title="type rsiot::components::cmp_plc::Cmp">Cmp</a></dt><dd>Компонент cmp_plc</dd></dl></section></div></main></body></html>

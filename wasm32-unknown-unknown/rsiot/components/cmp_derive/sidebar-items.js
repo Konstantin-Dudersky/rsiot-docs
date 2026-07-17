@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["Config","DeriveItem"],"trait":["DeriveItemProcess"],"type":["Cmp"]};
+window.SIDEBAR_ITEMS = {"constant":["COMPONENT_NAME"],"enum":["ConfigOutputSend","Error"],"struct":["Config"],"trait":["BufferBound"],"type":["Cmp"]};

@@ -27,13 +27,13 @@ GitHub</a></p>
 //!
 
 </span><span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
-</span><span class="kw">mod </span>config_inject_periodic;
+</span><span class="kw">mod </span>cfg_inject_periodic;
 <span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
-</span><span class="kw">mod </span>config_logger;
+</span><span class="kw">mod </span>cfg_logger;
 <span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
-</span><span class="kw">mod </span>config_modbus_client;
+</span><span class="kw">mod </span>cfg_modbus_client;
 <span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
-</span><span class="kw">mod </span>message;
+</span><span class="kw">mod </span>msg;
 
 <span class="attr">#[cfg(feature = <span class="string">"cmp_modbus_client"</span>)]
 #[tokio::main]
@@ -54,9 +54,9 @@ GitHub</a></p>
     };
 
     ComponentExecutor::new(executor_config)
-        .add_cmp(config_inject_periodic::cmp())
-        .add_cmp(config_modbus_client::cmp())
-        .add_cmp(config_logger::cmp())
+        .add_cmp(cfg_inject_periodic::cmp())
+        .add_cmp(cfg_modbus_client::cmp())
+        .add_cmp(cfg_logger::cmp())
         .wait_result()
         .<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())

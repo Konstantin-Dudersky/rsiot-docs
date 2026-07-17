@@ -1,4 +1,185 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент для взаимодействия с библиотекой пользовательского интерфейса Slint"><title>rsiot::components::cmp_slint - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0 (59807616e 2026-04-14)" data-channel="1.95.0" data-search-js="search-63369b7b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_slint</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.87</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_<wbr>slint</a></h2><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_<wbr>slint</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_slint/mod.rs.html#1-64">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент для взаимодействия с библиотекой пользовательского интерфейса Slint</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Компонент для взаимодействия с библиотекой пользовательского интерфейса Slint"><title>rsiot::components::cmp_slint - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rsiot" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0 (59807616e 2026-04-14)" data-channel="1.95.0" data-search-js="search-63369b7b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module cmp_slint</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../rsiot/index.html">rsiot</a><span class="version">0.0.87</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module cmp_<wbr>slint</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#Создание-проекта" title="Создание проекта">Создание проекта</a><ul><li><a href="#Файл-cargotoml" title="Файл `Cargo.toml`">Файл <code>Cargo.toml</code></a></li><li><a href="#dockerfile" title="Dockerfile">Dockerfile</a></li><li><a href="#buildrs" title="build.rs">build.rs</a></li><li><a href="#srcconfig_slintappmain_windowslint" title="src/config_slint/app/main_window.slint">src/config_slint/app/main_window.slint</a></li><li><a href="#srcconfig_slintappglobalinputslint" title="src/config_slint/app/global/input.slint">src/config_slint/app/global/input.slint</a></li><li><a href="#srcconfig_slintappglobaloutputslint" title="src/config_slint/app/global/output.slint">src/config_slint/app/global/output.slint</a></li><li><a href="#srcconfig_slintappglobalmainslint" title="src/config_slint/app/global/main.slint">src/config_slint/app/global/main.slint</a></li><li><a href="#Компоненты-material" title="Компоненты Material">Компоненты Material</a></li><li><a href="#zedsettingsjson" title=".zed/settings.json">.zed/settings.json</a></li><li><a href="#srcconfig_slintmodrs" title="src/config_slint/mod.rs">src/config_slint/mod.rs</a></li><li><a href="#srcmainrs" title="src/main.rs">src/main.rs</a></li></ul></li><li><a href="#Остальное" title="Остальное">Остальное</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In rsiot::<wbr>components</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">rsiot</a>::<wbr><a href="../index.html">components</a></div><h1>Module <span>cmp_<wbr>slint</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/rsiot/components/cmp_slint/mod.rs.html#1-168">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Компонент для взаимодействия с библиотекой пользовательского интерфейса Slint</p>
+<h2 id="Создание-проекта"><a class="doc-anchor" href="#Создание-проекта">§</a>Создание проекта</h2><h3 id="Файл-cargotoml"><a class="doc-anchor" href="#Файл-cargotoml">§</a>Файл <code>Cargo.toml</code></h3><div class="example-wrap"><pre class="language-toml"><code>[package]
+name = &quot;cmp_slint_minimal&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2024&quot;
+
+[dependencies]
+anyhow = &quot;*&quot;
+slint = { version = &quot;*&quot;, default-features = false, features = [
+    &quot;compat-1-2&quot;,
+    # &quot;backend-linuxkms-noseat&quot;,
+    &quot;backend-winit&quot;,
+    # &quot;renderer-skia&quot;,
+    &quot;renderer-femtovg&quot;,
+
+] }
+rsiot = { path = &quot;../../rsiot&quot;, features = [&quot;cmp_slint&quot;] }
+serde = { version = &quot;*&quot;, features = [&quot;derive&quot;] }
+tokio = { version = &quot;*&quot;, features = [&quot;macros&quot;, &quot;rt-multi-thread&quot;] }
+
+[build-dependencies]
+slint-build = &quot;*&quot;
+
+[package.metadata.cross.target.armv7-unknown-linux-gnueabihf]
+dockerfile = &quot;./Dockerfile.armv7-unknown-linux-gnueabihf&quot;
+
+[profile.release]
+lto = &quot;fat&quot;
+opt-level = &quot;z&quot;</code></pre></div>
+<p>В настройках крейта slint указываем требуемый бекенд и рендер. Для встраиваемых систем без
+графического окружения лучше всего подойдёт бекенд <code>backend-linuxkms-noseat</code> и рендер
+<code>renderer-skia</code>.</p>
+<h3 id="dockerfile"><a class="doc-anchor" href="#dockerfile">§</a>Dockerfile</h3>
+<p>Создаём в проекте файл Dockerfile.armv7-unknown-linux-gnueabihf (или аналогичный для другой
+архитектуры). Содержимое файла нужно взять из репозитория slint -
+https://github.com/slint-ui/slint/tree/master/docker.</p>
+<h3 id="buildrs"><a class="doc-anchor" href="#buildrs">§</a>build.rs</h3>
+<p>В файле build.rs прописываем функцию предкомпиляции</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::{collections::HashMap, env::var_os, path::PathBuf};
+
+<span class="kw">fn </span>main() {
+    <span class="kw">let </span>manifest_dir = PathBuf::from(var_os(<span class="string">"CARGO_MANIFEST_DIR"</span>).unwrap());
+    <span class="kw">let </span>library_paths = HashMap::from([(
+        <span class="string">"material"</span>.to_string(),
+        manifest_dir.join(<span class="string">"src/config_slint/app/components/material/material.slint"</span>),
+    )]);
+    <span class="kw">let </span>config = slint_build::CompilerConfiguration::new().with_library_paths(library_paths);
+    slint_build::compile_with_config(<span class="string">"src/config_slint/app/global/main.slint"</span>, config).unwrap();
+}</code></pre></div><h3 id="srcconfig_slintappmain_windowslint"><a class="doc-anchor" href="#srcconfig_slintappmain_windowslint">§</a>src/config_slint/app/main_window.slint</h3>
+<p>Создаём файл main_window.slint с описанием основного окна.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>import { Palette } from <span class="string">"std-widgets.slint"</span>;
+
+import { MaterialWindow } from <span class="string">"@material"</span>;
+
+export component MainWindow inherits MaterialWindow {
+    width: <span class="number">800px</span>;
+    height: <span class="number">480px</span>;
+    title: <span class="string">"My Application"</span>;
+    default-font-size: <span class="number">14px</span>;
+
+    init =&gt; {
+        Palette.color-scheme = ColorScheme.dark;
+    }
+
+    Text {
+        text: <span class="string">"Главное окно"</span>;
+    }
+}</code></pre></div><h3 id="srcconfig_slintappglobalinputslint"><a class="doc-anchor" href="#srcconfig_slintappglobalinputslint">§</a>src/config_slint/app/global/input.slint</h3>
+<p>Создаём файл input.slint. В этом файле прописывается структура Input, данные которой будут
+обновляться на основе входящих сообщений из шины MsgBus.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>export global Input {
+    <span class="kw">in </span>property &lt;int&gt; test_int;
+}</code></pre></div><h3 id="srcconfig_slintappglobaloutputslint"><a class="doc-anchor" href="#srcconfig_slintappglobaloutputslint">§</a>src/config_slint/app/global/output.slint</h3>
+<p>Создаём файл output.slint. В этом файле прописывается структура Output с функциями
+обратного вызова. Эти функции вызываются при событиях интерфейса - нажатие на кнопку, ввод
+данных и т.д. На основе этих событий формируются исходящие сообщения в шину MsgBus.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>export global Output {
+    pure callback button_pressed();
+}</code></pre></div><h3 id="srcconfig_slintappglobalmainslint"><a class="doc-anchor" href="#srcconfig_slintappglobalmainslint">§</a>src/config_slint/app/global/main.slint</h3>
+<p>Создаём файл main.slint. В этом файле делаем реэкспорт структур для использования в
+компонете cmp_slint. Этот файл необходим, поскольку Rust может использовать данные только из
+одного файла.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>import { Input } from <span class="string">"./input.slint"</span>;
+import { Output } from <span class="string">"./output.slint"</span>;
+import { MainWindow } from <span class="string">"../main_window.slint"</span>;
+
+export { Input, Output, MainWindow }</code></pre></div><h3 id="Компоненты-material"><a class="doc-anchor" href="#Компоненты-material">§</a>Компоненты Material</h3>
+<p>Клонировать репозиторий</p>
+<div class="example-wrap"><pre class="language-sh"><code>git clone https://github.com/slint-ui/slint.git</code></pre></div>
+<p>и положить содержимое папки
+ui-libraries/material/src в папку проекта src/config_slint/app/components/material</p>
+<h3 id="zedsettingsjson"><a class="doc-anchor" href="#zedsettingsjson">§</a>.zed/settings.json</h3>
+<p>Добавить путь к библиотеке material для работы LSP редактора Zed.</p>
+<div class="example-wrap"><pre class="language-json"><code>{
+  &quot;lsp&quot;: {
+    &quot;slint&quot;: {
+      &quot;binary&quot;: {
+        &quot;arguments&quot;: [&quot;-Lmaterial=./src/config_slint/app/components/material/material.slint&quot;],
+      },
+    },
+  },
+}</code></pre></div><h3 id="srcconfig_slintmodrs"><a class="doc-anchor" href="#srcconfig_slintmodrs">§</a>src/config_slint/mod.rs</h3>
+<p>Создаём файл mod.rs. В этом файле задаём конфигурацию компонента cmp_slint. Импорт данных из
+Slint (структуры Input, Output, главное окно MainWindow) импортируются с помощью функции
+slint::include_modules!</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>rsiot::{components::cmp_slint::<span class="kw-2">*</span>, executor::Component};
+<span class="kw">use </span>slint::{ComponentHandle, Weak};
+
+<span class="kw">use </span><span class="kw">crate</span>::msg::<span class="kw-2">*</span>;
+
+<span class="macro">slint::include_modules!</span>();
+
+<span class="kw">pub fn </span>cmp(slint_window: Weak&lt;MainWindow&gt;) -&gt; Component&lt;Config&lt;Msg, MainWindow&gt;, Msg&gt; {
+    <span class="kw">let </span>config = Config {
+        slint_window,
+        fn_input: |_msg, w| {
+            <span class="kw">let </span>input = w.global::&lt;Input&gt;();
+            input.set_test_int(<span class="number">0</span>)
+        },
+        fn_output: |w, sender| {
+            <span class="kw">let </span>output = w.global::&lt;Output&gt;();
+
+            <span class="kw">let </span>sender_clone = sender.clone();
+            output.on_button_pressed(<span class="kw">move </span>|| {
+                <span class="kw">let </span>msg = Msg::ButtonPressed;
+                sender_clone.send(msg);
+            });
+        },
+        output_period: Duration::from_millis(<span class="number">100</span>),
+    };
+
+    Cmp::new(config)
+}</code></pre></div><h3 id="srcmainrs"><a class="doc-anchor" href="#srcmainrs">§</a>src/main.rs</h3>
+<p>Создаём файл src/main.rs. Интерфейс Slint должен запускаться в основном потоке, поэтому все
+компоненты uScada запускаются в другом потоке с асинхронной средой выполнения.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>rsiot::executor::{ComponentExecutor, ComponentExecutorConfig};
+<span class="kw">use </span>slint::{ComponentHandle, Weak};
+<span class="kw">use </span>tokio::main;
+
+<span class="kw">mod </span>config_slint;
+<span class="kw">mod </span>msg;
+
+<span class="kw">use </span>msg::<span class="kw-2">*</span>;
+
+<span class="kw">fn </span>main() -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">let </span>main_window = config_slint::MainWindow::new()<span class="question-mark">?</span>;
+    <span class="kw">let </span>main_window_link = main_window.as_weak();
+
+    std::thread::spawn(<span class="kw">move </span>|| main_executor(main_window_link));
+
+    main_window.run()<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Err</span>(anyhow::Error::msg(<span class="string">"Program stop"</span>))
+}
+
+<span class="attr">#[main]
+</span><span class="kw">async fn </span>main_executor(slint_window: Weak&lt;config_slint::MainWindow&gt;) -&gt; anyhow::Result&lt;()&gt; {
+    <span class="kw">let </span>executor_config = ComponentExecutorConfig::&lt;Msg&gt; {
+        buffer_size: <span class="number">1000</span>,
+        fn_auth: |msg, <span class="kw">_</span>| <span class="prelude-val">Some</span>(msg),
+        delay_publish: Duration::from_millis(<span class="number">100</span>),
+        fn_tokio_metrics: |<span class="kw">_</span>| <span class="prelude-val">None</span>,
+    };
+
+    ComponentExecutor::new(executor_config)
+        .add_cmp(config_slint::cmp(slint_window))
+        .wait_result()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="prelude-val">Err</span>(anyhow::Error::msg(<span class="string">"Program stop"</span>))
+}</code></pre></div><h2 id="Остальное"><a class="doc-anchor" href="#Остальное">§</a>Остальное</h2>
 <p><strong>cargo apk</strong></p>
 <div class="example-wrap"><pre class="language-bash"><code>cargo install cargo-apk
 sudo apt install qtbase5-dev</code></pre></div>

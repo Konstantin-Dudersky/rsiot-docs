@@ -13,7 +13,7 @@
 
 <span class="kw">use </span>rsiot::components::cmp_inject_periodic::<span class="kw-2">*</span>;
 
-<span class="kw">use </span><span class="kw">crate</span>::messages::<span class="kw-2">*</span>;
+<span class="kw">use </span><span class="kw">crate</span>::msg::<span class="kw-2">*</span>;
 
 <span class="kw">pub fn </span>cmp() -&gt; Cmp&lt;Msg, <span class="kw">impl </span>FnMut() -&gt; Vec&lt;Msg&gt;&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>counter = <span class="number">0</span>;
